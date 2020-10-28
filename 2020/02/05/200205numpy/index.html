@@ -15,13 +15,13 @@
 <meta property="og:site_name" content="KOneLane">
 <meta property="og:description" content="最后编辑于：2020.02.05 12:30 Numpy库Numpy库是Python的一种开源的数值计算扩展。 Numpy可用来存储和处理大型矩阵，比Python自身的嵌套列表结构要高效很多。 据说Numpy将Pyhon变成了一种免费的更强大的Matlab系统。 本文介绍性文字转载自万旷网。氦核感觉notebook形式更适合学习，有机会把丘比特文件给大家附上。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://konelane.github.io/2020/02/05/200205numpy/tu1.png">
-<meta property="og:image" content="https://konelane.github.io/2020/02/05/200205numpy/tu2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/02/05/200205numpy/02/05/200205numpy/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/02/05/200205numpy/02/05/200205numpy/tu2.png">
 <meta property="og:updated_time" content="2020-02-05T05:26:34.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python联萌|今天康康numpy（怒骂朋友库">
 <meta name="twitter:description" content="最后编辑于：2020.02.05 12:30 Numpy库Numpy库是Python的一种开源的数值计算扩展。 Numpy可用来存储和处理大型矩阵，比Python自身的嵌套列表结构要高效很多。 据说Numpy将Pyhon变成了一种免费的更强大的Matlab系统。 本文介绍性文字转载自万旷网。氦核感觉notebook形式更适合学习，有机会把丘比特文件给大家附上。">
-<meta name="twitter:image" content="https://konelane.github.io/2020/02/05/200205numpy/tu1.png">
+<meta name="twitter:image" content="https://konelane.github.io/2020/02/05/200205numpy/02/05/200205numpy/tu1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -967,7 +967,7 @@ a2形状重构：
 <h2 id="七、多项式曲线拟合"><a href="#七、多项式曲线拟合" class="headerlink" title="七、多项式曲线拟合"></a>七、多项式曲线拟合</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt   <span class="comment"># 导入作图库  为了更好展示曲线拟合的结果</span></span><br><span class="line">plt.style.use(<span class="string">'ggplot'</span>)</span><br></pre></td></tr></table></figure>
 <p>例如，对于下面的这些散点进行多项式拟合。观察散点的形态，采用直线取拟合</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = np.linspace(<span class="number">-10</span>,<span class="number">10</span>,<span class="number">100</span>)</span><br><span class="line">y = <span class="number">2</span>*x + <span class="number">1</span> + np.random.randn(<span class="number">100</span>)*<span class="number">2</span></span><br><span class="line">fig = plt.subplots(figsize=(<span class="number">14</span>,<span class="number">8</span>))</span><br><span class="line">plt.plot(x, y, <span class="string">'rx'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<img src="/2020/02/05/200205numpy/tu1.png" title="图1">
+<img src="/2020/02/05/200205numpy/02/05/200205numpy/tu1.png" title="图1">
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> polyfit,poly1d</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">coef_fit = polyfit(x, y, <span class="number">1</span>)  <span class="comment">#进行线性拟合 1代表的是多项式拟合的多项式的阶数  这里指的是线性拟合</span></span><br><span class="line">coef_fit    <span class="comment">#查看拟合的系数</span></span><br></pre></td></tr></table></figure>
 <pre><code>array([1.96386726, 1.11375232])
@@ -1004,7 +1004,7 @@ D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWar
   font.set_text(s, 0, flags=flags)
 D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 32447 missing from current font.
   font.set_text(s, 0, flags=flags)
-</code></pre><img src="/2020/02/05/200205numpy/tu2.png" title="图2">
+</code></pre><img src="/2020/02/05/200205numpy/02/05/200205numpy/tu2.png" title="图2">
 <p>从上图可以看到，直线拟合的结果还是比较好的（报错可能是汉字bug</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f = poly1d(coef_fit)   <span class="comment">#也可以直接产生拟合的函数解析式</span></span><br><span class="line">print(<span class="string">'拟合函数：'</span>,f)</span><br></pre></td></tr></table></figure>
 <pre><code>拟合函数：  
@@ -1066,6 +1066,7 @@ D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWar
     </script>
 </div>
       
+  
   
   
     
