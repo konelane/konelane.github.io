@@ -15,17 +15,17 @@
 <meta property="og:site_name" content="KOneLane">
 <meta property="og:description" content="最后编辑于：20.10.15 开门见山地来一段，就一段，不会有人这个都没搞懂吧，不会吧不会吧（拖走 123456hadoop jar \ $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \ -input /user/devel/2020210995wangyuanhe/README.txt \ -output /user">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu1.png">
-<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu2.png">
-<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu3.png">
-<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu4.png">
-<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu5.png">
-<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu6.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/tu2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/tu3.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/tu4.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/tu5.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/tu6.png">
 <meta property="og:updated_time" content="2020-10-15T03:56:25.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式1007-Map-Reduce的文字流">
 <meta name="twitter:description" content="最后编辑于：20.10.15 开门见山地来一段，就一段，不会有人这个都没搞懂吧，不会吧不会吧（拖走 123456hadoop jar \ $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \ -input /user/devel/2020210995wangyuanhe/README.txt \ -output /user">
-<meta name="twitter:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu1.png">
+<meta name="twitter:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/tu1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -353,15 +353,15 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar \</span><br><span class="line"> $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \</span><br><span class="line"> -input /user/devel/2020210995wangyuanhe/README.txt \</span><br><span class="line"> -output /user/devel/2020210995wangyuanhe/1007output \</span><br><span class="line"> -mapper &quot;/usr/bin/cat&quot; \</span><br><span class="line"> -reducer &quot;/usr/bin/wc&quot;</span><br></pre></td></tr></table></figure>
 <p>开始前再插一句题外话，被强大而可爱的丰丰老师表（da）扬（shang）了，动力+10086，继续努力啊小禾禾！！</p>
 <a id="more"></a>
-<h2 id="分布式1007-Map-Reduce的文字流"><a href="#分布式1007-Map-Reduce的文字流" class="headerlink" title="分布式1007-Map-Reduce的文字流"></a>分布式1007-Map-Reduce的文字流</h2><h3 id="1-程序运行情况介绍"><a href="#1-程序运行情况介绍" class="headerlink" title="1.程序运行情况介绍"></a>1.程序运行情况介绍</h3><img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu1.png" title="tu1">
+<h2 id="分布式1007-Map-Reduce的文字流"><a href="#分布式1007-Map-Reduce的文字流" class="headerlink" title="分布式1007-Map-Reduce的文字流"></a>分布式1007-Map-Reduce的文字流</h2><h3 id="1-程序运行情况介绍"><a href="#1-程序运行情况介绍" class="headerlink" title="1.程序运行情况介绍"></a>1.程序运行情况介绍</h3><img src="/2020/10/07/1007分布式计算/tu1.png" title="tu1">
 <p>这张运行图只是执行中间一部分，正常情况下无ERROR，map 100% reduce 100%（这里运行时看着最爽）。</p>
-<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu2.png" title="tu2">
+<img src="/2020/10/07/1007分布式计算/tu2.png" title="tu2">
 <p>图2中第一行文件并无内容，后7个文件是本次运行开启的7个mapper的结果，reducer在这几个文件中运行，并把结果写入这7个文件中，所有的结果求和即真正结果。</p>
 <p>下面看看运行的文件情况：</p>
-<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu3.png" title="tu3">
-<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu4.png" title="tu4">
+<img src="/2020/10/07/1007分布式计算/tu3.png" title="tu3">
+<img src="/2020/10/07/1007分布式计算/tu4.png" title="tu4">
 <p>上图中，wc函数第一列的和就是16，即行数（验证正确），第二列为单词数（字符串连在一起算一个单词），第三列为字节数。</p>
-<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu5.png" title="tu5">
+<img src="/2020/10/07/1007分布式计算/tu5.png" title="tu5">
 <p>单个mapper+单个reducer运行</p>
 <blockquote>
 <p>每次cat：<br>行数+1；单词+n；字节数+m</p>
@@ -404,7 +404,7 @@
 <p>-jobconf 被替代为-D，-file 被替换成 -files</p>
 <p>附上本次课程老师的<a href="https://github.com/feng-li/Distributed-Statistical-Computing/tree/master/L02-MapReduce" target="_blank" rel="noopener">代码和讲义</a>，我还得好好研究一下，收获满满的一节课（虽然有点怀疑人生哈哈哈</p>
 <p>附作业中可能用到的hadoop jar<a href="http://www.voidcn.com/article/p-nyinxrro-cn.html" target="_blank" rel="noopener">参数介绍</a>，hadoop fs <a href="https://www.cnblogs.com/zwgblog/p/6005061.html" target="_blank" rel="noopener">参数介绍</a></p>
-<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu6.png" title="tu6">
+<img src="/2020/10/07/1007分布式计算/tu6.png" title="tu6">
 <p>（完）</p>
 
           </br>
