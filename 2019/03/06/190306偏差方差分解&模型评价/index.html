@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>数据挖掘|偏差方差分解&amp;模型评价标准 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="提供了一种关键思想：偏差-方差分解，以及几个模型评价标准。">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘|偏差方差分解&amp;模型评价标准">
+<meta property="og:url" content="https://konelane.github.io/2019/03/06/190306偏差方差分解&模型评价/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="提供了一种关键思想：偏差-方差分解，以及几个模型评价标准。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-09T07:48:13.560Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据挖掘|偏差方差分解&amp;模型评价标准">
+<meta name="twitter:description" content="提供了一种关键思想：偏差-方差分解，以及几个模型评价标准。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+							<li><a href="/tags/填词">填词涂鸦</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16.67px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+					<li><a href="/tags/填词">填词涂鸦</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	盈盈一水间，脉脉不得语
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-190306偏差方差分解&amp;模型评价" class="article article-type-post" itemscope itemprop="blogPost">
+  <script>
+      $("html").niceScroll({
+          cursorcolor: "#2a2929",
+          cursoropacitymax: 1,
+          touchbehavior: false,
+          cursorwidth: "6px",
+          cursorborder: "5",
+          cursorborderradius: "0px",
+          autohidemode: true
+      });
+  </script>
+  
+  <div class="article-meta">
+      <a href="/2019/03/06/190306偏差方差分解&模型评价/" class="article-date">
+  	<time datetime="2019-03-05T16:00:00.000Z" itemprop="datePublished">2019-03-06</time>
+</a>
+
+  </div>
+  
+  <div class="article-inner">
+      
+      <input type="hidden" class="isFancy" />
+      
+      
+      <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      数据挖掘|偏差方差分解&amp;模型评价标准
+    </h1>
+  
+
+
+          
+      </header>
+      
+      
+      <div class="article-info article-info-post">
+          
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+          
+
+          <div class="clearfix"></div>
+      </div>
+      
+      
+
+      <div class="article-entry" itemprop="articleBody">
+
+          
+          <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、基本原理"><span class="toc-number">1.</span> <span class="toc-text">一、基本原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、基本思路及待讨论解决问题"><span class="toc-number">2.</span> <span class="toc-text">二、基本思路及待讨论解决问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、代码部分"><span class="toc-number">3.</span> <span class="toc-text">三、代码部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码思路"><span class="toc-number">3.1.</span> <span class="toc-text">代码思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码内容"><span class="toc-number">3.2.</span> <span class="toc-text">代码内容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义函数lml"><span class="toc-number">3.2.1.</span> <span class="toc-text">自定义函数lml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自定义函数BV"><span class="toc-number">3.2.2.</span> <span class="toc-text">自定义函数BV</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模型复杂度选取"><span class="toc-number">3.2.3.</span> <span class="toc-text">模型复杂度选取</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结论"><span class="toc-number">3.3.</span> <span class="toc-text">结论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-偏差Bias"><span class="toc-number">3.3.1.</span> <span class="toc-text">1. 偏差Bias</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-方差Variance"><span class="toc-number">3.3.2.</span> <span class="toc-text">2. 方差Variance</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型评价与相关指标"><span class="toc-number">4.</span> <span class="toc-text">模型评价与相关指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-推广误差及期望推广误差"><span class="toc-number">4.1.</span> <span class="toc-text">1. 推广误差及期望推广误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-误差估计方法（测试误差）"><span class="toc-number">4.2.</span> <span class="toc-text">2. 误差估计方法（测试误差）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-交叉验证误差"><span class="toc-number">4.3.</span> <span class="toc-text">3. 交叉验证误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Bootstrap误差"><span class="toc-number">4.4.</span> <span class="toc-text">4. Bootstrap误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-AIC"><span class="toc-number">4.5.</span> <span class="toc-text">5. AIC</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+          
+          
+
+          
+          <p>提供了一种关键思想：偏差-方差分解，以及几个模型评价标准。</p>
+<a id="more"></a>
+<h2 id="一、基本原理"><a href="#一、基本原理" class="headerlink" title="一、基本原理"></a>一、基本原理</h2><p>假定的真实模型为<script type="math/tex">y = f(x) + \epsilon ,</script>其中$E(\epsilon)=0,V(\epsilon)={\sigma}^{2}.$</p>
+<p>对给定训练集$\{(x_{i},y_{i})\}$下训练出的假设$h(x)=ax+b$，我们通过预测误差$E_{P}{(y^{<em>}-h(x^{</em>}))}^{2}$对其进行评价</p>
+<h2 id="二、基本思路及待讨论解决问题"><a href="#二、基本思路及待讨论解决问题" class="headerlink" title="二、基本思路及待讨论解决问题"></a>二、基本思路及待讨论解决问题</h2><p>我们假定训练集样本点的概率分布满足$E_{P}[Z]=\underline{Z}$,于是</p>
+<script type="math/tex; mode=display">
+\begin{split}
+& E_{P}{(y^{*}-h(x^{*}))}^{2}\\
+= & E[{(h(x^{*})-\underline{h(x^{*})})}^{2}] + {[\underline{h(x^{*})}-f(x^{*})]}^{2} +  E[{(y^{*}-f(x^{*}))}^{2}]\\ 
+= & Variance + Bias^{2} + Noise
+\end{split}</script><p>然后用足够多的训练样本点$(x_i^<em>,y_i^</em>)$去评价假设$h(x)$，对每个给定的$(x_i^<em>,y_i^</em>)$，有</p>
+<script type="math/tex; mode=display">Variance_i = E[{(h(x_i^*)-\underline{h(x_i^*)})}^{2}]</script><script type="math/tex; mode=display">Bias_i^2 = {[\underline{h(x_i^{*})}-f(x_i^{*})]}^{2}</script><p>于是我们可以得到对假定模型$h(x)=ax+b$最终的评价</p>
+<script type="math/tex; mode=display">Variance = E[E[{(h(x_i^*)-\underline{h(x_i^*)})}^{2}]]</script><script type="math/tex; mode=display">Bias^2 = E[{[\underline{h(x_i^{*})}-f(x_i^{*})]}^{2}]</script><p>下面我们用程序来完成这个过程，并在这个基础上讨论当误差项$\epsilon$的方差${\sigma}^{2}$变化时，$h(x)$复杂度的选择问题。</p>
+<h2 id="三、代码部分"><a href="#三、代码部分" class="headerlink" title="三、代码部分"></a>三、代码部分</h2><h3 id="代码思路"><a href="#代码思路" class="headerlink" title="代码思路"></a>代码思路</h3><p>真实函数<script type="math/tex">y = 2{e}^x + \epsilon ,</script>其中$\epsilon\sim N(0,\sigma^2)$。对$f(x) = 2{e}^x$进行泰勒展开，有<script type="math/tex">f(x) = 2{e}^x = 2 + 2x + \frac{2x^2}{2!} + \frac{2x^3}{3!} + ...</script></p>
+<p>于是选择不同光滑度的函数h(x)进行训练，下列公式光滑度由低到高：</p>
+<script type="math/tex; mode=display">h(x)_1 = a_1x+b</script><script type="math/tex; mode=display">h(x)_2 = a_1x+a_2x^2 + b</script><script type="math/tex; mode=display">h(x)_3 = a_1x+a_2x^2+a_3x^3+b</script><h3 id="代码内容"><a href="#代码内容" class="headerlink" title="代码内容"></a>代码内容</h3><h4 id="自定义函数lml"><a href="#自定义函数lml" class="headerlink" title="自定义函数lml"></a>自定义函数lml</h4><p>函数$lml$的输入为训练集TR与测试集TE，输出为以TR为训练集训练出的$h(x)$关于TE的预测集。</p>
+<p>TR和TE变量结构相同，TR为训练集，TE为测试集，第一个均为因变量</p>
+<p>mlm以向前法的顺序，添加自变量，建立相应的回归模型，并给出与之对应的TE的因变量的预测值</p>
+<p>预测结果排列为1个向量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">mlm &lt;- function(TR, TE)&#123;</span><br><span class="line">  vname = names(TR) </span><br><span class="line">  yn=vname[1]         #因变量名称</span><br><span class="line">  xn=vname[-1]        #自变量名称</span><br><span class="line">  mp=length(xn)       #自变量的维数</span><br><span class="line"> </span><br><span class="line">  ypr=NULL</span><br><span class="line">  tm=paste(yn,xn[1],sep=&quot;~&quot;)     #将因变量y和第一个自变量粘贴成y~x.1的形式，建立lm函数。</span><br><span class="line">  fam=formula(tm)                #公式化</span><br><span class="line">  cp=1</span><br><span class="line">  repeat&#123;</span><br><span class="line">    lm1 = lm(fam,TR)             #运用公式化后的lm函数对训练集TR做回归，得到相应的回归系数。</span><br><span class="line">    ypr=c(ypr,predict(lm1,TE))   #给出与之对应的TE的因变量的预测值</span><br><span class="line">    </span><br><span class="line">    #使用向前法，依次添加自变量x.2、x.3、……、x.p，重新建立lm函数。</span><br><span class="line">    if(cp&gt;=mp) break            </span><br><span class="line">    cp=cp+1                   </span><br><span class="line">    tm=paste(tm,xn[cp],sep=&quot;+&quot;) </span><br><span class="line">    fam=formula(tm)</span><br><span class="line">  &#125;</span><br><span class="line">  as.vector(ypr)                #返回结果为TE的因变量的预测值，其为一个拉直的向量。         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="自定义函数BV"><a href="#自定义函数BV" class="headerlink" title="自定义函数BV"></a>自定义函数BV</h4><p>计算给定光滑度和方差后得到的预测函数的偏差bias和方差variance</p>
+<p>有k个样本量为n的训练集dataTR，与一个样本量为N的测试集dataTE，其中p为做线性回归的自变量的最高阶数，$\sigma$为随机误差的标准差</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">library(plyr)</span><br><span class="line">BV &lt;- function(p, sigma, N, n, k)&#123;</span><br><span class="line"></span><br><span class="line">  ##构造两个结构相同的数据集，其中自变量维数均为p，第一个均为因变量</span><br><span class="line">  #构造样本数为N的测试集dataTE</span><br><span class="line">  nx &lt;- runif(N,-1,1) #一个样本数为N的均匀分布的随机数</span><br><span class="line">  ny &lt;- 2*exp(nx)+rnorm(N,0,sigma)                 #真实函数为y = 2*exp(x)+epsilon 其中epsilon~N(0,sigma^2)</span><br><span class="line">  nz &lt;- matrix(nx,N,p)                             #构造一个自变量矩阵，其中自变量维数为p,样本数为N</span><br><span class="line">  for(i in 2:p) nz[,i] &lt;- 10*nz[,i]*nz[,i-1]      #乘10为了量纲不要差太多，因为是(0,1)间的，平方会差很多</span><br><span class="line">  dataTE &lt;- data.frame(y=ny,z=nz)                  </span><br><span class="line"></span><br><span class="line">  #构造样本数为n*k的训练集dataTR</span><br><span class="line">  x &lt;- runif(n * k,-1,1)</span><br><span class="line">  y &lt;- 2 * exp(x) + rnorm(n*k,0,sigma)</span><br><span class="line">  z &lt;- matrix(x,n*k,p)</span><br><span class="line">  for(i in 2:p) z[,i]=10*z[,i]*z[,i-1];</span><br><span class="line">  dataTR &lt;- data.frame(y=y,z=z)</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  index &lt;- rep(1:k,rep(n,k)) </span><br><span class="line"> </span><br><span class="line">  ##使用自定义函数mlm，对样本量为n的训练集dataTR做关于自变量x从1到p阶的线性回归</span><br><span class="line">  ##得到与之对应的关于测试集dataTE的预测。</span><br><span class="line">  ##重复k次，计算偏差和方差。</span><br><span class="line">  PRE=daply(dataTR, .(index), mlm, TE = dataTE)     #预测值，为一个k*(N*p)的矩阵</span><br><span class="line">  b =  ( apply(PRE,2,mean) - rep(2*exp(nx),p) )^2   #(E(h(x))-f(x))^2</span><br><span class="line">  b = matrix(b, nrow=N, byrow=F)                    #按列排成N*p的矩阵，第j列的对应的回归模型的自变量最高阶数为j</span><br><span class="line">  b = apply(b, 2, mean)                             #求不同阶数对应的预测函数的偏差，E[(E(h(x))-f(x))^2]</span><br><span class="line">  v =  apply(PRE, 2, var)                           #var(h(x))</span><br><span class="line">  v = matrix(v, nrow=N, byrow=F)                    #按列排成N*p的矩阵，第j列的对应的回归模型的自变量最高阶数为j</span><br><span class="line">  v = apply(v,2,mean)                               #求不同阶数对应的预测函数的方差，E[var(h(x))]                        </span><br><span class="line">  mse= b+v</span><br><span class="line">  </span><br><span class="line">  list(mse=mse, bias=b, var=v)</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="模型复杂度选取"><a href="#模型复杂度选取" class="headerlink" title="模型复杂度选取"></a>模型复杂度选取</h4><p>使用自定义函数，分别计算误差项方差$\sigma^2$为$1^2、5^2和10^2$时，不同光滑度对应预测函数$h(x)$的Bias和Variance，对比不同复杂度下模型的优劣。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#定义训练集、测试集的容量、阶数p和sigma的取值</span><br><span class="line">N=2000; k=2000; n=500</span><br><span class="line">msigma=c(1,5,10)            </span><br><span class="line">NL=length(msigma)</span><br><span class="line">ps=cbind(3,msigma)</span><br><span class="line"></span><br><span class="line">print(NL)</span><br><span class="line">print(ps)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#计算不同h(x)的bias和variance</span><br><span class="line">set.seed(1)</span><br><span class="line">timestart &lt;- Sys.time()</span><br><span class="line"></span><br><span class="line">#每一次循环均为给定一个sigma，使用自定义函数BV计算最高阶数为p时的偏差和方差</span><br><span class="line">for(nl in 1:NL) print(BV(ps[nl,1],ps[nl,2], N, n, k))</span><br><span class="line"></span><br><span class="line">timeend &lt;- Sys.time()</span><br><span class="line">runningtime &lt;- timeend-timestart</span><br><span class="line">print(runningtime)                                        #计算运行时间</span><br></pre></td></tr></table></figure>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><h4 id="1-偏差Bias"><a href="#1-偏差Bias" class="headerlink" title="1. 偏差Bias"></a>1. 偏差Bias</h4><p>Bias度量了模型预测期望函数和真实函数的偏离程度，体现了模型的<strong>拟合效果</strong>。  </p>
+<p>在给定较低的噪声方差$sigma^2$时，偏差会随着模型复杂度的增加而减少；<br>而当噪声方差过高时，模型复杂度的增加会导致预测函数偏离真实函数，即偏差增加。</p>
+<h4 id="2-方差Variance"><a href="#2-方差Variance" class="headerlink" title="2. 方差Variance"></a>2. 方差Variance</h4><p>Variance表示不同的训练数据集训练出的差异，体现了模型的<strong>稳定性</strong>。<br>随着模型复杂度的增加，模型的简洁和稳定性均会下降，这体现在方差的增加上。</p>
+<h2 id="模型评价与相关指标"><a href="#模型评价与相关指标" class="headerlink" title="模型评价与相关指标"></a>模型评价与相关指标</h2><h3 id="1-推广误差及期望推广误差"><a href="#1-推广误差及期望推广误差" class="headerlink" title="1. 推广误差及期望推广误差"></a>1. 推广误差及期望推广误差</h3><p>记基于样本$L,$ 我们通过某个方法或者算法, 例如最小二乘法得到模型$h(x；L).$</p>
+<ul>
+<li>推广误差为<script type="math/tex; mode=display">E_{x,y}(y-h(x;L))^2.</script></li>
+<li>期望推广误差为<script type="math/tex; mode=display">E_{L}[E_{x,y}(y-h(x;L))^2].</script></li>
+</ul>
+<h3 id="2-误差估计方法（测试误差）"><a href="#2-误差估计方法（测试误差）" class="headerlink" title="2. 误差估计方法（测试误差）"></a>2. 误差估计方法（测试误差）</h3><ul>
+<li>数据挖掘实践中通常按照7:3的比例把原始的样本分为训练集和测试集，基于训练集训练模型，基于测试集评价模型，评价误差被称为测试误差. </li>
+<li>可以认为测试误差在估计推广误差，也可以认为在估计期望推广误差. 如果原始训练集如果大，上述两种看法事实上均可以. 为什么呢？</li>
+</ul>
+<h3 id="3-交叉验证误差"><a href="#3-交叉验证误差" class="headerlink" title="3. 交叉验证误差"></a>3. 交叉验证误差</h3><ul>
+<li>交叉验证误差指把原始数据分为$K$折, 每次去掉原始数据中的一折，构建模型，并用去掉的那折评价模型, 最后再把$K$个误差平均. $K$越大， 越接近在评价推广误差，$K$越小（当然不能太小）, 越接近在评价期望推广误差.</li>
+<li>如果不能理解后半句，试着把期望推广误差的定义中两个期望换序.</li>
+</ul>
+<h3 id="4-Bootstrap误差"><a href="#4-Bootstrap误差" class="headerlink" title="4. Bootstrap误差"></a>4. Bootstrap误差</h3><ul>
+<li>Bootstrap误差和交叉验证误差类似，每次从原始数据中有放回抽取和原始数据样本量大小一致的自助训练集，训练模型，使用原始数据中未进入自助训练集的数据评价模型.</li>
+<li>重复多次，计算平均误差，即Bootstrap误差.</li>
+</ul>
+<h3 id="5-AIC"><a href="#5-AIC" class="headerlink" title="5. AIC"></a>5. AIC</h3><ul>
+<li>$AIC = n\log(RSS/n) + 2k + C$</li>
+<li>AIC在什么情况下可以用？</li>
+</ul>
+
+          </br>
+          <p>本文链接：
+              <a href="https://konelane.github.io/2019/03/06/190306偏差方差分解&模型评价/">
+                  https://konelane.github.io/2019/03/06/190306偏差方差分解&模型评价/
+              </a>
+          </p>
+          <p>-- <acronym title="End of File">EOF</acronym> --</p>
+          <div class="post-info">
+              <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+              <p> 
+                    
+               </p>
+          </div>
+          
+          
+      </div>
+
+      
+  </div>
+  
+      
+  
+  
+      
+          <div class="donateContainer">
+    <div>￥^￥赞助将用于氦核一人咖啡绿茶优酸乳费用（唉</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+      
+  
+  
+    
+        <section id="comments" class="comments">
+        <style>
+            .comments{margin:30px;padding:10px;background:#fff}
+            @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+        </style>
+        <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+    </section>
+    
+  
+
+</article>
+
+
+<script>
+  var isMobile = {
+      Android: function () {
+          return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function () {
+          return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function () {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function () {
+          return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function () {
+          return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function () {
+          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+              isMobile.Windows());
+      }
+  };
+  if (isMobile.any()) {
+      //移动端不显示目录和评论
+      $("#toc-button").css("display", "none");
+      $("#commentDiv").css("display", "none");
+  }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

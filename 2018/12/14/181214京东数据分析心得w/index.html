@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>京东数据分析心得 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="京东数据分析心得w报告人|刘亚男1.知识储备2.分析思路与案例3.产品">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="京东数据分析心得">
+<meta property="og:url" content="https://konelane.github.io/2018/12/14/181214京东数据分析心得w/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="京东数据分析心得w报告人|刘亚男1.知识储备2.分析思路与案例3.产品">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-14T03:38:48.704Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="京东数据分析心得">
+<meta name="twitter:description" content="京东数据分析心得w报告人|刘亚男1.知识储备2.分析思路与案例3.产品">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+							<li><a href="/tags/填词">填词涂鸦</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16.67px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+					<li><a href="/tags/填词">填词涂鸦</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	盈盈一水间，脉脉不得语
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-181214京东数据分析心得w" class="article article-type-post" itemscope itemprop="blogPost">
+  <script>
+      $("html").niceScroll({
+          cursorcolor: "#2a2929",
+          cursoropacitymax: 1,
+          touchbehavior: false,
+          cursorwidth: "6px",
+          cursorborder: "5",
+          cursorborderradius: "0px",
+          autohidemode: true
+      });
+  </script>
+  
+  <div class="article-meta">
+      <a href="/2018/12/14/181214京东数据分析心得w/" class="article-date">
+  	<time datetime="2018-12-13T16:00:00.000Z" itemprop="datePublished">2018-12-14</time>
+</a>
+
+  </div>
+  
+  <div class="article-inner">
+      
+      <input type="hidden" class="isFancy" />
+      
+      
+      <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      京东数据分析心得
+    </h1>
+  
+
+
+          
+      </header>
+      
+      
+      <div class="article-info article-info-post">
+          
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+          
+
+          <div class="clearfix"></div>
+      </div>
+      
+      
+
+      <div class="article-entry" itemprop="articleBody">
+
+          
+          <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#京东数据分析心得w"><span class="toc-number">1.</span> <span class="toc-text">京东数据分析心得w</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#报告人-刘亚男"><span class="toc-number">1.1.</span> <span class="toc-text">报告人|刘亚男</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-知识储备"><span class="toc-number">1.2.</span> <span class="toc-text">1.知识储备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#大数据分析"><span class="toc-number">1.2.1.</span> <span class="toc-text">大数据分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#知识储备"><span class="toc-number">1.2.2.</span> <span class="toc-text">知识储备</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-思路"><span class="toc-number">1.3.</span> <span class="toc-text">2.思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#界定问题"><span class="toc-number">1.3.1.</span> <span class="toc-text">界定问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分解问题"><span class="toc-number">1.3.2.</span> <span class="toc-text">分解问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-数据分析背后的产品思维"><span class="toc-number">1.4.</span> <span class="toc-text">3.数据分析背后的产品思维</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+          
+          
+
+          
+          <h1 id="京东数据分析心得w"><a href="#京东数据分析心得w" class="headerlink" title="京东数据分析心得w"></a>京东数据分析心得w</h1><h2 id="报告人-刘亚男"><a href="#报告人-刘亚男" class="headerlink" title="报告人|刘亚男"></a>报告人|刘亚男</h2><p>1.知识储备<br>2.分析思路与案例<br>3.产品</p>
+<a id="more"></a>
+<h2 id="1-知识储备"><a href="#1-知识储备" class="headerlink" title="1.知识储备"></a>1.知识储备</h2><p>对象：政府，企业，个人</p>
+<p>统计+计算机。。。</p>
+<p>方法：<br>持续跟踪，模型算法，定制研究</p>
+<h3 id="大数据分析"><a href="#大数据分析" class="headerlink" title="大数据分析"></a>大数据分析</h3><p>京东：电商为主，41000台服务器</p>
+<p>数据量级支持的<strong>分析内容</strong>不同，以京东为例</p>
+<p>1.内部业务创新<br>2.经济指数<br>3.行业报告<br>4.高校政府科研<br>5.区块链、供应链溯源（数字货币，支付盐酸，数字票据）<br>6.平安城市、智慧城市</p>
+<h3 id="知识储备"><a href="#知识储备" class="headerlink" title="知识储备"></a>知识储备</h3><p>1.数据</p>
+<p>合理的样本数据，拿到的数据可能是有偏误的，注意样本多样性。</p>
+<p>有质量的样本数据，小心空值错误值，数据全周期全链条。指标唯一性。</p>
+<p>eg数据中台：阿里全领域，京东全链路（2016年开始，趋势）</p>
+<p>2.方法<br><strong>硬方法</strong>：描述统计，假设检验，列联表，判别，聚类，ROC等……</p>
+<p>在一定假设前提下，科学严谨的推导。数据分析报告很高大上。。。</p>
+<p>并非必须做相关分析之类，更多会使用软方法</p>
+<p><strong>软方法</strong>：如用户分层</p>
+<p>3.延伸<br>企业中，知识+场景</p>
+<h2 id="2-思路"><a href="#2-思路" class="headerlink" title="2.思路"></a>2.思路</h2><p>1.界定问题<br>2.分解问题<br>3.分析问题</p>
+<p>目的：找到原因，落实方案</p>
+<p>经验能够给出描述，精准地找出定义，找到最根本的原因。</p>
+<h3 id="界定问题"><a href="#界定问题" class="headerlink" title="界定问题"></a>界定问题</h3><p>SMART原则</p>
+<blockquote>
+<p>S具体<br>M目标要指标化<br>A可行动<br>R目标相关性，要能掌控<br>T时效性</p>
+</blockquote>
+<p>利用五个为什么，确保研究的有效性</p>
+<p>麦肯锡的总分金字塔</p>
+<h3 id="分解问题"><a href="#分解问题" class="headerlink" title="分解问题"></a>分解问题</h3><p><strong>分解方法1</strong>：议题树（结构化思维）<br>下层需要上层的支持<br>（广度上一致性，深度上相关性）</p>
+<p>首先不需要很全局的思考，从几个具体问题开始思考，挖掘分论点<br>传播 -&gt; 人群 </p>
+<p>推崇团队，不同的人解决不同的问题，方便达成共识</p>
+<p><strong>分解方法2</strong>：MECE原则（相互独立，完全穷尽）</p>
+<p><strong>分解方法3</strong>：完整论证链路，组织故事，表头，易懂（PPT贼赚钱）</p>
+<h2 id="3-数据分析背后的产品思维"><a href="#3-数据分析背后的产品思维" class="headerlink" title="3.数据分析背后的产品思维"></a>3.数据分析背后的产品思维</h2><p>营销，数据分析产品经理</p>
+<p>业务知识，行业背景，技术</p>
+<p>在垂直领域中做深</p>
+<p>玻璃瓶子换塑料瓶何易拉罐</p>
+<p>为何饮料瓶的颜色区别？年轻人感官刺激</p>
+<p>感受：耐摔，印刷，方便喝，环保<br>结构化：商家：成本，运输，印刷，质检。用户：便捷，口感，爽感，品牌<br>流程化：原料，调制，罐装，印刷，质检，运输，摆放，购买，引用，回收</p>
+<blockquote>
+<p>六阶<br>1.感性<br>2.结构化，流程化<br>3.聚焦，关键节点<br>4.价值<br>5.抽象<br>6.行业生态，发展</p>
+</blockquote>
+<p><strong>人性 &gt; 理性</strong></p>
+<p>时间管理，数据分析能力提升，行业探究，针对已有产品进行功能性迭代，PPT制作</p>
+<p>项目管理和汇报，梳理价值，独立负责能力</p>
+
+          </br>
+          <p>本文链接：
+              <a href="https://konelane.github.io/2018/12/14/181214京东数据分析心得w/">
+                  https://konelane.github.io/2018/12/14/181214京东数据分析心得w/
+              </a>
+          </p>
+          <p>-- <acronym title="End of File">EOF</acronym> --</p>
+          <div class="post-info">
+              <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+              <p> 
+                    
+               </p>
+          </div>
+          
+          
+      </div>
+
+      
+  </div>
+  
+      
+  
+  
+      
+          <div class="donateContainer">
+    <div>￥^￥赞助将用于氦核一人咖啡绿茶优酸乳费用（唉</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+      
+  
+  
+    
+        <section id="comments" class="comments">
+        <style>
+            .comments{margin:30px;padding:10px;background:#fff}
+            @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+        </style>
+        <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+    </section>
+    
+  
+
+</article>
+
+
+<script>
+  var isMobile = {
+      Android: function () {
+          return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function () {
+          return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function () {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function () {
+          return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function () {
+          return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function () {
+          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+              isMobile.Windows());
+      }
+  };
+  if (isMobile.any()) {
+      //移动端不显示目录和评论
+      $("#toc-button").css("display", "none");
+      $("#commentDiv").css("display", "none");
+  }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

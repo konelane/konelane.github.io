@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>R语言与数据挖掘：公式；数据；方法 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="简介r语言的代码">
+<meta name="keywords" content="R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R语言与数据挖掘：公式；数据；方法">
+<meta property="og:url" content="https://konelane.github.io/2018/02/08/R语言基本操作/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="简介r语言的代码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-10T16:16:20.694Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R语言与数据挖掘：公式；数据；方法">
+<meta name="twitter:description" content="简介r语言的代码">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+							<li><a href="/tags/填词">填词涂鸦</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16.67px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+					<li><a href="/tags/填词">填词涂鸦</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	盈盈一水间，脉脉不得语
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-R语言基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <script>
+      $("html").niceScroll({
+          cursorcolor: "#2a2929",
+          cursoropacitymax: 1,
+          touchbehavior: false,
+          cursorwidth: "6px",
+          cursorborder: "5",
+          cursorborderradius: "0px",
+          autohidemode: true
+      });
+  </script>
+  
+  <div class="article-meta">
+      <a href="/2018/02/08/R语言基本操作/" class="article-date">
+  	<time datetime="2018-02-07T16:00:00.000Z" itemprop="datePublished">2018-02-08</time>
+</a>
+
+  </div>
+  
+  <div class="article-inner">
+      
+      <input type="hidden" class="isFancy" />
+      
+      
+      <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      R语言与数据挖掘：公式；数据；方法
+    </h1>
+  
+
+
+          
+      </header>
+      
+      
+      <div class="article-info article-info-post">
+          
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/R/">R</a></li></ul>
+	</div>
+
+
+          
+
+          <div class="clearfix"></div>
+      </div>
+      
+      
+
+      <div class="article-entry" itemprop="articleBody">
+
+          
+          <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#R语言特征"><span class="toc-number">1.</span> <span class="toc-text">R语言特征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基础指令"><span class="toc-number">2.</span> <span class="toc-text">基础指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#程序辅助性操作："><span class="toc-number">2.1.</span> <span class="toc-text">程序辅助性操作：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#运行"><span class="toc-number">2.1.1.</span> <span class="toc-text">运行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调试查错"><span class="toc-number">2.1.2.</span> <span class="toc-text">调试查错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#帮助"><span class="toc-number">2.1.3.</span> <span class="toc-text">帮助</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备"><span class="toc-number">2.2.</span> <span class="toc-text">准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件目录设置"><span class="toc-number">2.2.1.</span> <span class="toc-text">文件目录设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加载资源"><span class="toc-number">2.2.2.</span> <span class="toc-text">加载资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#批处理文件和结果重定向"><span class="toc-number">2.2.3.</span> <span class="toc-text">批处理文件和结果重定向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据处理"><span class="toc-number">2.3.</span> <span class="toc-text">数据处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#输入输出（读入输出数据、文件）"><span class="toc-number">2.3.1.</span> <span class="toc-text">输入输出（读入输出数据、文件）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据查看"><span class="toc-number">2.3.2.</span> <span class="toc-text">数据查看</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通用对象"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">通用对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本数据类型"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">基本数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#特殊属性"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">特殊属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#混合类型"><span class="toc-number">2.3.2.4.</span> <span class="toc-text">混合类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#向量特征"><span class="toc-number">2.3.2.5.</span> <span class="toc-text">向量特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数组和矩阵"><span class="toc-number">2.3.2.6.</span> <span class="toc-text">数组和矩阵</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绘图"><span class="toc-number">2.3.3.</span> <span class="toc-text">绘图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编辑"><span class="toc-number">2.3.4.</span> <span class="toc-text">编辑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#apply族函数"><span class="toc-number">2.3.4.1.</span> <span class="toc-text">apply族函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#plyr库"><span class="toc-number">2.3.4.2.</span> <span class="toc-text">plyr库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reshape库（reshape2）"><span class="toc-number">2.3.4.3.</span> <span class="toc-text">reshape库（reshape2）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#字符串处理"><span class="toc-number">2.3.4.4.</span> <span class="toc-text">字符串处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#控制流"><span class="toc-number">2.3.4.5.</span> <span class="toc-text">控制流</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特殊数据对象"><span class="toc-number">3.</span> <span class="toc-text">特殊数据对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#向量特性"><span class="toc-number">3.1.</span> <span class="toc-text">向量特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据索引"><span class="toc-number">3.1.1.</span> <span class="toc-text">数据索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序"><span class="toc-number">3.1.2.</span> <span class="toc-text">排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比较大小"><span class="toc-number">3.1.3.</span> <span class="toc-text">比较大小</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向量间的交、并、补集"><span class="toc-number">3.1.4.</span> <span class="toc-text">向量间的交、并、补集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵"><span class="toc-number">3.2.</span> <span class="toc-text">矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#因子"><span class="toc-number">3.3.</span> <span class="toc-text">因子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#列表和数据框"><span class="toc-number">3.4.</span> <span class="toc-text">列表和数据框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#na和NULL的区别"><span class="toc-number">3.5.</span> <span class="toc-text">na和NULL的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#处理缺失数据na"><span class="toc-number">3.6.</span> <span class="toc-text">处理缺失数据na</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公式"><span class="toc-number">3.7.</span> <span class="toc-text">公式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数理统计"><span class="toc-number">4.</span> <span class="toc-text">数理统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基础知识"><span class="toc-number">4.1.</span> <span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#统计量"><span class="toc-number">4.1.1.</span> <span class="toc-text">统计量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数学函数"><span class="toc-number">4.1.2.</span> <span class="toc-text">数学函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正态分布"><span class="toc-number">4.1.3.</span> <span class="toc-text">正态分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单分析"><span class="toc-number">4.1.4.</span> <span class="toc-text">简单分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#假设检验"><span class="toc-number">4.2.</span> <span class="toc-text">假设检验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分布函数"><span class="toc-number">4.2.1.</span> <span class="toc-text">分布函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#正态总体的均值方差"><span class="toc-number">4.2.2.</span> <span class="toc-text">正态总体的均值方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#独立性检验（原假设H0：X与Y独立）"><span class="toc-number">4.2.3.</span> <span class="toc-text">独立性检验（原假设H0：X与Y独立）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关性检验（原假设H0：X与Y相互独立）"><span class="toc-number">4.2.4.</span> <span class="toc-text">相关性检验（原假设H0：X与Y相互独立）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#秩"><span class="toc-number">4.2.5.</span> <span class="toc-text">秩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#显著性差异检验（方差分析，原假设：相同，相关性）"><span class="toc-number">4.2.6.</span> <span class="toc-text">显著性差异检验（方差分析，原假设：相同，相关性）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用模型"><span class="toc-number">4.3.</span> <span class="toc-text">常用模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、回归模型"><span class="toc-number">4.3.1.</span> <span class="toc-text">1、回归模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性回归模型基础"><span class="toc-number">4.3.2.</span> <span class="toc-text">线性回归模型基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#筛选模型自变量"><span class="toc-number">4.3.2.1.</span> <span class="toc-text">筛选模型自变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#回归诊断"><span class="toc-number">4.3.2.2.</span> <span class="toc-text">回归诊断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计量的残差图"><span class="toc-number">4.3.2.3.</span> <span class="toc-text">计量的残差图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#异常点分析（影响分析）"><span class="toc-number">4.3.2.4.</span> <span class="toc-text">异常点分析（影响分析）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#非线性模型"><span class="toc-number">4.3.2.5.</span> <span class="toc-text">非线性模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、回归树"><span class="toc-number">4.3.3.</span> <span class="toc-text">2、回归树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、随机森林"><span class="toc-number">4.3.4.</span> <span class="toc-text">3、随机森林</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、支持向量机"><span class="toc-number">4.3.5.</span> <span class="toc-text">4、支持向量机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、时间序列分析"><span class="toc-number">4.3.6.</span> <span class="toc-text">5、时间序列分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ARIMA模型"><span class="toc-number">4.3.6.1.</span> <span class="toc-text">ARIMA模型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#聚类分析"><span class="toc-number">4.4.</span> <span class="toc-text">聚类分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主成分分析"><span class="toc-number">4.4.1.</span> <span class="toc-text">主成分分析</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#R包"><span class="toc-number">5.</span> <span class="toc-text">R包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据集"><span class="toc-number">6.</span> <span class="toc-text">数据集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型函数"><span class="toc-number">7.</span> <span class="toc-text">模型函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特殊字符"><span class="toc-number">8.</span> <span class="toc-text">特殊字符</span></a></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+          
+          
+
+          
+          <p>简介r语言的代码</p>
+<a id="more"></a>
+<h1 id="R语言特征"><a href="#R语言特征" class="headerlink" title="R语言特征"></a>R语言特征</h1><p>对大小写敏感<br>通常，数字，字母，. 和 _都是允许的(在一些国家还包括重音字母)。不过，一个命名必须以 . 或者字母开头，并且如果以 . 开头，第二个字符不允许是数字。<br>基本命令要么是表达式（expressions）要么就是 赋值（assignments）。<br>命令可以被 (\;)隔开，或者另起一行。<br>基本命令可以通过大括弧({和}) 放在一起构成一个复合表达式（compound expression）。<br>一行中，从井号(#)开始到句子收尾之间的语句就是是注释。<br>R是动态类型、强类型的语言。<br>R的基本数据类型有数值型（numeric）、字符型（character）、复数型（complex）和逻辑型（logical），对象类型有向量、因子、数组、矩阵、数据框、列表、时间序列。</p>
+<h1 id="基础指令"><a href="#基础指令" class="headerlink" title="基础指令"></a>基础指令</h1><h2 id="程序辅助性操作："><a href="#程序辅助性操作：" class="headerlink" title="程序辅助性操作："></a>程序辅助性操作：</h2><h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>q()——退出R程序<br>tab——自动补全<br>ctrl+L——清空console<br>ESC——中断当前计算</p>
+<h3 id="调试查错"><a href="#调试查错" class="headerlink" title="调试查错"></a>调试查错</h3><p>browser() 和 debug()——设置断点进行，运行到此可以进行浏览查看（具体调试看browser（）帮助文档（c,n,Q））<br>stop(‘your message here.’)——输入参数不正确时，停止程序执行<br>cat（）——查看变量？</p>
+<h3 id="帮助"><a href="#帮助" class="headerlink" title="帮助"></a>帮助</h3><p>help(solve) 和 ?solve 等同<br>??solve——检索所有与solve相关的信息<br>help(“[[“) 对于特殊含义字符，加上双引号或者单引号变成字符串，也适用于有语法涵义的关键字 if，for 和 function<br>help(package=”rpart”)——查看某个包<br>help.start()——得到html格式帮助<br>help.search()——允许以任何方式（话题）搜索帮助文档<br>example（topic）——查看某个帮助主题示例<br>apropos（”keyword”）——查找关键词keyword相关的函数<br>RSiteSearch(“onlinekey”， restrict=fuction)——用来搜索邮件列表文档、R手册和R帮助页面中的关键词或短语（互联网）RSiteSearch(‘neural networks’)</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="文件目录设置"><a href="#文件目录设置" class="headerlink" title="文件目录设置"></a>文件目录设置</h3><p>setwd（<dir>）——设置工作文件目录<br>getwd（）——获取当前工作文件目录<br>list.files()——查看当前文件目录中的文件</dir></p>
+<h3 id="加载资源"><a href="#加载资源" class="headerlink" title="加载资源"></a>加载资源</h3><p>search()——通过search()函数，可以查看到R启动时默认加载7个核心包。<br>基础函数：数学计算函数，统计计算函数，日期函数，包加载函数，数据处理函数，函数操作函数，图形设备函数</p>
+<p>setRepositpries（）——选择软件库（CRAN，Bioconductor，R-Forge），寻找安装包的方法另看《【R笔记】寻找R的安装包》<br>(.packages())——列出当前包<br>(.packages(all.available=TRUE))——列出有效包<br>install.packages（“<package>”）——安装包<br>library（）和require（）——加载R包（package）至工作空间</package></p>
+<p>data（）——列出可以被获取到的存在的数据集(base包的数据集)<br>data（<datasets>，package=“nls”）——将nls包的datasets加载到数据库中</datasets></p>
+<h3 id="批处理文件和结果重定向"><a href="#批处理文件和结果重定向" class="headerlink" title="批处理文件和结果重定向"></a>批处理文件和结果重定向</h3><p>source(“commands.R”)——执行commands.R （存放批处理命令的）脚本文件。<br>cat(<rcommond>,file=””)——可以把R命令输出至外部文件，然后调用source函数进行批处理</rcommond></p>
+<p>do.call(<funcname>，<pars>)——调用函数，第一个参数<funcnames>指示调用函数字符串名称，第二个参数包含调用所需参数的一个列表<pars><br>sink(“record.lis”)——把后续的输出结果从控制台重定向到外部文件 record.lis 中<br>sink（）——把后续代码输出重新恢复到终端上展示</pars></funcnames></pars></funcname></p>
+<p>attach（<datafame>）——将数据框<datafame>中的变量链接到内存中，便于数据调用<br>detach()——对应attach(<datafame>)，取消变量的链接，detach()里没有参数！<br>_注：_ attach()和detach()均是在默认变量搜索路径表中由前向后找到第一个符合变量名称，因此之前若存在重名变量，有可能会出现问题！！！</datafame></datafame></datafame></p>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><h3 id="输入输出（读入输出数据、文件）"><a href="#输入输出（读入输出数据、文件）" class="headerlink" title="输入输出（读入输出数据、文件）"></a>输入输出（读入输出数据、文件）</h3><p>assign(“x”,c(1,2,3)) 和 x &lt;- c(1,2,3) 和 c(1,2,3)-&gt;x ——向量赋值</p>
+<p>read.table（”infantry.txt”, sep=”\t”， header=TRUE）——seq属性用其它字符分割，比如文本文件用空格（tab）分隔，header设置为文件中已经存在表头名称<br>read.csv(“targets.csv”)——读入csv（Comma Seperated Values）文件，属性被逗号分割<br>read.csv(url(“<link>“))——read.csv() 和 url()的合体，读存在网上的数据</p>
+<p>x &lt;- scan(file=””)——手动输入数据，同时scan可以指定输入变量的数据类型，适合大数据文件<br>scan(“data.dat”, what = list(“”, 0, 0))——what指定变量类型列表<br>readLines(‘http:……’,n=10)——读取文本文件，将文档转为以行为单位存放的list格式，比如读取读取wikipedia的主页html文件的前十行</p>
+<p>write.table(Data, file=”file.txt”, row.names = FALSE, quote=FALSE)——输出，quote为FALSE去掉字符串类型的双引号，write.table(stasum, “stasum.csv”,row.names = FALSE,col.name=FALSE,sep=”,”,append=TRUE)<br>write.csv（data，file=”foo.csv”,row.names=FALSE）——写成csv格式,row.names=FALSE去掉行号</p>
+<p>print（）——打印<br>save.image（”./data.RData”）——把原本在计算机内存中（工作空间）活动的数据转存到硬盘中。<br>load(“./RData”)——加载目录中的*.RData，把文档-词项矩阵从磁盘加载到内存中</p>
+<h3 id="数据查看"><a href="#数据查看" class="headerlink" title="数据查看"></a>数据查看</h3><h4 id="通用对象"><a href="#通用对象" class="headerlink" title="通用对象"></a>通用对象</h4><p>R是一种基于对象（Object）的语言，对象具有很多属性（Attribute），其中一种重要的属性就是类（Class），最基本的类包括了数值（numeric）、逻辑（logical）、字符（character）、列表（list），符合类包括矩阵（matrix）、数组（array）、因子（factor）、数据框（dataframe）。</p>
+<p>class(<object>) 和 data.class(object)——查看对象object的类或类型<br>unclass()——消除对象object的类</object></p>
+<h4 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h4><p>mode()——查看基本数据类型<br>length()——查看长度<br>as.&lt;数据类型&gt;——改变对象的数据类型</p>
+<h4 id="特殊属性"><a href="#特殊属性" class="headerlink" title="特殊属性"></a>特殊属性</h4><p>attributes(<object>)——查看对象object各种属性组成的列表<br>attr(<object>，“name”)——存取对象object的名为name的属性</object></object></p>
+<h4 id="混合类型"><a href="#混合类型" class="headerlink" title="混合类型"></a>混合类型</h4><p>逻辑类型+数值类型=数值类型<br>逻辑类型+字符类型=字符类型<br>数值类型+字符类型=字符类型</p>
+<p>ls() 和 objects（）——查看当前工作空间中存在的对象（变量）<br>rm(list=ls())——删除工作空间的所有对象<br>methods(x)——查看x函数的源码，有些自带函数输入名称x可以直接看到，有一些需要调用methods方法才能查看函数x的源码，出现多重名，输入对应名称即可</p>
+<p>str（）——查看数据（框）中的数据总体信息（比如样本个数、变量个数、属性变量名称、类型）<br>nrow(dataframe)——查看数据集行数<br>NROW（vector）——查看向量的行数，等于length(x)<br>head(dataframe)——查看数据集前6行数据<br>tail(dataframe)——查看数据集尾6行数据</p>
+<h4 id="向量特征"><a href="#向量特征" class="headerlink" title="向量特征"></a>向量特征</h4><p>逻辑向量运算：<br>TRUE，FALSE——全部大写<br>isTRUE(x)——判断x为TRUE<br>*|，&amp;，！——或且非，注意是单个，不是&amp;&amp;！<br>ANY，ALL——任意，全部</p>
+<h4 id="数组和矩阵"><a href="#数组和矩阵" class="headerlink" title="数组和矩阵"></a>数组和矩阵</h4><p>train$var<br>train$new[train$var == NA] &lt;- 1<br>Data[is.na(Data)] &lt;- 0——数据框多维变量中给NA值赋值为0</p>
+<p>apply（A，Margin，FUN，…）——A为矩阵，Margin设定待处理的维数，为1是横排（行），为2是竖排（列）做运算，Fun是运算函数<br>sweep（x，2，apply（x，MARGIN=1，mean），FUN）——对数组或者矩阵进行运算。 MARGIN=1表示行，2表示列；STATS统计量，如apply（x，MARGIN=1，mean），FUN函数运算默认为减法，“/”除法<br>y.vector&lt;-with(data,get(yval))——表示在data数据框中读取列名称为yval的向量。<br>with(<data>，<colname|func>)——提取数据框中的某些参数做运算，对于数据框运算很方便</colname|func></data></p>
+<h3 id="绘图"><a href="#绘图" class="headerlink" title="绘图"></a>绘图</h3><p>plot()——绘制图像<br>plot(<vecter_horizontal>, <vector_vertical>, pch=as.integer(<factors>)，col，xlab，ylab)——用factors区分图像点的类型pch（圆的，三角，叉），col是颜色类别，xlab或者ylab对应横纵轴标题<br>legend(<location="topright">,legend=<vector_labelname>,pch=1:3，cex=1，col)——图例，<location>是位置（比如右上），<vector_labelname>图例类别标签名，pch是图例对应标签的类别id（向量），<cex>调整字体比例大小，颜色设置，legend(“topright”, levels(<factors>), pch=1:length(levels(factors)))<br>text(X，Y，labels=c(1,2,3),adj=1.2)——添加标注,X,Y是对应坐标的向量，labels是标记值，adj调整标注位置<br>abline(h = <int>，lty=2)——低级绘图添加一条水平线h或者是回归模型直线，垂线v；lty为2表示绘制虚线<br>abline(a,b)——画一条y=a+bx的直线<br>points（x，y）————低级绘图，画个点，坐标为向量x，y<br>lines（x，y）——低级绘图，画一条线，坐标为向量x，y<br>axis(side=1，at=seq(from=0.7，by=1.2，length.out=7)，labels=c（…）)——绘制坐标轴，低级绘图，side为2是纵坐标</int></factors></cex></vector_labelname></location></vector_labelname></location="topright"></factors></vector_vertical></vecter_horizontal></p>
+<p>barchart（）——lattice包预先要对数据汇总<br>barplot(<vector>)——绘制柱状图，vector可增加名称。也可以绘制直方图，和hist（）均分数据不太一样，需要用table（）统计各个子分段下样本数量后在画图。<br>mosaicplot（x~y，main，color=T，xlab，ylab）——柱形对应关系图<br>contour(<matrix>)——创建等高线<br>persp(<matrix>，expand=0.2）——创建3D图，expand扩展值设置为0.2，否则为全屏扩展<br>image（volcano）——加载栅格（矩阵）图像</matrix></matrix></vector></p>
+<p>par（mfrow=c(1,2)，oma，mar）——mfrow设置图形输出窗口为1行2列，添加car包？oma是所有图像距离边框的距离(底部，左边，顶部，右边)，mar是每幅图像对边框的距离，默认是c(5, 4, 4, 2) + 0.1。<br>lines(data)——（低级）原图中画线，data是由散点(x，y)组成<br>rug（jitter（<data>），side =2）——检验离群点数据，rug（）原图中执行绘图绘制在横坐标上，side为2是纵坐标，jitter(<data>)对绘制值略微调整，增加随机排序以避免标记值作图重合。</data></data></p>
+<p>pairs(data)——数据框各个变量的散布图<br>coplot(y~x|a+b)——多个变量时的散点图，在a，b（向量或是因子）的划分下的y与x的散点图<br>scatterplotMatr()——散点图矩阵，car包</p>
+<p>identify（<data>）——交互式点选，单击图形中的点，将会输出对应数据的行号，右击结束交互<br>stem(x，scale=1，width=80，atom=1e-08)——茎叶图,scale控制茎叶图的长度，为2即是以0~4为一组，5~9为一组将个位分成两部分，width是绘图宽度，atom是容差<br>boxplot（）——箱图，研究变量的中心趋势，以及变量发散情况和离群值。上体顶部和底部为上下四分位数，中间粗线为中位数，上下伸出的垂直部分为数据的散步范围，最远点为1.5倍四分为点，超出后为异常点，用圆圈表示。boxplot(y~f,notch=TRUE,col=1:3,add=TRUE)#y是数据，f是由因子构成，notch是带有切口的箱型图，add=T图叠加到上一幅图。<br>plot（f，y）——箱线图，f是因子，y是与f因子对应的数值<br>bwplot（<factor> ~ <y>，data，ylab）——lattice包的箱图，绘制不同factor下的y的箱图（条件绘图，在某个因子取值集合下的y值变化）<br>bwplot（size~a1,data,panel=panel.bpplot,prob=seq(.01,.49,by=.01),datadensity=TRUE,ylab=’’）——Hmisc包的分位箱图<br>earth.count(na.omit（x）,number=4,overlap=1/5)——连续变量x的离散化，把x转化为因子类型；number设置区间个数，overlap设置两个区间靠近边界的重合？每个区间的观测值相等<br>stripplot(x1~y|x2)——lattice包的复杂箱图，存在两个因子x1,x2控制下的y, x2按照从左到右，从下到上的顺序排列，左下方的x2值较小</y></factor></data></p>
+<p>palette()——col取值对应的颜色， “black”   “red”     “green3”  “blue”    “cyan”    “magenta” “yellow”  “gray”<br>colors（）——列出对应的颜色数组</p>
+<p>qcc（）——qcc包，监控转化率型指标的质量监控图（P控制图），监控异常点，前提是二项分布足够大后趋于正态分布<br>mosaic（<tab>，shade=T，legend=T）——绘制三级列联表，<tab>是三级列联表或者公式，vcd包</tab></tab></p>
+<p>curve（sapply(x,<func>)，<from>，<to>）——画曲线图，from和to设置横坐标取值范围</to></from></func></p>
+<h3 id="编辑"><a href="#编辑" class="headerlink" title="编辑"></a>编辑</h3><p>optim(c(0,0),<func>)——优化问题函数，c(0,0)是优化函数参数的初始值，返回值par是参数最优点值，value是参数的最优点时平方误差值，counts是返回执行输入函数func的次数以及梯度gradient的次数，convergence值为0表示有把握找到最优点，非0值时对应错误，message是一些其它信息。<br>curve（sapply(x,<func>)，<from>，<to>）——画曲线图，from和to设置横坐标取值范围</to></from></func></func></p>
+<p>sample(length(x)，<size>，replace=F)——采样，生成向量x的随机顺序的大小为<size>的新向量；replace为False为不重复抽样，为True则重复抽样<br>Round ——取整。精确<br>ceiling()——取整，偏向数值小的<br>floor() ——取整，偏向数值大的<br>%/% ——整除</size></size></p>
+<p>colnames(Data)[4]=”value”——更换某一列名<br>edit（）——编辑数据表格<br>fix（）——<br>rm（x，y）——移除对象（变量）x和y<br>na.exclude(<data>)——移除缺失数据整行<br>na.omit(<data>)——删除缺失数据<br>attr（na.omit（<data>）,”na.action”）——返回向量a中元素为NA的下标<br>na.fail（）——如果向量中至少包括1个NA值，则返回错误；如果不包括任何NA，则返回原有向量</data></data></data></p>
+<p>merge(x = targets, y = infanty)——合并数据框，x和y是待合并数据框，相同属性字段也会合并在一起<br>merge(x, y, by = intersect(names(x), names(y)),by.x = by, by.y = by, all = FALSE, all.x = all, all.y = all,sort = TRUE, suffixes = c(“.x”,”.y”),incomparables = NULL, …)<br>merge函数参数的说明:<br>    x,y:用于合并的两个数据框<br>    by,by.x,by.y:指定依据哪些行合并数据框,默认值为相同列名的列.<br>    all,all.x,all.y:指定x和y的行是否应该全在输出文件.<br>    sort:by指定的列是否要排序.<br>    suffixes:指定除by外相同列名的后缀.<br>    incomparables:指定by中哪些单元不进行合并.</p>
+<p>scale(x, center = TRUE, scale = TRUE)——中心化与标准化，center是中心化，scale是标准化。（全选：减去均值，再除以标准差）</p>
+<p>cut(x，breaks=c(0,10,30)，labels，ordered_result=F)——连续数据的离散化，将向量依据breaks区间分割为因子向量。labels设置返回因子向量的水平标签值，ordered_result为False生成的因子向量无大小意义，否则有大小意义</p>
+<h4 id="apply族函数"><a href="#apply族函数" class="headerlink" title="apply族函数"></a>apply族函数</h4><p>apply(A，MARGIN，FUN，…)——处理对象A是矩阵或数组，MARGIN设定待计算的维数，FUN是某些函数，如mean，sum<br>注：apply与其它函数不同，它并不能明显改善计算效率，因为它本身内置为循环运算。<br>按列？<br>lappy(dataframe，FUN，list(median,sd))——处理对象是向量、列表或其它对象，输出格式为列表list<br>sapply(dataframe$Filed，FUN)——与lapply()相似，输出格式为矩阵（或数据框）<br>按行？<br>tapply(X, INDEX, FUN, simplify = TRUE) ——处理分组数据, INDEX和X是有同样长度的因子，simplify是逻辑变（量默认为T）<br>aggregate(x~y+z, data，FUN)和by()——和tapply功能类似</p>
+<p>其余参看：apply函数族</p>
+<h4 id="plyr库"><a href="#plyr库" class="headerlink" title="plyr库"></a>plyr库</h4><p>ddply(Data，.(user_id，item_id)，summarize，liulan=sum(liulan)）——split-apply-combine的一体化函数；.(user_id，item_id)作为每行的一对标识ID（因子），前面的“.”号省略数据框名称；summrize是一个函数fun；liulan是一个变量，最后生成的数据框只有user_id，item_id，liulan三列。详情参见例子  R语言利器之ddply<br>transform(x，y)——将x和y的列转换成·一个数据框。</p>
+<h4 id="reshape库（reshape2）"><a href="#reshape库（reshape2）" class="headerlink" title="reshape库（reshape2）"></a>reshape库（reshape2）</h4><p>melt（data，id.vars）——转换数据溶解。修改数据组织结构，创建一个数据矩阵，以id.var作为每行的编号，剩余列数据取值仅作为1列数值，并用原列名作为新数值的分类标记。<br>cast（data, userid~itemid,value=”rattings”,fill=0）——统计转换数据，生成矩阵，公式~左边的作为行表名，右边的作为列表名。之后可以用cor（）计算每列数据之间的相关系数，并计算距离。<br>acast 和 dcast（data, userid~itemid,value.var=”rattings”）——同上，reshape2包，acast最后生成数组，dcase生成数据框。参见 R语言进阶之4：数据整形（reshape）</p>
+<h4 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h4><p>nchar()——获取字符串长度，它能够获取字符串的长度，它也支持字符串向量操作。注意它和length()的结果是有区别的？什么区别<br>paste(“a”, “b”, sep=””)——字符串粘合，负责将若干个字符串相连结，返回成单独的字符串。其优点在于，就算有的处理对象不是字符型也能自动转为字符型。<br>strsplit(A，split=’[,.]’) ——字符串分割，负责将字符串按照某种分割形式将其进行划分，它正是paste()的逆操作。<br>substr(data,start,stop)——字符串截取，能对给定的字符串对象取出子集，其参数是子集所处的起始和终止位置。子集为从start到stop的下标区间<br>grep()——字符串匹配，负责搜索给定字符串对象中特定表达式 ，并返回其位置索引。grepl()函数与之类似，但其后面的”l”则意味着返回的将是逻辑值<br>regexpr（pattern,text）——从字符串text中提取特定的字符串的下标位置<br>gregexpr（）——只查询匹配的第一个特定字符串的下标位置<br>gsub(“a”,1,<vector>)——字符串替代，负责搜索字符串的特定表达式，并用新的内容加以替代。<br>sub()函数——和gsub是类似的，但只替代第一个发现结果。<br>chartr( )——字符串替换函数<br>toupper( )、tolower( )及casefold( )——大小写转换函数<br>其余参见：R语言中的字符串处理函数</vector></p>
+<h4 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h4><p>if—else——分支语句<br>switch(index,case1,case2,casen)——index指示跳到第i个casei中<br>for（i in <vecter>）——循环语句，通过控制变量i<br>while——循环语句，通过设定循环范围<br>repeat—break——循环语句，无限循环，由break跳出</vecter></p>
+<h1 id="特殊数据对象"><a href="#特殊数据对象" class="headerlink" title="特殊数据对象"></a>特殊数据对象</h1><h2 id="向量特性"><a href="#向量特性" class="headerlink" title="向量特性"></a>向量特性</h2><p>向量数组初始小标序号从1开始<br>向量增加元素可以直接通过“vector[n+1]&lt;-0”方式增加</p>
+<p>a&lt;-c()——向量初始化<br>vector &lt;- numeric（<int>）——创建初始向量<int>个数，并赋初值为0<br>length（vector）&lt;- leg——修改对象长度为leg<br>names(vector) &lt;- c(“A”,”B”,”C”)——给向量起名称</int></int></p>
+<p>vector[“A”]——通过名称访问对应元素<br> a == c(1, 99, 3)——比较每一个元素对应是否相等<br>c（0，1）——创建向量，向量内元素类型应一致！<br>seq（5，9）和 5：9 ——连续向量，等差数列<br>seq（5，9，0.5）——以0.5为间隔创建<br>seq(from,to,length,by)</p>
+<h3 id="数据索引"><a href="#数据索引" class="headerlink" title="数据索引"></a>数据索引</h3><p>which（is.na(var) == T）——返回对应数组序号<br>which.max() 和 which.min()——返回数值类型中最大和最小元素下标<br>subset（<data>,<condition>，<colname>）——索引，<data>是数据，<condition>是索引条件，colnames指定索引列名<br>match（x，table，nomatch，incomparables）——匹配函数，返回x对应值在table中是否存在，并从1开始编号。x是查询对象，table是待匹配的向量，nomatch是不匹配项的设置值（默认为NA值），incomparables设置table表中不参加匹配的数值，默认为NULL</condition></data></colname></condition></data></p>
+<p><x> %n% <y>——判断x中是否包含y，返回x对应的逻辑值</y></x></p>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p>sort(x, decreasing = FALSE, na.last = NA, …)——排序，单变量排序，输出排序结果（不是序号）。na.last为TRUE，缺失值放在数据最后，为False    缺失值放在数据最前面，为NA，缺失数据将被移除<br>sort.list()——排序输出序号值<br>order()——排序，多个变量数据框排序，返回数据框序号数。order例子【结】<br>结合ddply和transform函数，降序输出并，输出编号：ddply(dfx,.(group,sex),.fun=function(x){transform(x[order(x$age,decreasing=TRUE),c(1:3)],ind=1:length(group))})</p>
+<p>rank()——秩排序，有重复数字的时候就用这个，根据数值之间的远近输出序号</p>
+<p>rev()——依据下标从后往前倒排数据<br>unique（<dataframe>）——返回无重复样本的数据集<br>duplicated（x）——查找重复数据，重复序号返回为TRUE</dataframe></p>
+<h3 id="比较大小"><a href="#比较大小" class="headerlink" title="比较大小"></a>比较大小</h3><p>pmin（x1,x2,…）——比较向量中的各元素，并把较小的元素组成新向量<br>pmax（x1,x2,…）——</p>
+<h3 id="向量间的交、并、补集"><a href="#向量间的交、并、补集" class="headerlink" title="向量间的交、并、补集"></a>向量间的交、并、补集</h3><p>union(x, y)——（并集）合并两组数据，x和y是没有重复的同一类数据，比如向量集<br>intersect(x, y)——（交集）对两组数据求交集，x和y是没有重复的同一类数据，比如向量集<br>setdiff(x, y)——（补集）x中与y不同的数据，x和y是没有重复的同一类数据，比如向量集，重复不同不记<br>setequal(x, y)——判断x与y相同，返回逻辑变量，True为相同，False不同。x和y是没有重复的同一类数据，比如向量集<br>is.element(x, y) 和 %n%——对x中每个元素，判断是否在y中存在，TRUE为x，y重共有的元素，Fasle为y中没有。x和y是没有重复的同一类数据，比如向量集</p>
+<p>Vectorize()——将不能进行向量化预算的函数进行转化</p>
+<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><p>array（data=NA,dim=length(data),dimnames=null）——数组、矩阵初始化,dim是数组各维的长度dimnames是数组维的名字，默认为空，array(1:20, dim=c(4,5))。数组是多维的，dim属性设置维数<br>matrix(0, 3, 4)——0为赋初值，3行，4列，存储方式是先列后行！矩阵是二维的，用ncol和nrow设置矩阵的行数和列数。byrow设置存储方式（默认列优先），若为TRUE则以行优先<br>dim（<vector>）&lt;- c(2,3)——设置矩阵为2行3列<br>dimnames（）=list(c（<row>），c（<col>）)——设置参数行和列的名称，以列表的形式进行输入<br>matrix[ ,4]——矩阵第4列<br>as.vector(matrix)——将矩阵转换成向量<br>a[“name1”,”name2”]——矩阵以行和列的名称来代替行列的下标，name1是行名，name2是列名</row></vector></p>
+<p>rbind（）——矩阵合并，按行合并，自变量宽度应该相等<br>cbind（）——矩阵合并，安列合并，自变量高度应该相等</p>
+<p>t()——矩阵转置<br>det()——行列式<br>solve（A，b）——求线性方程组Ax=b<br>solve（A）——求逆矩阵<br>eigen（A） ——求距阵的特征值与特征向量，Ax=(Lambda)x，A$values是矩阵的特征值构成的向量，A$vectors是A的特征向量构成的矩阵<br>*——矩阵中每个元素对应相乘<br>%*%——矩阵相乘</p>
+<h2 id="因子"><a href="#因子" class="headerlink" title="因子"></a>因子</h2><p>因子和向量的区别：<br>向量里面存的元素类型可以是字符型，而因子里面存的是整型数值对应因子的类别（levels）<br>as.integer(<factors>)——因子可以转化为整型<br>levels(<factors>)——查看因子类别<br>gl（n，k，length）——因子,n为水平数，k为重复的次数，length为结果的长度<br>factor(x，levels，labels)——因子<br>as.factror()——将向量转化为无序因子，不能比较大小<br>as.order()——将向量转化为有序因子<br>is.factor()——判断是否为无序因子<br>is.order()——判断是否为有序因子</factors></factors></p>
+<h2 id="列表和数据框"><a href="#列表和数据框" class="headerlink" title="列表和数据框"></a>列表和数据框</h2><p>list()——列表<br>unlist()——列表转化为向量<br>data.frame()——数据框<br>names(<dataframe>)——显示数据框的列名称<br>dataframe[[2]] 和 dataframe[[“TheSec.Name”]] 和  dataframe$TheSec.Name——获取数据框第二列的元素值<br>as.matrix(<dataframe>)[，1]——把数据框转化为矩阵后，再去提取列向量</dataframe></dataframe></p>
+<h2 id="na和NULL的区别"><a href="#na和NULL的区别" class="headerlink" title="na和NULL的区别"></a>na和NULL的区别</h2><p>is.na()——判断na值存在，na是指该数值缺失但是存在。<br>is.null（）——判断数据是否为NULL。NULL是指不存在，可以通过 train$var&lt;-NULL 的方法去掉属性变量var。</p>
+<h2 id="处理缺失数据na"><a href="#处理缺失数据na" class="headerlink" title="处理缺失数据na"></a>处理缺失数据na</h2><p>1、将缺失部分剔除<br>2、用最高频率值来填补缺失值<br>3、通过变量的相关关系来填补缺失值<br>4、通过探索案例之间的相似性来填补缺失值</p>
+<h2 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h2><p>a:b——a和b的交互效应<br>a+b——a和b的相加效应<br>a*b——相加和交互效应（等价于a+b+a：b）<br>-b——去掉b的影响<br>1——y~1拟合一个没有因子影响的模型（仅仅是截距）<br>-1——y~x-1表示通过原点的线性回归（等价于y~x+0或者0+y~x）<br>^n——包含所有知道n阶的交互作用（a+b+c）^2==a+b+c+a:b+a:c+b:c<br>poly(a,n)——a的n阶多项式<br>I(x1+x2)——表示模型y=b（x1+x2）+a</p>
+<h1 id="数理统计"><a href="#数理统计" class="headerlink" title="数理统计"></a>数理统计</h1><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="统计量"><a href="#统计量" class="headerlink" title="统计量"></a>统计量</h3><p>mean（x，trim=0,na,rm=FALSE）——均值，trim去掉x两端观测值的便利，默认为0，即包括全部数据，na.rm=TRUE允许数据中有缺失<br>weighted.mean(x，<weigth>)——加权平均值，weigth表示对应权值<br>median——中值<br>quantile(x，probs=seq(<start>,<end>,<diff>))——计算百分位数，是五数总和的扩展，probs设置分位数分位点，用seq(0,1,0.2)设置，表示以样本值*20%为间隔划分数据。<br>var（）——样本方差（n-1）<br>sd——样本标准差（n-1）<br>cov——协方差<br>cor——相关矩阵<br>fivenum(x,na.rm=TRUE)——五数总括：中位数，下上四分位数，最小值，最大值</diff></end></start></weigth></p>
+<h3 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h3><p>sum（x,y,z，na.rm=FALSE）——x+y+z，na.rm为TURE可以忽略掉na值数据<br>sum（x&gt;4）——统计向量x中数值大于4的个数<br>rep（“LOVE！”，<times>）——重复times次，rep(1:3，c（1，2，3）)表示1个1，2个2，3个3组成的序列<br>sqrt（）——开平方函数<br>2^2 和 **——“^”幂运算<br>abs（）——绝对值函数<br>‘%%’——表示求余<br>‘%/%’——求商（整数）</times></p>
+<p>exp  ： 2.71828…<br>expm1  ： 当x的绝对值比1小很多的时候，它将能更加正确的计算exp(x)-1<br>log  ： 对数函数（自然对数）<br>log10  ： 对数（底为10）函数（常用对数）<br>log2  ： 对数（底为2）函数<br>因为10&gt;e&gt;1，常用对数比自然对数更接近横坐标轴x<br>log1p()——log（1+p），用来解决对数变换时自变量p=0的情况。指数和对数的变换得出任何值的0次幂都是1<br>特性：对数螺旋图。当图像呈指数型增长时，常对等式的两边同时取对数已转换成线性关系。</p>
+<p>sin  ： 正弦函数<br>cos  ： 余弦函数<br>tan  ：  正切函数<br>asin  ：  反正弦函数<br>acos  ：  反余弦函数<br>atan  ：  反正切函数<br>sinh  ：  超越正弦函数<br>cosh  ：  超越余弦函数<br>tanh  ：  超越正切函数<br>asinh  ：  反超越正弦函数<br>acosh  ：  反超越余弦函数<br>atanh  ：  反超越正切函数<br>logb  ：  和log函数一样<br>log1px  ：  当x的绝对值比1小很多的时候，它将能更加正确的计算log(1+x)<br>gamma  ：  Γ函数（伽玛函数）<br>lgamma  ：  等同于log(gamma(x))<br>ceiling  ：  返回大于或等于所给数字表达式的最小整数<br>floor  ：  返回小于或等于所 给数字表达式的最大整数<br>trunc  ：  截取整数部分<br>round  ：  四舍五入<br>signif(x,a)  ：  数据截取函数 x：有效位 a：到a位为止<br>圆周率用 ‘pi’表示</p>
+<p>crossprod(A,B)——A %*% t(B) ，内积<br>tcrosspeod(A,B)——t(A) %*% B，外积<br>%*%——内积，a1b1+a2b2+…+anbn=a<em>b</em>cos<a,b>，crossprod(x)表示x与x的内积。||x||2，矩阵相乘<br>%o%——外积，a<em>b</em>sin<a,b>（矩阵乘法，叉积），tcrossprod(x,y)表示x与y的外积。<em>表示矩阵中对应元素的乘积！</em><br>向量内积（点乘）和向量外积（叉乘）</a,b></a,b></p>
+<h3 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h3><p>dnorm（x，mean=0,sd=1,log=FALSE）——正态分布的概率密度函数<br>pnorm(x，mean=0,sd=1)——返回正态分布的分布函数·<br>rnorm（n，mean=0.sd=1）——生成n个正态分布随机数构成的向量<br>qnorm()——下分为点函数</p>
+<p>qqnorm（data）——画出qq散点图<br>qqline（data）——低水平作图，用qq图的散点画线<br>qq.plot（<x>，main=’’）——qq图检验变量是否为正态分布</x></p>
+<h3 id="简单分析"><a href="#简单分析" class="headerlink" title="简单分析"></a>简单分析</h3><p>summary()——描述统计摘要，和 Hmisc()包的describe()类似，会显示NA值，四分位距是第1个（25%取值小于该值）和第3个四分位数（75%取值小于该值）的差值（50%取值的数值），可以衡量变量与其中心值的偏离程度，值越大则偏离越大。</p>
+<p>table(<datafame>$<var>)——统计datafame数据中属性变量var的数值取值频数(NA会自动去掉！)，列联表<br>table(<data_var_1>, <data_var_2>)——比较两个data_var，<data_var_1>为列，<data_var_2>为行，先列后行！<br>xtabs(formular，data)——列联表<br>ftable( table())——三维列联表<br>prop.table()——统计所占百分比例<br>prop.table(table(<data_var_1>, <data_var_2>)，<int>)——比较两个data_var所占百分比，<int>填1位按行百分计算，2为列计算<br>margin.table( table()，<int> )——计算列联表的边际频数（边际求和）,<int>=1为按列变量<br>addmargin.table（table()，<int> ）——计算列联表的边际频数（边际求和）并求和,<int>=1为按列变量</int></int></int></int></int></int></data_var_2></data_var_1></data_var_2></data_var_1></data_var_2></data_var_1></var></datafame></p>
+<p>as.formula(<string>)——转换为一个R公式，<string>是一个字符串<br>循环时的判断语句：<br>ifelse(<test>, <yes>, <no>)——if，else的变种，test是判断语句,其中的判断变量可以是一个向量！yes是True时的赋值，no是False时的赋值</no></yes></test></string></string></p>
+<p>hist(<data>，prob=T，xlab=’横坐标标题’，main=’标题’，ylim=0:1，freq，breaks=seq(0,550,2))——prob=T表示是频率直方图，在直角坐标系中，用横轴每个小区间对应一个组的组距，纵轴表示频率与组距的比值，直方图面积之和为1；prob位FALSE表示频数直方图；ylim设置纵坐标的取值范围；freq为TRUE绘出频率直方图，counts绘出频数直方图，FALSE绘出密度直方图。breaks设置直方图横轴取点间隔，如seq(0,550,2)表示间隔为2，从0到550之间的数值。</data></p>
+<p>density(<data>,na.rm=T)——概率密度函数（核密度估计，非参数估计方法），用已知样本估计其密度,作图为lines(density(data),col=”blue”)<br>ecdf（data）——经验分布函数,作图plot(ecdf(data),verticasl=FALSE,do.p=FALSE)，verticals为TRUE表示画竖线，默认不画。do.p=FALSE表示不画点处的记号</data></p>
+<h2 id="假设检验"><a href="#假设检验" class="headerlink" title="假设检验"></a>假设检验</h2><h3 id="分布函数"><a href="#分布函数" class="headerlink" title="分布函数"></a>分布函数</h3><p>shapiro.test(data)——正态W检验方法，当p值大于a为正态分布<br>ks.test(x,y)——经验分布的K-S检验方法，比较x与y的分布是否相同，y是与x比较的数据向量或者是某种分布的名称，ks.test(x, rnorm(length(x), mean(x), sd(x)))，或ks.test(x,”pnorm”,mean(x),sd(x))</p>
+<p>chisq.test(x，y，p)——Pearson拟合优度X2（卡方）检验，x是各个区间的频数，p是原假设落在小区间的理论概率，默认值表示均匀分布,要检验其它分布，比如正态分布时先构造小区间，并计算各个区间的概率值，方法如下：<br>brk&lt;-cut(x,br=c(-6,-4,-2,0,2,4,6,8))#切分区间<br>A&lt;-table(brk)#统计频数<br> p&lt;-pnorm(c(-4,-2,0,2,4,6,8),mean(x),sd(x))#构造正态分布函数<br>p&lt;-c(p[1],p[2]-p[1],p[3]-p[2],p[4]-p[3],p[5]-p[4],p[6]-p[5],p[7]-p[6])#计算各个区间概率值<br> chisq.test(A,p=p)</p>
+<h3 id="正态总体的均值方差"><a href="#正态总体的均值方差" class="headerlink" title="正态总体的均值方差"></a>正态总体的均值方差</h3><p>t.test(x，y，alternative=c(“two.sided”,”less”,”greater”)，var.equal=FALSE)——单个正态总体均值μ或者两个正态总体均值差μ1-μ2的区间估计；alternative表示备择假设：two.side（默认）是双边检验，less表示H1:μ&lt;μ0，greater表示H1：μ&gt;μ0的单边检验(μ0表示原假设)；当var.equal=TRUE时，则是双样本方差相同的情况，默认为不同<br>var.test(x，y)——双样本方差比的区间估计</p>
+<h3 id="独立性检验（原假设H0：X与Y独立）"><a href="#独立性检验（原假设H0：X与Y独立）" class="headerlink" title="独立性检验（原假设H0：X与Y独立）"></a>独立性检验（原假设H0：X与Y独立）</h3><p>chisq.test(x,correct=FALSE)——卡方检验，x为矩阵，dim(x)=c(2,2)，对于大样本（频数大于5）<br>fisher.test()——单元频数小于5，列联表为2*2</p>
+<h3 id="相关性检验（原假设H0：X与Y相互独立）"><a href="#相关性检验（原假设H0：X与Y相互独立）" class="headerlink" title="相关性检验（原假设H0：X与Y相互独立）"></a>相关性检验（原假设H0：X与Y相互独立）</h3><p>cor.test（x,y,method=c(“pearson”,”kendall”,”spearman”)）——相关性检验，观察p-value小于0.05则相关。method选择相关性检验方法</p>
+<h3 id="秩"><a href="#秩" class="headerlink" title="秩"></a>秩</h3><p>rank()——秩统计量<br>cor.test（）——秩相关检验：Spearman，Kendall<br>wilcox.test(x,y=NULL，mu,alternative，paired=FALSE，exact=FALSE,correct=FALSE，conf.int=FALSE)——秩显著性检验（一个样本来源于总体的检验，显著性差异的检验），Wilcoxon秩和检验（非成对样本的秩次和检验）,mu是待检测参数，比如中值，paired逻辑变量，说明变量x，y是否为成对数据，exact说民是否精确计算P值，correct是逻辑变量，说明是否对p值采用连续性修正，conf.int是逻辑变量，给出相应的置信区间。</p>
+<p>uniroot(f，interval=c(1,2))——求一元方程根的函数，f是方程，interval是求解根的区间内，返回值root为解<br>optimize(）或 optimise（）——求一维变量函数的极小点<br>nlm（f，p）——求解无约束问题，求解最小值，f是极小的目标函数，p是所有参数的初值，采用Newton型算法求极小，函数返回值是一个列表，包含极小值、极小点的估计值、极小点处的梯度、Hesse矩阵以及求解所需的迭代次数等。</p>
+<h3 id="显著性差异检验（方差分析，原假设：相同，相关性）"><a href="#显著性差异检验（方差分析，原假设：相同，相关性）" class="headerlink" title="显著性差异检验（方差分析，原假设：相同，相关性）"></a>显著性差异检验（方差分析，原假设：相同，相关性）</h3><p>mcnemar.test(x,y，correct=FALSE)——相同个体上的两次检验，检验两元数据的两个相关分布的频数比变化的显著性，即原假设是相关分布是相同的。y是又因子构成的对象，当x是矩阵时此值无效。<br>binom.test(x，n，p，alternative=c(“two.sided”,”less”,”greater”)，conf.level=0.95)——二项分布，符号检验（一个样本来源于总体的检验，显著性差异的检验）</p>
+<p>aov（x~f）——计算方差分析表，x是与（因子）f对应因素水平的取值，用summary（）函数查看信息<br>aov（x~A+B+A：B）——双因素方差，其中X~A+B中A和B是不同因素的水平因子（不考虑交互作用），A：B代表交互作用生成的因子<br>p.adjust()——P值调整函数<br>pairwise.t.test(x，g，p.adjust.method=”holm”)——多重t检验,p.adjust.method是P值的调整方法，其方法由p.adjust（）给出，默认值按Holm方法（”holm“）调整，若为”none“，表示P值不做任何调整。双因素交互作用时g=A：B<br>shapiro.test（x）——数据的正态W检验<br>bartlett.test（x~f，data）——Bartlett检验，方差齐性检验<br>kruskal.test（x~f，data）——Kruskal-Wallis秩和检验，非参数检验法，不满足正态分布<br>friedman.test(x，f1，f2，data）——Friedman秩和检验，不满足正态分布和方差齐性，f1是不同水平的因子，f2是试验次数的因子</p>
+<h2 id="常用模型"><a href="#常用模型" class="headerlink" title="常用模型"></a>常用模型</h2><h3 id="1、回归模型"><a href="#1、回归模型" class="headerlink" title="1、回归模型"></a>1、回归模型</h3><p>lm（y~.，<data>）——线性回归模型，“.”代表数据中所有除y列以外的变量，变量可以是名义变量（虚拟变量，k个水平因子，生成k-1个辅助变量（值为0或1））<br>summary（）——给出建模的诊断信息：<br>1、数据拟合的残差（Residual standard error，RSE），残差应该符合N（0，1）正态的，值越小越好<br>2、检验多元回归方程系数（变量）的重要性，t检验法，Pr&gt;|t|, Pr值越小该系数越重要（拒绝原假设）<br>3、多元R方或者调整R2方，标识模型与数据的拟合程度，即模型所能解释的数据变差比例，R方越接近1模型拟合越好，越小，越差。调整R方考虑回归模型中参数的数量，更加严格<br>4、检验解释变量x与目标变量y之间存在的依赖关系，统计量F，用p-value值，p值越小越好<br>5、绘图检验plot(<lm>)——绘制线性模型，和qq.plot误差的正态QQ图<br>6、精简线性模型，向后消元法</lm></data></p>
+<h3 id="线性回归模型基础"><a href="#线性回归模型基础" class="headerlink" title="线性回归模型基础"></a>线性回归模型基础</h3><p>lm（formula=x~y，data，subset）——回归分析，x是因变量（响应变量），y是自变量（指示变量），formular=y~x是公式，其中若是有x^2项时，应把公式改写为y~I(x^2)，subset为可选择向量，表示观察值的子集。例：lm(Y ~ X1 + X2 + I(X2^2) + X1:X2, data = data)<br>predict(lm(y~x)，new，interval=“prediction”，level=0.95)——预测，new为待预测的输入数据，其类型必须为数据框data.frame，如new&lt;-data.frame(x=7)，interval=“prediction”表示同时要给出相应的预测区间<br>predict(lm(y~x))——直接用用原模型的自变量做预测，生成估计值</p>
+<h4 id="筛选模型自变量"><a href="#筛选模型自变量" class="headerlink" title="筛选模型自变量"></a>筛选模型自变量</h4><p>lm.new&lt;-update(lm.sol，sqrt(.)~.)——修正原有的回归模型，将响应变量做开方变换<br>update（<lm>, .~. - x1）——移除变量x1后的模型<br>coef(lm.new)——提取回归系数</lm></p>
+<h4 id="回归诊断"><a href="#回归诊断" class="headerlink" title="回归诊断"></a>回归诊断</h4><p>1、正态性（QQ图）<br>plot(x,which)——回归模型残差图，which=1~4分别代表画普通残差与拟合值的残差图，画正态QQ的残差图，画标准化残差的开方与拟合值的残差图，画Cook统<br>norm.test（）——正态性检验，p-value&gt;0.05为正态</p>
+<h4 id="计量的残差图"><a href="#计量的残差图" class="headerlink" title="计量的残差图"></a>计量的残差图</h4><p>residuals()和resid()——残差<br>rstandard()——标准化残差<br>rstudent()——学生化残差<br>influence.measures(model)——model是由lm或者glm构成的对象，对回归诊断作总括，返回列表中包括，广义线性模型也可以使用</p>
+<p>anova（<lm>）——简单线性模型拟合的方差分析（确定各个变量的作用）<br>anova（<lm1>,<lm2>）——比较两个模型（检验原假设为不同）</lm2></lm1></lm></p>
+<p>2、误差的独立性——car包提供Duerbin_Watson检验函数<br>3、线性——car包crPlots（）绘制成分残差图（偏残差图）可以看因变量与自变量之间是否呈线性<br>4、同方差性——car包ncvTest（）原假设为误差方差不变，若拒绝原假设，则说明存在异方差性<br>5、多重共线性——car包中的vif（）函数计算VIF方差膨胀因子，一般vif&gt;2存在多重共线性问题</p>
+<h4 id="异常点分析（影响分析）"><a href="#异常点分析（影响分析）" class="headerlink" title="异常点分析（影响分析）"></a>异常点分析（影响分析）</h4><p>hatvalues（）和hat（）——帽子矩阵<br>dffits（）——DFFITS准则<br>cooks.distance()——Cook统计量，值越大越有可能是异常值点<br>covratio（）——COVRATIO准则</p>
+<p>kappa（z，exact=FALSE）——多重共线性，计算矩阵的条件数k,若k<100则认为多重共线性的程度很小；100<=k<=1000则认为存在中等程度或较强的多重共线性；若k>1000则认为存在严重的多重共线性。z是自变量矩阵（标准化，中心化的？相关矩阵），exact是逻辑变量，当其为TRUE时计算精准条件数，否则计算近似条件数。用eigen（z）计算特征值和特征向量，最小的特征值对应的特征向量为共线的系数。</100则认为多重共线性的程度很小；100<=k<=1000则认为存在中等程度或较强的多重共线性；若k></p>
+<p>step()——逐步回归，观察AIC和残差平方和最小，广义线性模型也可以使用<br>add1()——前进法<br>drop()——后退法<br>stepAIC（sol,direction=”backward”）——MASS包，可以实现逐步回归（向前、向后、向前向后）</p>
+<p>预测<br>predict（<sol>，<newdataframe>，level=0.95，interval=”prediction”）——回归预测，sol是模型，newdataframe是待预测数据框，level设置置信度，interval=”prediction”表示结果要计算置信区间</newdataframe></sol></p>
+<p>glm(formula，family=binomial（link=logit），data=data.frame)——广义线性模型，logit默认为二项分布族的链接函数，formula有两种输入方法，一种方法是输入成功和失败的次数，另一种像线性模型的公式输入方式<br>predict(glm()，data.frame(x=3.5)，type=”response”)——预测广义线性回归模型，type=“response”表示结果为概率值，否则为预测值y<br>inv.logit（）——预测值y的反logit，boot包的函数<br>glmnet（）——正则化glm函数，glmnet包，执行结果的行数越前正则化越强。其输出结果的意义是：<br>1）DF是指明非0权重个数，但不包括截距项。可以认为大部分输入特征的权重为0时，这个模型就是稀疏的（sparse）。<br>2）%Dev就是模型的R2<br>3)超参数（lambda）是正则化参数。lambda越大，说明越在意模型的复杂度，其惩罚越大，使得模型所有权重趋向于0。</p>
+<p>plot（lm(y~x)，which=1:4，caption=c(“Residuals vs Fitted”，“Normal Q-Q plot”，“Scale-Location plot”，“Cook’s distance plot”)）——画回归模型残差图，which为1表示画普通残差与拟合值的残差图，2表示画正态QQ的残差图，3表示画标准化残差的开方与拟合值的残差图，4表示画Cook统计量的残差图；caption是图题的内容。</p>
+<p>avova(sol1,sol2,test=”Chisq”)——比较模型两个模型，广义线性模型可用卡方检验（分类变量），不拒绝原假设说明两个没有显著差异，即用较少自变量模型就可以。</p>
+<h4 id="非线性模型"><a href="#非线性模型" class="headerlink" title="非线性模型"></a>非线性模型</h4><p>poly（想，degree=1）——计算正交多现实，x是数值向量，degree是正交多项式的阶数，并且degree&lt;length（x）样本个数，例如建立二次正交式回归模型：lm(y~1+poly（x，2）)</p>
+<p>nls（formula,data,start）——求解非线性最小二乘问题，formula是包括变量和非线性拟合的公式，start是初始点，用列表形式给出<br>nlm(f，p)——非线性最小二乘，构造最小目标函数，方程移项2为0，f是极小的目标函数，p是所有参数的初值，采用Newton型算法求极小，函数返回值是一个列表，minimum的值便是极小值，estimate是参数的估计值。例如：<br>fn&lt;-function(p,x,y){<br>f&lt;-y-p[1]*exp(p[2]*x)<br>res&lt;-sum(f^2)<br>}<br>nlm.sol&lt;-nlm(fn,p=c(3,-0.1),x,y)</p>
+<h3 id="2、回归树"><a href="#2、回归树" class="headerlink" title="2、回归树"></a>2、回归树</h3><p>rpart( y ~.， <data>)——rpart包，回归树，叶结点目标变量的平均值就是树的预测值。生成一棵树，再做修剪（防止过度拟合），内部10折交叉验证</data></p>
+<p>printcp（<rt>）——查看回归树结果，rt是指rpart（）函数的运行结果模型，plotcp（<rt>）以图形方式显示回归树的参数信息<br>参数如下：<br>    cp——当偏差的减少小于某一个给定界限值，默认0.01<br>    minsplit——当结点中的样本数量小于某个给定界限时，默认20<br>    maxdepth——当树的深度大于一个给定的界限值，默认30</rt></rt></p>
+<p>prune（<rt>,cp）——自行设置cp值的建树</rt></p>
+<p>snip.rpart(<rt>, c(4,7))——修剪，需要修剪的那个地方的是结点号c(4，7)，指出输出树对象来需要修剪的树的结点号<br>snip.rpart(<rt>)——交互修剪，点击结点，右击结束</rt></rt></p>
+<h3 id="3、随机森林"><a href="#3、随机森林" class="headerlink" title="3、随机森林"></a>3、随机森林</h3><p>randomForest(y ~.， <data>)——组合模型，由大量树模型构成，回归任务采用预测结果的平均值。</data></p>
+<h3 id="4、支持向量机"><a href="#4、支持向量机" class="headerlink" title="4、支持向量机"></a>4、支持向量机</h3><p>svm(<formula>，<data>，gamma=1/ncol(<data>)，<cost>)——e1071包，回归任务，<gamma>=0.01，<cost>=100违反边际所引入的损失?</cost></gamma></cost></data></data></formula></p>
+<h3 id="5、时间序列分析"><a href="#5、时间序列分析" class="headerlink" title="5、时间序列分析"></a>5、时间序列分析</h3><p>ts(<data>, frequency=12, start=(2006,1))——把一个向量转化为时间序列对象，<data>向量，frequency表示频率，start表示时间起始点</data></data></p>
+<p>decompose(<data>，type)——把时间序列分解成长期趋势和周期性变化，<data>是设置了频率（周期长度）的时间序列数据，type=”additive”为累加形式：长期趋势+周期性变化+随机变化；”multiplicative”分解为累乘形式：长期趋势<em>周期性变化</em>随机变化。默认使用”additive”累加形式。函数返回值sol&lt;-decompose()中，sol$trend是时间序列趋势，seasonal是季节性周期变化，random是随机误差。</data></data></p>
+<p>stl(<data>,”per”)——分解时间序列，返回值sol&lt;-stl()中，sol$time.series[, “seasonal”]读取周期性序列seasonal，sol$time.series[, “trend”]读取长期趋势trend。误差可以使用sol$time.series[, “remainder”]读取。</data></p>
+<p>增长率：<br>diff(data,lag=1)——差分，上下做差，lag控制变量上下间隔为1<br>ring.growth[t]=(data[t]-data[t-1])/data[t-1]——同比增长率，描述指标变化趋势<br>sam.per.grown[t]=(data[t]-data[t-T])/data[t-T]——环比增长率，分析周期性变化，避免周期性变化给数据分析带来的影响，T一般以周为单位</p>
+<p>移动平均：<br>filter(x, filter, method=c(“convolution”, “recursive”), side=2,…)——线性过滤函数，x待转化的向量数据，method=convolution（卷积方法）:使用x内部样本组成线性模型（系数ai由filter参数设置的，side参数设置卷积方法是单边或者双边），recursive（递归方法）:使用y内部样本以及当前阶段的x样本组成线性模型（系数ai由filter设置）y递归[t]=x[t]+sum(ai<em>y[t-i])。side为1（单边卷积）y卷积[t]=a1</em>x[t]+…+a(k+1)*x[t-k]，side为2（双边卷积）y卷积[t]=a1<em>x[t+m]+…+a(m+1)\</em>x[t]</p>
+<p>指数平滑:<br>sol&lt;-HoltWinters(<data>)——实现二次平滑和三次平滑指数。<br>sol.forst&lt;-forecast.HoltWinters(sol, h=12)——预测HoltWinters函数产生的模型的新时间序列，h表示频率？预测未来12个月<br>plot.forecast(sol.forst, include=10)——绘制预测图，include=10表明绘制预测前10个月的数据和未来12个月的预测数据</data></p>
+<h4 id="ARIMA模型"><a href="#ARIMA模型" class="headerlink" title="ARIMA模型"></a>ARIMA模型</h4><p>ymd()——lubridate包，将”年-月-日”格式的字符串转换成日期对象，（可以比较前后时间）<br>自相关性<br>cov(data.frame(x,y))——协方差矩阵S<br>cor(data.frame(x,y))——相关系数矩阵R<br>rnorm（n，<mean>，<sd>）<br>arima.sim（n=100，list（ar=，ma=））——模拟100个样本的模拟序列<br>lag.plot(data，lag=k，do.line=FALSE)——绘制原始数据和k阶滞后的散点图<br>acf（data，lag.max=16，ci.type=”ma”）——计算并绘制自相关图，0阶自相关系数是rxx，所以恒等于1。ci.type=”ma”主要是慨率acf的标准误的问题，以使acf图等准确。<br>pacf（data，lag.max=16）——偏自相关图，消除Xt-1，…，Xt-k+1的影响后，研究Xt和Xt-k的相关性。<br>Box.test（data,type=”Ljung-Box”,lag=16，fitdf=p+q）——自相关性检验，p-value<0.05，标识数据data具有自相关，fitdf为自由度参数p+q arima（data，order="c（p，d，q））——计算模型参数并建模，TSA包中，order设置AR过程的阶数p，差分过程的d（用于稳定化）和MA过程的阶数q。当p=d=0时，表示只使用MA过程对序列建模。结果sol<-arima（）调用predict(sol，n.ahead=5)$pred进行预测，n.ahead参数用于设置预测新阶段的数据量（未来5个月），predict(...）$se标准误差SE，用于计算预测范围（预测范围=预测值+-置信度（alpha）\*标准误差SE。" eacf(data)——根据凸显中三角区域顶点的行坐标和列坐标分别确定arma的p和q="" norm.test（）——正态性检验，p-value="">0.05为正态<br>tsdiag（sol）——绘制模型残差的散点图、自相关图和不同阶数下的Box.test体检验p-value值</0.05，标识数据data具有自相关，fitdf为自由度参数p+q></sd></mean></p>
+<p>模型评估<br>RMSE（lm，&lt; which&gt;）——qpcR包中计算均方根误差，计算子集subset</p>
+<h2 id="聚类分析"><a href="#聚类分析" class="headerlink" title="聚类分析"></a>聚类分析</h2><p>dist（x，method=”euclidean“）——计算距离<br>”euclidean“Euclid距离；<br>”maximum“——Chebyshev距离；<br>”manhattan“绝对值（马氏）距离；<br>“canberra”Lance距离；<br>“minkowski”Minkowski闵式距离；<br>“binary”定性变量的距离</p>
+<p>scale(x, center = TRUE, scale = TRUE)——中心化与标准化，center是中心化，scale是标准化。（全选：减去均值，再除以标准差）<br>hclust（d,method=“complete”）——系统聚类，d是又dist构成的距离结构，method是系统聚类的方法（默认为最长距离法）<br>“single”最短距离法“；<br>”complete“最长距离法；<br>”median“中间距离法；<br>”mcquitty“Mcquitty相似法；<br>”average“类平均法<br>”centroid“重心法<br>”ward“离差平法和法</p>
+<p>plot（hclist（），hang=0.1）——谱系图，hang表示谱系图中各类所在的位置，hang取负值时，表示谱系图从底部画起。</p>
+<p>as.dendrogram（hclust（），hang=-1）——将hclust得到的对象强制转换为谱系图<br>plot（x，type=c（”rectangle“，”triangle“），horiz=FALSE）——谱系图，x为as.dendrogram返回的对象，type是指是矩形或是三角形，horiz是逻辑变量，当horiz为TRUE时，表示谱系图水平放置。</p>
+<p>as.dist()——将普通矩阵转化为聚类分析用的距离结构</p>
+<p>plclust（x，hang=0.1）——谱系图，旧版停用，已被plot替换<br>rect.hclust（x，k，h，border）——在谱系图（plclust（））中标注聚类情况，确定聚类个数的函数，x是由hclust生成的对象，k是类个数；h是谱系图中的阈值，要求分成的各类的距离大于h；border是数或向量，标明矩形框的颜色；例如：rec.hclust（hclust()，k=3）</p>
+<p>kmeans(x，centers，iter.max，nstart=1，algorithm)——K均值方法，centers是聚类的个数或者是初始类的中心，iter.max为最大迭代次数（默认为10），nstart是随机集合的个数（当centers为聚类的个数时），algorithm为动态聚类算法，例如：km&lt;-kmeans(scale(data),4,nstart=20)，返回值中，size表示各类的个数，means表示各类均值，Clustering表示聚类后分类情况？，可以用sort(kmeans()$cluser)对分类情况排序</p>
+<h3 id="主成分分析"><a href="#主成分分析" class="headerlink" title="主成分分析"></a>主成分分析</h3><hr>
+<p>princomp() 和 prcomp（）——主成分分析，结果的标准差显示每一个主成分的贡献率（成分方差占总方差的比例），返回值loadings每一列代表每一个成分的载荷因子<br>summary（x，loadings=FALSE）——提取主成分的信息，x是princomp（）得到的对象，loadings是逻辑变量，为TRUE表示显示主成分分析原始变量的系数，False则不显示。返回表中，Standard deviation是标准差，即方差或lambda的开方，Proportion of Variance表示方差的贡献率，Cumulative Proportion表示累积贡献率。<br>loadings(x)——显示主成分或因子分析中loadings载荷的内容，主成分是对应割裂，即正交矩阵Q；因子分析中是载荷因子矩阵。x是princomp（）或者factanal（）得到的对象。<br>predict（x，newdata）——预测主成分的值，x是由princomp（）得到的对象，newdata是由预测值构成的数据框，当newdata为默认值时预测已有数据的主成分值。例如predict(<pca>)[,1]——用主成分的第一列作为原有数据的预测结果<br>screeplot(x，type=c（”barplot”,”lines“))——主成分的碎石图，确定主成分维数的选择，x是由princomp（）得到的对象，type是描述画出的碎石图的类型，”barplot“是直方图，”lines“是直线图。<br>biplot（x，choices=1:2，scale=1）——画关于主成分的散点图和原坐标在主成分下的方向，x是由princomp（）得到的对象，choices选择主成分，默认为第1、2主成分</pca></p>
+<p>factanal（x,factor,covmat=NULL，scores=c(“none”,”regression”,”Bartlett”)，rotation=”varimax“）——因子分析,factors是公因子的个数，covmat是样本协方差和相关矩阵,scores因子得分方法，rotation表示旋转，默认为方差最大旋转<br>cancor（x，y，xcenter=TRUE，ycenter=TRUE）——典型相关分析，xcenter，ycenter是逻辑变量，为TRUE时做数据中心化</p>
+<h1 id="R包"><a href="#R包" class="headerlink" title="R包"></a>R包</h1><p>rpart——决策树算法<br>my_tree &lt;- rpart（<formula>，<data>，<method>）——rpart(Survived ~ Sex + Age,<br>                 data=train, method=”class”)<br>rattle<br>rpart.plot<br>RColorBrewer<br>fancyRpartPlot(my_tree)——绘制更好看的决策树</method></data></formula></p>
+<p>ggplot2—— 绘图包<br>qplot(<vecter_horizontal>, <vector_vertical>, color = <factor> )——绘图类似plot</factor></vector_vertical></vecter_horizontal></p>
+<p>dplyr——输出处理包<br>tbl_df（）——将数据转换为一种特殊的数据框类型tbl，类似（as.data.frame（）），仅是改变了显示，数据结构没有变化<br>glimpse（<tbl>）——类似str（）</tbl></p>
+<p>hflights——飞行数据</p>
+<h1 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h1><p>data（）——查看R自带数据列表</p>
+<p>iris——鸢尾花数据集总共150行3种类别<br>iris3[1:50, 1:4, 1:3]——每50行一组，分3个类别分别<br>volcano——87x61 matrix with elevation value</p>
+<h1 id="模型函数"><a href="#模型函数" class="headerlink" title="模型函数"></a>模型函数</h1><p>神经网络<br>nnet()——在nnet包中BP神经网络，存在一层的隐藏层。<br>参数：<br>size=0，设置隐藏层中神经元数，设置为0时，表示建立一层神经网络？没有隐藏层<br>Wts：初始系数，不设定则使用随机数设定<br>linout：为TRUE时，模型输出（目标变量）为连续型实数，一般用于回归分析；如果为FALSE（默认取值）则输出为逻辑数据，一般用于（目标变量为分类型）分类分析，也可以把linout设为TRUE再添加一个阶跃函数转为逻辑型输出。<br>maxit：最大迭代次数iterations，默认为100次，一般尽量将maxit设置大于观测结果final value上显示的迭代次数。<br>skip：是否跳过隐藏层，如果为FALSE（默认），则不跳过<br>decay：加权系数的衰减<br>隐藏层中神经单元数目的确定</p>
+<p>支持向量机<br>svm()——e1071包中回归非线性<br>ksvm()——kernlab包中分类，分类时用的默认参数树径向基核函数</p>
+<p>多元自适应回归样条<br>mars()——mda包<br>earth()——earth包，具有更多优势</p>
+<p>决策树<br>RWeka包：C4.5（分类，输入变量是分类型或连续型，输出变量是分类型）<br>J48()<br>rpart包：分类回归树（CART）算法（输入、输出分类或连续变量）<br>rpart（）——拟合树模型，参数xval设置k折交叉验证<br>prune()——剪枝</p>
+<p>party包：条件推理决策树（CHAID）算法（输入、输出分类或连续变量）<br>ctree（）</p>
+<p>随机森林<br>randomForest包：分类与回归树的随机森林<br>randomForest()——随机森林，预测，分类，估计变量的重要性（通过计算每个变量被移除后随机森林误差的增加（选择变量需要用到模型的信息，但用其它模型来做预测）</p>
+<p>party包：条件推理决策树的随机森林<br>cforest()</p>
+<p>时间序列:<br>ts——在stats包中创建一个时间序列<br>xts包——时间序列<br>xts(<data>,<label>)——时间数列，可以是单元的也可以是多元的。<data>时间序列数据，<label>时间标签。as.xts(read.zoo(“abc.csv”, header = T))<br>seq.POSIXct() 和 Date——标识时间信息的规格的类</label></data></label></data></p>
+<p>index() 和 time()——获取对象的时间标签<br>coredata()——获取时间序列的数值</p>
+<p>贝叶斯分类<br>e1071包：<br>nativeBayes（）——朴素贝叶斯分类器，可以处理分类型和连续型自变量</p>
+<p>knn<br>knn（）——class包</p>
+<p>TTR包——技术指标集合<br>quantmod包——分析金融数据<br>tserise包</p>
+<h1 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h1><p>formula=y~.——“.”是除y以外数据中的所有变量<br>function（fromula, train, test，…）——特殊参数“…”,允许特定函数具有可变参数，这个参数结构是一个列表，用来获取传递给前三个命名参数之后的所有参数。这个结构用于给实际模型传递所需要的额外参数。</p>
+<p><model.object>@pars——（模型）对象的属性用操作符“@”访问，比如对象object的属性是pars</model.object></p>
+
+          </br>
+          <p>本文链接：
+              <a href="https://konelane.github.io/2018/02/08/R语言基本操作/">
+                  https://konelane.github.io/2018/02/08/R语言基本操作/
+              </a>
+          </p>
+          <p>-- <acronym title="End of File">EOF</acronym> --</p>
+          <div class="post-info">
+              <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+              <p> 
+                    
+               </p>
+          </div>
+          
+          
+      </div>
+
+      
+  </div>
+  
+      
+  
+  
+      
+          <div class="donateContainer">
+    <div>￥^￥赞助将用于氦核一人咖啡绿茶优酸乳费用（唉</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+      
+  
+  
+    
+        <section id="comments" class="comments">
+        <style>
+            .comments{margin:30px;padding:10px;background:#fff}
+            @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+        </style>
+        <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+    </section>
+    
+  
+
+</article>
+
+
+<script>
+  var isMobile = {
+      Android: function () {
+          return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function () {
+          return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function () {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function () {
+          return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function () {
+          return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function () {
+          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+              isMobile.Windows());
+      }
+  };
+  if (isMobile.any()) {
+      //移动端不显示目录和评论
+      $("#toc-button").css("display", "none");
+      $("#commentDiv").css("display", "none");
+  }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

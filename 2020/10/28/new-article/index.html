@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>Logistic Regression II | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="r语言-线性回归模型">
+<meta name="keywords" content="R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Logistic Regression II">
+<meta property="og:url" content="https://konelane.github.io/2020/10/28/new-article/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="r语言-线性回归模型">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-10T16:16:27.477Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Logistic Regression II">
+<meta name="twitter:description" content="r语言-线性回归模型">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+							<li><a href="/tags/填词">填词涂鸦</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16.67px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+					<li><a href="/tags/填词">填词涂鸦</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	盈盈一水间，脉脉不得语
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-new-article" class="article article-type-post" itemscope itemprop="blogPost">
+  <script>
+      $("html").niceScroll({
+          cursorcolor: "#2a2929",
+          cursoropacitymax: 1,
+          touchbehavior: false,
+          cursorwidth: "6px",
+          cursorborder: "5",
+          cursorborderradius: "0px",
+          autohidemode: true
+      });
+  </script>
+  
+  <div class="article-meta">
+      <a href="/2020/10/28/new-article/" class="article-date">
+  	<time datetime="2020-10-28T06:12:57.421Z" itemprop="datePublished">2020-10-28</time>
+</a>
+
+  </div>
+  
+  <div class="article-inner">
+      
+      <input type="hidden" class="isFancy" />
+      
+      
+      <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      Logistic Regression II
+    </h1>
+  
+
+
+          
+      </header>
+      
+      
+      <div class="article-info article-info-post">
+          
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/R/">R</a></li></ul>
+	</div>
+
+
+          
+
+          <div class="clearfix"></div>
+      </div>
+      
+      
+
+      <div class="article-entry" itemprop="articleBody">
+
+          
+          <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Donner-Party-The-Data"><span class="toc-number">1.</span> <span class="toc-text">Donner Party: The Data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Modeling-Survival"><span class="toc-number">1.1.</span> <span class="toc-text">Modeling Survival</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Do-Females-Have-a-Higher-Rate-of-Survival"><span class="toc-number">1.1.1.</span> <span class="toc-text">Do Females Have a Higher Rate of Survival?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Is-Age-Associated-with-Survival"><span class="toc-number">1.1.2.</span> <span class="toc-text">Is Age Associated with Survival?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Both-Age-Gender"><span class="toc-number">1.1.3.</span> <span class="toc-text">Both Age + Gender</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Significance-of-Predictors"><span class="toc-number">1.2.</span> <span class="toc-text">Significance of Predictors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Confusion-Matrices"><span class="toc-number">1.3.</span> <span class="toc-text">Confusion Matrices</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+          
+          
+
+          
+          <p>r语言-线性回归模型</p>
+<a id="more"></a>
+<h2 id="Donner-Party-The-Data"><a href="#Donner-Party-The-Data" class="headerlink" title="Donner Party: The Data"></a>Donner Party: The Data</h2><p>In 1846, a group of 87 people (calling themselves the Donner Party) were heading to California from Illinois. The leaders were stranded in the Sierra Nevada and were stranded there through the winter. Many people died due to the cold and lack of food.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- read.csv(&quot;Donner.csv&quot;, as.is = TRUE)</span><br><span class="line">head(x)</span><br></pre></td></tr></table></figure>
+<p>Let’s polish up the <code>Gender</code> variable a bit for clarity.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x$Gender &lt;- factor(ifelse(x$Gender == 1, &quot;Male&quot;, &quot;Female&quot;))</span><br></pre></td></tr></table></figure>
+<h3 id="Modeling-Survival"><a href="#Modeling-Survival" class="headerlink" title="Modeling Survival"></a>Modeling Survival</h3><h4 id="Do-Females-Have-a-Higher-Rate-of-Survival"><a href="#Do-Females-Have-a-Higher-Rate-of-Survival" class="headerlink" title="Do Females Have a Higher Rate of Survival?"></a>Do Females Have a Higher Rate of Survival?</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table(x$Gender, x$Survived)</span><br></pre></td></tr></table></figure>
+<p>We might want to study whether or not females are better able to survive through the harsh conditions. How do we answer this question?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m1 &lt;- glm(Survived ~ Gender, data=x, family=binomial)</span><br><span class="line">summary(m1)</span><br></pre></td></tr></table></figure>
+<p>We haven’t talked about where our p-values come from, but you can see from the summary that <code>Gender</code> is significant in predicting the probability of survival.</p>
+<p>Interpretation of this coefficient:</p>
+<blockquote>
+<p>Males were on average $e^{-1.28}=0.28$ times as likely as women were to<br>survive.</p>
+</blockquote>
+<p>This might seem odd. Logistic regression is meant to fit an S-shaped curve<br>for the probability of survival here, but we have a categorical predictor. How does<br>this work? Essentially, by passing in a categorical predictor as a factor,<br>R created a dummy variable that equals 1 when <code>Gender == &quot;Male&quot;</code> and 0<br>otherwise. So if we were to look at a plot of <code>GenderMale</code> on the x-axis<br>against <code>Survived</code> on the y-axis, logistic regression is essentially still<br>fitting an S-shaped curve, but with only two points of interest, when $x=0$ and<br>when $x=1$.</p>
+<h4 id="Is-Age-Associated-with-Survival"><a href="#Is-Age-Associated-with-Survival" class="headerlink" title="Is Age Associated with Survival?"></a>Is Age Associated with Survival?</h4><p>Suppose we now consider a different question, studying whether or not <code>Age</code> can help us predict survival. We need to first transform <code>Age</code> into a quantitative variable; it is currently character type because there is an asterisk somewhere, standing in for a missing value.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class(x$Age)</span><br><span class="line">x$Age</span><br><span class="line">x$Age &lt;- as.numeric(x$Age)</span><br></pre></td></tr></table></figure>
+<p>Your book ignores any assumptions for logistic regression, but that doesn’t mean there aren’t any. The <strong>linearity assumption</strong> requires that the log-odds be a linear function of the predictor variable. We need to be able to estimate log odds for various age groups. (The reason why it doesn’t make sense to estimate log odds for each age is that we simply don’t have enough data at each age.) To start,<br>we will want to create a categorical version of <code>Age</code> (using equal sized bins).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x$AgeGrp &lt;- cut(x$Age, 6)</span><br></pre></td></tr></table></figure>
+<p>Let’s practice checking the linearity assumption (although in general cases, we won’t bother).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">binned.x &lt;- tapply(x$Age, x$AgeGrp, mean) # average age per bin</span><br><span class="line">binned.p &lt;- tapply(x$Survived, x$AgeGrp, mean) # rate of survival per bin</span><br><span class="line">plot(log(binned.p/(1-binned.p)) ~ binned.x, main=&quot;Empirical Logit Plot&quot;,</span><br><span class="line">     pch=16)</span><br><span class="line">plot(binned.p ~ binned.x, main=&quot;Pr(Survival) by Age&quot;, pch=16)</span><br></pre></td></tr></table></figure>
+<p>As we can see, this assumption is hard to check with few observations, because<br>some of the bins are going to be extremely sparse (have very little data).  When there are a large number of observations, it’s much easier to check this assumption between a single predictor and the response. However, when there are a lot of observations, there will likely be multiple predictors, and then checking this assumption for every predictor can be tedious as well. As a result, we won’t bother checking this assumption in general.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m2 &lt;- glm(Survived ~ Age, data=x, family=binomial)</span><br><span class="line">summary(m2)</span><br></pre></td></tr></table></figure>
+<p>You can see again that <code>Age</code> is significant at the $\alpha=0.05$ level. There is also a negative coefficient, suggesting that we would have a downward sloping logit curve. This suggests that older people have lower chances of surviving the extreme conditions.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plot(Survived ~ Age, data=x, pch=16)</span><br><span class="line">tmp &lt;- data.frame(Age=seq(0,70, by=1))</span><br><span class="line">pred &lt;- predict(m2, newdata=tmp, type=&quot;response&quot;)</span><br><span class="line">lines(tmp$Age, pred, lwd=2, col=&quot;blue&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="Both-Age-Gender"><a href="#Both-Age-Gender" class="headerlink" title="Both Age + Gender"></a>Both Age + Gender</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m3 &lt;- glm(Survived ~ Age + Gender, data=x, family=binomial)</span><br><span class="line">summary(m3)</span><br></pre></td></tr></table></figure>
+<p>It appears that both Age and being male decreases the odds of survival. 95% confidence intervals for both coefficients are:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">confint(m3, level=0.95)</span><br></pre></td></tr></table></figure>
+<p>Undoing the log-transformation yields:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exp(confint(m3, level=0.95))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Between two individuals of the same age but of different genders, the male was between 0.11 to 0.78 times as likely as the female to survive.</p>
+<p>Between two individuals of the same gender but with age differing by 1 year, the older individual is 0.93 to 1.00 times as likely to survive as the younger individual.</p>
+</blockquote>
+<p>In this model, we have not interacted Age and Gender, so essentially it is like<br>fitting 2 parallel lines to the log-odds of survival.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">plot(Survived ~ Age, data=x, pch=16, col=ifelse(Gender==&quot;Female&quot;, &quot;red&quot;, &quot;blue&quot;))</span><br><span class="line">agetmp &lt;- seq(0,70, by=1)</span><br><span class="line">pred_fem &lt;- predict(m3, newdata=data.frame(Age=agetmp,</span><br><span class="line">                                       Gender = &quot;Female&quot;), type=&quot;response&quot;)</span><br><span class="line">lines(tmp$Age, pred_fem, lwd=2, col=&quot;red&quot;)</span><br><span class="line">pred_m &lt;- predict(m3, newdata=data.frame(Age=agetmp,</span><br><span class="line">                                       Gender = &quot;Male&quot;), type=&quot;response&quot;)</span><br><span class="line">lines(tmp$Age, pred_m, lwd=2, col=&quot;blue&quot;)</span><br></pre></td></tr></table></figure>
+<p>If we believe that the slopes of age should differ with respect to each gender, then we should interact the two variables:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m4 &lt;- glm(Survived ~ Age * Gender, data=x, family=binomial)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">plot(Survived ~ Age, data=x, pch=16, col=ifelse(Gender==&quot;Female&quot;, &quot;red&quot;, &quot;blue&quot;))</span><br><span class="line">agetmp &lt;- seq(0,70, by=1)</span><br><span class="line">pred_fem &lt;- predict(m4, newdata=data.frame(Age=agetmp,</span><br><span class="line">                                       Gender = &quot;Female&quot;), type=&quot;response&quot;)</span><br><span class="line">lines(tmp$Age, pred_fem, lwd=2, col=&quot;red&quot;)</span><br><span class="line">pred_m &lt;- predict(m4, newdata=data.frame(Age=agetmp,</span><br><span class="line">                                       Gender = &quot;Male&quot;), type=&quot;response&quot;)</span><br><span class="line">lines(tmp$Age, pred_m, lwd=2, col=&quot;blue&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">summary(m4)</span><br></pre></td></tr></table></figure>
+<p>Was this a good thing to do? No, because now none of the predictors are statistically significant.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">par(mfrow=c(1,2))</span><br><span class="line">hist(x$Age[x$Gender == &quot;Male&quot;], xlim=c(0, 70), main=&quot;Age of Males&quot;,</span><br><span class="line">     breaks=seq(0,70,by=10), ylim=c(0,18))</span><br><span class="line">hist(x$Age[x$Gender == &quot;Female&quot;], xlim=c(0, 70), main=&quot;Age of Females&quot;,</span><br><span class="line">     breaks=seq(0,70,by=10), ylim=c(0,18))</span><br></pre></td></tr></table></figure>
+<h3 id="Significance-of-Predictors"><a href="#Significance-of-Predictors" class="headerlink" title="Significance of Predictors"></a>Significance of Predictors</h3><p><strong>Deviance</strong> is -2 times the log-likelihood of the model and can be thought of as something like residual sum of squares in linear regression, that is a quantity for which a smaller number represents a better fit of the model.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m4$deviance</span><br></pre></td></tr></table></figure>
+<p>Note that this corresponds to the line in the regression output called <strong>residual deviance</strong>. The <strong>null deviance</strong> is the deviance of a model containing no predictors (just the intercept). We can use the <strong>drop-in-deviance</strong> test for evaluating the significance of individual predictors:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anova(m4, test = &quot;Chisq&quot;)</span><br></pre></td></tr></table></figure>
+<p>This presents an alternate way to test for the significance of individual predictors, and is often thought of as more reliable than Wald’s test, which is used for p-values in the regression summary.</p>
+<p>We can also test nested models.  Recall:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">coef(m1)</span><br><span class="line">coef(m4)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>eval</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anova(m1, m4, test=&quot;Chisq&quot;)</span><br></pre></td></tr></table></figure>
+<p>Why didn’t this work?</p>
+<p>Let’s try this again…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m1a &lt;- glm(Survived ~ Gender, data=x, subset=!is.na(x$Age), family=binomial)</span><br><span class="line">summary(m1a)</span><br></pre></td></tr></table></figure>
+<p>When you use anova(lm.1,lm.2,test=”Chisq”), it performs the Chi-square test to compare lm.1 and lm.2 (i.e. it tests whether reduction in the residual sum of squares are statistically significant or not). Note that this makes sense only if lm.1 and lm.2 are nested models.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">anova(m1a, m4, test=&quot;Chisq&quot;)</span><br><span class="line">anova(m1a, m2, test=&quot;Chisq&quot;) # ??</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">anova(m3, m4, test=&quot;Chisq&quot;)</span><br></pre></td></tr></table></figure>
+<h3 id="Confusion-Matrices"><a href="#Confusion-Matrices" class="headerlink" title="Confusion Matrices"></a>Confusion Matrices</h3><p>Another way to compare models is to examine <strong>confusion matrices</strong> which<br>compare $y$ to $\hat y$. This can be used even if models are not nested.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">table(fitted=(fitted(m1) &gt;= 0.5)*1, actual=x$Survived)</span><br><span class="line">mean((fitted(m1) &gt;= 0.5)*1 != x$Survived)</span><br></pre></td></tr></table></figure>
+<p>By the way, is this good? Significantly better than random guessing?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">table(fitted=(fitted(m2) &gt;= 0.5)*1, actual=x$Survived[!is.na(x$Age)])</span><br><span class="line">mean((fitted(m2) &gt;= 0.5)*1 != x$Survived[!is.na(x$Age)])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">table(fitted=(fitted(m3) &gt;= 0.5)*1, actual=x$Survived[!is.na(x$Age)])</span><br><span class="line">mean((fitted(m3) &gt;= 0.5)*1 != x$Survived[!is.na(x$Age)])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">table(fitted=(fitted(m4) &gt;= 0.5)*1, actual=x$Survived[!is.na(x$Age)])</span><br><span class="line">mean((fitted(m4) &gt;= 0.5)*1 != x$Survived[!is.na(x$Age)])</span><br></pre></td></tr></table></figure>
+
+          </br>
+          <p>本文链接：
+              <a href="https://konelane.github.io/2020/10/28/new-article/">
+                  https://konelane.github.io/2020/10/28/new-article/
+              </a>
+          </p>
+          <p>-- <acronym title="End of File">EOF</acronym> --</p>
+          <div class="post-info">
+              <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+              <p> 
+                    
+               </p>
+          </div>
+          
+          
+      </div>
+
+      
+  </div>
+  
+      
+  
+  
+      
+          <div class="donateContainer">
+    <div>￥^￥赞助将用于氦核一人咖啡绿茶优酸乳费用（唉</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+      
+  
+  
+    
+        <section id="comments" class="comments">
+        <style>
+            .comments{margin:30px;padding:10px;background:#fff}
+            @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+        </style>
+        <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+    </section>
+    
+  
+
+</article>
+
+
+<script>
+  var isMobile = {
+      Android: function () {
+          return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function () {
+          return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function () {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function () {
+          return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function () {
+          return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function () {
+          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+              isMobile.Windows());
+      }
+  };
+  if (isMobile.any()) {
+      //移动端不显示目录和评论
+      $("#toc-button").css("display", "none");
+      $("#commentDiv").css("display", "none");
+  }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

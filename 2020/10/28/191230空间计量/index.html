@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>软件初探|matlab之空间计量 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最后修改日期：191231，18:31 事由松鼠有难，正派学长自然要拿出一点正派学长的样子。从零开始自学matlab，写写作业，不过如此。好啦，话不多说爱不多示，进入正题吧。">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件初探|matlab之空间计量">
+<meta property="og:url" content="https://konelane.github.io/2020/10/28/191230空间计量/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="最后修改日期：191231，18:31 事由松鼠有难，正派学长自然要拿出一点正派学长的样子。从零开始自学matlab，写写作业，不过如此。好啦，话不多说爱不多示，进入正题吧。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-02T06:04:30.158Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="软件初探|matlab之空间计量">
+<meta name="twitter:description" content="最后修改日期：191231，18:31 事由松鼠有难，正派学长自然要拿出一点正派学长的样子。从零开始自学matlab，写写作业，不过如此。好啦，话不多说爱不多示，进入正题吧。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+							<li><a href="/tags/填词">填词涂鸦</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16.67px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+					<li><a href="/tags/填词">填词涂鸦</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	盈盈一水间，脉脉不得语
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-191230空间计量" class="article article-type-post" itemscope itemprop="blogPost">
+  <script>
+      $("html").niceScroll({
+          cursorcolor: "#2a2929",
+          cursoropacitymax: 1,
+          touchbehavior: false,
+          cursorwidth: "6px",
+          cursorborder: "5",
+          cursorborderradius: "0px",
+          autohidemode: true
+      });
+  </script>
+  
+  <div class="article-meta">
+      <a href="/2020/10/28/191230空间计量/" class="article-date">
+  	<time datetime="2020-10-28T06:12:57.304Z" itemprop="datePublished">2020-10-28</time>
+</a>
+
+  </div>
+  
+  <div class="article-inner">
+      
+      <input type="hidden" class="isFancy" />
+      
+      
+      <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      软件初探|matlab之空间计量
+    </h1>
+  
+
+
+          
+      </header>
+      
+      
+      <div class="article-info article-info-post">
+          
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+          
+
+          <div class="clearfix"></div>
+      </div>
+      
+      
+
+      <div class="article-entry" itemprop="articleBody">
+
+          
+          <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#事由"><span class="toc-number">1.</span> <span class="toc-text">事由</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、介绍说明"><span class="toc-number"></span> <span class="toc-text">一、介绍说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、代码"><span class="toc-number"></span> <span class="toc-text">二、代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#工作开始"><span class="toc-number"></span> <span class="toc-text">工作开始</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#调整数据结构"><span class="toc-number"></span> <span class="toc-text">调整数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OLS回归"><span class="toc-number"></span> <span class="toc-text">OLS回归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间计量模型SAR-SEM-SDM"><span class="toc-number"></span> <span class="toc-text">空间计量模型SAR,SEM,SDM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#空间面板数据模型"><span class="toc-number"></span> <span class="toc-text">空间面板数据模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#经验小总结"><span class="toc-number"></span> <span class="toc-text">经验小总结</span></a>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+          
+          
+
+          
+          <p>最后修改日期：191231，18:31</p>
+<h4 id="事由"><a href="#事由" class="headerlink" title="事由"></a>事由</h4><p>松鼠有难，正派学长自然要拿出一点正派学长的样子。从零开始自学matlab，写写作业，不过如此。好啦，话不多说爱不多示，进入正题吧。</p>
+<a id="more"></a>
+<h2 id="一、介绍说明"><a href="#一、介绍说明" class="headerlink" title="一、介绍说明"></a>一、介绍说明</h2><p>数据为1978年-2011年华东<strong>七城市</strong>（上海、山东、安徽、江苏、浙江、江西、福建）各省区的<strong>GDP（GDP）、人口（RENKOU）、财政收入（GSH）、财政支出（GZH）、投资（TZ）、消费（XF）、进口（JK）</strong>。（氦核：别问我为什么起这些low爆的变量名，某松鼠的老师起的</p>
+<p>以GDP为因变量，其他六个变量为解释变量，详细情况见表1。</p>
+<p><strong>表1  变量介绍表</strong>  </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>含义</th>
+<th>变量水平</th>
+<th>单位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GDP</td>
+<td>地区生产总值</td>
+<td>连续型</td>
+<td>亿元</td>
+</tr>
+<tr>
+<td>RENKOU</td>
+<td>人口</td>
+<td>连续型</td>
+<td>万人</td>
+</tr>
+<tr>
+<td>GSH</td>
+<td>财政收入</td>
+<td>连续型</td>
+<td>亿元</td>
+</tr>
+<tr>
+<td>GZH</td>
+<td>财政支出</td>
+<td>连续型</td>
+<td>亿元</td>
+</tr>
+<tr>
+<td>TZ</td>
+<td>投资</td>
+<td>连续型</td>
+<td>亿元</td>
+</tr>
+<tr>
+<td>XF</td>
+<td>消费</td>
+<td>连续型</td>
+<td>亿元</td>
+</tr>
+<tr>
+<td>JK</td>
+<td>进出口</td>
+<td>连续型</td>
+<td>亿元</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>利用matlab软件构造<strong>空间自回归模型、空间误差模型、空间杜宾模型和空间面板数据模型</strong>。其中空间自回归模型、空间误差模型、空间杜宾模型均使用2017年数据，空间面板数据模型使用40年全部数据构造。（氦核：切莫手滑一上来就panel函数。。。空间面板数据模型和空间xx模型有微妙的区别。血的教训</p>
+<p>基于邻域关系的空间权重矩阵weight1由<em>“华东省区公路邻域.xlsx”</em>得出，基于距离关系的空间权重矩阵weight1由<em>“华东各省会城市的距离”</em>得出，基于GDP差距的经济距离关系的空间权重矩阵由<em>“华东2014年GDP计算的经济距离”</em>得出。综合权重矩阵取<strong>a=b=c=1/3</strong>（毫无梦想和灵魂的取值）。最后利用matlab构造出模型并进行检验。（氦核：文件在文末附件，你们看看我多好</p>
+<blockquote>
+<p>注1：<br>（1）空间自回归模型：<script type="math/tex">y=ρWy+βX+μ</script><br>（2）空间误差模型：<script type="math/tex">y=βX+μ     μ=ρWμ+ε</script><br>（3）空间杜宾模型：<script type="math/tex">y=ρW_1 y+Xβ_1+W_2 Xβ_2+μ</script><br>（4）空间面板数据模型：<script type="math/tex">y_it=ρWy_it+βX_it+μ_it</script></p>
+<p>注2：<br>空间权重矩阵的选择，要有基于邻域关系的空间权重矩阵，基于距离关系的空间权重矩阵，基于某个经济指标的经济距离关系的空间权重矩阵。提倡构建组合空间权重矩阵<script type="math/tex">W=aW_1+(1-a)W_2（0＜a＜1）</script>；或 <script type="math/tex">W=aW_1+bW_2+ cW_3（a+b+c=1）</script>。</p>
+</blockquote>
+<h2 id="二、代码"><a href="#二、代码" class="headerlink" title="二、代码"></a>二、代码</h2><p>贴代码之前，先说几个坑。</p>
+<p>sar函数，sem函数，sdm函数，一定不能做多年的数据，只能使用一年数据，否则报错。（氦核：不知道谁没搞清楚原理就开始写代码了呢。。。</p>
+<p>松鼠的老师还是有意思，自己派人写了个有趣的包：fanzhuan（将上/下三角矩阵变成对称矩阵），里面还有几个对空间权重矩阵做标准化的函数，不想找的话<strong>normw()</strong>也可以，具体内容实在不想看了。</p>
+<p>这次用到的方法，是空间计量，对于我来说很新奇，同时觉得很有趣。matlab空间计量需要最关键的<strong>jplv7</strong>工具包，下载安装这里也略过。</p>
+<p>准备结束，下来就要开工了。这次代码注释写的很详细，原因不表，读者心领神会即可。</p>
+<h3 id="工作开始"><a href="#工作开始" class="headerlink" title="工作开始"></a>工作开始</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">clear all;</span><br><span class="line"></span><br><span class="line">% 工作路径</span><br><span class="line">userpath(&apos;C:\Users\Surface\Desktop&apos;); </span><br><span class="line">% 读取数据</span><br><span class="line">[data,name] = xlsread(&apos;data&apos;,1); % 原数据为原始面板数据，需要转化为空间面板数据</span><br><span class="line"></span><br><span class="line">% 读取几个权重矩阵</span><br><span class="line">weight1 = xlsread(&apos;华东各省会城市距离&apos;,1);            % 基于距离关系的空间权重矩阵</span><br><span class="line">weight2 = xlsread(&apos;华东省区公路邻域&apos;,1);              % 基于邻域关系的空间权重矩阵</span><br><span class="line">weight3t = xlsread(&apos;华东2014GDP计算的经济距离&apos;,1);    % 基于GDP的经济距离关系的空间权重矩阵</span><br><span class="line">weight3 = fanzhuan(weight3t);                        % 将上三角矩阵反转为实对称矩阵，需要fanzhuan包</span><br><span class="line">% 空间权重标准化,函数需要fanzhuan包</span><br><span class="line">W1 = hbzh(weight1);</span><br><span class="line">W2 = lyhbzh(weight2);</span><br><span class="line">W3 = hbzh(weight3);</span><br><span class="line">W = 1/3*W1+1/3*W2+1/3*W3    % 加权构建复合矩阵</span><br><span class="line"></span><br><span class="line">% 问题的维度</span><br><span class="line">T = 40; % 时期数量 </span><br><span class="line">N = 7; % 地区数量</span><br></pre></td></tr></table></figure>
+<p>最最重要的一个地方来了，要使用空间计量分析函数，就要明白其数据结构。</p>
+<h3 id="调整数据结构"><a href="#调整数据结构" class="headerlink" title="调整数据结构"></a>调整数据结构</h3><p>空间面板数据结构<br>时间1 个体1  x1 x2 x3<br>时间1 个体2  x1 x2 x3<br>时间1 个体3  x1 x2 x3<br>……<br>时间2 个体1  x1 x2 x3<br>时间2 个体2  x1 x2 x3<br>时间2 个体3  x1 x2 x3<br>……<br>时间T 个体1  x1 x2 x3<br>时间T 个体2  x1 x2 x3<br>时间T 个体3  x1 x2 x3  </p>
+<p>原始的面板结构如下，需要变换调整：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>个体1</th>
+<th>个体2</th>
+<th>个体3</th>
+<th>个体4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>时间1</td>
+<td><script type="math/tex">x_{11}^{(1)},…… x_{1k}^{(1)}</script></td>
+<td><script type="math/tex">x_{11}^{(2)},…… x_{1k}^{(2)}</script></td>
+<td><script type="math/tex">x_{11}^{(3)},…… x_{1k}^{(3)}</script></td>
+<td><script type="math/tex">x_{11}^{(4)},…… x_{1k}^{(4)}</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">时间2</script></td>
+<td><script type="math/tex">x_{21}^{(1)},…… x_{2k}^{(1)}</script></td>
+<td><script type="math/tex">x_{21}^{(2)},…… x_{2k}^{(2)}</script></td>
+<td><script type="math/tex">x_{21}^{(3)},…… x_{2k}^{(3)}</script></td>
+<td><script type="math/tex">x_{21}^{(4)},…… x_{2k}^{(4)}</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">时间3</script></td>
+<td><script type="math/tex">x_{31}^{(1)},…… x_{3k}^{(1)}</script></td>
+<td><script type="math/tex">x_{31}^{(2)},…… x_{3k}^{(2)}</script></td>
+<td><script type="math/tex">x_{31}^{(3)},…… x_{3k}^{(3)}</script></td>
+<td><script type="math/tex">x_{31}^{(4)},…… x_{3k}^{(4)}</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">时间4</script></td>
+<td><script type="math/tex">x_{41}^{(1)},…… x_{4k}^{(1)}</script></td>
+<td><script type="math/tex">x_{41}^{(2)},…… x_{4k}^{(2)}</script></td>
+<td><script type="math/tex">x_{41}^{(3)},…… x_{4k}^{(3)}</script></td>
+<td><script type="math/tex">x_{41}^{(4)},…… x_{4k}^{(4)}</script></td>
+</tr>
+<tr>
+<td><script type="math/tex">……</script></td>
+<td><script type="math/tex">……</script></td>
+<td><script type="math/tex">……</script></td>
+<td><script type="math/tex">……</script></td>
+<td><script type="math/tex">……</script></td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">% 调整数据结构,从原始数据转化为空间面板数据</span><br><span class="line">temp =  zeros(T,7);  % 构建存储面板数据的0矩阵</span><br><span class="line">for i = 1:T         % 第i年至第40年</span><br><span class="line">    </span><br><span class="line">    shh = data(i,[2:8]);  % SHH上海当年的全部数据</span><br><span class="line">    shd = data(i,[9:15]); % SHD山东当年的全部数据</span><br><span class="line">    ah = data(i,[16:22]);  % AH 安徽当年的全部数据</span><br><span class="line">    js = data(i,[23:29]);  % JS 江苏当年的全部数据</span><br><span class="line">    zhj = data(i,[30:36]); % ZHJ浙江当年的全部数据</span><br><span class="line">    jx = data(i,[37:43]);  % JX 江西当年的全部数据</span><br><span class="line">    fj = data(i,[44:50]);  % FJ 福建当年的全部数据</span><br><span class="line">    temp&#123;(7*i-6):(7*i),:) = vertcat(shh,shd,ah,js,zhj,jx,fj);  % 将每一年的数据贴进准备好的0矩阵</span><br><span class="line">    </span><br><span class="line">    if i&gt;40</span><br><span class="line">        break</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>完事了，建模。先做个简单最小二乘法的回归对比一哈。</p>
+<h3 id="OLS回归"><a href="#OLS回归" class="headerlink" title="OLS回归"></a>OLS回归</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">% 0 OLS模型</span><br><span class="line">% 提取变量</span><br><span class="line">y = temp(:,[1]);           % 华东各地区GDP</span><br><span class="line">x_ols = temp(:,[2:7]); </span><br><span class="line">% 变量名</span><br><span class="line">vnames=strvcat(&apos;gdp&apos;,&apos;renkou&apos;,&apos;gsh&apos;,&apos;gzh&apos;,&apos;tz&apos;,&apos;xf&apos;,&apos;jk&apos;); </span><br><span class="line">% 因变量：GDP（亿元），自变量：人口(万人)，财政收入（亿元），财政支出（亿元），投资（亿元），消费（亿元），进出口（亿元）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">% 建模</span><br><span class="line">results_ols = ols(y,x_ols); % 进行最小二乘法回归</span><br><span class="line">prt_reg(results_ols,vnames,1); </span><br><span class="line"></span><br><span class="line">I = eye(T);W1 = kron(I,W);</span><br><span class="line">res = moran(y,x_ols,W1); % moran 检验</span><br><span class="line">prt(res); %moran值较大，在0.01显著性水平下，依据空间分布的特征显著</span><br></pre></td></tr></table></figure>
+<p>做完空间相关性检验后，一切才刚刚开始。空间相关性检验一般就moran和LR、LM检验。都有现成的函数，适合新手。</p>
+<h3 id="空间计量模型SAR-SEM-SDM"><a href="#空间计量模型SAR-SEM-SDM" class="headerlink" title="空间计量模型SAR,SEM,SDM"></a>空间计量模型SAR,SEM,SDM</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">% ---------------------------------------------------------------------</span><br><span class="line">% 1 SAR模型</span><br><span class="line">% 提取变量：2017年数据</span><br><span class="line">y = temp(274:280,[1]);         </span><br><span class="line">x_sar = temp(274:280,[2,3,4,5,6,7]);      </span><br><span class="line">% 因变量：GDP（亿元），自变量：人口(万人)，财政收入（亿元），财政支出（亿元），投资（亿元），消费（亿元），进出口（亿元）</span><br><span class="line"></span><br><span class="line">% 建模</span><br><span class="line">results_sar = sar(y,x_sar,W);</span><br><span class="line">prt(results_sar,vnames);</span><br><span class="line"></span><br><span class="line">results_sar.tstat        % t检验统计量的值</span><br><span class="line">results_sar.rho          % 空间自回归系数rho</span><br><span class="line">results_sar.beta         % 模型估计的beta值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">% ---------------------------------------------------------------------</span><br><span class="line">% 2 SEM模型</span><br><span class="line">% y = beta*x + mu ; mu = rho*W*mu + e </span><br><span class="line">% 选择变量：2017年数据</span><br><span class="line">y = temp(274:280,[1]); </span><br><span class="line">x_sem = temp(274:280,[2:7]); </span><br><span class="line"></span><br><span class="line">results_sem = sem(y,x_sem,W);</span><br><span class="line">prt(results_sem,vnames);</span><br><span class="line"></span><br><span class="line">results_sem.tstat    % 渐进t检验统计量的值(最后输入为rho空间自回归系数)</span><br><span class="line">results_sem.rho      % (p above)</span><br><span class="line">results_sem.beta     % 模型估计的beta值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">% ---------------------------------------------------------------------</span><br><span class="line">% 3 SDM空间杜宾模型</span><br><span class="line">% y = XB + u (optional) + v (optional) + s,  s = p*W*s + e</span><br><span class="line">% 选择变量:2017年数据</span><br><span class="line">y = temp(274:280,[1]);  </span><br><span class="line">x_sdm = temp(274:280,[2:4]); % 空间相关性影响变量</span><br><span class="line">vnames1=strvcat(&apos;gdp&apos;,&apos;renkou&apos;,&apos;gsh&apos;,&apos;gzh&apos;); </span><br><span class="line"></span><br><span class="line">% 建模</span><br><span class="line">results_sdm = sdm(y,x_sdm,W); </span><br><span class="line">prt(results_sdm,vnames1);</span><br><span class="line"></span><br><span class="line">results_sdm.tstat        % t检验统计量的值</span><br><span class="line">results_sdm.rho          % 最后输入为rho空间自回归系数</span><br><span class="line">results_sdm.beta         % 模型估计的beta值</span><br></pre></td></tr></table></figure>
+<p>以上是三个一年数据的结果，下面是面板数据模型，平时网上搜到的基本都是面板数据模型。</p>
+<p>工具箱目录jplv7→spatial→panel下有一个演示程序：demopanelscompare好像是随机效应与混合模型的选择，使用的方法是LR检验。</p>
+<h3 id="空间面板数据模型"><a href="#空间面板数据模型" class="headerlink" title="空间面板数据模型"></a>空间面板数据模型</h3><p>真没什么好说的。要说的话只能怪罪LMsarsem_panel函数太猛了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">% 4 空间面板数据模型</span><br><span class="line"></span><br><span class="line">% 4.1 空间相关性检验</span><br><span class="line">%LM检验，大于6.635拒绝原假设（不存在空间自相关），即存在误差项空间自相关</span><br><span class="line">LMsarsem_panel(results_sar,W,y,x_sar) </span><br><span class="line">% 结果表明0.1显著性水平下，空间固定效应LR检验通过，空间固定效应的空间滞后的LM检验通过</span><br><span class="line">% 时间固定效应的的空间误差的LM检验不通过,时间固定效应的LR检验不通过</span><br><span class="line">% 故选择时间效应固定模型info.model=2</span><br><span class="line">info.model=2;</span><br><span class="line"></span><br><span class="line">% 4.2 提取变量：30年数据</span><br><span class="line">y = temp(:,[1]);         </span><br><span class="line">x_sar = temp(:,[2,3,4,5,6,7]);      </span><br><span class="line">% 因变量：GDP（亿元），自变量：人口(万人)，财政收入（亿元），财政支出（亿元），投资（亿元），消费（亿元），进出口（亿元）</span><br><span class="line"></span><br><span class="line">% 4.3 建模</span><br><span class="line">results_general = sar_panel_FE(y,x_sar,W,T,info); </span><br><span class="line">prt_spnew(results_general,vnames);</span><br><span class="line"></span><br><span class="line">results_general.corr2     % 模型的拟合优度调整的r方</span><br><span class="line">results_general.tstat     % t检验统计量的值</span><br><span class="line">results_general.rho       % 最后输入为rho空间自回归系数</span><br><span class="line">results_general.beta      % 模型估计的beta值</span><br></pre></td></tr></table></figure>
+<p>info.model参数是设定模型是某种固定效应：<br>info.model=0：表示此模型为混合模型，即没有固定效应；<br>info.model=1：表示此模型为地区固定效应模型；<br>info.model=2：表示时间固定效应模型；<br>info.model=3：表示双向固定效应模型。  </p>
+<h2 id="经验小总结"><a href="#经验小总结" class="headerlink" title="经验小总结"></a>经验小总结</h2><p><strong>help+函数名</strong>这个指令太有用了，任何软件的帮助文档都是学软件的最好老师。</p>
+<p>matlab有个现象，你不加句末的分号，就会输出在下面。我一开始循环没有加分号，每次运行都很慢。</p>
+<p>不知道为什么，他们读“马特拉布”，难道是北美口音？不得而知。</p>
+<p>虽然没有系统学习过matlab，但是这次借着任务也算好好认识了这款传说中的软件，点一下，玩一年，help不花一分钱。真心感觉全部的语言都有相通之处。不过matlab在做统计的问题时，我总是觉得用着不趁手，不如真正的统计软件，输出结果也乱糟糟的。或许这就是没有把好钢用在刀刃上吧。</p>
+<p>结果不贴了，有兴趣的人们可以跑跑看。<a href="https://github.com/konelane/konelane.github.io/blob/master/upload/data%26weight.rar" target="_blank" rel="noopener">数据传送门</a></p>
+<p>松鼠作业一定很优秀了（老父亲笑容）</p>
+<p>（后补，松鼠观罢：烦死了！）</p>
+<p>（完）</p>
+
+          </br>
+          <p>本文链接：
+              <a href="https://konelane.github.io/2020/10/28/191230空间计量/">
+                  https://konelane.github.io/2020/10/28/191230空间计量/
+              </a>
+          </p>
+          <p>-- <acronym title="End of File">EOF</acronym> --</p>
+          <div class="post-info">
+              <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+              <p> 
+                    
+               </p>
+          </div>
+          
+          
+      </div>
+
+      
+  </div>
+  
+      
+  
+  
+      
+          <div class="donateContainer">
+    <div>￥^￥赞助将用于氦核一人咖啡绿茶优酸乳费用（唉</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+      
+  
+  
+    
+        <section id="comments" class="comments">
+        <style>
+            .comments{margin:30px;padding:10px;background:#fff}
+            @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+        </style>
+        <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+    </section>
+    
+  
+
+</article>
+
+
+<script>
+  var isMobile = {
+      Android: function () {
+          return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function () {
+          return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function () {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function () {
+          return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function () {
+          return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function () {
+          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+              isMobile.Windows());
+      }
+  };
+  if (isMobile.any()) {
+      //移动端不显示目录和评论
+      $("#toc-button").css("display", "none");
+      $("#commentDiv").css("display", "none");
+  }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,4022 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>python联萌|pandas（国宝库 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最后编辑于：2020.02.06 18:00 Pandas库Pandas是基于NumPy 的一种工具，其出现是为了解决数据分析任务。（氦核：个人觉得更像是探索工具，没有模型，简单分析。）Pandas吸纳了大量库和一些标准的数据模型，提供了高效操作大型数据集所需的工具。Pandas中的函数和方法能够使我们快速便捷地处理数据。它是使Python成为强大而高效的数据分析环境的重要因素之一。 http:/">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python联萌|pandas（国宝库">
+<meta property="og:url" content="https://konelane.github.io/2020/02/06/200206pandaslearning/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="最后编辑于：2020.02.06 18:00 Pandas库Pandas是基于NumPy 的一种工具，其出现是为了解决数据分析任务。（氦核：个人觉得更像是探索工具，没有模型，简单分析。）Pandas吸纳了大量库和一些标准的数据模型，提供了高效操作大型数据集所需的工具。Pandas中的函数和方法能够使我们快速便捷地处理数据。它是使Python成为强大而高效的数据分析环境的重要因素之一。 http:/">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-06T09:59:14.619Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python联萌|pandas（国宝库">
+<meta name="twitter:description" content="最后编辑于：2020.02.06 18:00 Pandas库Pandas是基于NumPy 的一种工具，其出现是为了解决数据分析任务。（氦核：个人觉得更像是探索工具，没有模型，简单分析。）Pandas吸纳了大量库和一些标准的数据模型，提供了高效操作大型数据集所需的工具。Pandas中的函数和方法能够使我们快速便捷地处理数据。它是使Python成为强大而高效的数据分析环境的重要因素之一。 http:/">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+							<li><a href="/tags/填词">填词涂鸦</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16.67px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+					<li><a href="/tags/填词">填词涂鸦</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	盈盈一水间，脉脉不得语
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-200206pandaslearning" class="article article-type-post" itemscope itemprop="blogPost">
+  <script>
+      $("html").niceScroll({
+          cursorcolor: "#2a2929",
+          cursoropacitymax: 1,
+          touchbehavior: false,
+          cursorwidth: "6px",
+          cursorborder: "5",
+          cursorborderradius: "0px",
+          autohidemode: true
+      });
+  </script>
+  
+  <div class="article-meta">
+      <a href="/2020/02/06/200206pandaslearning/" class="article-date">
+  	<time datetime="2020-02-05T16:00:00.000Z" itemprop="datePublished">2020-02-06</time>
+</a>
+
+  </div>
+  
+  <div class="article-inner">
+      
+      <input type="hidden" class="isFancy" />
+      
+      
+      <header class="article-header">
+          
+  
+    <h1 class="article-title" itemprop="name">
+      python联萌|pandas（国宝库
+    </h1>
+  
+
+
+          
+      </header>
+      
+      
+      <div class="article-info article-info-post">
+          
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+          
+
+          <div class="clearfix"></div>
+      </div>
+      
+      
+
+      <div class="article-entry" itemprop="articleBody">
+
+          
+          <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pandas库"><span class="toc-number">1.</span> <span class="toc-text">Pandas库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、序列Series"><span class="toc-number">2.</span> <span class="toc-text">一、序列Series</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、DataFrame"><span class="toc-number">3.</span> <span class="toc-text">二、DataFrame</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-DataFrame的生成"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 DataFrame的生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-DataFrame的基本性质"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 DataFrame的基本性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-DataFrame截取"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 DataFrame截取</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-行截取"><span class="toc-number">3.3.1.</span> <span class="toc-text">2.3.1 行截取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-列截取"><span class="toc-number">3.3.2.</span> <span class="toc-text">2.3.2 列截取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-DataFrame行列同时截取"><span class="toc-number">3.3.3.</span> <span class="toc-text">2.3.3 DataFrame行列同时截取</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-4-DataFrame条件截取"><span class="toc-number">3.3.4.</span> <span class="toc-text">2.3.4 DataFrame条件截取</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-DataFrame缺失值处理"><span class="toc-number">3.4.</span> <span class="toc-text">2.4 DataFrame缺失值处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-DataFrame排序"><span class="toc-number">3.5.</span> <span class="toc-text">2.5 DataFrame排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-DataFrame的基本函数"><span class="toc-number">3.6.</span> <span class="toc-text">2.6 DataFrame的基本函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#函数汇总"><span class="toc-number">3.6.1.</span> <span class="toc-text">函数汇总</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-DataFrame拼接"><span class="toc-number">3.7.</span> <span class="toc-text">2.7 DataFrame拼接</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-7-1-DataFrame拼接—pd-concat"><span class="toc-number">3.7.1.</span> <span class="toc-text">2.7.1 DataFrame拼接—pd.concat</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-3-DataFrame拼接—pd-merge"><span class="toc-number">3.8.</span> <span class="toc-text">2.7.3 DataFrame拼接—pd.merge</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-4-DataFrame拼接—-join"><span class="toc-number">3.9.</span> <span class="toc-text">2.7.4 DataFrame拼接—.join</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-8-DataFrame重复值剔除"><span class="toc-number">3.10.</span> <span class="toc-text">2.8 DataFrame重复值剔除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-9-DataFrame分组及透视表（groupby）"><span class="toc-number">3.11.</span> <span class="toc-text">2.9 DataFrame分组及透视表（groupby）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-9-1-分组——groupby函数"><span class="toc-number">3.11.1.</span> <span class="toc-text">2.9.1 分组——groupby函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-9-2-对分组进行迭代"><span class="toc-number">3.11.2.</span> <span class="toc-text">2.9.2 对分组进行迭代</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-9-3-选取一个或一组列"><span class="toc-number">3.11.3.</span> <span class="toc-text">2.9.3 选取一个或一组列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-9-4-通过字典或者Series进行分组"><span class="toc-number">3.11.4.</span> <span class="toc-text">2.9.4 通过字典或者Series进行分组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-9-5-根据索引级别分组"><span class="toc-number">3.11.5.</span> <span class="toc-text">2.9.5 根据索引级别分组</span></a></li></ol></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+          
+          
+
+          
+          <p>最后编辑于：2020.02.06 18:00</p>
+<h2 id="Pandas库"><a href="#Pandas库" class="headerlink" title="Pandas库"></a>Pandas库</h2><p>Pandas是基于NumPy 的一种工具，其出现是为了解决数据分析任务。（氦核：个人觉得更像是探索工具，没有模型，简单分析。）<br>Pandas吸纳了大量库和一些标准的数据模型，提供了高效操作大型数据集所需的工具。<br>Pandas中的函数和方法能够使我们快速便捷地处理数据。<br>它是使Python成为强大而高效的数据分析环境的重要因素之一。</p>
+<p><a href="http://pandas.pydata.org/pandas-docs/stable/api.html" target="_blank" rel="noopener">http://pandas.pydata.org/pandas-docs/stable/api.html</a></p>
+<p>本文参考<a href="https://www.windquant.com/" target="_blank" rel="noopener">万旷网教程</a>。</p>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先导入pandas库</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<p>numpy详见上一篇文章。</p>
+<h2 id="一、序列Series"><a href="#一、序列Series" class="headerlink" title="一、序列Series"></a>一、序列Series</h2><p>序列Series是一个一维数组结构，可以存入任一种Python数据类型(integers, strings, floating point numbers, Python objects, 等等)</p>
+<p>序列Series由两部分构成，一个是index，另一个是对应的值，注意两者的长度必须一样。序列Series和数组array很类似，大多数numpy的函数都可以直接应用于序列Series</p>
+<p>序列Series也像一个固定大小的字典dict，可以通过index来赋值或者取值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'通过数组来生成序列Series'</span>)</span><br><span class="line">s_array = np.random.randn(<span class="number">5</span>)</span><br><span class="line">s = pd.Series(s_array, index = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>])</span><br><span class="line">s</span><br></pre></td></tr></table></figure>
+<pre><code>通过数组来生成序列Series
+a   -0.298058
+b   -1.095748
+c    1.333607
+d    1.119917
+e    1.595123
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'通过字典来生成序列Series'</span>)</span><br><span class="line">s_dict= &#123;<span class="string">'a'</span>:<span class="number">11</span>,<span class="string">'b'</span>:<span class="number">1000</span>,<span class="string">'c'</span>:<span class="number">123213</span>,<span class="string">'d'</span>:<span class="number">-1000</span>&#125;</span><br><span class="line">s = pd.Series(s_dict)</span><br><span class="line">s</span><br></pre></td></tr></table></figure>
+<pre><code>通过字典来生成序列Series
+a        11
+b      1000
+c    123213
+d     -1000
+dtype: int64
+</code></pre><p>我们取一段金融时间序列给大家做更具体的分析：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> WindPy <span class="keyword">import</span> *</span><br><span class="line">w.start()</span><br><span class="line"></span><br><span class="line">list1 = w.wsd(<span class="string">"000001.SZ"</span>, <span class="string">"close"</span>, <span class="string">"2018-06-28"</span>, <span class="string">"2018-07-11"</span>, <span class="string">""</span>)</span><br><span class="line">list1</span><br></pre></td></tr></table></figure>
+<pre><code>Welcome to use Wind Quant API for Python (WindPy)!
+
+COPYRIGHT (C) 2017 WIND INFORMATION CO., LTD. ALL RIGHTS RESERVED.
+IN NO CIRCUMSTANCE SHALL WIND BE RESPONSIBLE FOR ANY DAMAGES OR LOSSES CAUSED BY USING WIND QUANT API FOR Python.
+
+.ErrorCode=0
+.Codes=[000001.SZ]
+.Fields=[CLOSE]
+.Times=[20180628,20180629,20180702,20180703,20180704,20180705,20180706,20180709,20180710,20180711]
+.Data=[[8.92,9.09,8.61,8.67,8.61,8.6,8.66,9.03,8.98,8.78]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#将收盘价转为</span></span><br><span class="line">ss = pd.Series(list1.Data[<span class="number">0</span>], index = list1.Times)</span><br><span class="line">ss</span><br></pre></td></tr></table></figure>
+<pre><code>2018-06-28    8.92
+2018-06-29    9.09
+2018-07-02    8.61
+2018-07-03    8.67
+2018-07-04    8.61
+2018-07-05    8.60
+2018-07-06    8.66
+2018-07-09    9.03
+2018-07-10    8.98
+2018-07-11    8.78
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以通过index来查看序列Series中的元素</span></span><br><span class="line">print(<span class="string">'查看序列中index为：'</span>,ss.index)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看序列中index为a的元素：'</span>,ss[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>查看序列中index为： Index([2018-06-28, 2018-06-29, 2018-07-02, 2018-07-03, 2018-07-04, 2018-07-05,
+       2018-07-06, 2018-07-09, 2018-07-10, 2018-07-11],
+      dtype=&#39;object&#39;)
+
+查看序列中index为a的元素： 8.92
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于index 可以修改序列s中的元素</span></span><br><span class="line">print(<span class="string">'原序列：\n'</span>,ss)</span><br><span class="line">print()</span><br><span class="line">ss[<span class="number">0</span>] = <span class="number">11.4</span></span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'修改后的序列：\n'</span>,ss)</span><br></pre></td></tr></table></figure>
+<pre><code>原序列：
+ 2018-06-28    8.92
+2018-06-29    9.09
+2018-07-02    8.61
+2018-07-03    8.67
+2018-07-04    8.61
+2018-07-05    8.60
+2018-07-06    8.66
+2018-07-09    9.03
+2018-07-10    8.98
+2018-07-11    8.78
+dtype: float64
+
+修改后的序列：
+2018-06-28    11.40
+2018-06-29     9.09
+2018-07-02     8.61
+2018-07-03     8.67
+2018-07-04     8.61
+2018-07-05     8.60
+2018-07-06     8.66
+2018-07-09     9.03
+2018-07-10     8.98
+2018-07-11     8.78
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ss1 = pd.Series(np.random.randn(<span class="number">10</span>))</span><br><span class="line">print(<span class="string">'原序列：\n'</span>,ss)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'新序列：\n'</span>,ss1)</span><br><span class="line">print()</span><br><span class="line"><span class="comment"># 大多数numpy的函数可以直接应用于 序列 Series</span></span><br><span class="line">print(<span class="string">'序列相加：\n'</span>,pd.Series(ss.values+ss1.values,index=ss.index))</span><br></pre></td></tr></table></figure>
+<pre><code>原序列：
+ 2018-06-28    11.40
+2018-06-29     9.09
+2018-07-02     8.61
+2018-07-03     8.67
+2018-07-04     8.61
+2018-07-05     8.60
+2018-07-06     8.66
+2018-07-09     9.03
+2018-07-10     8.98
+2018-07-11     8.78
+dtype: float64
+
+新序列：
+ 0   -0.955700
+1    0.391561
+2    0.002435
+3   -0.131621
+4   -0.791321
+5    0.841264
+6   -0.058034
+7   -0.486677
+8    0.708875
+9    1.841834
+dtype: float64
+
+序列相加：
+ 2018-06-28    10.444300
+2018-06-29     9.481561
+2018-07-02     8.612435
+2018-07-03     8.538379
+2018-07-04     7.818679
+2018-07-05     9.441264
+2018-07-06     8.601966
+2018-07-09     8.543323
+2018-07-10     9.688875
+2018-07-11    10.621834
+dtype: float64
+</code></pre><h2 id="二、DataFrame"><a href="#二、DataFrame" class="headerlink" title="二、DataFrame"></a>二、DataFrame</h2><p>DataFrame是一个二维数组结构，可以存入任一种Python数据类型(integers, strings, floating point numbers, Python objects, 等等)。<br>DataFrame由<strong>三部分</strong>构成，一个是行索引index，一个是列名，另一个则是取值。</p>
+<h3 id="2-1-DataFrame的生成"><a href="#2-1-DataFrame的生成" class="headerlink" title="2.1 DataFrame的生成"></a>2.1 DataFrame的生成</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'由字典来产生数据框'</span>)</span><br><span class="line">data = &#123;<span class="string">'state'</span>: [<span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Nevada'</span>, <span class="string">'Nevada'</span>],</span><br><span class="line">        <span class="string">'year'</span>: [<span class="number">2000</span>, <span class="number">2001</span>, <span class="number">2002</span>, <span class="number">2001</span>, <span class="number">2002</span>],</span><br><span class="line">        <span class="string">'pop'</span>: [<span class="number">1.5</span>, <span class="number">1.7</span>, <span class="number">3.6</span>, <span class="number">2.4</span>, <span class="number">2.9</span>]&#125;</span><br><span class="line">frame = pd.DataFrame(data)</span><br><span class="line">frame</span><br></pre></td></tr></table></figure>
+<pre><code>由字典来产生数据框
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>1.7</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Nevada</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'由列表来产生数据框'</span>)</span><br><span class="line">data = [[<span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Nevada'</span>, <span class="string">'Nevada'</span>],</span><br><span class="line">        [<span class="number">2000</span>, <span class="number">2001</span>, <span class="number">2002</span>, <span class="number">2001</span>, <span class="number">2002</span>],</span><br><span class="line">        [<span class="number">1.5</span>, <span class="number">1.7</span>, <span class="number">3.6</span>, <span class="number">2.4</span>, <span class="number">2.9</span>]]</span><br><span class="line">frame = pd.DataFrame(data,index=[<span class="string">'state'</span>,<span class="string">'year'</span>,<span class="string">'pop'</span>]).T</span><br><span class="line">frame</span><br></pre></td></tr></table></figure>
+<pre><code>由列表来产生数据框
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>1.7</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Nevada</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="2-2-DataFrame的基本性质"><a href="#2-2-DataFrame的基本性质" class="headerlink" title="2.2 DataFrame的基本性质"></a>2.2 DataFrame的基本性质</h3><p>我们取一段金融时间序列给大家做更具体的分析：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">list2 = w.wsd(<span class="string">"000300.SH"</span>, <span class="string">"open,high,low,close"</span>, <span class="string">"2018-06-28"</span>, <span class="string">"2018-07-10"</span>, <span class="string">""</span>)</span><br><span class="line">list2</span><br></pre></td></tr></table></figure>
+<pre><code>.ErrorCode=0
+.Codes=[000300.SH]
+.Fields=[OPEN,HIGH,LOW,CLOSE]
+.Times=[20180628,20180629,20180702,20180703,20180704,20180705,20180706,20180709,20180710]
+.Data=[[3434.9441,3431.9619,3504.4571,3410.4767,3398.7788,3365.5547,3347.0624,3378.9056,3464.9064],[3477.0565,3512.3834,3506.8996,3422.0398,3418.3311,3398.4852,3396.2458,3459.3153,3474.1396],[3416.9476,3425.2159,3383.5006,3319.2889,3359.0861,3330.7113,3295.7296,3378.9056,3437.2706],[3423.5255,3510.9845,3407.9638,3409.2801,3363.7473,3342.4379,3365.1227,3459.1837,3467.5155]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(list2.Data,columns=list2.Times,index=list2.Fields)</span><br><span class="line">df = df.T</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2018-06-28</td>
+      <td>3434.9441</td>
+      <td>3477.0565</td>
+      <td>3416.9476</td>
+      <td>3423.5255</td>
+    </tr>
+    <tr>
+      <td>2018-06-29</td>
+      <td>3431.9619</td>
+      <td>3512.3834</td>
+      <td>3425.2159</td>
+      <td>3510.9845</td>
+    </tr>
+    <tr>
+      <td>2018-07-02</td>
+      <td>3504.4571</td>
+      <td>3506.8996</td>
+      <td>3383.5006</td>
+      <td>3407.9638</td>
+    </tr>
+    <tr>
+      <td>2018-07-03</td>
+      <td>3410.4767</td>
+      <td>3422.0398</td>
+      <td>3319.2889</td>
+      <td>3409.2801</td>
+    </tr>
+    <tr>
+      <td>2018-07-04</td>
+      <td>3398.7788</td>
+      <td>3418.3311</td>
+      <td>3359.0861</td>
+      <td>3363.7473</td>
+    </tr>
+    <tr>
+      <td>2018-07-05</td>
+      <td>3365.5547</td>
+      <td>3398.4852</td>
+      <td>3330.7113</td>
+      <td>3342.4379</td>
+    </tr>
+    <tr>
+      <td>2018-07-06</td>
+      <td>3347.0624</td>
+      <td>3396.2458</td>
+      <td>3295.7296</td>
+      <td>3365.1227</td>
+    </tr>
+    <tr>
+      <td>2018-07-09</td>
+      <td>3378.9056</td>
+      <td>3459.3153</td>
+      <td>3378.9056</td>
+      <td>3459.1837</td>
+    </tr>
+    <tr>
+      <td>2018-07-10</td>
+      <td>3464.9064</td>
+      <td>3474.1396</td>
+      <td>3437.2706</td>
+      <td>3467.5155</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'首先查看数据框的形状'</span>,df.shape)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看数据框的头部：'</span>)</span><br><span class="line">print(df.head()) </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看数据框的尾部：'</span>)</span><br><span class="line">print(df.tail())</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看数据框的索引index'</span>)</span><br><span class="line">print(df.index)</span><br></pre></td></tr></table></figure>
+<pre><code>首先查看数据框的形状 (9, 4)
+
+查看数据框的头部：
+                 OPEN       HIGH        LOW      CLOSE
+2018-06-28  3434.9441  3477.0565  3416.9476  3423.5255
+2018-06-29  3431.9619  3512.3834  3425.2159  3510.9845
+2018-07-02  3504.4571  3506.8996  3383.5006  3407.9638
+2018-07-03  3410.4767  3422.0398  3319.2889  3409.2801
+2018-07-04  3398.7788  3418.3311  3359.0861  3363.7473
+
+查看数据框的尾部：
+                 OPEN       HIGH        LOW      CLOSE
+2018-07-04  3398.7788  3418.3311  3359.0861  3363.7473
+2018-07-05  3365.5547  3398.4852  3330.7113  3342.4379
+2018-07-06  3347.0624  3396.2458  3295.7296  3365.1227
+2018-07-09  3378.9056  3459.3153  3378.9056  3459.1837
+2018-07-10  3464.9064  3474.1396  3437.2706  3467.5155
+
+查看数据框的索引index
+Index([2018-06-28, 2018-06-29, 2018-07-02, 2018-07-03, 2018-07-04, 2018-07-05,
+       2018-07-06, 2018-07-09, 2018-07-10],
+      dtype=&#39;object&#39;)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'查看数据框的列名'</span>)</span><br><span class="line">print(df.columns)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看数据框的值，其格式为数组array'</span>)</span><br><span class="line">print(df.values)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看数据框的基础描述性统计'</span>)</span><br><span class="line">print(df.describe())</span><br></pre></td></tr></table></figure>
+<pre><code>查看数据框的列名
+Index([&#39;OPEN&#39;, &#39;HIGH&#39;, &#39;LOW&#39;, &#39;CLOSE&#39;], dtype=&#39;object&#39;)
+
+查看数据框的值，其格式为数组array
+[[3434.9441 3477.0565 3416.9476 3423.5255]
+ [3431.9619 3512.3834 3425.2159 3510.9845]
+ [3504.4571 3506.8996 3383.5006 3407.9638]
+ [3410.4767 3422.0398 3319.2889 3409.2801]
+ [3398.7788 3418.3311 3359.0861 3363.7473]
+ [3365.5547 3398.4852 3330.7113 3342.4379]
+ [3347.0624 3396.2458 3295.7296 3365.1227]
+ [3378.9056 3459.3153 3378.9056 3459.1837]
+ [3464.9064 3474.1396 3437.2706 3467.5155]]
+
+查看数据框的基础描述性统计
+              OPEN         HIGH          LOW        CLOSE
+count     9.000000     9.000000     9.000000     9.000000
+mean   3415.227522  3451.655144  3371.850689  3416.640111
+std      49.780741    44.488942    49.698315    55.264867
+min    3347.062400  3396.245800  3295.729600  3342.437900
+25%    3378.905600  3418.331100  3330.711300  3365.122700
+50%    3410.476700  3459.315300  3378.905600  3409.280100
+75%    3434.944100  3477.056500  3416.947600  3459.183700
+max    3504.457100  3512.383400  3437.270600  3510.984500
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在原有的数据框中新加入一列</span></span><br><span class="line">df[<span class="string">'名称'</span>] = [<span class="string">'HS300'</span>] * len(df)</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+      <th>名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2018-06-28</td>
+      <td>3434.9441</td>
+      <td>3477.0565</td>
+      <td>3416.9476</td>
+      <td>3423.5255</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-06-29</td>
+      <td>3431.9619</td>
+      <td>3512.3834</td>
+      <td>3425.2159</td>
+      <td>3510.9845</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-02</td>
+      <td>3504.4571</td>
+      <td>3506.8996</td>
+      <td>3383.5006</td>
+      <td>3407.9638</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-03</td>
+      <td>3410.4767</td>
+      <td>3422.0398</td>
+      <td>3319.2889</td>
+      <td>3409.2801</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-04</td>
+      <td>3398.7788</td>
+      <td>3418.3311</td>
+      <td>3359.0861</td>
+      <td>3363.7473</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-05</td>
+      <td>3365.5547</td>
+      <td>3398.4852</td>
+      <td>3330.7113</td>
+      <td>3342.4379</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-06</td>
+      <td>3347.0624</td>
+      <td>3396.2458</td>
+      <td>3295.7296</td>
+      <td>3365.1227</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-09</td>
+      <td>3378.9056</td>
+      <td>3459.3153</td>
+      <td>3378.9056</td>
+      <td>3459.1837</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-10</td>
+      <td>3464.9064</td>
+      <td>3474.1396</td>
+      <td>3437.2706</td>
+      <td>3467.5155</td>
+      <td>HS300</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据框的转置</span></span><br><span class="line">df.T</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>2018-06-28</th>
+      <th>2018-06-29</th>
+      <th>2018-07-02</th>
+      <th>2018-07-03</th>
+      <th>2018-07-04</th>
+      <th>2018-07-05</th>
+      <th>2018-07-06</th>
+      <th>2018-07-09</th>
+      <th>2018-07-10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>OPEN</td>
+      <td>3434.94</td>
+      <td>3431.96</td>
+      <td>3504.46</td>
+      <td>3410.48</td>
+      <td>3398.78</td>
+      <td>3365.55</td>
+      <td>3347.06</td>
+      <td>3378.91</td>
+      <td>3464.91</td>
+    </tr>
+    <tr>
+      <td>HIGH</td>
+      <td>3477.06</td>
+      <td>3512.38</td>
+      <td>3506.9</td>
+      <td>3422.04</td>
+      <td>3418.33</td>
+      <td>3398.49</td>
+      <td>3396.25</td>
+      <td>3459.32</td>
+      <td>3474.14</td>
+    </tr>
+    <tr>
+      <td>LOW</td>
+      <td>3416.95</td>
+      <td>3425.22</td>
+      <td>3383.5</td>
+      <td>3319.29</td>
+      <td>3359.09</td>
+      <td>3330.71</td>
+      <td>3295.73</td>
+      <td>3378.91</td>
+      <td>3437.27</td>
+    </tr>
+    <tr>
+      <td>CLOSE</td>
+      <td>3423.53</td>
+      <td>3510.98</td>
+      <td>3407.96</td>
+      <td>3409.28</td>
+      <td>3363.75</td>
+      <td>3342.44</td>
+      <td>3365.12</td>
+      <td>3459.18</td>
+      <td>3467.52</td>
+    </tr>
+    <tr>
+      <td>名称</td>
+      <td>HS300</td>
+      <td>HS300</td>
+      <td>HS300</td>
+      <td>HS300</td>
+      <td>HS300</td>
+      <td>HS300</td>
+      <td>HS300</td>
+      <td>HS300</td>
+      <td>HS300</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="2-3-DataFrame截取"><a href="#2-3-DataFrame截取" class="headerlink" title="2.3 DataFrame截取"></a>2.3 DataFrame截取</h3><h4 id="2-3-1-行截取"><a href="#2-3-1-行截取" class="headerlink" title="2.3.1 行截取"></a>2.3.1 行截取</h4><p>氦核：不推荐使用ix进行截取，因为ix既可以对名称截取，又可以索引截取。如果index是整数，会很迷惑。一般使用loc和iloc函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'查看df索引为1的行——方法一'</span>)</span><br><span class="line">print(df.ix[<span class="number">1</span>])   <span class="comment"># print(df.iloc[1]) 推荐使用</span></span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看df前3行'</span>)</span><br><span class="line">print(df[:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>查看df索引为1的行——方法一
+OPEN     3431.96
+HIGH     3512.38
+LOW      3425.22
+CLOSE    3510.98
+名称         HS300
+Name: 2018-06-29, dtype: object
+
+查看df前3行
+                 OPEN       HIGH        LOW      CLOSE     名称
+2018-06-28  3434.9441  3477.0565  3416.9476  3423.5255  HS300
+2018-06-29  3431.9619  3512.3834  3425.2159  3510.9845  HS300
+2018-07-02  3504.4571  3506.8996  3383.5006  3407.9638  HS300
+
+
+D:\anaconda\lib\site-packages\ipykernel_launcher.py:2: FutureWarning: 
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+</code></pre><h4 id="2-3-2-列截取"><a href="#2-3-2-列截取" class="headerlink" title="2.3.2 列截取"></a>2.3.2 列截取</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'df的一列选取'</span>)</span><br><span class="line">print(df[<span class="string">'OPEN'</span>])</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'df的两列同时选取'</span>)</span><br><span class="line">print(df[[<span class="string">'OPEN'</span>,<span class="string">'LOW'</span>]])</span><br></pre></td></tr></table></figure>
+<pre><code>df的一列选取
+2018-06-28    3434.9441
+2018-06-29    3431.9619
+2018-07-02    3504.4571
+2018-07-03    3410.4767
+2018-07-04    3398.7788
+2018-07-05    3365.5547
+2018-07-06    3347.0624
+2018-07-09    3378.9056
+2018-07-10    3464.9064
+Name: OPEN, dtype: float64
+
+df的两列同时选取
+                 OPEN        LOW
+2018-06-28  3434.9441  3416.9476
+2018-06-29  3431.9619  3425.2159
+2018-07-02  3504.4571  3383.5006
+2018-07-03  3410.4767  3319.2889
+2018-07-04  3398.7788  3359.0861
+2018-07-05  3365.5547  3330.7113
+2018-07-06  3347.0624  3295.7296
+2018-07-09  3378.9056  3378.9056
+2018-07-10  3464.9064  3437.2706
+</code></pre><h4 id="2-3-3-DataFrame行列同时截取"><a href="#2-3-3-DataFrame行列同时截取" class="headerlink" title="2.3.3 DataFrame行列同时截取"></a>2.3.3 DataFrame行列同时截取</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'截取df的前4行的close和low列'</span>)</span><br><span class="line">df.ix[:<span class="number">4</span>,[<span class="string">'CLOSE'</span>,<span class="string">'LOW'</span>]]</span><br></pre></td></tr></table></figure>
+<pre><code>截取df的前4行的close和low列
+
+
+D:\anaconda\lib\site-packages\ipykernel_launcher.py:2: FutureWarning: 
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+</code></pre><p>​    </p>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CLOSE</th>
+      <th>LOW</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2018-06-28</td>
+      <td>3423.5255</td>
+      <td>3416.9476</td>
+    </tr>
+    <tr>
+      <td>2018-06-29</td>
+      <td>3510.9845</td>
+      <td>3425.2159</td>
+    </tr>
+    <tr>
+      <td>2018-07-02</td>
+      <td>3407.9638</td>
+      <td>3383.5006</td>
+    </tr>
+    <tr>
+      <td>2018-07-03</td>
+      <td>3409.2801</td>
+      <td>3319.2889</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h4 id="2-3-4-DataFrame条件截取"><a href="#2-3-4-DataFrame条件截取" class="headerlink" title="2.3.4 DataFrame条件截取"></a>2.3.4 DataFrame条件截取</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'截取df CLOSE大于等于3500的记录'</span>)</span><br><span class="line">print(df[df[<span class="string">'CLOSE'</span>]&gt;=<span class="number">3500</span>])  </span><br><span class="line">print(<span class="string">''</span>)</span><br><span class="line">print(<span class="string">'截取df CLOSE大于3300且LOW小于3400的记录'</span>)</span><br><span class="line">print(df[(df[<span class="string">'CLOSE'</span>]&gt;<span class="number">3300</span>)&amp;(df[<span class="string">'LOW'</span>]&lt;<span class="number">3400</span>)])   </span><br><span class="line">print(<span class="string">''</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>截取df CLOSE大于等于3500的记录
+                 OPEN       HIGH        LOW      CLOSE     名称
+2018-06-29  3431.9619  3512.3834  3425.2159  3510.9845  HS300
+
+截取df CLOSE大于3300且LOW小于3400的记录
+                 OPEN       HIGH        LOW      CLOSE     名称
+2018-07-02  3504.4571  3506.8996  3383.5006  3407.9638  HS300
+2018-07-03  3410.4767  3422.0398  3319.2889  3409.2801  HS300
+2018-07-04  3398.7788  3418.3311  3359.0861  3363.7473  HS300
+2018-07-05  3365.5547  3398.4852  3330.7113  3342.4379  HS300
+2018-07-06  3347.0624  3396.2458  3295.7296  3365.1227  HS300
+2018-07-09  3378.9056  3459.3153  3378.9056  3459.1837  HS300
+</code></pre><p>​    </p>
+<h3 id="2-4-DataFrame缺失值处理"><a href="#2-4-DataFrame缺失值处理" class="headerlink" title="2.4 DataFrame缺失值处理"></a>2.4 DataFrame缺失值处理</h3><p>例如下面这个数据框data，其中就存在缺失值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="string">'state'</span>: [<span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Ohio'</span>, <span class="string">'Nevada'</span>, <span class="string">'Nevada'</span>],</span><br><span class="line">        <span class="string">'year'</span>: [<span class="number">2000</span>, <span class="number">2001</span>, <span class="number">2002</span>, <span class="number">2001</span>, <span class="number">2002</span>],</span><br><span class="line">        <span class="string">'pop'</span>: [<span class="number">1.5</span>, <span class="number">1.7</span>, <span class="number">3.6</span>, <span class="number">2.4</span>, <span class="number">2.9</span>]&#125;</span><br><span class="line">data = pd.DataFrame(data)</span><br><span class="line">data.loc[<span class="number">1</span>,<span class="string">'pop'</span>] = np.NaN</span><br><span class="line">data.loc[<span class="number">3</span>,<span class="string">'state'</span>] = <span class="keyword">None</span></span><br><span class="line">data</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>None</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#删除含有缺失的行</span></span><br><span class="line">data.dropna()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#表示该行都为缺失的行才删除 注意是这一行中的每一个元素都为缺失才删除这一行</span></span><br><span class="line">data.dropna(how=<span class="string">"all"</span>)</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>None</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#表示该列若都为缺失的列则删除,注意是这一列的每个元素都为缺失才会删除这一列</span></span><br><span class="line">data.dropna(how=<span class="string">"all"</span>, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>None</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#表示保留至少存在3个非NaN的行，即如果某一行的非缺失值个数小于3个，则会被删除</span></span><br><span class="line">data.dropna(thresh=<span class="number">3</span>, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#表示保留至少存在3个非NaN的列，即如果某一列的非缺失值个数小于3个，则会被删除</span></span><br><span class="line">data.dropna(thresh=<span class="number">3</span>, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>None</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>None</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'用0填充数据框中的缺失值,0是可选参数之一'</span>)</span><br><span class="line">data.fillna(value=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>用0填充数据框中的缺失值,0是可选参数之一
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#填充缺失值 用缺失值所在列的前一个非NaN值来进行填充  </span></span><br><span class="line">data.fillna(method=<span class="string">'ffill'</span>)</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用缺失值所在列的后一个非NaN来填充</span></span><br><span class="line">data.fillna(method=<span class="string">"bfill"</span>)</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Nevada</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>氦核：这些填补都是什么鬼方法，无语。</p>
+<h3 id="2-5-DataFrame排序"><a href="#2-5-DataFrame排序" class="headerlink" title="2.5 DataFrame排序"></a>2.5 DataFrame排序</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+      <th>名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2018-06-28</td>
+      <td>3434.9441</td>
+      <td>3477.0565</td>
+      <td>3416.9476</td>
+      <td>3423.5255</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-06-29</td>
+      <td>3431.9619</td>
+      <td>3512.3834</td>
+      <td>3425.2159</td>
+      <td>3510.9845</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-02</td>
+      <td>3504.4571</td>
+      <td>3506.8996</td>
+      <td>3383.5006</td>
+      <td>3407.9638</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-03</td>
+      <td>3410.4767</td>
+      <td>3422.0398</td>
+      <td>3319.2889</td>
+      <td>3409.2801</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-04</td>
+      <td>3398.7788</td>
+      <td>3418.3311</td>
+      <td>3359.0861</td>
+      <td>3363.7473</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-05</td>
+      <td>3365.5547</td>
+      <td>3398.4852</td>
+      <td>3330.7113</td>
+      <td>3342.4379</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-06</td>
+      <td>3347.0624</td>
+      <td>3396.2458</td>
+      <td>3295.7296</td>
+      <td>3365.1227</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-09</td>
+      <td>3378.9056</td>
+      <td>3459.3153</td>
+      <td>3378.9056</td>
+      <td>3459.1837</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-10</td>
+      <td>3464.9064</td>
+      <td>3474.1396</td>
+      <td>3437.2706</td>
+      <td>3467.5155</td>
+      <td>HS300</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'df按列OPEN降序排序'</span>)</span><br><span class="line">df.sort_values(<span class="string">'OPEN'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>df按列OPEN降序排序
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+      <th>名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2018-07-06</td>
+      <td>3347.0624</td>
+      <td>3396.2458</td>
+      <td>3295.7296</td>
+      <td>3365.1227</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-05</td>
+      <td>3365.5547</td>
+      <td>3398.4852</td>
+      <td>3330.7113</td>
+      <td>3342.4379</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-09</td>
+      <td>3378.9056</td>
+      <td>3459.3153</td>
+      <td>3378.9056</td>
+      <td>3459.1837</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-04</td>
+      <td>3398.7788</td>
+      <td>3418.3311</td>
+      <td>3359.0861</td>
+      <td>3363.7473</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-03</td>
+      <td>3410.4767</td>
+      <td>3422.0398</td>
+      <td>3319.2889</td>
+      <td>3409.2801</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-06-29</td>
+      <td>3431.9619</td>
+      <td>3512.3834</td>
+      <td>3425.2159</td>
+      <td>3510.9845</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-06-28</td>
+      <td>3434.9441</td>
+      <td>3477.0565</td>
+      <td>3416.9476</td>
+      <td>3423.5255</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-10</td>
+      <td>3464.9064</td>
+      <td>3474.1396</td>
+      <td>3437.2706</td>
+      <td>3467.5155</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-02</td>
+      <td>3504.4571</td>
+      <td>3506.8996</td>
+      <td>3383.5006</td>
+      <td>3407.9638</td>
+      <td>HS300</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'df按列LOW升序排序'</span>)</span><br><span class="line">df.sort_values(<span class="string">'LOW'</span>,ascending=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>df按列LOW升序排序
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+      <th>名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2018-07-06</td>
+      <td>3347.0624</td>
+      <td>3396.2458</td>
+      <td>3295.7296</td>
+      <td>3365.1227</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-03</td>
+      <td>3410.4767</td>
+      <td>3422.0398</td>
+      <td>3319.2889</td>
+      <td>3409.2801</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-05</td>
+      <td>3365.5547</td>
+      <td>3398.4852</td>
+      <td>3330.7113</td>
+      <td>3342.4379</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-04</td>
+      <td>3398.7788</td>
+      <td>3418.3311</td>
+      <td>3359.0861</td>
+      <td>3363.7473</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-09</td>
+      <td>3378.9056</td>
+      <td>3459.3153</td>
+      <td>3378.9056</td>
+      <td>3459.1837</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-02</td>
+      <td>3504.4571</td>
+      <td>3506.8996</td>
+      <td>3383.5006</td>
+      <td>3407.9638</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-06-28</td>
+      <td>3434.9441</td>
+      <td>3477.0565</td>
+      <td>3416.9476</td>
+      <td>3423.5255</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-06-29</td>
+      <td>3431.9619</td>
+      <td>3512.3834</td>
+      <td>3425.2159</td>
+      <td>3510.9845</td>
+      <td>HS300</td>
+    </tr>
+    <tr>
+      <td>2018-07-10</td>
+      <td>3464.9064</td>
+      <td>3474.1396</td>
+      <td>3437.2706</td>
+      <td>3467.5155</td>
+      <td>HS300</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="2-6-DataFrame的基本函数"><a href="#2-6-DataFrame的基本函数" class="headerlink" title="2.6 DataFrame的基本函数"></a>2.6 DataFrame的基本函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'按列求均值'</span>)</span><br><span class="line">df.mean()</span><br></pre></td></tr></table></figure>
+<pre><code>按列求均值
+OPEN     3415.227522
+HIGH     3451.655144
+LOW      3371.850689
+CLOSE    3416.640111
+dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'按行求均值'</span>)</span><br><span class="line">df.mean(axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>按行求均值
+2018-06-28    3438.118425
+2018-06-29    3470.136425
+2018-07-02    3450.705275
+2018-07-03    3390.271375
+2018-07-04    3384.985825
+2018-07-05    3359.297275
+2018-07-06    3351.040125
+2018-07-09    3419.077550
+2018-07-10    3460.958025
+dtype: float64
+</code></pre><h4 id="函数汇总"><a href="#函数汇总" class="headerlink" title="函数汇总"></a>函数汇总</h4><p>下面的函数都是通过数据框.函数名(参数设置)来进行调用，一般的参数是axis=0/1，选择为0则是按行来实现函数，1则是按列来实现函数</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>函数</th>
+<th>函数含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>count</td>
+<td>计数非na值</td>
+</tr>
+<tr>
+<td>2</td>
+<td>describe</td>
+<td>针对Series或个DataFrame列基本描述统计</td>
+</tr>
+<tr>
+<td>3</td>
+<td>min、max</td>
+<td>计算最小值和最大值</td>
+</tr>
+<tr>
+<td>4</td>
+<td>argmin、argmax</td>
+<td>获取到最大值和最小值的索引位置（整数）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>idxmin、idxmax</td>
+<td>计算能够获取到最大值和最小值得索引值</td>
+</tr>
+<tr>
+<td>6</td>
+<td>quantile</td>
+<td>计算样本的分位数（0到1）</td>
+</tr>
+<tr>
+<td>7</td>
+<td>sum</td>
+<td>求和</td>
+</tr>
+<tr>
+<td>8</td>
+<td>mean</td>
+<td>求平均数</td>
+</tr>
+<tr>
+<td>9</td>
+<td>median</td>
+<td>求中位数（50%分位数）</td>
+</tr>
+<tr>
+<td>10</td>
+<td>mad</td>
+<td>计算平均绝对离差</td>
+</tr>
+<tr>
+<td>11</td>
+<td>var</td>
+<td>样本方差</td>
+</tr>
+<tr>
+<td>12</td>
+<td>std</td>
+<td>样本标准差</td>
+</tr>
+<tr>
+<td>13</td>
+<td>skew</td>
+<td>样本偏度（三阶矩）</td>
+</tr>
+<tr>
+<td>14</td>
+<td>kurt</td>
+<td>样本峰度（四阶矩）</td>
+</tr>
+<tr>
+<td>15</td>
+<td>cumsum</td>
+<td>样本累计和</td>
+</tr>
+<tr>
+<td>16</td>
+<td>cummin，cummax</td>
+<td>样本累计最大值和累计最小值</td>
+</tr>
+<tr>
+<td>17</td>
+<td>cumprod</td>
+<td>样本累计积</td>
+</tr>
+<tr>
+<td>18</td>
+<td>diff</td>
+<td>计算一阶差分</td>
+</tr>
+<tr>
+<td>19</td>
+<td>pct_change</td>
+<td>计算百分数变化</td>
+</tr>
+<tr>
+<td>20</td>
+<td>corr</td>
+<td>计数相关性</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-7-DataFrame拼接"><a href="#2-7-DataFrame拼接" class="headerlink" title="2.7 DataFrame拼接"></a>2.7 DataFrame拼接</h3><p>下面介绍了三个函数来实现 DataFrame的拼接功能——concat函数，merge函数和join函数</p>
+<h4 id="2-7-1-DataFrame拼接—pd-concat"><a href="#2-7-1-DataFrame拼接—pd-concat" class="headerlink" title="2.7.1 DataFrame拼接—pd.concat"></a>2.7.1 DataFrame拼接—pd.concat</h4><p>通过Wind API可以获取到各种金融数据，可以使用代码生成器生成获取数据的函数代码。获取到数据后，可参考一下代码将数据转换为DataFrame格式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> WindPy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame </span><br><span class="line">w.start()</span><br><span class="line"></span><br><span class="line">wsd_data = w.wsd(<span class="string">"000001.SZ"</span>, <span class="string">"lastradeday_s,sec_name,open,high,low,close"</span>, <span class="string">"2017-11-01"</span>, <span class="string">"2017-11-05"</span>, <span class="string">""</span>)</span><br><span class="line">data_df = DataFrame(wsd_data.Data,columns=wsd_data.Times,index=wsd_data.Fields)</span><br><span class="line">data_df = data_df.T <span class="comment">#转置数据表</span></span><br><span class="line">data_df</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LASTRADEDAY_S</th>
+      <th>SEC_NAME</th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017-11-01</td>
+      <td>2017-11-01</td>
+      <td>平安银行</td>
+      <td>11.56</td>
+      <td>11.59</td>
+      <td>11.32</td>
+      <td>11.4</td>
+    </tr>
+    <tr>
+      <td>2017-11-02</td>
+      <td>2017-11-02</td>
+      <td>平安银行</td>
+      <td>11.36</td>
+      <td>11.58</td>
+      <td>11.26</td>
+      <td>11.54</td>
+    </tr>
+    <tr>
+      <td>2017-11-03</td>
+      <td>2017-11-03</td>
+      <td>平安银行</td>
+      <td>11.49</td>
+      <td>11.68</td>
+      <td>11.35</td>
+      <td>11.39</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wsd_data1 = w.wsd(<span class="string">"000002.SZ"</span>, <span class="string">"lastradeday_s,sec_name,open,high,low,close"</span>, <span class="string">"2017-11-01"</span>, <span class="string">"2017-11-05"</span>, <span class="string">""</span>)</span><br><span class="line">data_df1 = DataFrame(wsd_data1.Data,columns=wsd_data.Times,index=wsd_data.Fields)</span><br><span class="line">data_df1 = data_df1.T <span class="comment">#转置数据表</span></span><br><span class="line">data_df1</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LASTRADEDAY_S</th>
+      <th>SEC_NAME</th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017-11-01</td>
+      <td>2017-11-01</td>
+      <td>万科A</td>
+      <td>28.96</td>
+      <td>30.54</td>
+      <td>28.73</td>
+      <td>29.15</td>
+    </tr>
+    <tr>
+      <td>2017-11-02</td>
+      <td>2017-11-02</td>
+      <td>万科A</td>
+      <td>29.3</td>
+      <td>29.48</td>
+      <td>28.68</td>
+      <td>29.45</td>
+    </tr>
+    <tr>
+      <td>2017-11-03</td>
+      <td>2017-11-03</td>
+      <td>万科A</td>
+      <td>29.23</td>
+      <td>29.52</td>
+      <td>28.05</td>
+      <td>28.19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'按行拼接'</span>)</span><br><span class="line">pd.concat([data_df,data_df1],axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>按行拼接
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LASTRADEDAY_S</th>
+      <th>SEC_NAME</th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017-11-01</td>
+      <td>2017-11-01</td>
+      <td>平安银行</td>
+      <td>11.56</td>
+      <td>11.59</td>
+      <td>11.32</td>
+      <td>11.4</td>
+    </tr>
+    <tr>
+      <td>2017-11-02</td>
+      <td>2017-11-02</td>
+      <td>平安银行</td>
+      <td>11.36</td>
+      <td>11.58</td>
+      <td>11.26</td>
+      <td>11.54</td>
+    </tr>
+    <tr>
+      <td>2017-11-03</td>
+      <td>2017-11-03</td>
+      <td>平安银行</td>
+      <td>11.49</td>
+      <td>11.68</td>
+      <td>11.35</td>
+      <td>11.39</td>
+    </tr>
+    <tr>
+      <td>2017-11-01</td>
+      <td>2017-11-01</td>
+      <td>万科A</td>
+      <td>28.96</td>
+      <td>30.54</td>
+      <td>28.73</td>
+      <td>29.15</td>
+    </tr>
+    <tr>
+      <td>2017-11-02</td>
+      <td>2017-11-02</td>
+      <td>万科A</td>
+      <td>29.3</td>
+      <td>29.48</td>
+      <td>28.68</td>
+      <td>29.45</td>
+    </tr>
+    <tr>
+      <td>2017-11-03</td>
+      <td>2017-11-03</td>
+      <td>万科A</td>
+      <td>29.23</td>
+      <td>29.52</td>
+      <td>28.05</td>
+      <td>28.19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'按列拼接'</span>)</span><br><span class="line">pd.concat([data_df,data_df1],axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>按列拼接
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LASTRADEDAY_S</th>
+      <th>SEC_NAME</th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+      <th>LASTRADEDAY_S</th>
+      <th>SEC_NAME</th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>CLOSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017-11-01</td>
+      <td>2017-11-01</td>
+      <td>平安银行</td>
+      <td>11.56</td>
+      <td>11.59</td>
+      <td>11.32</td>
+      <td>11.4</td>
+      <td>2017-11-01</td>
+      <td>万科A</td>
+      <td>28.96</td>
+      <td>30.54</td>
+      <td>28.73</td>
+      <td>29.15</td>
+    </tr>
+    <tr>
+      <td>2017-11-02</td>
+      <td>2017-11-02</td>
+      <td>平安银行</td>
+      <td>11.36</td>
+      <td>11.58</td>
+      <td>11.26</td>
+      <td>11.54</td>
+      <td>2017-11-02</td>
+      <td>万科A</td>
+      <td>29.3</td>
+      <td>29.48</td>
+      <td>28.68</td>
+      <td>29.45</td>
+    </tr>
+    <tr>
+      <td>2017-11-03</td>
+      <td>2017-11-03</td>
+      <td>平安银行</td>
+      <td>11.49</td>
+      <td>11.68</td>
+      <td>11.35</td>
+      <td>11.39</td>
+      <td>2017-11-03</td>
+      <td>万科A</td>
+      <td>29.23</td>
+      <td>29.52</td>
+      <td>28.05</td>
+      <td>28.19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="2-7-3-DataFrame拼接—pd-merge"><a href="#2-7-3-DataFrame拼接—pd-merge" class="headerlink" title="2.7.3 DataFrame拼接—pd.merge"></a>2.7.3 DataFrame拼接—pd.merge</h3><p>pd.merge一般针对的是按列合并。</p>
+<p>pd.merge(left, right, how=’inner’, on=None, left_on=None, right_on=None,<br>         left_index=False, right_index=False, sort=True,<br>         suffixes=(‘_x’, ‘_y’), copy=True, indicator=False)</p>
+<p>left: 一个dataframe对象</p>
+<p>right: 另一个dataframe对象</p>
+<p>how: 可以是’left’, ‘right’, ‘outer’, ‘inner’. 默认为inner。</p>
+<p>on: 列名，两个dataframe都有的列。如果不传参数，而且left_index和right_index也等于False，则默认把两者交叉/共有的列作为链接键（join keys）。可以是一个列名，也可以是包含多个列名的list。</p>
+<p>left_on: 左边dataframe的列会用做keys。可以是列名，或者与dataframe长度相同的矩阵array。</p>
+<p>right_on: 右边同上。</p>
+<p>left_index: 如果为Ture，用左侧dataframe的index作为连接键。如果是多维索引，level数要跟右边相同才行。</p>
+<p>right_index: 右边同上。</p>
+<p>sort: 对合并后的数据框排序，以连接键。</p>
+<p>suffixes: 一个tuple，包字符串后缀，用来加在重叠的列名后面。默认是(‘_x’,’_y’)。</p>
+<p>copy: 默认Ture，复制数据。</p>
+<p>indicator: 布尔型（True/FALSE），或是字符串。如果为True，合并之后会增加一列叫做_merge。是分类数据，用left_only, right_only, both来标记来自左边，右边和两边的数据。</p>
+<p>参考：<a href="http://www.jianshu.com/p/dc8ba1c0eada" target="_blank" rel="noopener">http://www.jianshu.com/p/dc8ba1c0eada</a></p>
+<p>希望将上面两个 DataFrame left_data和right_data拼接起来，但要求是按照时间来进行拼接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'按LASTRADEDAY_S拼接，只保留共同的部分'</span>)</span><br><span class="line">pd.merge(data_df,data_df1,on=<span class="string">'LASTRADEDAY_S'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>按LASTRADEDAY_S拼接，只保留共同的部分
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LASTRADEDAY_S</th>
+      <th>SEC_NAME_x</th>
+      <th>OPEN_x</th>
+      <th>HIGH_x</th>
+      <th>LOW_x</th>
+      <th>CLOSE_x</th>
+      <th>SEC_NAME_y</th>
+      <th>OPEN_y</th>
+      <th>HIGH_y</th>
+      <th>LOW_y</th>
+      <th>CLOSE_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>2017-11-01</td>
+      <td>平安银行</td>
+      <td>11.56</td>
+      <td>11.59</td>
+      <td>11.32</td>
+      <td>11.4</td>
+      <td>万科A</td>
+      <td>28.96</td>
+      <td>30.54</td>
+      <td>28.73</td>
+      <td>29.15</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2017-11-02</td>
+      <td>平安银行</td>
+      <td>11.36</td>
+      <td>11.58</td>
+      <td>11.26</td>
+      <td>11.54</td>
+      <td>万科A</td>
+      <td>29.3</td>
+      <td>29.48</td>
+      <td>28.68</td>
+      <td>29.45</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2017-11-03</td>
+      <td>平安银行</td>
+      <td>11.49</td>
+      <td>11.68</td>
+      <td>11.35</td>
+      <td>11.39</td>
+      <td>万科A</td>
+      <td>29.23</td>
+      <td>29.52</td>
+      <td>28.05</td>
+      <td>28.19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'按LASTRADEDAY_S拼接，但所有的数据都保留下来'</span>)</span><br><span class="line">pd.merge(data_df,data_df1,on=<span class="string">'LASTRADEDAY_S'</span>,how=<span class="string">'outer'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>按LASTRADEDAY_S拼接，但所有的数据都保留下来
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LASTRADEDAY_S</th>
+      <th>SEC_NAME_x</th>
+      <th>OPEN_x</th>
+      <th>HIGH_x</th>
+      <th>LOW_x</th>
+      <th>CLOSE_x</th>
+      <th>SEC_NAME_y</th>
+      <th>OPEN_y</th>
+      <th>HIGH_y</th>
+      <th>LOW_y</th>
+      <th>CLOSE_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>2017-11-01</td>
+      <td>平安银行</td>
+      <td>11.56</td>
+      <td>11.59</td>
+      <td>11.32</td>
+      <td>11.4</td>
+      <td>万科A</td>
+      <td>28.96</td>
+      <td>30.54</td>
+      <td>28.73</td>
+      <td>29.15</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2017-11-02</td>
+      <td>平安银行</td>
+      <td>11.36</td>
+      <td>11.58</td>
+      <td>11.26</td>
+      <td>11.54</td>
+      <td>万科A</td>
+      <td>29.3</td>
+      <td>29.48</td>
+      <td>28.68</td>
+      <td>29.45</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2017-11-03</td>
+      <td>平安银行</td>
+      <td>11.49</td>
+      <td>11.68</td>
+      <td>11.35</td>
+      <td>11.39</td>
+      <td>万科A</td>
+      <td>29.23</td>
+      <td>29.52</td>
+      <td>28.05</td>
+      <td>28.19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'LASTRADEDAY_S，但所有的数据都保留下来，且生成一列来表示数据的来源'</span>)</span><br><span class="line">pd.merge(data_df,data_df1,on=<span class="string">'LASTRADEDAY_S'</span>,how=<span class="string">'outer'</span>,indicator=<span class="string">'数据来源'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>LASTRADEDAY_S，但所有的数据都保留下来，且生成一列来表示数据的来源
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LASTRADEDAY_S</th>
+      <th>SEC_NAME_x</th>
+      <th>OPEN_x</th>
+      <th>HIGH_x</th>
+      <th>LOW_x</th>
+      <th>CLOSE_x</th>
+      <th>SEC_NAME_y</th>
+      <th>OPEN_y</th>
+      <th>HIGH_y</th>
+      <th>LOW_y</th>
+      <th>CLOSE_y</th>
+      <th>数据来源</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>2017-11-01</td>
+      <td>平安银行</td>
+      <td>11.56</td>
+      <td>11.59</td>
+      <td>11.32</td>
+      <td>11.4</td>
+      <td>万科A</td>
+      <td>28.96</td>
+      <td>30.54</td>
+      <td>28.73</td>
+      <td>29.15</td>
+      <td>both</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2017-11-02</td>
+      <td>平安银行</td>
+      <td>11.36</td>
+      <td>11.58</td>
+      <td>11.26</td>
+      <td>11.54</td>
+      <td>万科A</td>
+      <td>29.3</td>
+      <td>29.48</td>
+      <td>28.68</td>
+      <td>29.45</td>
+      <td>both</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2017-11-03</td>
+      <td>平安银行</td>
+      <td>11.49</td>
+      <td>11.68</td>
+      <td>11.35</td>
+      <td>11.39</td>
+      <td>万科A</td>
+      <td>29.23</td>
+      <td>29.52</td>
+      <td>28.05</td>
+      <td>28.19</td>
+      <td>both</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="2-7-4-DataFrame拼接—-join"><a href="#2-7-4-DataFrame拼接—-join" class="headerlink" title="2.7.4 DataFrame拼接—.join"></a>2.7.4 DataFrame拼接—.join</h3><p>DataFrame.join(other, on=None, how=’left’, lsuffix=’’, rsuffix=’’, sort=False)</p>
+<p>other：一个DataFrame、Series（要有命名），或者DataFrame组成的list。</p>
+<p>on：列名，包含列名的list或tuple，或矩阵样子的列 （如果是多列，必须有MultiIndex）。 跟上面的几种方法一样，用来指明依据哪一列进行合并。 如果没有赋值，则依据两个数据框的index合并。</p>
+<p>how：合并方式， {‘left’, ‘right’, ‘outer’, ‘inner’}, 默认‘left‘。</p>
+<p>lsuffix：字符串。用于左侧数据框的重复列。 把重复列重新命名，原来的列名+字符串。 【如果有重复列，必须添加这个参数。】</p>
+<p>rsuffix：同上。右侧。</p>
+<p>sort：布尔型，默认False。如果为True，将链接键（on的那列）按字母排序。</p>
+<p>参考：<a href="http://www.jianshu.com/p/dc8ba1c0eada" target="_blank" rel="noopener">http://www.jianshu.com/p/dc8ba1c0eada</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'注意到两个拼接的数据框，含有相同的列LASTRADEDAY_S，故重新命名了这两个列'</span>)</span><br><span class="line">data_df.join(data_df1,lsuffix=<span class="string">'_left'</span>,rsuffix=<span class="string">'_right'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>注意到两个拼接的数据框，含有相同的列LASTRADEDAY_S，故重新命名了这两个列
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LASTRADEDAY_S_left</th>
+      <th>SEC_NAME_left</th>
+      <th>OPEN_left</th>
+      <th>HIGH_left</th>
+      <th>LOW_left</th>
+      <th>CLOSE_left</th>
+      <th>LASTRADEDAY_S_right</th>
+      <th>SEC_NAME_right</th>
+      <th>OPEN_right</th>
+      <th>HIGH_right</th>
+      <th>LOW_right</th>
+      <th>CLOSE_right</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017-11-01</td>
+      <td>2017-11-01</td>
+      <td>平安银行</td>
+      <td>11.56</td>
+      <td>11.59</td>
+      <td>11.32</td>
+      <td>11.4</td>
+      <td>2017-11-01</td>
+      <td>万科A</td>
+      <td>28.96</td>
+      <td>30.54</td>
+      <td>28.73</td>
+      <td>29.15</td>
+    </tr>
+    <tr>
+      <td>2017-11-02</td>
+      <td>2017-11-02</td>
+      <td>平安银行</td>
+      <td>11.36</td>
+      <td>11.58</td>
+      <td>11.26</td>
+      <td>11.54</td>
+      <td>2017-11-02</td>
+      <td>万科A</td>
+      <td>29.3</td>
+      <td>29.48</td>
+      <td>28.68</td>
+      <td>29.45</td>
+    </tr>
+    <tr>
+      <td>2017-11-03</td>
+      <td>2017-11-03</td>
+      <td>平安银行</td>
+      <td>11.49</td>
+      <td>11.68</td>
+      <td>11.35</td>
+      <td>11.39</td>
+      <td>2017-11-03</td>
+      <td>万科A</td>
+      <td>29.23</td>
+      <td>29.52</td>
+      <td>28.05</td>
+      <td>28.19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="2-8-DataFrame重复值剔除"><a href="#2-8-DataFrame重复值剔除" class="headerlink" title="2.8 DataFrame重复值剔除"></a>2.8 DataFrame重复值剔除</h3><p>有时候，希望能够剔除掉DataFrame中的重复记录。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每股基本收益指标</span></span><br><span class="line">error_code,df3 = w.wsd(<span class="string">"000001.SZ"</span>, <span class="string">"fa_eps_basic"</span>, <span class="string">"2017-08-07"</span>, <span class="string">"2017-08-15"</span>, <span class="string">"Days=Alldays;currencyType="</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">df3</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FA_EPS_BASIC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017-08-07</td>
+      <td>0.31</td>
+    </tr>
+    <tr>
+      <td>2017-08-08</td>
+      <td>0.31</td>
+    </tr>
+    <tr>
+      <td>2017-08-09</td>
+      <td>0.31</td>
+    </tr>
+    <tr>
+      <td>2017-08-10</td>
+      <td>0.31</td>
+    </tr>
+    <tr>
+      <td>2017-08-11</td>
+      <td>0.68</td>
+    </tr>
+    <tr>
+      <td>2017-08-12</td>
+      <td>0.68</td>
+    </tr>
+    <tr>
+      <td>2017-08-13</td>
+      <td>0.68</td>
+    </tr>
+    <tr>
+      <td>2017-08-14</td>
+      <td>0.68</td>
+    </tr>
+    <tr>
+      <td>2017-08-15</td>
+      <td>0.68</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'查看DataFrame中是否存在重复记录，标记为True的为重复记录'</span>)</span><br><span class="line">df3.duplicated()</span><br></pre></td></tr></table></figure>
+<pre><code>查看DataFrame中是否存在重复记录，标记为True的为重复记录
+
+2017-08-07    False
+2017-08-08     True
+2017-08-09     True
+2017-08-10     True
+2017-08-11    False
+2017-08-12     True
+2017-08-13     True
+2017-08-14     True
+2017-08-15     True
+dtype: bool
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'剔除数据框中的重复记录'</span>)</span><br><span class="line">df3.drop_duplicates()</span><br></pre></td></tr></table></figure>
+<pre><code>剔除数据框中的重复记录
+</code></pre><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>FA_EPS_BASIC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017-08-07</td>
+      <td>0.31</td>
+    </tr>
+    <tr>
+      <td>2017-08-11</td>
+      <td>0.68</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="2-9-DataFrame分组及透视表（groupby）"><a href="#2-9-DataFrame分组及透视表（groupby）" class="headerlink" title="2.9 DataFrame分组及透视表（groupby）"></a>2.9 DataFrame分组及透视表（groupby）</h3><h4 id="2-9-1-分组——groupby函数"><a href="#2-9-1-分组——groupby函数" class="headerlink" title="2.9.1 分组——groupby函数"></a>2.9.1 分组——groupby函数</h4><p>氦核：这个函数很厉害。下面列几个用法：</p>
+<p>1.根据DataFrame本身的某一列或多列内容进行分组聚合。</p>
+<p>2.还可以利用for循环，对分组进行迭代。（下面举了个小栗子）</p>
+<pre><code>for name,group in df.groupby(&#39;key1&#39;):
+    print(name) 
+    print(group)
+</code></pre><p>若仅使用一个变量name,会影响输出结果的索引层次表达方式，且结果为元组。</p>
+<p>3.对聚合后的数据片段，进行格式类型转化</p>
+<p>4.利用groupby，根据dtypes对列进行分组,此时，需指定<code>axis=1</code>，否则，groupby默认根据<code>axis=0</code>进行分组，而行数据由于类型不统一，故无法根据dtypes对列进行分组。</p>
+<pre><code>*#将聚合后df转化为字典格式，后根据df的数据类型对列进行分组* 
+grouped=df.groupby(df.dtypes,axis=1) dict(list(grouped))
+</code></pre><p>我们设定，如果当天收益率大于0，我们标记为up，反之为down。把收盘价大于11的标记为good，反之为bad。正式举例。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> WindPy <span class="keyword">import</span> *</span><br><span class="line">w.start()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先取一个金融时间序列，以DataFrame的形式</span></span><br><span class="line">error_code,df4 = w.wsd(<span class="string">"000001.SZ"</span>, <span class="string">"open,close,pct_chg"</span>, <span class="string">"2018-04-20"</span>, <span class="string">"2018-04-30"</span>, <span class="string">""</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">df4[<span class="string">'standard'</span>] = df4.PCT_CHG.apply(<span class="keyword">lambda</span> x: <span class="string">'up'</span> <span class="keyword">if</span> x &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="string">'down'</span>)</span><br><span class="line">df4[<span class="string">'expression'</span>] = df4.CLOSE.apply(<span class="keyword">lambda</span> x: <span class="string">'good'</span> <span class="keyword">if</span> x &gt; <span class="number">11</span> <span class="keyword">else</span> <span class="string">'bad'</span>)</span><br><span class="line">df4</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>CLOSE</th>
+      <th>PCT_CHG</th>
+      <th>standard</th>
+      <th>expression</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2018-04-20</td>
+      <td>11.51</td>
+      <td>11.35</td>
+      <td>-1.046207</td>
+      <td>down</td>
+      <td>good</td>
+    </tr>
+    <tr>
+      <td>2018-04-23</td>
+      <td>11.30</td>
+      <td>11.57</td>
+      <td>1.938326</td>
+      <td>up</td>
+      <td>good</td>
+    </tr>
+    <tr>
+      <td>2018-04-24</td>
+      <td>11.63</td>
+      <td>11.86</td>
+      <td>2.506482</td>
+      <td>up</td>
+      <td>good</td>
+    </tr>
+    <tr>
+      <td>2018-04-25</td>
+      <td>11.76</td>
+      <td>11.68</td>
+      <td>-1.517707</td>
+      <td>down</td>
+      <td>good</td>
+    </tr>
+    <tr>
+      <td>2018-04-26</td>
+      <td>11.66</td>
+      <td>11.42</td>
+      <td>-2.226027</td>
+      <td>down</td>
+      <td>good</td>
+    </tr>
+    <tr>
+      <td>2018-04-27</td>
+      <td>11.49</td>
+      <td>10.85</td>
+      <td>-4.991243</td>
+      <td>down</td>
+      <td>bad</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grouped = df4[<span class="string">'CLOSE'</span>].groupby(df4[<span class="string">'standard'</span>])</span><br><span class="line">grouped</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;pandas.core.groupby.generic.SeriesGroupBy object at 0x0000020B26C63648&gt;
+</code></pre><p>氦核：上面这行是聚合后不适用配合函数的输出。</p>
+<p>这是由于变量grouped是一个GroupBy对象，它实际上还没有进行任何计算，只是含有一些有关分组键<code>df[‘key1’]</code>的中间数据而已，然后我们可以调用配合函数（如：.mean()方法）来计算分组平均值等。<br>　　因此，一般为方便起见可直接在<strong>聚合之后+“配合函数”</strong>，默认情况下，所有数值列都将会被聚合，虽然有时可能会被过滤为一个子集。<br>　　一般，如果对df直接聚合时，<br><code>df.groupby([df[&#39;key1&#39;],df[&#39;key2&#39;]]).mean()</code>（分组键为：Series）与<code>df.groupby([&#39;key1&#39;,&#39;key2&#39;]).mean()</code>（分组键为：列名）是等价的，输出结果相同。<br>　　但是，如果对df的指定列进行聚合时，<br><code>df[&#39;data1&#39;].groupby(df[&#39;key1&#39;]).mean()</code>（分组键为：Series），唯一方式。<br>此时，直接使用“列名”作分组键，提示“Error Key”。<br>　　 注意：分组键中的任何缺失值都会被排除在结果之外。</p>
+<p><a href="https://blog.csdn.net/weixin_42782150/article/details/90716533" target="_blank" rel="noopener">参考groupby用法博客链接</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grouped.mean()</span><br></pre></td></tr></table></figure>
+<pre><code>standard
+down    11.325
+up      11.715
+Name: CLOSE, dtype: float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">means = df4[<span class="string">'CLOSE'</span>].groupby([df4[<span class="string">'standard'</span>],df4[<span class="string">'expression'</span>]]).mean()</span><br><span class="line">means</span><br></pre></td></tr></table></figure>
+<pre><code>standard  expression
+down      bad           10.850000
+          good          11.483333
+up        good          11.715000
+Name: CLOSE, dtype: float64
+</code></pre><p>对两个键进行了分组，得到的Series具有一个层次化索引。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">means.unstack()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>expression</th>
+      <th>bad</th>
+      <th>good</th>
+    </tr>
+    <tr>
+      <th>standard</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>down</td>
+      <td>10.85</td>
+      <td>11.483333</td>
+    </tr>
+    <tr>
+      <td>up</td>
+      <td>NaN</td>
+      <td>11.715000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>你还可以将列名用作分组键。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df4.groupby(<span class="string">'standard'</span>).mean()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>CLOSE</th>
+      <th>PCT_CHG</th>
+    </tr>
+    <tr>
+      <th>standard</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>down</td>
+      <td>11.605</td>
+      <td>11.325</td>
+      <td>-2.445296</td>
+    </tr>
+    <tr>
+      <td>up</td>
+      <td>11.465</td>
+      <td>11.715</td>
+      <td>2.222404</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df4.groupby([df4[<span class="string">'standard'</span>],df4[<span class="string">'expression'</span>]]).mean()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>OPEN</th>
+      <th>CLOSE</th>
+      <th>PCT_CHG</th>
+    </tr>
+    <tr>
+      <th>standard</th>
+      <th>expression</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2" valign="top">down</td>
+      <td>bad</td>
+      <td>11.490000</td>
+      <td>10.850000</td>
+      <td>-4.991243</td>
+    </tr>
+    <tr>
+      <td>good</td>
+      <td>11.643333</td>
+      <td>11.483333</td>
+      <td>-1.596647</td>
+    </tr>
+    <tr>
+      <td>up</td>
+      <td>good</td>
+      <td>11.465000</td>
+      <td>11.715000</td>
+      <td>2.222404</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>我们还可以用size方法，返回一个含有分组大小的Series。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df4.groupby([<span class="string">'standard'</span>,<span class="string">'expression'</span>]).size()</span><br></pre></td></tr></table></figure>
+<pre><code>standard  expression
+down      bad           1
+          good          3
+up        good          2
+dtype: int64
+</code></pre><h4 id="2-9-2-对分组进行迭代"><a href="#2-9-2-对分组进行迭代" class="headerlink" title="2.9.2 对分组进行迭代"></a>2.9.2 对分组进行迭代</h4><p>GroupBy对象支持迭代，可以产生一组二元元组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> name,group <span class="keyword">in</span> df4.groupby(<span class="string">'standard'</span>):</span><br><span class="line">    print(name)</span><br><span class="line">    print(group)</span><br></pre></td></tr></table></figure>
+<pre><code>down
+             OPEN  CLOSE   PCT_CHG standard expression
+2018-04-20  11.51  11.35 -1.046207     down       good
+2018-04-25  11.76  11.68 -1.517707     down       good
+2018-04-26  11.66  11.42 -2.226027     down       good
+2018-04-27  11.49  10.85 -4.991243     down        bad
+up
+             OPEN  CLOSE   PCT_CHG standard expression
+2018-04-23  11.30  11.57  1.938326       up       good
+2018-04-24  11.63  11.86  2.506482       up       good
+</code></pre><p>对于<strong>多重组件</strong>的情况，元素的第一个元素将会是有键值组成的元组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (k1,k2), group <span class="keyword">in</span> df4.groupby([<span class="string">'standard'</span>,<span class="string">'expression'</span>]):</span><br><span class="line">    print(k1,k2)</span><br><span class="line">    print(group)</span><br></pre></td></tr></table></figure>
+<pre><code>down bad
+             OPEN  CLOSE   PCT_CHG standard expression
+2018-04-27  11.49  10.85 -4.991243     down        bad
+down good
+             OPEN  CLOSE   PCT_CHG standard expression
+2018-04-20  11.51  11.35 -1.046207     down       good
+2018-04-25  11.76  11.68 -1.517707     down       good
+2018-04-26  11.66  11.42 -2.226027     down       good
+up good
+             OPEN  CLOSE   PCT_CHG standard expression
+2018-04-23  11.30  11.57  1.938326       up       good
+2018-04-24  11.63  11.86  2.506482       up       good
+</code></pre><p>当然，你可以对这些数据片段做任何操作。将这些数据片段做成一个字典：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pieces = dict(list(df4.groupby(<span class="string">'standard'</span>)))</span><br><span class="line">pieces</span><br></pre></td></tr></table></figure>
+<pre><code>{&#39;down&#39;:              OPEN  CLOSE   PCT_CHG standard expression
+ 2018-04-20  11.51  11.35 -1.046207     down       good
+ 2018-04-25  11.76  11.68 -1.517707     down       good
+ 2018-04-26  11.66  11.42 -2.226027     down       good
+ 2018-04-27  11.49  10.85 -4.991243     down        bad,
+ &#39;up&#39;:              OPEN  CLOSE   PCT_CHG standard expression
+ 2018-04-23  11.30  11.57  1.938326       up       good
+ 2018-04-24  11.63  11.86  2.506482       up       good}
+</code></pre><p>groupby默认是在<code>axis=0</code>上进行分组的。通过设置也可以对其他任何轴上进行分组。比如我们可以根据dtype对列进行分组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df4.dtypes</span><br></pre></td></tr></table></figure>
+<pre><code>OPEN          float64
+CLOSE         float64
+PCT_CHG       float64
+standard       object
+expression     object
+dtype: object
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grouped = df4.groupby(df4.dtypes,axis=<span class="number">1</span>)</span><br><span class="line">dict(list(grouped))</span><br></pre></td></tr></table></figure>
+<pre><code>{dtype(&#39;float64&#39;):              OPEN  CLOSE   PCT_CHG
+ 2018-04-20  11.51  11.35 -1.046207
+ 2018-04-23  11.30  11.57  1.938326
+ 2018-04-24  11.63  11.86  2.506482
+ 2018-04-25  11.76  11.68 -1.517707
+ 2018-04-26  11.66  11.42 -2.226027
+ 2018-04-27  11.49  10.85 -4.991243, dtype(&#39;O&#39;):            standard expression
+ 2018-04-20     down       good
+ 2018-04-23       up       good
+ 2018-04-24       up       good
+ 2018-04-25     down       good
+ 2018-04-26     down       good
+ 2018-04-27     down        bad}
+</code></pre><h4 id="2-9-3-选取一个或一组列"><a href="#2-9-3-选取一个或一组列" class="headerlink" title="2.9.3 选取一个或一组列"></a>2.9.3 选取一个或一组列</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df4.groupby([<span class="string">'standard'</span>,<span class="string">'expression'</span>])[[<span class="string">'CLOSE'</span>]].mean() <span class="comment"># 在['CLOSE']前后再多加一组[]即可</span></span><br></pre></td></tr></table></figure>
+<p>氦核：再加一个中括号。</p>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>CLOSE</th>
+    </tr>
+    <tr>
+      <th>standard</th>
+      <th>expression</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2" valign="top">down</td>
+      <td>bad</td>
+      <td>10.850000</td>
+    </tr>
+    <tr>
+      <td>good</td>
+      <td>11.483333</td>
+    </tr>
+    <tr>
+      <td>up</td>
+      <td>good</td>
+      <td>11.715000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>或者是以分组的Series:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s_grouped = df4.groupby([<span class="string">'standard'</span>,<span class="string">'expression'</span>])[<span class="string">'CLOSE'</span>]</span><br><span class="line">s_grouped.mean()</span><br></pre></td></tr></table></figure>
+<pre><code>standard  expression
+down      bad           10.850000
+          good          11.483333
+up        good          11.715000
+Name: CLOSE, dtype: float64
+</code></pre><h4 id="2-9-4-通过字典或者Series进行分组"><a href="#2-9-4-通过字典或者Series进行分组" class="headerlink" title="2.9.4 通过字典或者Series进行分组"></a>2.9.4 通过字典或者Series进行分组</h4><p>除数组以外，分组信息还可以以其他形式存在。我们新构建一个DataFrame。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error_code,df_wss = w.wss(<span class="string">"000001.SZ,000088.SZ,002626.SZ,600021.SH,600036.SH"</span>, <span class="string">"open,high,low,volume,amt,pct_chg"</span>, <span class="string">"tradeDate=2018-05-29;priceAdj=1;cycle=1"</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">df_wss</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>VOLUME</th>
+      <th>AMT</th>
+      <th>PCT_CHG</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>000001.SZ</td>
+      <td>10.58</td>
+      <td>10.63</td>
+      <td>10.35</td>
+      <td>88949497.0</td>
+      <td>9.303870e+08</td>
+      <td>-1.983003</td>
+    </tr>
+    <tr>
+      <td>000088.SZ</td>
+      <td>7.65</td>
+      <td>7.79</td>
+      <td>7.61</td>
+      <td>9731389.0</td>
+      <td>7.493758e+07</td>
+      <td>-0.260756</td>
+    </tr>
+    <tr>
+      <td>002626.SZ</td>
+      <td>19.13</td>
+      <td>19.72</td>
+      <td>18.97</td>
+      <td>7058799.0</td>
+      <td>1.367769e+08</td>
+      <td>-0.679561</td>
+    </tr>
+    <tr>
+      <td>600021.SH</td>
+      <td>8.15</td>
+      <td>8.20</td>
+      <td>8.10</td>
+      <td>2065681.0</td>
+      <td>1.685831e+07</td>
+      <td>-0.368098</td>
+    </tr>
+    <tr>
+      <td>600036.SH</td>
+      <td>28.65</td>
+      <td>28.98</td>
+      <td>28.41</td>
+      <td>48053415.0</td>
+      <td>1.376605e+09</td>
+      <td>0.486111</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加几个空值NAN</span></span><br><span class="line">df_wss.ix[<span class="number">2</span>:<span class="number">3</span>, [<span class="string">'OPEN'</span>,<span class="string">'HIGH'</span>]] = np.nan</span><br><span class="line">df_wss</span><br></pre></td></tr></table></figure>
+<pre><code>D:\anaconda\lib\site-packages\ipykernel_launcher.py:2: FutureWarning: 
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+</code></pre><p>​    </p>
+<p>氦核：依然不建议使用ix。</p>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>VOLUME</th>
+      <th>AMT</th>
+      <th>PCT_CHG</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>000001.SZ</td>
+      <td>10.58</td>
+      <td>10.63</td>
+      <td>10.35</td>
+      <td>88949497.0</td>
+      <td>9.303870e+08</td>
+      <td>-1.983003</td>
+    </tr>
+    <tr>
+      <td>000088.SZ</td>
+      <td>7.65</td>
+      <td>7.79</td>
+      <td>7.61</td>
+      <td>9731389.0</td>
+      <td>7.493758e+07</td>
+      <td>-0.260756</td>
+    </tr>
+    <tr>
+      <td>002626.SZ</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>18.97</td>
+      <td>7058799.0</td>
+      <td>1.367769e+08</td>
+      <td>-0.679561</td>
+    </tr>
+    <tr>
+      <td>600021.SH</td>
+      <td>8.15</td>
+      <td>8.20</td>
+      <td>8.10</td>
+      <td>2065681.0</td>
+      <td>1.685831e+07</td>
+      <td>-0.368098</td>
+    </tr>
+    <tr>
+      <td>600036.SH</td>
+      <td>28.65</td>
+      <td>28.98</td>
+      <td>28.41</td>
+      <td>48053415.0</td>
+      <td>1.376605e+09</td>
+      <td>0.486111</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>假设已知列的分组关系，并希望根据分组计算列的总和：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapping = &#123;<span class="string">'OPEN'</span>:<span class="string">'r'</span>,<span class="string">'HIGH'</span>:<span class="string">'r'</span>,<span class="string">'LOW'</span>:<span class="string">'b'</span>,<span class="string">'VOLUME'</span>:<span class="string">'b'</span>,<span class="string">'AMT'</span>:<span class="string">'b'</span>,<span class="string">'PCT_CHG'</span>:<span class="string">'o'</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>只需要将这个字典传给groupby即可：（行方向）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">by_colum = df_wss.groupby(mapping,axis=<span class="number">1</span>)</span><br><span class="line">by_colum.sum()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b</th>
+      <th>o</th>
+      <th>r</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>000001.SZ</td>
+      <td>1.019336e+09</td>
+      <td>-1.983003</td>
+      <td>21.21</td>
+    </tr>
+    <tr>
+      <td>000088.SZ</td>
+      <td>8.466897e+07</td>
+      <td>-0.260756</td>
+      <td>15.44</td>
+    </tr>
+    <tr>
+      <td>002626.SZ</td>
+      <td>1.438358e+08</td>
+      <td>-0.679561</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>600021.SH</td>
+      <td>1.892400e+07</td>
+      <td>-0.368098</td>
+      <td>16.35</td>
+    </tr>
+    <tr>
+      <td>600036.SH</td>
+      <td>1.424658e+09</td>
+      <td>0.486111</td>
+      <td>57.63</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>Series也有这样的功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map_series = pd.Series(mapping)</span><br><span class="line">map_series</span><br></pre></td></tr></table></figure>
+<pre><code>OPEN       r
+HIGH       r
+LOW        b
+VOLUME     b
+AMT        b
+PCT_CHG    o
+dtype: object
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_wss.groupby(map_series,axis=<span class="number">1</span>).count()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b</th>
+      <th>o</th>
+      <th>r</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>000001.SZ</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>000088.SZ</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>002626.SZ</td>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>600021.SH</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>600036.SH</td>
+      <td>3</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h4 id="2-9-5-根据索引级别分组"><a href="#2-9-5-根据索引级别分组" class="headerlink" title="2.9.5 根据索引级别分组"></a>2.9.5 根据索引级别分组</h4><p>层次化索引数据最方便的地方就是在于它能够根据索引级别进行聚合。要实现该目的，通过level关键字传入级别编号或名称即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_wss</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>VOLUME</th>
+      <th>AMT</th>
+      <th>PCT_CHG</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>000001.SZ</td>
+      <td>10.58</td>
+      <td>10.63</td>
+      <td>10.35</td>
+      <td>88949497.0</td>
+      <td>9.303870e+08</td>
+      <td>-1.983003</td>
+    </tr>
+    <tr>
+      <td>000088.SZ</td>
+      <td>7.65</td>
+      <td>7.79</td>
+      <td>7.61</td>
+      <td>9731389.0</td>
+      <td>7.493758e+07</td>
+      <td>-0.260756</td>
+    </tr>
+    <tr>
+      <td>002626.SZ</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>18.97</td>
+      <td>7058799.0</td>
+      <td>1.367769e+08</td>
+      <td>-0.679561</td>
+    </tr>
+    <tr>
+      <td>600021.SH</td>
+      <td>8.15</td>
+      <td>8.20</td>
+      <td>8.10</td>
+      <td>2065681.0</td>
+      <td>1.685831e+07</td>
+      <td>-0.368098</td>
+    </tr>
+    <tr>
+      <td>600036.SH</td>
+      <td>28.65</td>
+      <td>28.98</td>
+      <td>28.41</td>
+      <td>48053415.0</td>
+      <td>1.376605e+09</td>
+      <td>0.486111</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">columns = pd.MultiIndex.from_arrays([[<span class="string">'行情'</span>,<span class="string">'行情'</span>,<span class="string">'行情'</span>,<span class="string">'量'</span>,<span class="string">'量'</span>,<span class="string">'幅度'</span>],</span><br><span class="line">                                     [<span class="string">'OPEN'</span>,<span class="string">'HIGH'</span>,<span class="string">'LOW'</span>,<span class="string">'VOLUME'</span>,<span class="string">'AMT'</span>,<span class="string">'PCT_CHG'</span>]],names=[<span class="string">'s1'</span>,<span class="string">'s2'</span>])</span><br><span class="line">hier_df = pd.DataFrame(df_wss.values, columns=columns,index=df_wss.index)</span><br><span class="line">hier_df</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th>s1</th>
+      <th colspan="3" halign="left">行情</th>
+      <th colspan="2" halign="left">量</th>
+      <th>幅度</th>
+    </tr>
+    <tr>
+      <th>s2</th>
+      <th>OPEN</th>
+      <th>HIGH</th>
+      <th>LOW</th>
+      <th>VOLUME</th>
+      <th>AMT</th>
+      <th>PCT_CHG</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>000001.SZ</td>
+      <td>10.58</td>
+      <td>10.63</td>
+      <td>10.35</td>
+      <td>88949497.0</td>
+      <td>9.303870e+08</td>
+      <td>-1.983003</td>
+    </tr>
+    <tr>
+      <td>000088.SZ</td>
+      <td>7.65</td>
+      <td>7.79</td>
+      <td>7.61</td>
+      <td>9731389.0</td>
+      <td>7.493758e+07</td>
+      <td>-0.260756</td>
+    </tr>
+    <tr>
+      <td>002626.SZ</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>18.97</td>
+      <td>7058799.0</td>
+      <td>1.367769e+08</td>
+      <td>-0.679561</td>
+    </tr>
+    <tr>
+      <td>600021.SH</td>
+      <td>8.15</td>
+      <td>8.20</td>
+      <td>8.10</td>
+      <td>2065681.0</td>
+      <td>1.685831e+07</td>
+      <td>-0.368098</td>
+    </tr>
+    <tr>
+      <td>600036.SH</td>
+      <td>28.65</td>
+      <td>28.98</td>
+      <td>28.41</td>
+      <td>48053415.0</td>
+      <td>1.376605e+09</td>
+      <td>0.486111</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hier_df.groupby(level=<span class="string">'s1'</span>,axis=<span class="number">1</span>).count()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>s1</th>
+      <th>幅度</th>
+      <th>行情</th>
+      <th>量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>000001.SZ</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>000088.SZ</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>002626.SZ</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>600021.SH</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>600036.SH</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+<p>（完）</p>
+<p>依然鸣谢：某大哥假粉。愿四下空虚的灵魂皆能得以慰藉。</p>
+
+          </br>
+          <p>本文链接：
+              <a href="https://konelane.github.io/2020/02/06/200206pandaslearning/">
+                  https://konelane.github.io/2020/02/06/200206pandaslearning/
+              </a>
+          </p>
+          <p>-- <acronym title="End of File">EOF</acronym> --</p>
+          <div class="post-info">
+              <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+              <p> 
+                    
+               </p>
+          </div>
+          
+          
+      </div>
+
+      
+  </div>
+  
+      
+  
+  
+      
+          <div class="donateContainer">
+    <div>￥^￥赞助将用于氦核一人咖啡绿茶优酸乳费用（唉</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+      
+  
+  
+    
+        <section id="comments" class="comments">
+        <style>
+            .comments{margin:30px;padding:10px;background:#fff}
+            @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+        </style>
+        <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "https://sdn.geekzu.org/avatar/",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+    </section>
+    
+  
+
+</article>
+
+
+<script>
+  var isMobile = {
+      Android: function () {
+          return navigator.userAgent.match(/Android/i);
+      },
+      BlackBerry: function () {
+          return navigator.userAgent.match(/BlackBerry/i);
+      },
+      iOS: function () {
+          return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+      },
+      Opera: function () {
+          return navigator.userAgent.match(/Opera Mini/i);
+      },
+      Windows: function () {
+          return navigator.userAgent.match(/IEMobile/i);
+      },
+      any: function () {
+          return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+              isMobile.Windows());
+      }
+  };
+  if (isMobile.any()) {
+      //移动端不显示目录和评论
+      $("#toc-button").css("display", "none");
+      $("#commentDiv").css("display", "none");
+  }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>
