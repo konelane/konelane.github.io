@@ -15,15 +15,15 @@
 <meta property="og:site_name" content="KOneLane">
 <meta property="og:description" content="对spark进行一些补充介绍。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://konelane.github.io/2020/11/12/201112hadoop/11/12/201112hadoop/tu1.png">
-<meta property="og:image" content="https://konelane.github.io/2020/11/12/201112hadoop/11/12/201112hadoop/tu2.png">
-<meta property="og:image" content="https://konelane.github.io/2020/11/12/201112hadoop/11/12/201112hadoop/tu3.png">
-<meta property="og:image" content="https://konelane.github.io/2020/11/12/201112hadoop/11/12/201112hadoop/tu4.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/12/201112hadoop/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/12/201112hadoop/tu2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/12/201112hadoop/tu3.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/12/201112hadoop/tu4.png">
 <meta property="og:updated_time" content="2020-12-31T02:17:30.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式1112-Spark简单功能补充介绍">
 <meta name="twitter:description" content="对spark进行一些补充介绍。">
-<meta name="twitter:image" content="https://konelane.github.io/2020/11/12/201112hadoop/11/12/201112hadoop/tu1.png">
+<meta name="twitter:image" content="https://konelane.github.io/2020/11/12/201112hadoop/tu1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -366,7 +366,7 @@
 <p>MEMORY_ONLY_2</p>
 </blockquote>
 <p>内存不够则会报错</p>
-<img src="/2020/11/12/201112hadoop/11/12/201112hadoop/tu1.png" title="tu1">
+<img src="/2020/11/12/201112hadoop/tu1.png" title="tu1">
 <h3 id="二、Spark的一些特别之处"><a href="#二、Spark的一些特别之处" class="headerlink" title="二、Spark的一些特别之处"></a>二、Spark的一些特别之处</h3><h4 id="1-广播"><a href="#1-广播" class="headerlink" title="1. 广播"></a>1. 广播</h4><p>分布式最重要的是“数据共享”使得不同节点之间能够用一个数据。</p>
 <p>比如正态分布的概率密度函数，π就如此，共享，但不修改。</p>
 <blockquote>
@@ -416,11 +416,11 @@
 <p>各种语言都支持。</p>
 <h3 id="三、战斗案例"><a href="#三、战斗案例" class="headerlink" title="三、战斗案例"></a>三、战斗案例</h3><p>目标，处理分布式的DataFrame，首先启动SC。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pyspark.sql import SparkSession</span><br><span class="line">spark = SparkSession.builder.appName(&quot;Python Spark&quot;).getOrCreate()</span><br><span class="line">spark # test if Spark session is created or not</span><br><span class="line"></span><br><span class="line">sc = spark.sparkContext # make a spakr context for RDD</span><br><span class="line">sc</span><br></pre></td></tr></table></figure>
-<img src="/2020/11/12/201112hadoop/11/12/201112hadoop/tu2.png" title="tu2">
-<img src="/2020/11/12/201112hadoop/11/12/201112hadoop/tu3.png" title="tu3">
+<img src="/2020/11/12/201112hadoop/tu2.png" title="tu2">
+<img src="/2020/11/12/201112hadoop/tu3.png" title="tu3">
 <p>spark有read函数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sdf = spark.read.csv(&quot;/opt/apps/ecm/service/spark/2.4.4/package/spark-2.4.4-bin-hadoop2.7/examples/src/main/resources/people.txt&quot;)</span><br><span class="line">sdf.show() # Displays the content of the DataFrame to stdout</span><br></pre></td></tr></table></figure>
-<img src="/2020/11/12/201112hadoop/11/12/201112hadoop/tu4.png" title="tu4">
+<img src="/2020/11/12/201112hadoop/tu4.png" title="tu4">
 <p>这个就是分布式上的表。</p>
 <p>json格式可以直接读取（spark.read.json）</p>
 <h4 id="schema"><a href="#schema" class="headerlink" title="schema"></a>schema</h4><p>属于读取表格时的表头信息。名字，类型，缺失等等。</p>

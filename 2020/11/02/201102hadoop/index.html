@@ -15,17 +15,17 @@
 <meta property="og:site_name" content="KOneLane">
 <meta property="og:description" content="hadoop以及MapReduce暂告一段落！ 这一节我们做个过渡，讲一讲Hive以及Spark。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/11/02/201102hadoop/tu1.png">
-<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/11/02/201102hadoop/tu2.png">
-<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/11/02/201102hadoop/tu3.png">
-<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/11/02/201102hadoop/tu4.png">
-<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/11/02/201102hadoop/tu5.png">
-<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/11/02/201102hadoop/tu6.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/tu2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/tu3.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/tu4.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/tu5.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/201102hadoop/tu6.png">
 <meta property="og:updated_time" content="2020-12-30T09:10:23.494Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式1102-Hi,Hive!Hi,Spark!">
 <meta name="twitter:description" content="hadoop以及MapReduce暂告一段落！ 这一节我们做个过渡，讲一讲Hive以及Spark。">
-<meta name="twitter:image" content="https://konelane.github.io/2020/11/02/201102hadoop/11/02/201102hadoop/tu1.png">
+<meta name="twitter:image" content="https://konelane.github.io/2020/11/02/201102hadoop/tu1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -387,9 +387,9 @@
 <p>Hive -f /path/to/file/withqueries.hql</p>
 </blockquote>
 <p>hql（hive的文本文件，与sql区分）</p>
-<img src="/2020/11/02/201102hadoop/11/02/201102hadoop/tu1.png" title="tu1">
+<img src="/2020/11/02/201102hadoop/tu1.png" title="tu1">
 <p>输入hive可以进入终端</p>
-<img src="/2020/11/02/201102hadoop/11/02/201102hadoop/tu2.png" title="tu2">
+<img src="/2020/11/02/201102hadoop/tu2.png" title="tu2">
 <p>操作时，在终端中可以直接输入dfs -ls /;    （别忘了分号）</p>
 <p>注：sql语言的特点——对大小写不敏感，语句中可以小写可以大写。但是对表的字段依然敏感。</p>
 <blockquote>
@@ -401,7 +401,7 @@
 <p>Create database if not exists mydb;</p>
 </blockquote>
 <p> if not exists（是一个条件，如果有了就不会再创建，如果没有的话就创建）</p>
-<img src="/2020/11/02/201102hadoop/11/02/201102hadoop/tu3.png" title="tu3">
+<img src="/2020/11/02/201102hadoop/tu3.png" title="tu3">
 <p>数据库下有表，mydb不指定文件夹，就在warehouse的文件夹下。</p>
 <p>location参数可以指定创建的位置</p>
 <blockquote>
@@ -456,7 +456,7 @@
 <p>spark也可以运行在其他分布式平台上，各种各样的平台上都有spark接口。易用性使其广泛普及。</p>
 <p>spark提供了hive的集成。不过select不能写很复杂。但是通过spark可以先让spark执行select，再让hive执行。</p>
 <p>快的原因：</p>
-<img src="/2020/11/02/201102hadoop/11/02/201102hadoop/tu4.png" title="tu4">
+<img src="/2020/11/02/201102hadoop/tu4.png" title="tu4">
 <blockquote>
 <p>1.很多worker节点，worker之间交互很快（通过交换机）<br>2.worker上可以运行很多任务（executor）<br>3.每个worker上都有一些存储最常用数据的内存</p>
 </blockquote>
@@ -488,9 +488,9 @@
 <p>X = [1,2,3,…,1000] </p>
 <p>Sumfunc(**x)</p>
 <p>登录服务器，输入spark-shell</p>
-<img src="/2020/11/02/201102hadoop/11/02/201102hadoop/tu5.png" title="tu5">
+<img src="/2020/11/02/201102hadoop/tu5.png" title="tu5">
 <p>使用pyspark要输入神秘代码（就是python的版本，配置时一定要与spark版本对应起来，比如服务器只能用3.6版本的python）</p>
-<img src="/2020/11/02/201102hadoop/11/02/201102hadoop/tu6.png" title="tu6">
+<img src="/2020/11/02/201102hadoop/tu6.png" title="tu6">
 <p>或者直接在python中import pyspark，有时候需要先import findspark。</p>
 <h4 id="Spark的API"><a href="#Spark的API" class="headerlink" title="Spark的API"></a>Spark的API</h4><p>rdd是什么（resilient distributed dataset）RDD是Spark里最重要的一个概念。</p>
 <p>任何一个spark都可以通过rdd对象连接起来，也允许用户部署任何计算。</p>
