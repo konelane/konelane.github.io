@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>datasets（R自带数据包） | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="众所周知，r语言自带很多好用的数据。他们就像代码功能大江之下的暗流，虽然使用者通常难见其全貌，但它却能却将它深深的影响传给江面上的我们。今天氦核就领着大家来见识一下这神奇的暗流~">
+<meta name="keywords" content="R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="datasets（R自带数据包）">
+<meta property="og:url" content="https://konelane.github.io/2018/04/15/datasets（R自带数据包）/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="众所周知，r语言自带很多好用的数据。他们就像代码功能大江之下的暗流，虽然使用者通常难见其全貌，但它却能却将它深深的影响传给江面上的我们。今天氦核就领着大家来见识一下这神奇的暗流~">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-22T15:52:23.106Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="datasets（R自带数据包）">
+<meta name="twitter:description" content="众所周知，r语言自带很多好用的数据。他们就像代码功能大江之下的暗流，虽然使用者通常难见其全貌，但它却能却将它深深的影响传给江面上的我们。今天氦核就领着大家来见识一下这神奇的暗流~">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-datasets（R自带数据包）" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2018/04/15/datasets（R自带数据包）/" class="article-date">
+  	<time datetime="2018-04-14T16:00:00.000Z" itemprop="datePublished">2018-04-15</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      datasets（R自带数据包）
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/R/">R</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#向量"><span class="toc-number">1.</span> <span class="toc-text">向量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#因子"><span class="toc-number">2.</span> <span class="toc-text">因子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵、数组"><span class="toc-number">3.</span> <span class="toc-text">矩阵、数组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类矩阵"><span class="toc-number">4.</span> <span class="toc-text">类矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据框"><span class="toc-number">5.</span> <span class="toc-text">数据框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#列表"><span class="toc-number">6.</span> <span class="toc-text">列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类数据框"><span class="toc-number">7.</span> <span class="toc-text">类数据框</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间序列数据"><span class="toc-number">8.</span> <span class="toc-text">时间序列数据</span></a></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>众所周知，r语言自带很多好用的数据。他们就像代码功能大江之下的暗流，虽然使用者通常难见其全貌，但它却能却将它深深的影响传给江面上的我们。<br>今天氦核就领着大家来见识一下这神奇的暗流~<br><a id="more"></a></p>
+<h2 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h2><p>euro    #欧元汇率，长度为11，每个元素都有命名<br>landmasses    #48个陆地的面积，每个都有命名<br>precip    #长度为70的命名向量<br>rivers    #北美141条河流长度<br>state.abb    #美国50个州的双字母缩写<br>state.area    #美国50个州的面积<br>state.name    #美国50个州的全称</p>
+<h2 id="因子"><a href="#因子" class="headerlink" title="因子"></a>因子</h2><p>state.division    #美国50个州的分类，9个类别<br>state.region    #美国50个州的地理分类</p>
+<h2 id="矩阵、数组"><a href="#矩阵、数组" class="headerlink" title="矩阵、数组"></a>矩阵、数组</h2><p>euro.cross    #11种货币的汇率矩阵<br>freeny.x    #每个季度影响收入四个因素的记录<br>state.x77    #美国50个州的八个指标<br>USPersonalExpenditure    #5个年份在5个消费方向的数据<br>VADeaths    #1940年弗吉尼亚州死亡率（每千人）<br>volcano    #某火山区的地理信息（10米×10米的网格）<br>WorldPhones    #8个区域在7个年份的电话总数<br>iris3    #3种鸢尾花形态数据<br>Titanic    #泰坦尼克乘员统计<br>UCBAdmissions    #伯克利分校1973年院系、录取和性别的频数<br>crimtab    #3000个男性罪犯左手中指长度和身高关系<br>HairEyeColor    #592人头发颜色、眼睛颜色和性别的频数<br>occupationalStatus    #英国男性父子职业联系</p>
+<h2 id="类矩阵"><a href="#类矩阵" class="headerlink" title="类矩阵"></a>类矩阵</h2><p>eurodist    #欧洲12个城市的距离矩阵，只有下三角部分<br>Harman23.cor    #305个女孩八个形态指标的相关系数矩阵<br>Harman74.cor    #145个儿童24个心理指标的相关系数矩阵</p>
+<h2 id="数据框"><a href="#数据框" class="headerlink" title="数据框"></a>数据框</h2><p>airquality    #纽约1973年5-9月每日空气质量<br>anscombe    #四组x-y数据，虽有相似的统计量，但实际数据差别较大<br>attenu    #多个观测站对加利福尼亚23次地震的观测数据<br>attitude    #30个部门在七个方面的调查结果，调查结果是同一部门35个职员赞成的百分比<br>beaver1    #一只海狸每10分钟的体温数据，共114条数据<br>beaver2    #另一只海狸每10分钟的体温数据，共100条数据<br>BOD    #随水质的提高，生化反应对氧的需求（mg/l）随时间（天）的变化<br>cars    #1920年代汽车速度对刹车距离的影响<br>chickwts    #不同饮食种类对小鸡生长速度的影响<br>esoph    #法国的一个食管癌病例对照研究<br>faithful    #一个间歇泉的爆发时间和持续时间<br>Formaldehyde    #两种方法测定甲醛浓度时分光光度计的读数<br>Freeny     #每季度收入和其他四因素的记录<br>dating from     #配对的病例对照数据，用于条件logistic回归<br>InsectSprays     #使用不同杀虫剂时昆虫数目<br>iris    #3种鸢尾花形态数据<br>LifeCycleSavings    #50个国家的存款率<br>longley    #强共线性的宏观经济数据<br>morley    #光速测量试验数据<br>mtcars    #32辆汽车在11个指标上的数据<br>OrchardSprays     #使用拉丁方设计研究不同喷雾剂对蜜蜂的影响<br>PlantGrowth     #三种处理方式对植物产量的影响<br>pressure     #温度和气压<br>Puromycin     #两种细胞中辅因子浓度对酶促反应的影响<br>quakes     #1000次地震观测数据（震级&gt;4）<br>randu     #在VMS1.5中使用FORTRAN中的RANDU三个一组生成随机数字，共400组。</p>
+<pre><code> #该随机数字有问题。在VMS2.0以上版本已修复。
+</code></pre><p>rock     #48块石头的形态数据<br>sleep     #两药物的催眠效果<br>stackloss     #化工厂将氨转为硝酸的数据<br>swiss     #瑞士生育率和社会经济指标<br>ToothGrowth     #VC剂量和摄入方式对豚鼠牙齿的影响<br>trees    #树木形态指标<br>USArrests    #美国50个州的四个犯罪率指标<br>USJudgeRatings    #43名律师的12个评价指标<br>warpbreaks    #织布机异常数据<br>women    #15名女性的身高和体重</p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>state.center    #美国50个州中心的经度和纬度</p>
+<h2 id="类数据框"><a href="#类数据框" class="headerlink" title="类数据框"></a>类数据框</h2><p>ChickWeight    #饮食对鸡生长的影响<br>CO2    #耐寒植物CO2摄取的差异<br>DNase    #若干次试验中，DNase浓度和光密度的关系<br>Indometh    #某药物的药物动力学数据<br>Loblolly    #火炬松的高度、年龄和种源<br>Orange    #桔子树生长数据<br>Theoph    #茶碱药动学数据</p>
+<h2 id="时间序列数据"><a href="#时间序列数据" class="headerlink" title="时间序列数据"></a>时间序列数据</h2><p>airmiles    #美国1937-1960年客运里程营收（实际售出机位乘以飞行哩数）<br>AirPassengers    #Box &amp; Jenkins航空公司1949-1960年每月国际航线乘客数<br>austres    #澳大利亚1971-1994每季度人口数（以千为单位）<br>BJsales    #有关销售的一个时间序列<br>BJsales.lead    #前一指标的先行指标（leading indicator）<br>co2    #1959-1997年每月大气co2浓度（ppm）<br>discoveries    #1860-1959年每年巨大发现或发明的个数<br>ldeaths    #1974-1979年英国每月支气管炎、肺气肿和哮喘的死亡率<br>fdeaths    #前述死亡率的女性部分<br>mdeaths    #前述死亡率的男性部分<br>freeny.y    #每季度收入<br>JohnsonJohnson    #1960-1980年每季度Johnson &amp; Johnson股票的红利<br>LakeHuron    #1875-1972年某一湖泊水位的记录<br>lh     #黄体生成素水平，10分钟测量一次<br>lynx    #1821-1934年加拿大猞猁数据<br>nhtemp     #1912-1971年每年平均温度<br>Nile     #1871-1970尼罗河流量<br>nottem     #1920-1939每月大气温度<br>presidents     #1945-1974年每季度美国总统支持率<br>UKDriverDeaths     #1969-1984年每月英国司机死亡或严重伤害的数目<br>sunspot.month     #1749-1997每月太阳黑子数<br>sunspot.year     #1700-1988每年太阳黑子数<br>sunspots    #1749-1983每月太阳黑子数<br>treering    #归一化的树木年轮数据<br>UKgas    #1960-1986每月英国天然气消耗<br>USAccDeaths    #1973-1978美国每月意外死亡人数<br>uspop    #1790–1970美国每十年一次的人口总数（百万为单位）<br>WWWusage    #每分钟网络连接数<br>Seatbelts     #多变量时间序列。和UKDriverDeaths时间段相同，反映更多因素。<br>EuStockMarkets    #多变量时间序列。欧洲股市四个主要指标的每个工作日记录，共1860条记录。</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2018/04/15/datasets（R自带数据包）/">
+                    https://konelane.github.io/2018/04/15/datasets（R自带数据包）/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2018/04/25/人类命运共同体/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          政经研究|东方智慧给出的社会主义出路
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/11/new-article/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Logistic Regression II</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>python联萌|初探WindAPI | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最后编辑于：2020.02.05 12:30 Wind API使用说明windAPI是一个很好的工具，可以不通过客户端获取数据（不过前提是要有土豪的账号加持，笑）本文大部分介绍性文字转载自万旷网。本文的分析全部通过python完成。配置安装略过不表，请致电客服经理小哥哥（声音奶声奶气有点温柔！">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python联萌|初探WindAPI">
+<meta property="og:url" content="https://konelane.github.io/2020/02/01/20200201WindAPI/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="最后编辑于：2020.02.05 12:30 Wind API使用说明windAPI是一个很好的工具，可以不通过客户端获取数据（不过前提是要有土豪的账号加持，笑）本文大部分介绍性文字转载自万旷网。本文的分析全部通过python完成。配置安装略过不表，请致电客服经理小哥哥（声音奶声奶气有点温柔！">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-05T04:31:48.447Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python联萌|初探WindAPI">
+<meta name="twitter:description" content="最后编辑于：2020.02.05 12:30 Wind API使用说明windAPI是一个很好的工具，可以不通过客户端获取数据（不过前提是要有土豪的账号加持，笑）本文大部分介绍性文字转载自万旷网。本文的分析全部通过python完成。配置安装略过不表，请致电客服经理小哥哥（声音奶声奶气有点温柔！">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-20200201WindAPI" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/02/01/20200201WindAPI/" class="article-date">
+  	<time datetime="2020-01-31T16:00:00.000Z" itemprop="datePublished">2020-02-01</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      python联萌|初探WindAPI
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wind-API使用说明"><span class="toc-number">1.</span> <span class="toc-text">Wind API使用说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0-综述"><span class="toc-number">2.</span> <span class="toc-text">0. 综述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-WSD日期序列函数"><span class="toc-number">3.</span> <span class="toc-text">1. WSD日期序列函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义"><span class="toc-number">3.0.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数输入"><span class="toc-number">3.0.2.</span> <span class="toc-text">函数输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数输出"><span class="toc-number">3.0.3.</span> <span class="toc-text">函数输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例"><span class="toc-number">3.0.4.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-WSS多维数据函数"><span class="toc-number">4.</span> <span class="toc-text">2. WSS多维数据函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-1"><span class="toc-number">4.0.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数输入-1"><span class="toc-number">4.0.2.</span> <span class="toc-text">函数输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-1"><span class="toc-number">4.0.3.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-WSQ行情数据函数"><span class="toc-number">5.</span> <span class="toc-text">3. WSQ行情数据函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-实时行情取数函数说明"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 实时行情取数函数说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-2"><span class="toc-number">5.1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数输入-2"><span class="toc-number">5.1.2.</span> <span class="toc-text">函数输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-2"><span class="toc-number">5.1.3.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-WSET数据集函数"><span class="toc-number">6.</span> <span class="toc-text">4. WSET数据集函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-3"><span class="toc-number">6.0.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数输入-3"><span class="toc-number">6.0.2.</span> <span class="toc-text">函数输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-3"><span class="toc-number">6.0.3.</span> <span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-TDays-日期函数"><span class="toc-number">7.</span> <span class="toc-text">5. TDays 日期函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-返回区间内的日期序列w-tdays"><span class="toc-number">7.1.</span> <span class="toc-text">5.1 返回区间内的日期序列w.tdays</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-4"><span class="toc-number">7.1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数输入-4"><span class="toc-number">7.1.2.</span> <span class="toc-text">函数输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-4"><span class="toc-number">7.1.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-返回某个偏移值对应的日期w-tdaysoffset"><span class="toc-number">7.2.</span> <span class="toc-text">5.2 返回某个偏移值对应的日期w.tdaysoffset</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-5"><span class="toc-number">7.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数输入-5"><span class="toc-number">7.2.2.</span> <span class="toc-text">函数输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#示例-5"><span class="toc-number">7.2.3.</span> <span class="toc-text">示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-返回某个区间内日期数量w-tdayscount"><span class="toc-number">7.3.</span> <span class="toc-text">5.3 返回某个区间内日期数量w.tdayscount</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-6"><span class="toc-number">7.3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数输入-6"><span class="toc-number">7.3.2.</span> <span class="toc-text">函数输入</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-日期宏的说明"><span class="toc-number">8.</span> <span class="toc-text">6. 日期宏的说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-通用日期"><span class="toc-number">8.1.</span> <span class="toc-text">6.1 通用日期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-特殊日期宏"><span class="toc-number">8.2.</span> <span class="toc-text">6.2 特殊日期宏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-指标参数的说明"><span class="toc-number">9.</span> <span class="toc-text">7. 指标参数的说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-财务数据的说明"><span class="toc-number">10.</span> <span class="toc-text">8.财务数据的说明</span></a></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>最后编辑于：2020.02.05 12:30</p>
+<h2 id="Wind-API使用说明"><a href="#Wind-API使用说明" class="headerlink" title="Wind API使用说明"></a>Wind API使用说明</h2><p>windAPI是一个很好的工具，可以不通过客户端获取数据（不过前提是要有土豪的账号加持，笑）本文大部分介绍性文字转载自<a href="https://www.windquant.com/" target="_blank" rel="noopener">万旷网</a>。本文的分析全部通过python完成。配置安装略过不表，请致电客服经理小哥哥（声音奶声奶气有点温柔！</p>
+<a id="more"></a>
+<h2 id="0-综述"><a href="#0-综述" class="headerlink" title="0. 综述"></a>0. 综述</h2><p>目前万矿网支持的API函数有：</p>
+<p>1、WSD日期序列函数：支持股票、债券、基金、期货、指数等多种证券的基本资料、股东信息、市场行情、证券分析、预测评级、财务数据等各种数据。WSD可以支持取 <code>多品种单指标</code> 或者 <code>单品种多指标</code> 的时间序列数据。（氦核：可以说是最重要的函数）</p>
+<p>2、WSS多维函数：同样支持股票、债券、基金、期货、指数等多种证券的基本资料、股东信息、市场行情、证券分析、预测评级、财务数据等各种数据。但是WSS支持取多品种多指标某个时间点的截面数据。</p>
+<p>3、WSQ行情数据函数：支持股票、债券、基金、期货、指数等多种证券品种的实时行情数据，既可以选择获取一次性的快照数据，也可以选择订阅数据（即交易所有新的行情就推送）。</p>
+<p>4、WSET数据集：支持股票、债券、基金、期货、指数等多种证券品种板块成分、指数历史成分股以及权重，以及各种市场常用报表的获取。</p>
+<p>5、TDays 日期函数：日期函数包含日期序列函数（TDays)、日期偏移函数(TDaysOffset) 以及日期区间统计函数（TDaysCount）。</p>
+<p>下面为大家介绍各个函数的详细用法。</p>
+<p>注： 建议用户在使用取数函数时<strong>直接借助API函数</strong>生成相应的取数代码，然后修改其中的参数使其满足自己的取数需求。(氦核注：这个很好使，点点点就能拿到代码。)</p>
+<h2 id="1-WSD日期序列函数"><a href="#1-WSD日期序列函数" class="headerlink" title="1. WSD日期序列函数"></a>1. WSD日期序列函数</h2><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>该命令用来获取选定证券品种的历史序列数据，包括日间的行情数据、基本面数据以及技术数据指标。（氦核注：有些数据被限制获取的数量了，有些是最多五十个，这倒是很不方便。如果看实盘还好，但是做分析就不舒服了。）</p>
+<h4 id="函数输入"><a href="#函数输入" class="headerlink" title="函数输入"></a>函数输入</h4><p>WSD函数结构 w.wsd（security,fields,startdate,enddate,option）</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Element</th>
+<th>Type</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>证券（必选）</strong></td>
+<td>Security</td>
+<td>String</td>
+<td>获取数据的证券列表</td>
+<td>范例1：’600030.SH’说明：证券列表支持Wind代码及证券转换类工具函数输出的Wind代码结果</td>
+</tr>
+<tr>
+<td><strong>指标（必选）</strong></td>
+<td>Fields</td>
+<td>String</td>
+<td>获取数据的指标列表</td>
+<td>范例1：’CLOSE,HIGH,LOW,OPEN’</td>
+</tr>
+<tr>
+<td><strong>起始日期（必选）</strong></td>
+<td>StartDate</td>
+<td></td>
+<td>时间序列的起始日期</td>
+<td>范例1：’2017-01-01’,’-5w’说明：支持日期类工具函数输出的标准日期结果，支持相对日期宏表达方式，日期宏具体使用方式参考’日期宏’部分内容</td>
+</tr>
+<tr>
+<td><strong>截止日期（必选）</strong></td>
+<td>EndDate</td>
+<td></td>
+<td>时间序列的截止日期，若为空默认为系统当前日期</td>
+<td>范例1：’2017-05-30’，Sys.Date()，支持相对日期，比如’0w’; 不输入的话为当前时间说明：支持日期类工具函数输出的标准日期结果，支持相对日期宏表达方式</td>
+</tr>
+<tr>
+<td>指标参数（可选）</td>
+<td>Parameter/Value</td>
+<td>String</td>
+<td>提取指标时使用的参数名/指定参数的值</td>
+<td>范例：’TRADE_DATE=20110301;FUND_DATE=20101231’说明：多指标参数支持在不同引号内分开取值</td>
+</tr>
+<tr>
+<td>变频参数（可选）</td>
+<td>Period</td>
+<td>String</td>
+<td>每天一值:D/每周一值:W/每月一值:M/每季度一值:Q/每半年一值:S/每年一值:Y</td>
+<td>范例：’Period=D’ ，默认Period=D</td>
+</tr>
+<tr>
+<td>输出日期（可选）</td>
+<td>Days</td>
+<td>String</td>
+<td>所有工作日:Weekdays/所有日历日:Alldays/排除所有非交易日:Trading</td>
+<td>范例：’Days=Trading’，默认Days=Trading</td>
+</tr>
+<tr>
+<td>填充方式（可选）</td>
+<td>Fill</td>
+<td>String</td>
+<td>沿用之前数据:Previous/返回空值:Blank</td>
+<td>范例：’Fill=Previous’，默认Fill=Blank</td>
+</tr>
+<tr>
+<td>日期排序（可选）</td>
+<td>Order</td>
+<td>String</td>
+<td>升序:A/ 降序:D，最近日期在先</td>
+</tr>
+<tr>
+<td>交易日历（可选）</td>
+<td>TradingCalendar</td>
+<td>String</td>
+<td>选择不同交易所所在国家地区日历</td>
+<td>范例1：’ TradingCalendar =SSE’，默认TradingCalendar =SSE;SSE表示上交所，SZSE表示深圳证券交易所，CFFE表示中金所……</td>
+</tr>
+<tr>
+<td>输出币种（可选）</td>
+<td>Currency</td>
+<td>String</td>
+<td>使用货币设置： ORIGINAL:原始货币/HKD：港币/USD：美元/CNY：人民币</td>
+<td>范例1：’Currency =Original’，默认Currency =Original</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>关于指标参数的详细说明见 <strong>7.指标常见参数说明</strong></p>
+<h4 id="函数输出"><a href="#函数输出" class="headerlink" title="函数输出"></a>函数输出</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>输出内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>错误ID</td>
+<td>ErrorCode</td>
+<td>返回值为0 ，则表示代码运行正常。若为其他则需查找原因</td>
+</tr>
+<tr>
+<td>数据列表</td>
+<td>Data</td>
+<td>函数读取的数据存到此列表中，比如：读取000592.SZ 的close,open指标从’2017-05-08’到’2017-05-18’区间的数据.Data=[[5.12,5.16,5.02,4.9,4.91,5.13,5.35,5.42,5.32],[5.3,5.12,5.17,4.98,4.94,4.93,5.1,5.4,5.4]]</td>
+</tr>
+<tr>
+<td>证券代码列表</td>
+<td>Codes</td>
+<td>输入的证券代码列表 .Codes=[000592.SZ]</td>
+</tr>
+<tr>
+<td>字段列表</td>
+<td>Field</td>
+<td>函数输入中请求的字段列表 .Fields=[CLOSE,OPEN]</td>
+</tr>
+<tr>
+<td>时间列表</td>
+<td>Times</td>
+<td>输出时间序列.Times=[20170508,20170509,20170510,20170511,20170512,20170515,20170516,20170517,20170518]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加载相关的包</span></span><br><span class="line"><span class="keyword">from</span> WindPy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">w.start()</span><br></pre></td></tr></table></figure>
+<p>w.start是启动函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例1、 取富士康概念股近七个交易日的每天机构资金流入额</span></span><br><span class="line">date=time.strftime(<span class="string">"%Y-%m-%d"</span>, time.localtime()) </span><br><span class="line">stock=w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date="</span>+date+<span class="string">";sectorid=1000011346000000"</span>).Data[<span class="number">1</span>]  <span class="comment">#富士康概念股最新板块成分</span></span><br><span class="line">buyamt=w.wsd(stock, <span class="string">"mfd_buyamt_d"</span>, <span class="string">"ED-7TD"</span>, date, <span class="string">"unit=1;traderType=1"</span>) <span class="comment">#traderType表示类型，如机构、大户、中户、散户，具体参数设置可以借助API函数了解</span></span><br><span class="line">buyamt</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.DataFrame(buyamt.Data,index=stock,columns=buyamt.Times).T</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例2、 任取一只国债010107.SH六月份以来的净值历史行情数据</span></span><br><span class="line">history_data=w.wsd(<span class="string">"010107.SH"</span>, <span class="string">"sec_name,ytm_b,volume,duration,convexity,open,high,low,close,vwap"</span>, <span class="string">"2018-06-01"</span>, <span class="string">"2018-06-11"</span>, <span class="string">"returnType=1;PriceAdj=CP"</span>) <span class="comment"># returnType表示到期收益率计算方法，PriceAdj表示债券价格类型‘</span></span><br><span class="line"><span class="comment">#pd.DataFrame(history_data.Data,index=history_data.Fields,columns=history_data.Times).T</span></span><br><span class="line">pd.DataFrame(history_data.Data,index=[<span class="string">"中文简称"</span>,<span class="string">"YTM"</span>,<span class="string">"成交量"</span>,<span class="string">"久期"</span>,<span class="string">"凸性"</span>,<span class="string">"开盘价"</span>,<span class="string">"最高价"</span>,<span class="string">"最低价"</span>,<span class="string">"收盘价"</span>,<span class="string">"均价"</span>],columns=history_data.Times).T</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例3、 取国内所有农产品主力合约不同日期所对应的具体合约</span></span><br><span class="line">future=w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date="</span>+date+<span class="string">";sectorid=1000009337000000"</span>) <span class="comment">#农产品主力合约板块</span></span><br><span class="line">tradecode=w.wsd(future.Data[<span class="number">1</span>], <span class="string">"trade_hiscode"</span>, <span class="string">"2018-01-01"</span>, <span class="string">"2018-06-11"</span>, <span class="string">""</span>)</span><br><span class="line">pd.DataFrame(tradecode.Data,index=future.Data[<span class="number">2</span>],columns=tradecode.Times).T</span><br></pre></td></tr></table></figure>
+<h2 id="2-WSS多维数据函数"><a href="#2-WSS多维数据函数" class="headerlink" title="2. WSS多维数据函数"></a>2. WSS多维数据函数</h2><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p>命令用来获取选定证券品种的历史截面数据</p>
+<p>命令原型为：data= w.wss(品种代码,指标,可选参数)</p>
+<h4 id="函数输入-1"><a href="#函数输入-1" class="headerlink" title="函数输入"></a>函数输入</h4><p>WSS函数输入 w.wss（security,fields, option）</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Element</th>
+<th>Type</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>证券（必选）</td>
+<td>Security</td>
+<td>String</td>
+<td>获取数据的证券列表</td>
+<td>范例：’600030.SH,600031.SH 说明：证券列表支持Wind代码及证券转换类工具函数输出的Wind代码结果</td>
+</tr>
+<tr>
+<td>指标（必选）</td>
+<td>Fields</td>
+<td>String</td>
+<td>获取数据的指标列表</td>
+<td>范例1：’CLOSE,HIGH,LOW,OPEN’ 范例2：[‘CLOSE’,’HIGH’,’LOW’,’OPEN’]</td>
+</tr>
+<tr>
+<td>指标参数（可选）</td>
+<td>Parameter/Value</td>
+<td>String</td>
+<td>提取指标时使用的参数名/指定参数的值</td>
+<td>范例：’TRADE_DATE=20170601;FUND_DATE=’20161231’ 说明：多指标参数支持在不同引号内分开取值</td>
+</tr>
+<tr>
+<td>输出币种（可选）</td>
+<td>Currency</td>
+<td>String</td>
+<td>使用什么货币 ORIGINAL/HKD/USD/CNY</td>
+<td>范例：’Currency =Original’，默认Currency =Original</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>关于指标参数的详细说明见 7.指标常见参数说明</p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例4、 取A股纳入MSCI各成分股的基本资料信息</span></span><br><span class="line">MSCI_stock=w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date="</span>+date+<span class="string">";sectorid=1000027970000000"</span>)</span><br><span class="line">infor=w.wss(MSCI_stock.Data[<span class="number">1</span>] , <span class="string">"sec_name,ipo_date,mkt,stockclass,industry_sw,indexcode_sw,SHSC,SHSC2"</span>,<span class="string">"tradeDate="</span>+date+<span class="string">";industryType=1"</span>)</span><br><span class="line">pd.DataFrame(infor.Data,index=infor.Fields,columns=MSCI_stock.Data[<span class="number">1</span>]).T</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例5、 取截止日期 上海证券交易所 发行的国债 基本资料</span></span><br><span class="line">bond=w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date=2018-06-11;sectorid=a101010201000000"</span>).Data[<span class="number">1</span>]</span><br><span class="line">error_code,bond_data=w.wss(bond, <span class="string">"sec_name,issueamount,term,issue_issueprice,couponrate,coupon,interesttype,interestfrequency,carrydate,maturitydate,ptmyear,trade_status"</span>,<span class="string">"unit=1;tradeDate=20180611"</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">bond_data.head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例6、 取被动指数型基金最新业绩排名</span></span><br><span class="line">fund=w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date=2018-06-11;sectorid=2001010102000000"</span>).Data[<span class="number">1</span>]</span><br><span class="line">error_code,returns=w.wss(fund, <span class="string">"sec_name,return_1w,return_1m,return_3m,return_6m,return_1y,return_ytd,fund_fundmanager"</span>,<span class="string">"annualized=0;tradeDate=20180611"</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">returns.head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#按今年以来总回报排序</span></span><br><span class="line">returns_sort=returns.sort_values(by = <span class="string">'RETURN_YTD'</span>,ascending=<span class="keyword">False</span>) </span><br><span class="line">returns_sort.head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">first_fund=list(returns_sort.index.values)</span><br><span class="line">first_fund[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> WindCharts <span class="keyword">import</span> *</span><br><span class="line">error_code,nav=w.wsd(first_fund[<span class="number">0</span>], <span class="string">"NAV_adj"</span>, <span class="string">'2017-01-01'</span>, <span class="string">"2018-06-11"</span>, usedf=<span class="keyword">True</span>)</span><br><span class="line">chart=WLine(title=<span class="string">"复权单位净值走势图"</span>,subtitle=first_fund[<span class="number">0</span>],data=nav)</span><br><span class="line">chart.plot()</span><br></pre></td></tr></table></figure>
+<h2 id="3-WSQ行情数据函数"><a href="#3-WSQ行情数据函数" class="headerlink" title="3. WSQ行情数据函数"></a>3. WSQ行情数据函数</h2><h3 id="3-1-实时行情取数函数说明"><a href="#3-1-实时行情取数函数说明" class="headerlink" title="3.1 实时行情取数函数说明"></a>3.1 实时行情取数函数说明</h3><h4 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h4><p>命令用来获取选定证券品种的当天实时指标数据，数据可以一次性请求，也可以通过订阅的方式获取</p>
+<p>命令原型为： data=w.wsq(品种代码,指标,可选参数,回调函数)</p>
+<h4 id="函数输入-2"><a href="#函数输入-2" class="headerlink" title="函数输入"></a>函数输入</h4><p>函数名: w.wsq（security,fields,func = None)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Element</th>
+<th>Type</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>证券（必选）</td>
+<td>Security</td>
+<td>String</td>
+<td>获取数据的证券列表</td>
+<td>范例：’600030.SH’说明：实时行情所支持品种较多，基本上终端中有的行情接口中皆可取得</td>
+</tr>
+<tr>
+<td>指标（必选）</td>
+<td>Fields</td>
+<td>String</td>
+<td>获取数据的指标列表</td>
+<td>范例：’rt_open,rt_high,rt_last’</td>
+</tr>
+<tr>
+<td>回调函数（可选）</td>
+<td>Func</td>
+<td>指定回测函数</td>
+<td>范例：’ func=w.demoCallback’</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>返回选定品种的实时数据，支持一次请求和订阅两种方式。</p>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例7. 获取沪股通最新一笔的行情数据</span></span><br><span class="line">hksh=w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date=2018-06-12;sectorid=1000014938000000"</span>).Data[<span class="number">1</span>]</span><br><span class="line">mk_data=w.wsq(hksh,<span class="string">"rt_last,rt_vol,rt_amt,rt_chg,rt_pct_chg,rt_swing,rt_vwap,rt_upward_vol,rt_downward_vol,rt_ask1,rt_ask2,rt_ask3,rt_ask4,rt_ask5,rt_bid1,rt_bid2,rt_bid3,rt_bid4,rt_bid5"</span>)</span><br><span class="line"><span class="comment">#pd.DataFrame(tradecode.Data,index=future.Data[2],columns=tradecode.Times).T</span></span><br><span class="line">pd.DataFrame(data.Data,index=data.Fields,columns=data.Codes).T</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#任意订阅一只股票的最新行情</span></span><br><span class="line">w.wsq(<span class="string">"000001.SZ"</span>, <span class="string">"rt_last"</span>, func=DemoWSQCallback)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#订阅行情后当交易所发送新的行情数据时，这里就会推送</span></span><br><span class="line"><span class="comment"># 上面订阅后会返回一个RequestID，此ID作为后面取消订阅函数的传入参数</span></span><br><span class="line"><span class="comment">#当传入ID为0时表示取消所有订阅 </span></span><br><span class="line">w.cancelRequest(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="4-WSET数据集函数"><a href="#4-WSET数据集函数" class="headerlink" title="4. WSET数据集函数"></a>4. WSET数据集函数</h2><h4 id="定义-3"><a href="#定义-3" class="headerlink" title="定义"></a>定义</h4><p>命令用来获取数据集信息，包括板块成分、指数成分、ETF申赎成分信息、分级基金明细、融资标的、融券标的、融资融券担保品、回购担保品、停牌股票、复牌股票、分红送转等</p>
+<p>参数设置为起止日期、板块名称等，不同的报表有不同的参数设置</p>
+<p>命令原型为： data=w.wset(数据集名称,可选参数)</p>
+<h4 id="函数输入-3"><a href="#函数输入-3" class="headerlink" title="函数输入"></a>函数输入</h4><p>函数名: w.wset（view，options），返回股票，基金，债券，商品等专题统计报表的数据。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Element</th>
+<th>Type</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据集（必选）</td>
+<td>view</td>
+<td>String</td>
+<td>提取数据集的VIEW名</td>
+<td>范例1：’SectorConstituent’</td>
+</tr>
+<tr>
+<td>View参数（可选）</td>
+<td>Parameter/Value</td>
+<td>String</td>
+<td>提取指标时使用的参数名/指定参数的值</td>
+<td>范例1：’date=20130531’;</td>
+</tr>
+<tr>
+<td>板块列表（可选）</td>
+<td>sectorid</td>
+<td>String</td>
+<td>获取数据的板块ID</td>
+<td>范例1： ‘sector=全部A股’ 范例2：’sectorid=a001010100000000’</td>
+</tr>
+<tr>
+<td>字段列表（可选）</td>
+<td>Field</td>
+<td>String</td>
+<td>获取字段列表的数据</td>
+<td>范例1：’field=wind_code,i_weight’</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>基本获取某些板块的数据方法在上面的函数介绍中已经涉及了，这里就不再赘述</p>
+<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例8、 获取申万一级行业的成分股</span></span><br><span class="line">sw_index=w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date=2018-06-12;sectorid=a39901011g000000"</span>) <span class="comment">#申万一级行业指数代码</span></span><br><span class="line">sw_index</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下面分别取各行业指数的成分股</span></span><br><span class="line">result=pd.DataFrame()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(sw_index.Data[<span class="number">0</span>])):</span><br><span class="line">    x=pd.DataFrame(w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date=2018-06-12;windcode="</span>+sw_index.Data[<span class="number">1</span>][i]+<span class="string">""</span>).Data[<span class="number">1</span>],columns=[sw_index.Data[<span class="number">1</span>][i]])</span><br><span class="line">    result=pd.concat([result,x], axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例9、 获取A股纳入MSCI成分股的2017年报的股票分红实施情况</span></span><br><span class="line"><span class="comment"># MSCI_stock=w.wset("sectorconstituent","date="+date+";sectorid=1000027970000000") MSCI股票代码上文已经取出</span></span><br><span class="line">error_code,bonus=w.wset(<span class="string">"bonus"</span>,<span class="string">"orderby=报告期;year=2017;period=y1;sectorid=1000027970000000"</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">bonus.head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例10、 沪深交易所期权列表</span></span><br><span class="line">error_code,option=w.wset(<span class="string">"optioncontractbasicinfo"</span>,<span class="string">"exchange=sse;windcode=510050.SH;status=trading"</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">option.head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="5-TDays-日期函数"><a href="#5-TDays-日期函数" class="headerlink" title="5. TDays 日期函数"></a>5. TDays 日期函数</h2><h3 id="5-1-返回区间内的日期序列w-tdays"><a href="#5-1-返回区间内的日期序列w-tdays" class="headerlink" title="5.1 返回区间内的日期序列w.tdays"></a>5.1 返回区间内的日期序列w.tdays</h3><h4 id="定义-4"><a href="#定义-4" class="headerlink" title="定义"></a>定义</h4><p>命令用来获取一个时间区间内的某种规则下的日期序列。</p>
+<h4 id="函数输入-4"><a href="#函数输入-4" class="headerlink" title="函数输入"></a>函数输入</h4><p>函数名：TDays(startDate,endDate,[Optional argument])</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Element</th>
+<th>Type</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>起始日期（必选）</td>
+<td>StartDate</td>
+<td>String</td>
+<td>时间序列的起始日期</td>
+<td>范例1：”2015-01-01”，支持日期宏</td>
+</tr>
+<tr>
+<td>截止日期（必选）</td>
+<td>EndDate</td>
+<td>String</td>
+<td>时间序列的截止日期，置空取当前最新日期</td>
+<td>范例1：”2015-06-30”，支持日期宏</td>
+</tr>
+<tr>
+<td>日期类型（可选）</td>
+<td>Days</td>
+<td>String</td>
+<td>所有工作日：Weekdays，所有日历日：Alldays，排除所有非交易日：Trading</td>
+<td>范例：’Days=Trading’，默认Days=Trading</td>
+</tr>
+<tr>
+<td>变频参数（可选）</td>
+<td>Period</td>
+<td>String</td>
+<td>每天一值：D， 每周一值：W，每月一值M：，每季度一值：Q ，每半年一值：S ，每年一值：Y</td>
+<td>范例：’Period=D’</td>
+</tr>
+<tr>
+<td>交易日历（可选）</td>
+<td>TradingCalendar</td>
+<td>String</td>
+<td></td>
+<td>TradingCalendar默认为上海证券交易所，当DAYS为日历日的时候，这个参数不起作用,只有当DAYS为交易日的时候，这个参数才起作用,默认“TradingCalendar=SSE”(上海证券交易所)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="示例-4"><a href="#示例-4" class="headerlink" title="示例"></a>示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例11 取上交所2018年以来的交易日期序列，交易所为空默认为上交所</span></span><br><span class="line">date_list=w.tdays(<span class="string">"2018-05-13"</span>, <span class="string">"2018-06-13"</span>,<span class="string">" "</span>)</span><br><span class="line">date_list</span><br></pre></td></tr></table></figure>
+<h3 id="5-2-返回某个偏移值对应的日期w-tdaysoffset"><a href="#5-2-返回某个偏移值对应的日期w-tdaysoffset" class="headerlink" title="5.2 返回某个偏移值对应的日期w.tdaysoffset"></a>5.2 返回某个偏移值对应的日期w.tdaysoffset</h3><h4 id="定义-5"><a href="#定义-5" class="headerlink" title="定义"></a>定义</h4><p>命令用来获取基于某个基准时间前推(<0) 或者后推(="">0)指定天数的日期。</0)></p>
+<p>命令原型为：data=w.tdaysoffset(偏移值，基准时间,可选参数)</p>
+<h4 id="函数输入-5"><a href="#函数输入-5" class="headerlink" title="函数输入"></a>函数输入</h4><p>函数名:TDaysOffset(offset, refDate, [Optional argument])</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Element</th>
+<th>Type</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参考日期</td>
+<td>refDate</td>
+<td>String</td>
+<td>参照日期</td>
+<td>范例1：”2015-01-01”，支持日期宏</td>
+</tr>
+<tr>
+<td>日期类型（可选）</td>
+<td>Days</td>
+<td>String</td>
+<td>所有工作日：Weekdays，所有日历日：Alldays，排除所有非交易日：Trading</td>
+<td>范例：’Days=Trading’，默认Days=Trading</td>
+</tr>
+<tr>
+<td>变频参数（可选）</td>
+<td>Period</td>
+<td>String</td>
+<td>每天一值：D， 每周一值：W，每月一值M：，每季度一值：Q ，每半年一值：S ，每年一值：Y</td>
+<td>范例：’Period=D’，默认Period=D</td>
+</tr>
+<tr>
+<td>交易日历（可选）</td>
+<td>TradingCalendar</td>
+<td>String</td>
+<td></td>
+<td>TradingCalendar默认为上海证券交易所，当DAYS为日历日的时候，这个参数不起作用,只有当DAYS为交易日的时候，这个参数才起作用。默认“TradingCalendar=SSE”(上海证券交易所)</td>
+</tr>
+<tr>
+<td>偏移量（可选）</td>
+<td>Offset</td>
+<td></td>
+<td>偏移参数</td>
+<td>偏移参数，为整数，&gt;0后推，&lt;0前推，默认为0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="示例-5"><a href="#示例-5" class="headerlink" title="示例"></a>示例</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例12 取从今天往前推10个月的日历日</span></span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line">today = datetime.date.today() </span><br><span class="line">w.tdaysoffset(<span class="number">-10</span>, today.isoformat(), <span class="string">"Period=M;Days=Alldays"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="5-3-返回某个区间内日期数量w-tdayscount"><a href="#5-3-返回某个区间内日期数量w-tdayscount" class="headerlink" title="5.3 返回某个区间内日期数量w.tdayscount"></a>5.3 返回某个区间内日期数量w.tdayscount</h3><h4 id="定义-6"><a href="#定义-6" class="headerlink" title="定义"></a>定义</h4><p>命令用来获取两个时间区间内的某种规则下的日期序列个数</p>
+<p>命令原型为：data= w.tdayscount(开始时间，结束时间,可选参数)</p>
+<h4 id="函数输入-6"><a href="#函数输入-6" class="headerlink" title="函数输入"></a>函数输入</h4><p>函数名：TDaysCount(startDate,endDate, [Optional argument])</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Element</th>
+<th>Type</th>
+<th>Description</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>起始日期（必选）</td>
+<td>StartDate</td>
+<td>String</td>
+<td>时间序列的起始日期</td>
+<td>范例1：”2017-01-01”，支持日期宏</td>
+</tr>
+<tr>
+<td>截止日期</td>
+<td>EndDate</td>
+<td>String</td>
+<td>时间序列的截止日期，置空取当前最新日期</td>
+<td>范例1：”2017-06-30”，支持日期宏</td>
+</tr>
+<tr>
+<td>日期类型（可选）</td>
+<td>Days</td>
+<td>String</td>
+<td>所有工作日:Weekdays，所有日历日：Alldays，排除所有非交易日：Trading</td>
+<td>范例：’Days=Trading’，默认Days=Trading</td>
+</tr>
+<tr>
+<td>交易日历（可选）</td>
+<td>TradingCalendar</td>
+<td>String</td>
+<td></td>
+<td>TradingCalendar默认为上海证券交易所，当DAYS为日历日的时候，这个参数不起作用,只有当DAYS为交易日的时候，这个参数才起作用，默认“TradingCalendar=SSE”(上海证券交易所)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例13 统计2017年交易日天数</span></span><br><span class="line">days=w.tdayscount(<span class="string">"2017-01-01"</span>, <span class="string">"2017-12-31"</span>, <span class="string">""</span>).Data[<span class="number">0</span>]</span><br><span class="line">days</span><br></pre></td></tr></table></figure>
+<h2 id="6-日期宏的说明"><a href="#6-日期宏的说明" class="headerlink" title="6. 日期宏的说明"></a>6. 日期宏的说明</h2><h3 id="6-1-通用日期"><a href="#6-1-通用日期" class="headerlink" title="6.1 通用日期"></a>6.1 通用日期</h3><p>支持相对日期表达方式，相对日期周期包括:交易日TD、日历日：D、日历周：W、日历月：M、日历季：Q、日历半年：S、日历年：Y。</p>
+<p>相关说明：<br>1、以’-’代表前推，数字代表N个周期，只支持整数；后推没有负号，比如’-5D’表示从当前最新日期前推5个日历日；<br>2、截止日期若为’’空值，取系统当前日期；<br>3、可对日期宏进行加减运算，比如’ED-10d’。</p>
+<p>举例：<br>1、起始日期为1个月前，截至日期为最新 StartDate=’-1M’,EndDate=’’<br>2、起始日期为前推10个交易日，截至日期为前推5个交易日 StartDate=’-10TD’,EndDate=’-5TD’</p>
+<h3 id="6-2-特殊日期宏"><a href="#6-2-特殊日期宏" class="headerlink" title="6.2 特殊日期宏"></a>6.2 特殊日期宏</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>宏名称</th>
+<th>截止日期</th>
+<th>开始日期</th>
+<th>去年一季</th>
+<th>去年二季</th>
+<th>去年三季</th>
+<th>去年年报</th>
+<th>今年一季</th>
+<th>今年二季</th>
+<th>今年三季</th>
+<th>最新一期</th>
+<th>本年初</th>
+<th>下半年初</th>
+<th>本月初</th>
+<th>本周一</th>
+<th>上周末</th>
+<th>上月末</th>
+<th>上半年末</th>
+<th>上年末</th>
+<th>上市首日</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>宏助记符</td>
+<td>ED</td>
+<td>SD</td>
+<td>LQ1</td>
+<td>LQ2</td>
+<td>LQ3</td>
+<td>LYR</td>
+<td>RQ1</td>
+<td>RQ2</td>
+<td>RQ3</td>
+<td>MRQ</td>
+<td>RYF</td>
+<td>RHYF</td>
+<td>RMF</td>
+<td>RWF</td>
+<td>LWE</td>
+<td>LME</td>
+<td>LHYE</td>
+<td>LYE</td>
+<td>IPO</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例14 用日期宏IPO的示例</span></span><br><span class="line">error_code,data=w.wsd(<span class="string">"000001.SZ"</span>, <span class="string">"close"</span>, <span class="string">'IPO'</span>, <span class="string">"2018-06-11"</span>, usedf=<span class="keyword">True</span>)</span><br><span class="line">data.head()</span><br></pre></td></tr></table></figure>
+<h2 id="7-指标参数的说明"><a href="#7-指标参数的说明" class="headerlink" title="7. 指标参数的说明"></a>7. 指标参数的说明</h2><p>关于WSD/WSS中常见指标参数的举例说明</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>element</th>
+<th>description</th>
+<th>value</th>
+<th>Indicator examples</th>
+<th>demo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tradeDate</td>
+<td>交易日期</td>
+<td>自填</td>
+<td>开盘价</td>
+<td>‘tradeDate=20180618’</td>
+</tr>
+<tr>
+<td>startDate</td>
+<td>开始日期</td>
+<td>自填</td>
+<td>区间开盘价</td>
+<td>‘startDate=20180618’</td>
+</tr>
+<tr>
+<td>endDate</td>
+<td>截止日期</td>
+<td>自填</td>
+<td>区间开盘价</td>
+<td>‘endDate=20180618’</td>
+</tr>
+<tr>
+<td>adjDate</td>
+<td>复权基期</td>
+<td>自填</td>
+<td>收盘价(支持定点复权)</td>
+<td>‘adjDate=20180618’</td>
+</tr>
+<tr>
+<td>rptDate</td>
+<td>报告期</td>
+<td>自填</td>
+<td>净利润</td>
+<td>‘rptDate=20171231’</td>
+</tr>
+<tr>
+<td>priceAdj</td>
+<td>复权方式</td>
+<td>不复权/前复权/后复权/定点复权</td>
+<td>收盘价</td>
+<td>‘priceAdj=U’</td>
+</tr>
+<tr>
+<td>cycle</td>
+<td>周期</td>
+<td>日/月/……</td>
+<td>成交量</td>
+<td>‘cycle=D’</td>
+</tr>
+<tr>
+<td>bondPriceType</td>
+<td>债券价格类型</td>
+<td>全价/净价/收益率/市价</td>
+<td>涨跌幅(债券)</td>
+<td>‘bondPriceType=2’</td>
+</tr>
+<tr>
+<td>currencyType</td>
+<td>币种</td>
+<td>原始币种/人民币/美元……</td>
+<td>未平仓卖空金额</td>
+<td>‘currencyType=Cur=CNY’</td>
+</tr>
+<tr>
+<td>ndays</td>
+<td>天数(用负号表示前推)</td>
+<td>自填</td>
+<td>N日涨跌幅</td>
+<td>‘ndays=-5’</td>
+</tr>
+<tr>
+<td>rptType</td>
+<td>报表类型</td>
+<td>合并报表/母公司报表……</td>
+<td>杠杆率</td>
+<td>‘rptType=1’</td>
+</tr>
+<tr>
+<td>dataType</td>
+<td>数据类型</td>
+<td>本外币/本币/……</td>
+<td>贷款利息收入-短期</td>
+<td>‘dataType=2’</td>
+</tr>
+<tr>
+<td>traderType</td>
+<td>类型</td>
+<td>机构/大户/散户……</td>
+<td>流入单数</td>
+<td>‘traderType=1’</td>
+</tr>
+<tr>
+<td>exchangeType</td>
+<td>交易所</td>
+<td>上海/深圳/银行间……</td>
+<td>跨市场代码</td>
+<td>‘exchangeType=SSE’</td>
+</tr>
+<tr>
+<td>index</td>
+<td>所属指数</td>
+<td>上证50指数/上证180指数/沪深300指数……</td>
+<td>是否属于重要指数成份</td>
+<td>‘index=1’</td>
+</tr>
+<tr>
+<td>unit</td>
+<td>单位</td>
+<td>元、股、份、张、户</td>
+<td>总市值、注册资本、持有人持有数量、单一投资者报告期末持有份额合计、股东户数……</td>
+<td>‘unit=1’</td>
+</tr>
+<tr>
+<td>industryType/category/industryStandard</td>
+<td>行业级别/行业标准</td>
+<td>一级行业/二级行业……</td>
+<td>全部明细、中信行业/申万行业……</td>
+<td>所属行业名称(支持历史)、所属恒生行业名称</td>
+<td>‘industryType=1’，’category=1’,’industryStandard=3’</td>
+</tr>
+<tr>
+<td>adminType</td>
+<td>行政区划级别</td>
+<td>省级/地级/县级</td>
+<td>所属行政区划</td>
+<td>‘adminType=1’</td>
+</tr>
+<tr>
+<td>year</td>
+<td>年度</td>
+<td>2018/2017/2016……</td>
+<td>管理层年度薪酬总额</td>
+<td>‘year=2017’</td>
+</tr>
+<tr>
+<td>month</td>
+<td>月份</td>
+<td>1月/2月/……</td>
+<td>五星基金占比</td>
+<td>‘month=2’</td>
+</tr>
+<tr>
+<td>order</td>
+<td>大股东排名、名次</td>
+<td>第一名/第二名/……</td>
+<td>持有人持有数量、基金经理年限</td>
+<td>‘order=1’</td>
+</tr>
+<tr>
+<td>instituteType</td>
+<td>机构类别    基金公司/证券公司/……</td>
+<td>配售对象名称</td>
+<td>‘instituteType=1’</td>
+</tr>
+<tr>
+<td>topNum</td>
+<td>名次</td>
+<td>第1名/第2名……</td>
+<td>离职日期</td>
+<td>‘topNum=1’</td>
+</tr>
+<tr>
+<td>shareType</td>
+<td>股本类型</td>
+<td>流通股本/总股本</td>
+<td>户均持股比例</td>
+<td></td>
+<td>‘shareType=1’</td>
+</tr>
+<tr>
+<td>reportDateType</td>
+<td>报告期</td>
+<td>第一季度(1-3月)/第二季度(4-6月)……</td>
+<td>单一投资者报告期末持有份额合计</td>
+<td>‘reportDateType=1’</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>资产池资产级别</td>
+<td>次级/优先级/次优级</td>
+<td>各级发行总额</td>
+<td>‘reportDateType=1’</td>
+</tr>
+<tr>
+<td>type</td>
+<td>选择权类型、评级对象类型</td>
+<td>赎回/回售/……、主体信用评级/不限……</td>
+<td>行权资金到帐日</td>
+<td>‘type=Pr’、’type=3’</td>
+</tr>
+<tr>
+<td>serial</td>
+<td>第N次提前偿还</td>
+<td>手动输入数字</td>
+<td>提前还本比例</td>
+<td>‘serial=1’</td>
+</tr>
+<tr>
+<td>ratingAgency</td>
+<td>评级机构</td>
+<td>标普/穆迪……</td>
+<td>债项评级</td>
+<td>‘ratingAgency=16’</td>
+</tr>
+<tr>
+<td>bondTypeIndex</td>
+<td>债券类型</td>
+<td>短期融资券/中期票据/……</td>
+<td>历史累计注册额度</td>
+<td>‘bondTypeIndex=2’</td>
+</tr>
+<tr>
+<td>bondType</td>
+<td>债券类型</td>
+<td>金融债/同业存单……</td>
+<td>存量债券余额</td>
+<td>‘bondType=1’</td>
+</tr>
+<tr>
+<td>termType</td>
+<td>期限类型</td>
+<td>1年期内/1-3年期内……</td>
+<td>存量债券余额(按期限)</td>
+<td>termType=2</td>
+</tr>
+<tr>
+<td>credibility</td>
+<td>估值类型</td>
+<td>推荐/不推荐/行权……</td>
+<td>日终估价全价</td>
+<td>‘credibility=2’</td>
+</tr>
+<tr>
+<td>fundType</td>
+<td>基金分类</td>
+<td>投资类型(一级分类)/投资类型(二级分类)</td>
+<td>同类基金数量</td>
+<td>‘fundType=1’</td>
+</tr>
+<tr>
+<td>fundRatingAgency</td>
+<td>评级机构</td>
+<td>1/2……</td>
+<td>四星基金占比</td>
+<td>‘fundRatingAgency=2’</td>
+</tr>
+<tr>
+<td>chargesType</td>
+<td>收费类型</td>
+<td>前端/后端</td>
+<td>认购费率</td>
+<td>‘chargesType=1’</td>
+</tr>
+<tr>
+<td>returnType</td>
+<td>收益率计算方法</td>
+<td>普通收益率/对数收益率</td>
+<td>几何平均年化收益率</td>
+<td>‘returnType=1’</td>
+</tr>
+<tr>
+<td>annualized</td>
+<td>是否年化</td>
+<td>是/否</td>
+<td>近1周回报</td>
+<td>‘annualized=0’</td>
+</tr>
+<tr>
+<td>netType</td>
+<td>报告期净值数据项</td>
+<td>过去1个月/过去3个月/……</td>
+<td>报告期净值增长率</td>
+<td>‘netType=1’</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">例<span class="number">16</span> 指标参数说明案例</span><br><span class="line">w.wss(<span class="string">"510010.SH"</span>, <span class="string">"fund_fullname,fund_similarfundno,fund_purchasefee,fund_redemptionfee,fund_dq_status,fund_pchredm_largepchmaxamt,fund_manager_totalnetasset,fund_manager_arithmeticannualizedyield,fund_manager_totalreturnoverbenchmark,fund_corp_fivestarfundsprop,fund_corp_fourstarfundsprop,fund_corp_teamstability,issue_etfdealshareonmarket,fund_etfpr_estcash,fund_etfpr_cashratio"</span>, <span class="string">"fundType=1;chargesType=0;tradeDate=20180619;unit=1;order=2;returnType=1;year=2018;month=1;fundRatingAgency=2;startDate=20180520;endDate=20180620"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="8-财务数据的说明"><a href="#8-财务数据的说明" class="headerlink" title="8.财务数据的说明"></a>8.财务数据的说明</h2><p>Python如图，万矿的财务数据都是传入报告期，然后返回相应报告期的财务数据；在参数设置中可以直接设置报表类型为合并报表/母公司报表/合并报表（调整）/母公司报表（调整）。</p>
+<p>万矿是取每个季度最后一天作为报告期,如取2017年的四个定期报告数据，那报告期设置分别为 ：一季报：2017-03-31，半年报：2017-06-30，三季报：2017-09-30，年报:2017-12-31</p>
+<p>如果要用wsd取多个报告期的公告数据，则需要将周期设置为季，日期类型设置为日历日(因为有的季度最后一天不是交易日)</p>
+<p>财务数据回填说明：<br>1、比如说某公司A在2018年3月22日公布2017年年报，那在2018年3月22以前取2017年年报数据则为空，A公司公布年报数据后，我们会将公布的数据回填到2017-12-31，用户传入相应的报告期参数即可取出对应的年报数据；<br>2、如果用户直接取出年报数据做回测则会引入未来数据，所以如果要用财报数据做回测要先按照定期报告披露日期拉平至时间序列再做回测。</p>
+<p>下面举例说明如何获取各个报告期的财务数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例 17 用wsd函数取000001.SZ[平安银行]近十年的利润表(合并报表)数据</span></span><br><span class="line">error_code,finance_data=w.wsd(<span class="string">"000001.SZ"</span>,<span class="string">"tot_oper_rev,oper_rev,int_inc,insur_prem_unearned,handling_chrg_comm_inc,tot_prem_inc,reinsur_inc,prem_ceded,unearned_prem_rsrv_withdraw,net_inc_agencybusiness,net_inc_underwriting-business,net_inc_customerasset-managementbusiness,other_oper_inc,net_int_inc,net_fee_and_commission_inc,net_other_oper_inc,tot_oper_cost,oper_cost,int_exp,handling_chrg_comm_exp,oper_exp,taxes_surcharges_ops,selling_dist_exp,gerl_admin_exp,fin_exp_is,impair_loss_assets,prepay_surr,net_claim_exp,net_insur_cont_rsrv,dvd_exp_insured,reinsurance_exp,claim_exp_recoverable,Insur_rsrv_recoverable,reinsur_exp_recoverable,other_oper_exp,net_inc_other_ops,net_gain_chg_fv,net_invest_inc,inc_invest_assoc_jv_entp,net_gain_fx_trans,opprofit,non_oper_rev,non_oper_exp,net_loss_disp_noncur_asset,tot_profit,tax,unconfirmed_invest_loss_is"</span>, <span class="string">"2007-01-01"</span>, <span class="string">"2017-12-31"</span>, <span class="string">"unit=1;rptType=1;Period=Q;Days=Alldays"</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">finance_data</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#例18 用wss取上证50的常见财务指标的2017年年报数据</span></span><br><span class="line">sh_50=w.wset(<span class="string">"sectorconstituent"</span>,<span class="string">"date=2018-06-20;sectorid=1000000087000000"</span>).Data[<span class="number">1</span>]</span><br><span class="line">error_code,Y_finance_data=w.wss(sh_50, <span class="string">"tot_oper_rev,tot_oper_cost,opprofit,tot_profit,net_profit_is,np_belongto_parcomsh,extraordinary,wgsd_deductedprofit,researchanddevelopmentexpenses,ebit,ebitda,tot_cur_assets,fix_assets,long_term_eqy_invest,tot_assets,tot_cur_liab,tot_non_cur_liab,tot_liab,cap_rsrv,surplus_rsrv,undistributed_profit,cash_recp_sg_and_rs,cash_pay_acq_const_fiolta"</span>,<span class="string">"unit=1;rptDate=20171231;rptType=1;currencyType="</span>,usedf=<span class="keyword">True</span>)</span><br><span class="line">Y_finance_data</span><br></pre></td></tr></table></figure>
+<p>（完）<br>特别鸣谢：我家松鼠</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/02/01/20200201WindAPI/">
+                    https://konelane.github.io/2020/02/01/20200201WindAPI/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/02/05/200205numpy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          python联萌|今天康康numpy（怒骂朋友库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/01/22/20200122南京旅行日志/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">遍历山河|南京</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

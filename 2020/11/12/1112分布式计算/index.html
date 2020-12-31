@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>分布式1112-Spark简单功能补充介绍 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="对spark进行一些补充介绍。">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式1112-Spark简单功能补充介绍">
+<meta property="og:url" content="https://konelane.github.io/2020/11/12/1112分布式计算/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="对spark进行一些补充介绍。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu3.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu4.png">
+<meta property="og:updated_time" content="2020-12-31T02:17:30.840Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式1112-Spark简单功能补充介绍">
+<meta name="twitter:description" content="对spark进行一些补充介绍。">
+<meta name="twitter:image" content="https://konelane.github.io/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-1112分布式计算" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/11/12/1112分布式计算/" class="article-date">
+  	<time datetime="2020-11-11T16:00:00.000Z" itemprop="datePublished">2020-11-12</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      分布式1112-Spark简单功能补充介绍
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#二、Spark的一些特别之处"><span class="toc-number">1.</span> <span class="toc-text">二、Spark的一些特别之处</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-广播"><span class="toc-number">1.1.</span> <span class="toc-text">1. 广播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-懒人模式"><span class="toc-number">1.2.</span> <span class="toc-text">2. 懒人模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-线性代数"><span class="toc-number">1.3.</span> <span class="toc-text">3. 线性代数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#小结"><span class="toc-number">1.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、战斗案例"><span class="toc-number">2.</span> <span class="toc-text">三、战斗案例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#schema"><span class="toc-number">2.1.</span> <span class="toc-text">schema</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、作业-air-delay数据清洗"><span class="toc-number">3.</span> <span class="toc-text">四、作业 air-delay数据清洗</span></a></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>对spark进行一些补充介绍。</p>
+<a id="more"></a>
+<p>两个函数可以选定</p>
+<blockquote>
+<p>Cache()</p>
+<p>Persist()</p>
+</blockquote>
+<p>主动将数据放到硬盘上-内存中</p>
+<blockquote>
+<p>Data.persist()</p>
+</blockquote>
+<p>旧数据放在内存里，新数据放硬盘，spark帮助中有persist 的水平（默认是全放进内存的cache，假设内存很大）</p>
+<blockquote>
+<p>lineLengths.unpersist()</p>
+<p>persist的参数水平</p>
+<p>Memory_only</p>
+<p>Memory_AND_DISK</p>
+<p>Memory_AND_DISK_SER</p>
+<p>DISK_ONLY</p>
+<p>MEMORY_ONLY_2</p>
+</blockquote>
+<p>内存不够则会报错</p>
+<img src="/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu1.png" title="tu1">
+<h3 id="二、Spark的一些特别之处"><a href="#二、Spark的一些特别之处" class="headerlink" title="二、Spark的一些特别之处"></a>二、Spark的一些特别之处</h3><h4 id="1-广播"><a href="#1-广播" class="headerlink" title="1. 广播"></a>1. 广播</h4><p>分布式最重要的是“数据共享”使得不同节点之间能够用一个数据。</p>
+<p>比如正态分布的概率密度函数，π就如此，共享，但不修改。</p>
+<blockquote>
+<p>broadcastVar = sc.broadcast([1, 2, 3])</p>
+<p>broadcastVar</p>
+<p>Sparkcontext.broadcast(v)</p>
+</blockquote>
+<p>广播出去的变量不能修改，否则会乱。</p>
+<p>Broadcast.value可以查看广播出去的变量。</p>
+<p>spark中accumulator可以用于累积，在MapReduce中：</p>
+<blockquote>
+<p>accum = sc.accumulator(0)</p>
+<p>sc.parallelize([1, 2, 3, 4])<strong>.foreach</strong>(lambda x: accum.add(x)) # foreach有点像R的</p>
+<p>accum.value</p>
+</blockquote>
+<h4 id="2-懒人模式"><a href="#2-懒人模式" class="headerlink" title="2. 懒人模式"></a>2. 懒人模式</h4><p>spark的懒人模式：</p>
+<p>节约计算资源</p>
+<p>x=3 , y = 4 , z = 5</p>
+<p>提交任务</p>
+<blockquote>
+<p>1.2x = ? </p>
+<p>2.4y = ? </p>
+<p>3.2x +4y = ?</p>
+</blockquote>
+<p> 或许前两步根本不用算，于是节约了资源。</p>
+<p>spark使用DAG有向无环图，控制最后的结果本质上要求哪些计算。实现懒人模式。</p>
+<blockquote>
+<p>分布式就是管理人和物的一种抽象。 </p>
+<p>—— 李丰老师</p>
+</blockquote>
+<h4 id="3-线性代数"><a href="#3-线性代数" class="headerlink" title="3. 线性代数"></a>3. 线性代数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import scipy.sparse as sps</span><br><span class="line">from pyspark.mllib.linalg import Vectors</span><br><span class="line"></span><br><span class="line"># Use a NumPy array as a dense vector.</span><br><span class="line">dv1 = np.array([1.0, 0.0, 3.0])</span><br><span class="line"># Use a Python list as a dense vector.</span><br><span class="line">dv2 = [1.0, 0.0, 3.0]</span><br><span class="line"># Create a SparseVector.</span><br><span class="line">sv1 = Vectors.sparse(3, [0, 2], [1.0, 3.0])</span><br><span class="line"># Use a single-column SciPy csc_matrix as a sparse vector.</span><br><span class="line">sv2 = sps.csc_matrix((np.array([1.0, 3.0]),</span><br><span class="line">                      np.array([0, 2]),</span><br><span class="line">                      np.array([0, 2])), shape=(3, 1))</span><br></pre></td></tr></table></figure>
+<p>spark的线性代数模块很强大： pyspark.mllib.linalg</p>
+<p>spark专门提供的<strong>标签</strong>工具</p>
+<p>做分类模型时就可以使用特有变量了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from pyspark.mllib.linalg import SparseVector</span><br><span class="line">from pyspark.mllib.regression import LabeledPoint</span><br><span class="line"></span><br><span class="line"># Create a labeled point with a positive label and a dense feature vector.</span><br><span class="line">pos = LabeledPoint(1.0, [1.0, 0.0, 3.0])</span><br><span class="line"># Create a labeled point with a negative label and a sparse feature vector.</span><br><span class="line">neg = LabeledPoint(0.0, SparseVector(3, [0, 2], [1.0, 3.0]))</span><br></pre></td></tr></table></figure>
+<p>允许导入各式各样的稀疏数据。有了local就有distributed。</p>
+<p>如果要做个逻辑回归、线性回归，能否模拟一个线性回归的数据，将其存入矩阵。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>spark集成了很多hive的优秀理念。</p>
+<p>对于常见的数据框的操作，归类成不同类型的函数。</p>
+<p>依赖于sparkSQL，有别于传统的RDD形式，因为在RDD上可以更底层地操作数据（矩阵向量……）</p>
+<p>sparkSQL与hive结合，可以把hive的sql查询直接应用在数据框上，也允许用户自己的函数。支持读取hdfs上的数据，是个通用的多接口的形式。</p>
+<p>sparkRDD形式数据灵活，操作很琐碎。于是spark提供了自己的dataset集合。其实就是分布式数据的综合，通过java的jvm集成的（java虚拟机，用于快速计算的技术）</p>
+<p><strong>dataset的api只支持scala和Java。</strong></p>
+<p>故如果想在spark上处理数据集，需要自己学习Scala语言（最后一节有讲，敬请期待）。</p>
+<p>spark上的dataframe是分布式的，其实就是表，不同列之间可以是不同的数据类型。</p>
+<p>可以对dataframe做清洗和操作。可以通过hive的表来构建，可以通过现成的表来构建。</p>
+<p>各种语言都支持。</p>
+<h3 id="三、战斗案例"><a href="#三、战斗案例" class="headerlink" title="三、战斗案例"></a>三、战斗案例</h3><p>目标，处理分布式的DataFrame，首先启动SC。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from pyspark.sql import SparkSession</span><br><span class="line">spark = SparkSession.builder.appName(&quot;Python Spark&quot;).getOrCreate()</span><br><span class="line">spark # test if Spark session is created or not</span><br><span class="line"></span><br><span class="line">sc = spark.sparkContext # make a spakr context for RDD</span><br><span class="line">sc</span><br></pre></td></tr></table></figure>
+<img src="/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu2.png" title="tu2">
+<img src="/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu3.png" title="tu3">
+<p>spark有read函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sdf = spark.read.csv(&quot;/opt/apps/ecm/service/spark/2.4.4/package/spark-2.4.4-bin-hadoop2.7/examples/src/main/resources/people.txt&quot;)</span><br><span class="line">sdf.show() # Displays the content of the DataFrame to stdout</span><br></pre></td></tr></table></figure>
+<img src="/2020/11/12/1112分布式计算/11/12/1112分布式计算/tu4.png" title="tu4">
+<p>这个就是分布式上的表。</p>
+<p>json格式可以直接读取（spark.read.json）</p>
+<h4 id="schema"><a href="#schema" class="headerlink" title="schema"></a>schema</h4><p>属于读取表格时的表头信息。名字，类型，缺失等等。</p>
+<p>经常需要手写表头，因为自动容易出错。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"># We specify the correct schema by hand</span><br><span class="line">schema_sdf = StructType([</span><br><span class="line">        StructField(&apos;Year&apos;, IntegerType(), True),</span><br><span class="line">        StructField(&apos;Month&apos;, IntegerType(), True),</span><br><span class="line">        StructField(&apos;DayofMonth&apos;, IntegerType(), True),</span><br><span class="line">        StructField(&apos;DayOfWeek&apos;, IntegerType(), True),</span><br><span class="line">        StructField(&apos;DepTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;CRSDepTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;ArrTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;CRSArrTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;UniqueCarrier&apos;, StringType(), True),</span><br><span class="line">        StructField(&apos;FlightNum&apos;, StringType(), True),</span><br><span class="line">        StructField(&apos;TailNum&apos;, StringType(), True),</span><br><span class="line">        StructField(&apos;ActualElapsedTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;CRSElapsedTime&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;AirTime&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;ArrDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;DepDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;Origin&apos;, StringType(), True),</span><br><span class="line">        StructField(&apos;Dest&apos;,  StringType(), True),</span><br><span class="line">        StructField(&apos;Distance&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;TaxiIn&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;TaxiOut&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;Cancelled&apos;,  IntegerType(), True),</span><br><span class="line">        StructField(&apos;CancellationCode&apos;,  StringType(), True),</span><br><span class="line">        StructField(&apos;Diverted&apos;,  IntegerType(), True),</span><br><span class="line">        StructField(&apos;CarrierDelay&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;WeatherDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;NASDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;SecurityDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;LateAircraftDelay&apos;,  DoubleType(), True)</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">oridat = spark.read.options(header=&apos;true&apos;).schema(schema_sdf).csv(&quot;/data/airdelay_small.csv&quot;) # spark dataframe</span><br></pre></td></tr></table></figure>
+<p>air.describe().show()就相当于简单的描述统计</p>
+<p>air.describe([‘ArrDelay’]).show() 看具体的列</p>
+<p>Data.collect()可以避开懒人模式直接计算</p>
+<h3 id="四、作业-air-delay数据清洗"><a href="#四、作业-air-delay数据清洗" class="headerlink" title="四、作业 air-delay数据清洗"></a>四、作业 air-delay数据清洗</h3><p>五百万 * 十九列</p>
+<p>转化成新的df，一类是0、1，告诉大家有没有延误</p>
+<p>arrivedelay设置成0-1变量。现有的列可以使用：里程，是不是US（0-1），是不是AA（0-1），诸如此类，相当于把原变量修改成哑变量了。</p>
+<p>最后得到————&gt;五百万 * 一百八十列</p>
+<p>不要超过这么多列。（在老师github上/dlsa/blob/master/projects/logistic…）</p>
+<p>作业，整理好这个数据。</p>
+<p>下节课对这个数据做逻辑回归。</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/11/12/1112分布式计算/">
+                    https://konelane.github.io/2020/11/12/1112分布式计算/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/11/20/分布式计算汇总文件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          大数据|分布式计算课程作业（持续更新）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/02/1102分布式计算/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式1102-Hi,Hive!Hi,Spark!</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

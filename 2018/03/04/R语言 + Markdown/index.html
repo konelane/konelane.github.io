@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>【转载】R + Markdown简介 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="简介r语言和markdown的使用（功能和前期准备）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转载】R + Markdown简介">
+<meta property="og:url" content="https://konelane.github.io/2018/03/04/R语言 + Markdown/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="简介r语言和markdown的使用（功能和前期准备）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-09T15:31:12.615Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【转载】R + Markdown简介">
+<meta name="twitter:description" content="简介r语言和markdown的使用（功能和前期准备）">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-R语言 + Markdown" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2018/03/04/R语言 + Markdown/" class="article-date">
+  	<time datetime="2018-03-03T16:00:00.000Z" itemprop="datePublished">2018-03-04</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      【转载】R + Markdown简介
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#markdown是什么"><span class="toc-number">1.1.</span> <span class="toc-text">markdown是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#灵根育孕源流出-心性修持大道生"><span class="toc-number">1.1.1.</span> <span class="toc-text">灵根育孕源流出　心性修持大道生</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#R语言"><span class="toc-number">1.2.</span> <span class="toc-text">R语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rmarkdown和knitr"><span class="toc-number">1.3.</span> <span class="toc-text">rmarkdown和knitr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么要使用markdown"><span class="toc-number">1.4.</span> <span class="toc-text">为什么要使用markdown</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎样使用markdown"><span class="toc-number">1.5.</span> <span class="toc-text">怎样使用markdown</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#准备工作"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#编辑器"><span class="toc-number">2.1.</span> <span class="toc-text">编辑器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pandoc"><span class="toc-number">2.2.</span> <span class="toc-text">pandoc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于pandoc的安装："><span class="toc-number">2.3.</span> <span class="toc-text">关于pandoc的安装：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#texlive"><span class="toc-number">2.4.</span> <span class="toc-text">texlive</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#R安装"><span class="toc-number">2.5.</span> <span class="toc-text">R安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#R包安装"><span class="toc-number">2.6.</span> <span class="toc-text">R包安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#准备就绪"><span class="toc-number">2.7.</span> <span class="toc-text">准备就绪</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>简介r语言和markdown的使用（功能和前期准备）</p>
+<a id="more"></a>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="markdown是什么"><a href="#markdown是什么" class="headerlink" title="markdown是什么"></a>markdown是什么</h2><p>markdown是由John Gruber提出的一种书写格式，于2004年12月推出它的1.0.1版本。到现在为止这个版本也一直没有更新过，也就是说这是一个基本稳定的版本。作者的博客地址在这里，其中包含了Markdown的语法说明，这个是英文版的。<br>在说明markdown是什么之前，先看一个markdown文件的实例：</p>
+<hr>
+<h3 id="灵根育孕源流出-心性修持大道生"><a href="#灵根育孕源流出-心性修持大道生" class="headerlink" title="灵根育孕源流出　心性修持大道生"></a>灵根育孕源流出　心性修持大道生</h3><p><strong>诗曰</strong></p>
+<blockquote>
+<p>混沌未分天地乱，茫茫渺渺无人见。<br>自从盘古破鸿蒙，开辟从兹清浊辨。<br>覆载群生仰至仁，发明万物皆成善。<br>欲知造化会元功，须看《西游释厄传》。</p>
+</blockquote>
+<p>盖闻天地之数，有十二万九千六百岁为一元。将一元分为十二会，乃子、丑、寅、卯、辰、巳、午、未、申、酉、戌、亥之十二支也。每会该一万八百岁。且就一日而论：子时得阳气而丑则鸡鸣，寅不通光而卯则日出，辰时食后而巳则挨排，</p>
+<hr>
+<p>由此可见，markdown的源码和最终输出的结果比起来，除了格式不一样外，只是多出了一些 <strong>标点符号</strong>。而这些标点符号就是markdown控制格式的方法。</p>
+<p>如果说markdown有什么特征，那么markdown最大的特征就是简单。与微软的word相比，不知简单了多少倍，简直不是一个数量级的。标准的markdown中只是定义了10多种格式，并且格式的定义非常容易记忆，以至于你根本不需要化专门的时间来学习它。</p>
+<p>那么有人会问，它会不会太简单了？的确有时候它太简单了，比如写作一些科技文献的时候，它提供的基本格式就不够用了。在这种情况下，出现了markdown的几种扩展，可以让人们来方便的处理这些格式。目前比较流行的扩展有pandoc扩展，其次是GitHub扩展。其中GitHub的扩展主要是用于在GutHub的网站上使用。</p>
+<p>由于GitHub用户很多，所以这个扩展也很流行。而 <strong>pandoc</strong> 是一个强大的格式转换工具，基本上支持各类常见格式之间的转换，其中就包括有markdown。而markdown的格式超级简单，这就使得人们能够用超级简单的markdown来生成看起来复杂的其他格式，比如word、html、pdf等。这样，因为pandoc使得人们能够使用markdown来生成doc和pdf文档，因此受到广泛的欢迎。随着pandoc的流行，出现了很多以pandoc为基础的外围工具，以此来方便人们对pandoc的使用，比如在R语言中的几个软件包 <strong>Rmarkdown</strong>，<strong>knitr</strong> 等就使用pandoc作为底层的支持来实现从markdown到各种其他格式的转换。</p>
+<p>另外关于这些基于pandoc的扩展，有些已经实现的非常先进，可以帮助作者完成不少以前需要手动完成的工作，比如自动生成文档的部分内容，自动插入图片等等。</p>
+<p>基于以上这些原因，本文中也将以pandoc扩展为主要的关注点。</p>
+<h2 id="R语言"><a href="#R语言" class="headerlink" title="R语言"></a>R语言</h2><p>本文的目的是为了讲解markdown，为什么还要提到R语言？R语言是什么东西，跟markdown有什么关系呢？</p>
+<p>如果你使用markdown只是进行文学类创作，比如写写小说什么的，那么你根本不需要使用到markdown的扩展就可以工作了。在这种情况下，你可以不去考虑makrdown扩展以及R的问题。</p>
+<p>如果你要使用markdown进行科技文献，科技书籍的写作，那么如果你了解并能够使用R语言，将会对你的工作效率有巨大的提升。</p>
+<p>那么R语言是什么？R语言是一种针对统计分析和数据科学的开源的统计语言，它是一种基于向量的高级函数式编程语言。近年来，由于大数据的兴起，越来越多的人开始关注R语言。每天都有大量的志愿者为R软件的发展贡献代码。因此R本身也是一个迅速发展的语言。</p>
+<p>由于pandoc的兴起，R社区的开发者发现了这个工具给写作带来的巨大便利，因此开发了一些以pandoc为基础的软件包，其代表是Rmarkdown和knitr。这些软件包让文档或书籍的作者可以方便的从markdown文件动态的生成最终的文档。这些工具使得写作的效率大幅提高。这也是我们将要关注的内容。</p>
+<h2 id="rmarkdown和knitr"><a href="#rmarkdown和knitr" class="headerlink" title="rmarkdown和knitr"></a>rmarkdown和knitr</h2><p>前面介绍提到了rmarkdown和knitr是R的软件包，它们把能够在markdown中嵌入R语言，并且执行其中的R代码，而R代码的输出可以作为文档的一部分。甚至R代码生成的图片也可以自动嵌入到markdown文件中。</p>
+<p>Rmarkdown + knitr可以执行R语言代码的这个功能使得markdown如虎添翼，具有非凡的表现力和极高的效率。含有可执行R代码的markdown文件有一个专门的扩展名，即rmd。<br>下面我们看一个rmarkdown的实例：</p>
+<hr>
+<p>下面的代码将会画出100个正态分布的散点图，画出的图会变成文件的插图：</p>
+<p><code>`
+</code>{.r echo=FALSE,fig.path=”./rfigures/p6172-“}<br>plot(rnorm(100))<br>```</p>
+<hr>
+<p>这里可以看到新生成的图片已经被插入文档中了，这样每次重新生成文档，文档的内容都会被更新，这样只要文档中的R代码没有错，该文档将永远保持使用最新的结果，你不需要为每次的代码改动来重新粘贴代码生成的结果。这将为您节省宝贵的时间。</p>
+<h2 id="为什么要使用markdown"><a href="#为什么要使用markdown" class="headerlink" title="为什么要使用markdown"></a>为什么要使用markdown</h2><p>从上面的介绍可以看出，markdown最大的特征就是简单，其次是基于markdown的各种外围工具使得利用markdown进行创作非常高效。这个高效体现在</p>
+<ol>
+<li><p>语法简单，作者基本上无需关心排版的问题，只要专心写作就可以了。</p>
+</li>
+<li><p>对于科技文献的写作，R软件提供了文章动态生成的过程。使得作者不必要手动去拷贝粘贴代码的结果或者生成的图片等。</p>
+</li>
+<li><p>易于修改，因为文档可以从markdown动态的生成。作者只需要修改markdown文件，然后就立刻能够看到最终的文章结果。</p>
+</li>
+</ol>
+<p>还有一个使用markdown的重要原因是，它是免费的，markdown只是一种格式定义，你可以使用你喜欢的编辑器来编写markdown文件，编写完的markdown文件可以通过免费的工具来转换成html、pdf、docx等。因此使用markdown你不必要花钱去使用某软的付费系统和付费软件。</p>
+<h2 id="怎样使用markdown"><a href="#怎样使用markdown" class="headerlink" title="怎样使用markdown"></a>怎样使用markdown</h2><p>markdown文件是通常的文本文件，你使用vi，emacs或者windows下的记事本都可以编写markdown。写好的markdown如果上传到GitHub，那么markdown文件会自动被转换成html显示出来。在本地可以通过perl，R或者其他的工具比如pandoc来将markdown文件转为html或PDF以及docx。</p>
+<p>•    <strong>perl</strong>，在John Gruber的网站，提供了一个Markdown.pl，这是标准的markdown解析工具，它可以把markdown转为html</p>
+<p>使用方法是：</p>
+<pre><code>./Markdown.pl ./about.md
+</code></pre><p>这样将会把md文件转换为html，输出在标准输出。</p>
+<p>因为前面提到的，标准的markdown的功能有限，比如没有表格的支持等，所以一般使用中，不推荐直接使用这个perl脚本进行格式转换。</p>
+<p>•    <strong>pandoc</strong>，你也可以使用pandoc直接来将md文件转换为html</p>
+<p>使用方法：</p>
+<pre><code>pandoc -f markdown -t html -o ./about.html ./about.md
+</code></pre><p>pandoc也可以把md转换为pdf文件，使用方法为</p>
+<pre><code>pandoc -f markdown -t latex -o ./about.pdf ./about.md
+</code></pre><p>pandoc可以支持多种类型的转换，通常你需要熟悉pandoc的各种参数，你可以手动敲这些命令。不过使用R的包会使这个过程简化。</p>
+<p>•    <strong>R</strong> ，以下是利用R将当前目录下的about.md文件转换为about.html文档的方法：<br>Rscript -e “rmarkdown::render(‘./about.md’)”</p>
+<p>当然，为了上面的代码能够正确运行，你需要在安装R以后，安装rmarkdown这个包，这个包的安装方法是，在R的命令行键入</p>
+<pre><code>install.packages(&quot;rmarkdown&quot;)。
+</code></pre><p>如果要生成pdf格式的文件，你需要在render后面指定更多的参数。这些后面再讨论。</p>
+<hr>
+<p>那么rmarkdown的文件怎么编译呢，rmarkdown的文件，也就是.rmd文件就只能在R上编译（转换）了。编译的方法和编译markdown文件一样，只是这时候，文件的扩展名由md变成了rmd，这时候，rmd文件中的r代码就会被处理了，命令行如下：</p>
+<pre><code>Rscript -e &quot;rmarkdown::render(&#39;./about.rmd&#39;)&quot;
+</code></pre><p>在真正使用markdown进行创作之前，你还需要做一些准备工作。如果你比较着急的想试试，可以直接跳到后面一章去看看markdown的基础语法。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>在真正使用markdown之前，我们还需要一些准备工作。这里的准备工作主要包括两个部分，一是选择一个编辑器，再就是选择一个编译工具，我们这里选择R语言。当然你也可以选择perl,但是我不推荐。</p>
+<h2 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h2><p>Linux下的同学都应该有自己趁手的工具，vim或者emacs随便找一个就可以了。这些工具下面应该还有些支持markdown语法的插件。对于vim来说，有一款插件叫 <strong>vim-markdown</strong>。这个插件只是提供了语法的高亮显示。</p>
+<p>在Linux下使用VIM编辑markdown文件实际上是很不方便的，根本原因在于中文的切换问题。你在输入中文的时候，如果要键入一个vim的命令，需要退出中文输入，或者在输入法上输入命令然后直接键入回车键，这是很不方便的。因此，我实际的使用过程中，并不怎么使用vim。而是使用了另一款编辑器，即gedit。这个编辑器中集成了markdown语法的高亮显示。使用起来也比较直接。中文输入的不方便是我这个vim粉放弃vim的根本原因。不过除了markdown以外的其他的编辑基本在vim中进行。</p>
+<p>另外现在有一些可以实时看到编辑效果的编辑器，比如Windows下的MarkdownPad, Mac下的Mou，Linux下的ReText等编辑器，大家也可以自己去找一下。选择一个适合自己的编辑器就好了。</p>
+<h2 id="pandoc"><a href="#pandoc" class="headerlink" title="pandoc"></a>pandoc</h2><p>如前所述，pandoc是一个格式转换工具，可以支持常见文档格式之间的相互转换。它支持很多的格式，使用pandoc —help可以看到它所支持的所有格式，这里列出其支持的格式供参考：</p>
+<p>xuyang@ubuntu15:~/blog$ pandoc —help</p>
+<p>pandoc [OPTIONS] [FILES]</p>
+<blockquote>
+<p>Input formats:  docbook, docx, epub, haddock, html, json, latex, markdown, markdown_github, markdown_mmd, markdown_phpextra, markdown_strict, mediawiki, native, opml, org, rst, t2t,textile, twiki</p>
+<p>Output formats: asciidoc, beamer, context, docbook, docx, dokuwiki, dzslides, epub, epub3, fb2, haddock, html, html5, icml, json, latex, man, markdown, markdown_github, markdown_mmd, markdown_phpextra, markdown_strict, mediawiki, native, odt, opendocument, opml, org, pdf*, plain, revealjs, rst, rtf, s5, slideous, slidy, texinfo, textile</p>
+</blockquote>
+<p>[*for pdf output, use latex or beamer and -o FILENAME.pdf]</p>
+<p>另外，pandoc还支持很多变成语言的语法高亮显示。</p>
+<p>xuyang@ubuntu15:~/blog$ pandoc —version</p>
+<p>pandoc 1.13.2.1</p>
+<p>Compiled with texmath 0.8.2.2, highlighting-kate 0.5.12.</p>
+<p>Syntax highlighting is supported for the following languages:</p>
+<blockquote>
+<p>   abc, actionscript, ada, agda, apache, asn1, asp, awk, bash, bibtex, boo, c,<br>    changelog, clojure, cmake, coffee, coldfusion, commonlisp, cpp, cs, css,<br>    curry, d, diff, djangotemplate, dockerfile, dot, doxygen, doxygenlua, dtd,<br>    eiffel, email, erlang, fasm, fortran, fsharp, gcc, glsl, gnuassembler, go,<br>    haskell, haxe, html, idris, ini, isocpp, java, javadoc, javascript, json,<br>    jsp, julia, latex, lex, lilypond, literatecurry, literatehaskell, lua, m4,<br>    makefile, mandoc, markdown, mathematica, matlab, maxima, mediawiki,<br>    metafont, mips, modelines, modula2, modula3, monobasic, nasm, noweb,<br>    objectivec, objectivecpp, ocaml, octave, opencl, pascal, perl, php, pike,<br>    postscript, prolog, pure, python, r, relaxng, relaxngcompact, rest, rhtml,<br>    roff, ruby, rust, scala, scheme, sci, sed, sgml, sql, sqlmysql,<br>    sqlpostgresql, tcl, tcsh, texinfo, verilog, vhdl, xml, xorg, xslt, xul,<br>    yacc, yaml, zsh</p>
+</blockquote>
+<p>Default user data directory: /home/xuyang/.pandoc</p>
+<p>Copyright (C) 2006-2014 John MacFarlane</p>
+<p>Web:  <a href="http://johnmacfarlane.net/pandoc" target="_blank" rel="noopener">http://johnmacfarlane.net/pandoc</a></p>
+<p>This is free software; see the source for copying conditions.</p>
+<p>There is no warranty, not even for merchantability or fitness</p>
+<p>for a particular purpose.</p>
+<h2 id="关于pandoc的安装："><a href="#关于pandoc的安装：" class="headerlink" title="关于pandoc的安装："></a>关于pandoc的安装：</h2><p>•    ubuntu 15.10 sudo apt-get install pandoc</p>
+<p>•    ubuntu 15.10以前的版本 在15.10以前的版本，ubuntu缺省安装的pandoc版本太低，以至于Rmarkdown拒绝调用它。所以在以前的版本上，你需要自己安装pandoc的最新版本，安装方法是：</p>
+<pre><code>sudo apt-get install cabal-install
+cabal update
+cabal install pandoc
+#记得把这个添加到目录
+export PATH=$HOME/.cabal/bin:$PATH
+</code></pre><p>使用这个方法安装时，需要花很长的时间，估计要1个小时吧。主要原因是需要下载大量的haskell的包。所以推荐大家在ubuntu 15.10以后的平台上使用。</p>
+<p>另外，在用上面的方法安装pandoc的时候，如果使用国内的镜像，速度会快很多，国内镜像的使用方法可以参考清华镜像的使用方法1，这里把它记录下来供参考：</p>
+<p>第一次使用时，先执行cabal update，待生成~/.cabal/config之后，使用ctrl+c中断这个update，然后修改~/.cabal/config。修改方法为，将下面这行注释掉（用—注释）</p>
+<pre><code>remote-repo: hackage.haskell.org:http://hackage.haskell.org/packages/archive
+修改为：
+remote-repo: mirrors.tuna.tsinghua.edu.cn:http://mirrors.tuna.tsinghua.edu.cn/hackage
+然后再执行cabal update和cabal install pandoc
+</code></pre><p>•    其他的系统 暂时还没有尝试</p>
+<h2 id="texlive"><a href="#texlive" class="headerlink" title="texlive"></a>texlive</h2><p>texlive用来处理Latex，它把latex格式的文件转为pdf。如果需要从markdown生成pdf文件，或者是打算由多篇文章生成一本pdf格式的书籍，需要有texlive的支持。这里选择的是texlive，安装方法如下</p>
+<pre><code>sudo apt-get install texlive-full
+</code></pre><p>这个安装也需要大约1小时左右，因为texlive也有很多的包需要安装。这样安装会多安装许多语言包，不过比起自己去一个一个选择包来说，这是最简单的方式。</p>
+<p>另外，因为我们需要中文的支持，所以需要另一个latex引擎，xelatex，所以这个也需要安装，方法是</p>
+<pre><code>sudo apt-get install xelatex
+</code></pre><h2 id="R安装"><a href="#R安装" class="headerlink" title="R安装"></a>R安装</h2><p>•    ubuntu 15.10<br>直接安装就可以了</p>
+<pre><code>sudo apt-get install r-base rbase-dev
+</code></pre><p>安装成功以后，你应该可以直接键入R命令，如下所示：</p>
+<pre><code>xuyang@ubuntu15:~/blog$ R
+</code></pre><blockquote>
+<p>R version 3.2.2 (2015-08-14) — “Fire Safety”<br>Copyright (C) 2015 The R Foundation for Statistical Computing<br>Platform: x86_64-pc-linux-gnu (64-bit)</p>
+<p>R是自由软件，不带任何担保。<br>在某些条件下你可以将其自由散布。<br>用’license()’或’licence()’来看散布的详细条件。<br>R是个合作计划，有许多人为之做出了贡献.<br>用’contributors()’来看合作者的详细情况<br>用’citation()’会告诉你如何在出版物中正确地引用R或R程序包。</p>
+</blockquote>
+<p>用’demo()’来看一些示范程序，用’help()’来阅读在线帮助文件，或<br>用’help.start()’通过HTML浏览器来看帮助文件。</p>
+<p>用’q()’退出R.</p>
+<h2 id="R包安装"><a href="#R包安装" class="headerlink" title="R包安装"></a>R包安装</h2><p>R安装以后，还需要安装一个R的扩展包才可以工作，其中的rmarkdown,knitr是必须的。安装的方法为，在R的命令行键入</p>
+<pre><code>install.packages(c(&#39;rmarkdown&#39;,&#39;knitr&#39;),repos=&quot;http://mirror.bjtu.edu.cn/cran/&quot;)
+</code></pre><p>其中repos参数指定包的下载地址，这里指定的是国内的一个R镜像。</p>
+<h2 id="准备就绪"><a href="#准备就绪" class="headerlink" title="准备就绪"></a>准备就绪</h2><p>有了以上准备工作（pandoc，texlive，R，rmarkdown）以后，你就可以开始r + markdown的工作了。后面开始学习markdown的基础语法。</p>
+<hr>
+<p><a href="https://mirrors4.tuna.tsinghua.edu.cn/help/hackage/" target="_blank" rel="noopener">https://mirrors4.tuna.tsinghua.edu.cn/help/hackage/</a></p>
+<p><strong>本文地址: <a href="http://www.bagualu.net/wordpress/archives/6172" target="_blank" rel="noopener">http://www.bagualu.net/wordpress/archives/6172</a> 转载请注明</strong></p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2018/03/04/R语言 + Markdown/">
+                    https://konelane.github.io/2018/03/04/R语言 + Markdown/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2018/03/07/3.4人生之赌/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          突破自己，人生之赌
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/24/恶魔西红柿/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">委屈西红柿</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

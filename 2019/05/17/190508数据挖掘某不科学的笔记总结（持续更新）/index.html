@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>数据挖掘|某不科学的笔记总结（持续更新） | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="数据挖掘|某不科学的笔记总结（持续更新）记录：氦核   最后编辑时间：20190514 文章主要参考马景义老师的数据挖掘教学，与刘苗老师相应课件。笔记中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘|某不科学的笔记总结（持续更新）">
+<meta property="og:url" content="https://konelane.github.io/2019/05/17/190508数据挖掘某不科学的笔记总结（持续更新）/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="数据挖掘|某不科学的笔记总结（持续更新）记录：氦核   最后编辑时间：20190514 文章主要参考马景义老师的数据挖掘教学，与刘苗老师相应课件。笔记中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-13T02:25:26.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据挖掘|某不科学的笔记总结（持续更新）">
+<meta name="twitter:description" content="数据挖掘|某不科学的笔记总结（持续更新）记录：氦核   最后编辑时间：20190514 文章主要参考马景义老师的数据挖掘教学，与刘苗老师相应课件。笔记中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-190508数据挖掘某不科学的笔记总结（持续更新）" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2019/05/17/190508数据挖掘某不科学的笔记总结（持续更新）/" class="article-date">
+  	<time datetime="2019-05-16T16:00:00.000Z" itemprop="datePublished">2019-05-17</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      数据挖掘|某不科学的笔记总结（持续更新）
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据挖掘-某不科学的笔记总结（持续更新）"><span class="toc-number">1.</span> <span class="toc-text">数据挖掘|某不科学的笔记总结（持续更新）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#主要算法一览"><span class="toc-number">1.1.</span> <span class="toc-text">主要算法一览</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <h1 id="数据挖掘-某不科学的笔记总结（持续更新）"><a href="#数据挖掘-某不科学的笔记总结（持续更新）" class="headerlink" title="数据挖掘|某不科学的笔记总结（持续更新）"></a>数据挖掘|某不科学的笔记总结（持续更新）</h1><p><strong>记录：氦核   最后编辑时间：20190514</strong></p>
+<p>文章主要参考马景义老师的<a href="https://github.com/CUFESAM/Algorithm/blob/master/steplm.ipynb" target="_blank" rel="noopener">数据挖掘教学</a>，与刘苗老师相应课件。笔记中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。</p>
+<a id="more"></a>
+<h2 id="主要算法一览"><a href="#主要算法一览" class="headerlink" title="主要算法一览"></a>主要算法一览</h2><p>基于乔利斯基分解的逐步回归 <a href="https://konelane.github.io/2019/03/22/190322%E9%80%90%E6%AD%A5%E5%9B%9E%E5%BD%92-Cholesky%E5%88%86%E8%A7%A3%E6%B3%95/">传送门</a><br>偏差方差分解&amp;五个模型评价相关指标  <a href="https://konelane.github.io/2019/03/06/190306%E5%81%8F%E5%B7%AE%E6%96%B9%E5%B7%AE%E5%88%86%E8%A7%A3&amp;%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BB%B7/">传送门</a><br>最优子集回归&amp;最小角度回归  <a href="https://konelane.github.io/2019/03/26/190326%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98%E6%9C%80%E4%BC%98%E5%AD%90%E9%9B%86%E5%9B%9E%E5%BD%92&amp;%E6%9C%80%E5%B0%8F%E8%A7%92%E5%9B%9E%E5%BD%92/">传送门</a><br>基于lasso的LARSN  <a href="https://konelane.github.io/2019/04/16/190416LARSN/">传送门</a></p>
+<p>决策树 <a href="https://konelane.github.io/2019/05/07/190507decisiontree/">传送门</a></p>
+<p>adaboost算法介绍（含详细权重解释） <a href="https://konelane.github.io/2019/05/14/190514adaboost/">传送门</a></p>
+<p>聚类分析、EM算法、数据爬取（py）暂缺</p>
+<p>最近要写数据分析报告，笔记补充较晚，见谅（根本就没人看吧喂！）</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2019/05/17/190508数据挖掘某不科学的笔记总结（持续更新）/">
+                    https://konelane.github.io/2019/05/17/190508数据挖掘某不科学的笔记总结（持续更新）/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2019/06/04/190604有趣小链接/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          不务正业|近期收集的有趣小链接
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/05/14/190514adaboost/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据挖掘|adaboost原理</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

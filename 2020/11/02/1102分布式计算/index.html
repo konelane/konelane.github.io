@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>分布式1102-Hi,Hive!Hi,Spark! | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="hadoop以及MapReduce暂告一段落！ 这一节我们做个过渡，讲一讲Hive以及Spark。">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式1102-Hi,Hive!Hi,Spark!">
+<meta property="og:url" content="https://konelane.github.io/2020/11/02/1102分布式计算/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="hadoop以及MapReduce暂告一段落！ 这一节我们做个过渡，讲一讲Hive以及Spark。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu3.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu4.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu5.png">
+<meta property="og:image" content="https://konelane.github.io/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu6.png">
+<meta property="og:updated_time" content="2020-12-30T09:10:23.494Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式1102-Hi,Hive!Hi,Spark!">
+<meta name="twitter:description" content="hadoop以及MapReduce暂告一段落！ 这一节我们做个过渡，讲一讲Hive以及Spark。">
+<meta name="twitter:image" content="https://konelane.github.io/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-1102分布式计算" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/11/02/1102分布式计算/" class="article-date">
+  	<time datetime="2020-11-01T16:00:00.000Z" itemprop="datePublished">2020-11-02</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      分布式1102-Hi,Hive!Hi,Spark!
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、Hive介绍"><span class="toc-number">1.</span> <span class="toc-text">一、Hive介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、启动一个Hive任务"><span class="toc-number">2.</span> <span class="toc-text">二、启动一个Hive任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、Spark"><span class="toc-number">3.</span> <span class="toc-text">三、Spark</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#spark与hadoop的区别"><span class="toc-number">3.1.</span> <span class="toc-text">spark与hadoop的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、启动spark"><span class="toc-number">4.</span> <span class="toc-text">四、启动spark</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Spark的API"><span class="toc-number">4.1.</span> <span class="toc-text">Spark的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何创建spark-context"><span class="toc-number">4.2.</span> <span class="toc-text">如何创建spark context</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#给一个自己的作业超简单案例"><span class="toc-number">4.3.</span> <span class="toc-text">给一个自己的作业超简单案例</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>hadoop以及MapReduce暂告一段落！</p>
+<p>这一节我们做个过渡，讲一讲Hive以及Spark。</p>
+<a id="more"></a>
+<h3 id="一、Hive介绍"><a href="#一、Hive介绍" class="headerlink" title="一、Hive介绍"></a>一、Hive介绍</h3><p>Hive是分布式的数据库。对于结构化数据存储、查询的高效工具。</p>
+<p>查询特殊的行、列，数据库操作非常重要。</p>
+<blockquote>
+<p>数据库就像计算器一样。</p>
+<p>——李丰老师</p>
+</blockquote>
+<p>不管什么类型的数据库，都有sql，数据库查询语言。能够对很大的表格进行类似excel的操作。</p>
+<p>数据库面向不同的对象：</p>
+<blockquote>
+<p>计算机：设计高效数据库，快速存储海量数据。</p>
+<p>使用者：快速得到想要的数据。</p>
+</blockquote>
+<p>大数据时代，数据库进入瓶颈，因为其不可扩展。轻量级的数据应用就不太喜欢数据库，转而使用hdfs。但hdfs没有数据库那样便利，不能select…from…</p>
+<p>就诞生了基于hdfs的数据库工具。</p>
+<p><strong>初衷</strong>：为了使企业能够快速部署使用结构化表格与操作。能将hdfs上的表格当做数据库的表格来使用（如csv）。</p>
+<p>只要用sql语句就可以在hdfs上处理结构化数据。其实Hive是把sql解析成了MapReduce语句，最后传递回用户。</p>
+<p>Hadoop（系统）hdfs（文件管理系统）</p>
+<p>hive-SQL（可操作的客户端）complie+optimize+execute（很快啊！）</p>
+<p>hive其实有小缓存，如果大量/经常查询同一条，就会被缓存下来，方便直接调用。</p>
+<p>不会hadoop也可以用hive，只需要sql语句就行了。</p>
+<p>hive可以做spark中dataframe的查询引擎。hive的功能就是能用sql的客户端。（氦核：这一点在之后的工作中显示了其强大与方便）</p>
+<p>hive将sql解析成XML语句（标记位置）</p>
+<p>hive完全是模拟了sql的写法，sql用的最广，python之流不适合这样的工作。</p>
+<h3 id="二、启动一个Hive任务"><a href="#二、启动一个Hive任务" class="headerlink" title="二、启动一个Hive任务"></a>二、启动一个Hive任务</h3><p>Hive + 回车（进入交互界面）</p>
+<p>Exit （退出）</p>
+<p>hive允许执行很多命令同时推出</p>
+<p>如：</p>
+<blockquote>
+<p>Hive -e “dfs -ls /;”</p>
+</blockquote>
+<p>e是执行。引号内是hive语句，分号是模仿sql的结束符号。</p>
+<p>传递给hadoop就是hadoop fs -ls /</p>
+<p>结果再传回hive</p>
+<p>也可以写成文件：</p>
+<blockquote>
+<p>Hive -f /path/to/file/withqueries.hql</p>
+</blockquote>
+<p>hql（hive的文本文件，与sql区分）</p>
+<img src="/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu1.png" title="tu1">
+<p>输入hive可以进入终端</p>
+<img src="/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu2.png" title="tu2">
+<p>操作时，在终端中可以直接输入dfs -ls /;    （别忘了分号）</p>
+<p>注：sql语言的特点——对大小写不敏感，语句中可以小写可以大写。但是对表的字段依然敏感。</p>
+<blockquote>
+<p>Show databases;</p>
+</blockquote>
+<p>可以看分布式集群上有什么数据库</p>
+<blockquote>
+<p>Show databases like ‘d*’;</p>
+<p>Create database if not exists mydb;</p>
+</blockquote>
+<p> if not exists（是一个条件，如果有了就不会再创建，如果没有的话就创建）</p>
+<img src="/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu3.png" title="tu3">
+<p>数据库下有表，mydb不指定文件夹，就在warehouse的文件夹下。</p>
+<p>location参数可以指定创建的位置</p>
+<blockquote>
+<p>Create database if not exists fff location ‘user/lifeng/hive’</p>
+</blockquote>
+<p>创建一个指定位置的数据库fff</p>
+<blockquote>
+<p>Drop database fff;</p>
+</blockquote>
+<p>删库，跑路！（危）</p>
+<p>hive里如何创建表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS mydb.employees (</span><br><span class="line">    name</span><br><span class="line">        STRING COMMENT &apos;Employee name&apos;,</span><br><span class="line">    salary</span><br><span class="line">        FLOAT COMMENT &apos;Employee salary&apos;,</span><br><span class="line">    subordinates ARRAY&lt;STRING&gt; COMMENT &apos;Names of subordinates&apos;,</span><br><span class="line">    deductions MAP&lt;STRING, FLOAT&gt;</span><br><span class="line">        COMMENT &apos;Keys are deductions names, values are percentages&apos;,</span><br><span class="line">    address</span><br><span class="line">        STRUCT&lt;street:STRING, city:STRING, state:STRING, zip:INT&gt;</span><br><span class="line">        COMMENT &apos;Home address&apos;)</span><br><span class="line">COMMENT &apos;Description of the table&apos;</span><br><span class="line">TABLEPROPERTIES (&apos;creator&apos;=&apos;me&apos;, &apos;created_at&apos;=&apos;2012-01-02 10:00:00&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>列名，comment记录注释，最后一行只创建了表头、创建者、创建时间等</p>
+<p>hive记录了表的信息</p>
+<p>因为刚刚用了use wyh_db;现在Show tables;就能看有哪些表。</p>
+<p>hive提供了专门工具，把外部的csv文件链接进数据库。</p>
+<p>hive可以创建外部表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">create external table if not exists stocks (</span><br><span class="line">    symbol string, </span><br><span class="line">    ymd string, </span><br><span class="line">    price_open float, </span><br><span class="line">    price_high float, </span><br><span class="line">    price_low float, </span><br><span class="line">    price_close float, </span><br><span class="line">    volume int, </span><br><span class="line">    price_adj_close float )</span><br><span class="line">row format delimited fields terminated by &apos;,&apos; </span><br><span class="line">location &apos;/user/lifeng/data&apos;;</span><br></pre></td></tr></table></figure>
+<p>逗号分隔，原来是csv文件，要加一个逗号分隔（倒数第二行）</p>
+<p>linux里有个内置命令awk脚本工具，能够</p>
+<p>Awk -f 5，4啥的，能够选择打印第5和第4列</p>
+<p>主要是不想导入python中处理。</p>
+<p>如可以使用pig工具，合并两个表或多个表（我们用的不多）</p>
+<p>pig有自己的书写习惯，计算机架构的工程师经常用</p>
+<p>hbase是对谷歌bigtable的开源实现</p>
+<p>能够按行更新（如python的append）</p>
+<p>能做基于内存的文件缓存，加快速度</p>
+<p>不支持sql的查询，但是hive目前有工具可以与之通行。</p>
+<p>（HIVE的简介到此结束，后面有任务再见）</p>
+<h3 id="三、Spark"><a href="#三、Spark" class="headerlink" title="三、Spark"></a>三、Spark</h3><p><a href="http://spark.apache.org/" target="_blank" rel="noopener">spark</a>，</p>
+<blockquote>
+<p>Speed - Run workloads 100x faster.</p>
+<p>Ease of Use - Write applications quickly in Java, Scala, Python, R, and SQL.</p>
+<p>Generality - Combine SQL, streaming, and complex analytics.</p>
+<p>Runs Everywhere - Spark runs on Hadoop, Apache Mesos, Kubernetes, standalone, or in the cloud. It can access diverse data sources.</p>
+</blockquote>
+<p>伯克利的博士生，针对hadoop的问题重新写成了spark（老师也希望我们做这样的博士生，扶额）</p>
+<p>Databricks公司，官网上提供了简单交互学习的平台。</p>
+<p>spark在计算过程中非常快，是hadoop速度的一百倍</p>
+<p>可以使用python，r，java，还有spark自带的scala语言。Scala语言有java的特性，又像r一样好写。</p>
+<p>可以将spark当做python的一个模块来使用。（氦核：事实证明，pyspark很强，还自带深度学习模块，不过没那么顺手。）用户只需要学一点点就能用起来。</p>
+<p>sparkR可以启动r。r语言设计用于统计分析，但是spark需要计算机组件，但是r没有，python有。</p>
+<h4 id="spark与hadoop的区别"><a href="#spark与hadoop的区别" class="headerlink" title="spark与hadoop的区别"></a>spark与hadoop的区别</h4><p>hadoop是分布式的框架，spark对MapReduce看的更少，结果算的很快。</p>
+<p>还有，hadoop不能交互；spark可以交互式操作一个对象。可以创建分布式对象， 在不同的节点上都存在，同时保证应用性和速度</p>
+<p>spark也有通用性和广泛性，可以把sql集成进spark。</p>
+<p>spark也可以处理流数据。</p>
+<p>spark甚至可以机器学习和深度学习。</p>
+<p>spark可以看做是分布式系统上更方便操作的hadoop客户端。</p>
+<p>可以运行在hadoop上，可以当做独立的分布式系统。</p>
+<p>spark可以接受hdfs等来源的文件，也可以自己建立dataframe。</p>
+<p>spark可以用数据框组织数据。</p>
+<p>spark有内置机器学习库，叫ml_lib；图形处理GraphX；流数据处理Spark Streaming（企业常用）。 </p>
+<p>spark也可以运行在其他分布式平台上，各种各样的平台上都有spark接口。易用性使其广泛普及。</p>
+<p>spark提供了hive的集成。不过select不能写很复杂。但是通过spark可以先让spark执行select，再让hive执行。</p>
+<p>快的原因：</p>
+<img src="/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu4.png" title="tu4">
+<blockquote>
+<p>1.很多worker节点，worker之间交互很快（通过交换机）<br>2.worker上可以运行很多任务（executor）<br>3.每个worker上都有一些存储最常用数据的内存</p>
+</blockquote>
+<p>劣势：</p>
+<blockquote>
+<p>需要很大的内存 — hadoop最不耗内存</p>
+<p>spark的官方建议，需要原始数据2-5倍的内存才能保证平稳运行</p>
+</blockquote>
+<p>有名的spark错误：OOM错误</p>
+<p>Out of memory（哈哈哈）</p>
+<p>加内存，扩容，烧钱啊。</p>
+<blockquote>
+<p>尽可能让代码写快一些，用最少的资源得到最大的价值。</p>
+<p>——李丰老师</p>
+</blockquote>
+<p>之后课程计划讲：数据类型、机器学习的库（老版本基于rdd，新版本基于数据框）、streaming </p>
+<p>不讲：计算机视觉相关包</p>
+<h3 id="四、启动spark"><a href="#四、启动spark" class="headerlink" title="四、启动spark"></a>四、启动spark</h3><p>启动：.py .r</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Spark-submit \</span><br><span class="line"> --class </span><br><span class="line"> --master #什么节点(yarn)</span><br><span class="line"> --deploy-mode</span><br><span class="line"> --executor-memory 20G \</span><br><span class="line"> --conf</span><br></pre></td></tr></table></figure>
+<p><a href="http://spark.apache.org/examples.html" target="_blank" rel="noopener">Spark案例</a></p>
+<p>使用spark-summit提交上去就能执行了。在spark运算前，要想想全部需要多少运算资源，给每个executor分多少内存。</p>
+<p>Tiny fat 两种分配资源想法</p>
+<blockquote>
+<p>Tiny 模式给每个核分一个executor，32g给8核，只能拿到4g，加上系统消耗就会更少。这种情形适用于cpu负荷大，如迭代类型，更多时候是迭代的分布式要跑起来。</p>
+<p>Fat 模式，要是对IO很多的时候，我们不一定需要很多executor，八核可能只用两个executor，每个executor就有4核、16g使用。</p>
+</blockquote>
+<p>python有个**x，即将列表展开按位置放入</p>
+<p>x的长度不超过256，但是python3.8现在允许任意长度参数传入</p>
+<p>X = [1,2,3,…,1000] </p>
+<p>Sumfunc(**x)</p>
+<p>登录服务器，输入spark-shell</p>
+<img src="/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu5.png" title="tu5">
+<p>使用pyspark要输入神秘代码（就是python的版本，配置时一定要与spark版本对应起来，比如服务器只能用3.6版本的python）</p>
+<img src="/2020/11/02/1102分布式计算/11/02/1102分布式计算/tu6.png" title="tu6">
+<p>或者直接在python中import pyspark，有时候需要先import findspark。</p>
+<h4 id="Spark的API"><a href="#Spark的API" class="headerlink" title="Spark的API"></a>Spark的API</h4><p>rdd是什么（resilient distributed dataset）RDD是Spark里最重要的一个概念。</p>
+<p>任何一个spark都可以通过rdd对象连接起来，也允许用户部署任何计算。</p>
+<p>通过rdd转化成驱动程序，放入计算节点上计算，如传统的数学计算都可以转化。</p>
+<p>spark-rdd提供了数据上的一个抽象，提供了海量数据的拆分机制，也可以通过不同的方式创建。</p>
+<p>如分布式hdfs上有个文件，可以直接转化（好比hive上有个表），它也能判断哪些数据应该放入内存、硬盘。来提高效率。</p>
+<p>其次，rdd也监视了每个计算节点的数据完整性。复活的基本机理与hadoop相似。闲暇时间拷贝。</p>
+<p>spark能进行机器学习的理由：spark允许变量进行共享，每个节点都有想同的变量。</p>
+<blockquote>
+<p>1.常量，都用得着，不需修改。通过广播（broadcast variables）来传递给每个节点</p>
+<p>2.传递到节点后，还可能要修改（如迭代算法）会消耗资源（accumulators）</p>
+</blockquote>
+<h4 id="如何创建spark-context"><a href="#如何创建spark-context" class="headerlink" title="如何创建spark context"></a>如何创建spark context</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import findspark</span><br><span class="line">findspark.init(&quot;/usr/lib/spark-current&quot;)</span><br><span class="line">import pyspark</span><br><span class="line"></span><br><span class="line">sc.stop()</span><br><span class="line">sc = pyspark.SparkContext(&quot;local&quot;, &quot;My First Spark App&quot;)</span><br></pre></td></tr></table></figure>
+<p>使用了<strong>sc.parallelize</strong>就会传上spark，是一个对象。如果数据在本地或hdfs，都可以上传。</p>
+<h4 id="给一个自己的作业超简单案例"><a href="#给一个自己的作业超简单案例" class="headerlink" title="给一个自己的作业超简单案例"></a>给一个自己的作业超简单案例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env python3.6</span><br><span class="line">import pyspark</span><br><span class="line"></span><br><span class="line">conf = pyspark.SparkConf().setAppName(&quot;Hehe First Spark RDD APP&quot;).setMaster(&quot;local&quot;)  # “yarn”</span><br><span class="line">sc = pyspark.SparkContext(conf=conf)</span><br><span class="line">sc.stop()</span><br><span class="line">sc = pyspark.SparkContext.getOrCreate()</span><br><span class="line">licenseFile = sc.textFile(&quot;2020210995wangyuanhe/reg/stocks.txt&quot;)</span><br><span class="line">lineLengths = licenseFile.map(lambda s: len(s))</span><br><span class="line">totalLength = lineLengths.reduce(lambda a, b: a + b)</span><br><span class="line"></span><br><span class="line">print(totalLength)</span><br></pre></td></tr></table></figure>
+<p>（未完待续，下次再细讲Spark，学吧，学无止境，太深了）</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/11/02/1102分布式计算/">
+                    https://konelane.github.io/2020/11/02/1102分布式计算/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/11/12/1112分布式计算/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          分布式1112-Spark简单功能补充介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/10/21/1015hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式1015-1021-分布式回归分析</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

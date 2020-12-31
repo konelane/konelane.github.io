@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>分布式1007-Map-Reduce的文字流 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最后编辑于：20.10.15 开门见山地来一段，就一段，不会有人这个都没搞懂吧，不会吧不会吧（拖走 123456hadoop jar \ $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \ -input /user/devel/2020210995wangyuanhe/README.txt \ -output /user">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式1007-Map-Reduce的文字流">
+<meta property="og:url" content="https://konelane.github.io/2020/10/07/1007分布式计算/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="最后编辑于：20.10.15 开门见山地来一段，就一段，不会有人这个都没搞懂吧，不会吧不会吧（拖走 123456hadoop jar \ $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \ -input /user/devel/2020210995wangyuanhe/README.txt \ -output /user">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu3.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu4.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu5.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu6.png">
+<meta property="og:updated_time" content="2020-10-15T03:56:25.264Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式1007-Map-Reduce的文字流">
+<meta name="twitter:description" content="最后编辑于：20.10.15 开门见山地来一段，就一段，不会有人这个都没搞懂吧，不会吧不会吧（拖走 123456hadoop jar \ $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \ -input /user/devel/2020210995wangyuanhe/README.txt \ -output /user">
+<meta name="twitter:image" content="https://konelane.github.io/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-1007分布式计算" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/10/07/1007分布式计算/" class="article-date">
+  	<time datetime="2020-10-06T16:00:00.000Z" itemprop="datePublished">2020-10-07</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      分布式1007-Map-Reduce的文字流
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#分布式1007-Map-Reduce的文字流"><span class="toc-number">1.</span> <span class="toc-text">分布式1007-Map-Reduce的文字流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-程序运行情况介绍"><span class="toc-number">1.1.</span> <span class="toc-text">1.程序运行情况介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-运行的相关介绍"><span class="toc-number">1.2.</span> <span class="toc-text">2. 运行的相关介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Hadoop-与-Spark"><span class="toc-number">1.3.</span> <span class="toc-text">3. Hadoop 与 Spark</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-标准输入输出-STDin-amp-STDout"><span class="toc-number">1.4.</span> <span class="toc-text">4. 标准输入输出 STDin &amp; STDout</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Stdout"><span class="toc-number">1.4.1.</span> <span class="toc-text">Stdout</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Stdin"><span class="toc-number">1.4.2.</span> <span class="toc-text">Stdin</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-我们的函数，部署！"><span class="toc-number">1.5.</span> <span class="toc-text">5. 我们的函数，部署！</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>最后编辑于：20.10.15</p>
+<p>开门见山地来一段，就一段，不会有人这个都没搞懂吧，不会吧不会吧（拖走</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar \</span><br><span class="line"> $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \</span><br><span class="line"> -input /user/devel/2020210995wangyuanhe/README.txt \</span><br><span class="line"> -output /user/devel/2020210995wangyuanhe/1007output \</span><br><span class="line"> -mapper &quot;/usr/bin/cat&quot; \</span><br><span class="line"> -reducer &quot;/usr/bin/wc&quot;</span><br></pre></td></tr></table></figure>
+<p>开始前再插一句题外话，被强大而可爱的丰丰老师表（da）扬（shang）了，动力+10086，继续努力啊小禾禾！！</p>
+<a id="more"></a>
+<h2 id="分布式1007-Map-Reduce的文字流"><a href="#分布式1007-Map-Reduce的文字流" class="headerlink" title="分布式1007-Map-Reduce的文字流"></a>分布式1007-Map-Reduce的文字流</h2><h3 id="1-程序运行情况介绍"><a href="#1-程序运行情况介绍" class="headerlink" title="1.程序运行情况介绍"></a>1.程序运行情况介绍</h3><img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu1.png" title="tu1">
+<p>这张运行图只是执行中间一部分，正常情况下无ERROR，map 100% reduce 100%（这里运行时看着最爽）。</p>
+<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu2.png" title="tu2">
+<p>图2中第一行文件并无内容，后7个文件是本次运行开启的7个mapper的结果，reducer在这几个文件中运行，并把结果写入这7个文件中，所有的结果求和即真正结果。</p>
+<p>下面看看运行的文件情况：</p>
+<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu3.png" title="tu3">
+<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu4.png" title="tu4">
+<p>上图中，wc函数第一列的和就是16，即行数（验证正确），第二列为单词数（字符串连在一起算一个单词），第三列为字节数。</p>
+<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu5.png" title="tu5">
+<p>单个mapper+单个reducer运行</p>
+<blockquote>
+<p>每次cat：<br>行数+1；单词+n；字节数+m</p>
+</blockquote>
+<p>服务器上有很多个mapper，本次有17个（见上图），每个程序都做了cat函数（打印），7个reducer一起运行wc（计算行数）。Hadoop jar 中有这样一个参数，num.tasks，控制任务的数量。</p>
+<h3 id="2-运行的相关介绍"><a href="#2-运行的相关介绍" class="headerlink" title="2. 运行的相关介绍"></a>2. 运行的相关介绍</h3><p>reducer结束的很慢，原因是启动时要花资源，map过程非常快（程序运行时有体会）。听说均分文件时会用到哈希code，现在很多算法都是哈希函数的进阶，不知真伪，之后问问。</p>
+<p>在传输中，隐含了打乱shuffle和整理sort的过程:  </p>
+<script type="math/tex; mode=display">平摊</script><p>把数据随机打乱，$shuffle$，保证每个mapper接受的任务量相近。<br>打乱顺序的任务再排序，$sort$，使每个程序尽可能找到较近数据。  </p>
+<p>由于，数据在HDFS上存储在分布式的硬盘上，必须主动从硬盘读到内存里，有I/O（input/output）的消耗。如果数据很多，读起来很慢。一般map很复杂，可能map的中间结果要写入硬盘，又产生I/O消耗，reduce也需要从硬盘中读取。</p>
+<p>故HADOOP对<strong>硬件读写</strong>的要求很高，如此反过来也节约了内存资源（贵）。真正制约hadoop的大多是硬盘读写，因此很多服务器用SSD，但是SSD很容易坏，故需要做冗余（防止硬件坏掉）。</p>
+<p>apply函数，groupby函数，都有map的感觉</p>
+<h3 id="3-Hadoop-与-Spark"><a href="#3-Hadoop-与-Spark" class="headerlink" title="3. Hadoop 与 Spark"></a>3. Hadoop 与 Spark</h3><p>hadoop擅长进行批处理，但不能进行实时计算（比如无人驾驶）、股票高频交易（短时间的计算），这种实时运算需要使数据保持“热状态”不存入硬盘，在map-reduce后立刻传出，与硬盘无关。</p>
+<p>hadoop不擅长，但是spark擅长。spark写入硬盘的操作很有限，因此速度快。当然，上文也提到了，内存比硬盘贵，所以hadoop更廉价，两个框架各有胜负。</p>
+<p>同时，hadoop不能实现迭代计算（牛顿迭代，神经网络，梯度下降，反向传播），几乎涵盖所有机器学习算法。迭代时需要大量循环，不能经常读写硬盘。</p>
+<h3 id="4-标准输入输出-STDin-amp-STDout"><a href="#4-标准输入输出-STDin-amp-STDout" class="headerlink" title="4. 标准输入输出 STDin &amp; STDout"></a>4. 标准输入输出 STDin &amp; STDout</h3><p>在计算机编程中，有一类输入输出只与屏幕有关：</p>
+<h4 id="Stdout"><a href="#Stdout" class="headerlink" title="Stdout"></a>Stdout</h4><p>任何程序结果总是需要保存，但有一类输出直接打印在屏幕上。凡是能打印的都是stdout。举些例子：print函数(r,python)，cat函数(r,linux)，printf函数(c)等等等等。基本全部语言都能标准输出。</p>
+<h4 id="Stdin"><a href="#Stdin" class="headerlink" title="Stdin"></a>Stdin</h4><p>计算机能够接受打印的“文字流”（这也是hadoop streaming中streaming的含义！），举些例子：如linux和r的管道函数，python里open函数，都是打开文件把每一行读进来。</p>
+<p>linux中很方便地组织你的文件，只要文件是文本文件，都可以用管道<strong>“吸入”</strong>。很多linux的函数都以cat开头（猫猫头）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat txt | python wc.py 单机实验</span><br></pre></td></tr></table></figure>
+<p>再用R语言举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sink(&quot;想保存的文件名.txt&quot;,append = T, splt = T)</span><br><span class="line">abc = c(rnorm(100))</span><br><span class="line">abc</span><br><span class="line">sink()</span><br></pre></td></tr></table></figure>
+<p>写进hdfs就是另外一幅模样了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env Rscript</span><br><span class="line">options(warn=-1)</span><br><span class="line">sink(&quot;/dev/null&quot;)</span><br><span class="line"></span><br><span class="line">input &lt;- file(&quot;stdin&quot;, &quot;r&quot;) # 用input 吸入来自linux的STDin</span><br><span class="line">while(length(currentLine &lt;- readLines(input, n=1, warn=FALSE)) &gt; 0)</span><br><span class="line">&#123;</span><br><span class="line">    fields &lt;- unlist(strsplit(currentLine, &quot;,&quot;))</span><br><span class="line">    lowHigh &lt;- c(as.double(fields[3]), as.double(fields[6]))</span><br><span class="line">    stock_mean &lt;- mean(lowHigh)</span><br><span class="line">    sink()</span><br><span class="line">    cat(fields[1], fields[2], stock_mean, &quot;\n&quot;, sep=&quot;\t&quot;)</span><br><span class="line">    sink(&quot;/dev/null&quot;) # dev/null是linux的黑洞目录，扔进去就会消失呢！</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">close(input)</span><br></pre></td></tr></table></figure>
+<p>运行时在linux中用rscript：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rscript test.r</span><br></pre></td></tr></table></figure></p>
+<p>其实做开发时，java语言很好用（类操作，大型项目架构，内存管理），适合创建非常巨大的项目，运行很久不停止，其他语言不行。hadoop也是java编成。但java并非所有人都会，hadoop面向数据处理，会java的人不多。</p>
+<p>由此，先辈们做了个<strong>能让各种语言都能识别</strong>的框架：</p>
+<p>hadoop做了很好玩的模块：streaming（标准输入输出的“文本流”）。提供了简单的接口，c，py，java，r……但凡能接受标准输入输出，就可以调用！使得map函数和reduce函数完全脱离了hadoop，只需要输入输出就能得到结果，影响速度的只有map和reduce的写法。</p>
+<blockquote>
+<p>Hadoop不是编程语言，是分布式计算架构。<br>    ——李丰老师</p>
+</blockquote>
+<h3 id="5-我们的函数，部署！"><a href="#5-我们的函数，部署！" class="headerlink" title="5. 我们的函数，部署！"></a>5. 我们的函数，部署！</h3><p><strong>教练，我也想调用hadoop接口跑我自己的程序！</strong></p>
+<p>完全没问题！</p>
+<p>很简单，首先要保证每个存储数据的节点上（worker节点）必须有函数cat、wc，我们自己写一个wchehe.py，然后放上服务器去就好啦。</p>
+<p>如下，就是一个简单的读取行数的py程序，第一行一定要注明函数应该怎么找到运行的地方：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env python3</span><br><span class="line">import sys</span><br><span class="line">linecount=0</span><br><span class="line">data = []</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">	linecount += 1</span><br><span class="line">	data.append(line)</span><br><span class="line">Print(linecount)</span><br></pre></td></tr></table></figure>
+<p>可以用chmod +x wchehe.py 改一下运行权限。</p>
+<p>下来，为了规范代码格式，我们用一个shell批处理文件作为我们的程序入口，也方便调整参数。</p>
+<p>开头别忘了告诉sh函数这是个批处理。<em>看到这篇文章的同学不要用原代码直接跑啊（</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/bash</span><br><span class="line"></span><br><span class="line">PWD=$(cd $(dirname $0); pwd)</span><br><span class="line">cd $PWD</span><br><span class="line"></span><br><span class="line">HADOOP_inputdir=/user/devel/2020210995wangyuanhe/ordertxtfiles/test-edit.txt</span><br><span class="line">HADOOP_outputdir=/user/devel/2020210995wangyuanhe/output/1007out01</span><br><span class="line">HADOOP_home=/share/hadoop/tools/lib/hadoop-straming-3.1.3.jar</span><br><span class="line"></span><br><span class="line">echo $HADOOP_home</span><br><span class="line">echo $HADOOP_inputdir</span><br><span class="line">echo $HADOOP_outputdir</span><br><span class="line"></span><br><span class="line">hadoop fs -rm -r $HADOOP_outputdir</span><br><span class="line"></span><br><span class="line">hadoop jar \</span><br><span class="line"> $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \</span><br><span class="line"> -files $PWD/wchehe.py \</span><br><span class="line"> -input $&#123;HADOOP_inputdir&#125; \</span><br><span class="line"> -output $&#123;HADOOP_outputdir&#125; \</span><br><span class="line"> -mapper &quot;/usr/bin/cat&quot; \</span><br><span class="line"> -reducer &quot;python wchehe.py&quot;</span><br></pre></td></tr></table></figure>
+<p>-jobconf 被替代为-D，-file 被替换成 -files</p>
+<p>附上本次课程老师的<a href="https://github.com/feng-li/Distributed-Statistical-Computing/tree/master/L02-MapReduce" target="_blank" rel="noopener">代码和讲义</a>，我还得好好研究一下，收获满满的一节课（虽然有点怀疑人生哈哈哈</p>
+<p>附作业中可能用到的hadoop jar<a href="http://www.voidcn.com/article/p-nyinxrro-cn.html" target="_blank" rel="noopener">参数介绍</a>，hadoop fs <a href="https://www.cnblogs.com/zwgblog/p/6005061.html" target="_blank" rel="noopener">参数介绍</a></p>
+<img src="/2020/10/07/1007分布式计算/10/07/1007分布式计算/tu6.png" title="tu6">
+<p>（完）</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/10/07/1007分布式计算/">
+                    https://konelane.github.io/2020/10/07/1007分布式计算/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/10/13/1010CV/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          数据之学|交叉验证相关理论介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/24/0924分布式计算/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式0924-分布式服务器基础Linux中主机的远程交互(ssh)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>数据挖掘|LARSN | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最后编辑于190514   本文需要一定的Lasso基础，可以推荐的文章学习。 参考文章Lasso回归">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘|LARSN">
+<meta property="og:url" content="https://konelane.github.io/2019/04/16/190416LARSN/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="最后编辑于190514   本文需要一定的Lasso基础，可以推荐的文章学习。 参考文章Lasso回归">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-14T07:06:31.564Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据挖掘|LARSN">
+<meta name="twitter:description" content="最后编辑于190514   本文需要一定的Lasso基础，可以推荐的文章学习。 参考文章Lasso回归">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-190416LARSN" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2019/04/16/190416LARSN/" class="article-date">
+  	<time datetime="2019-04-15T16:00:00.000Z" itemprop="datePublished">2019-04-16</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      数据挖掘|LARSN
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#维数灾难"><span class="toc-number">1.</span> <span class="toc-text">维数灾难</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#高维数据"><span class="toc-number">1.1.</span> <span class="toc-text">高维数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#理论基础：数据降维"><span class="toc-number">2.</span> <span class="toc-text">理论基础：数据降维</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lasso回归"><span class="toc-number">3.</span> <span class="toc-text">lasso回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#普通线性模型"><span class="toc-number">3.1.</span> <span class="toc-text">普通线性模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#惩罚方法"><span class="toc-number">3.2.</span> <span class="toc-text">惩罚方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lasso方法"><span class="toc-number">3.3.</span> <span class="toc-text">Lasso方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LARS"><span class="toc-number">4.</span> <span class="toc-text">LARS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一般性质"><span class="toc-number">4.1.</span> <span class="toc-text">一般性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#初始化"><span class="toc-number">4.2.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一般化、第k步"><span class="toc-number">4.3.</span> <span class="toc-text">一般化、第k步</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#活跃集，考虑变量进入"><span class="toc-number">4.3.1.</span> <span class="toc-text">活跃集，考虑变量进入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#考虑变量退出"><span class="toc-number">4.3.2.</span> <span class="toc-text">考虑变量退出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#活跃集个数小于-p-时，变量的进入和退出"><span class="toc-number">4.3.3.</span> <span class="toc-text">活跃集个数小于$p$时，变量的进入和退出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#活跃集-p时"><span class="toc-number">4.4.</span> <span class="toc-text">活跃集=p时</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RSS的更新"><span class="toc-number">4.5.</span> <span class="toc-text">RSS的更新</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实现"><span class="toc-number">5.</span> <span class="toc-text">代码实现</span></a></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>最后编辑于190514  </p>
+<p>本文需要一定的Lasso基础，可以推荐的文章学习。</p>
+<p>参考文章<a href="https://blog.csdn.net/xiaozhu_1024/article/details/80585151" target="_blank" rel="noopener">Lasso回归</a></p>
+<a id="more"></a>
+<h2 id="维数灾难"><a href="#维数灾难" class="headerlink" title="维数灾难"></a>维数灾难</h2><h3 id="高维数据"><a href="#高维数据" class="headerlink" title="高维数据"></a>高维数据</h3><p>何谓高维数据？高维数据指数据的维度很高，甚至远大于样本量的个数。高维数据的明显的表现是：在空间中数据是非常稀疏的，与空间的维数相比样本量总是显得非常少。<br>在分析高维数据过程中碰到最大的问题就是维数的膨胀，也就是通常所说的“维数灾难”问题。研究表明，随着维数的增长，分析所需的空间样本数会呈指数增长。<br>如下所示，当数据空间维度由1增加为3，最明显的变化是其所需样本增加；换言之，当样本量确定时，样本密度将会降低，从而样本呈稀疏状态。假设样本量n=12,单个维度宽度为3，那在一维空间下，样本密度为12/3=4，在二维空间下，样本分布空间大小为3×3，则样本密度为12/9=1.33，在三维空间下样本密度为12/27=0.44。</p>
+<p>设想一下,当数据空间为更高维时，$X=[x_1x_1,x_2x_2,….,x_nx_n]$会怎么样？ </p>
+<ol>
+<li>需要更多的样本，样本随着数据维度的增加呈指数型增长；</li>
+<li>数据变得更稀疏，导致数据灾难；</li>
+<li>在高维数据空间，预测将变得不再容易；</li>
+<li>导致模型过拟合。</li>
+</ol>
+<p>具体例子可以参考 <a href="https://www.linuxidc.com/Linux/2016-01/127857.htm" target="_blank" rel="noopener">机器学习:分类问题中的“维数灾难”</a></p>
+<p>高维数据对非参数方法带来了致命打击。</p>
+<h2 id="理论基础：数据降维"><a href="#理论基础：数据降维" class="headerlink" title="理论基础：数据降维"></a>理论基础：数据降维</h2><p>对于高维数据，维数灾难所带来的过拟合问题，其解决思路是：<br>1）增加样本量；<br>2）减少样本特征。  </p>
+<p>而对于现实情况，会存在所能获取到的样本数据量有限的情况，甚至远小于数据维度，即：d&gt;&gt;n。如证券市场交易数据、多媒体图形图像视频数据、航天航空采集数据、生物特征数据等。 </p>
+<p>主成分分析作为一种数据降维方法，其出发点是通过整合原本的单一变量来得到一组新的综合变量，综合变量所代表的意义丰富且变量间互不相关，综合变量包含了原变量大部分的信息，这些综合变量称为主成分。主成分分析是在保留所有原变量的基础上，通过原变量的线性组合得到主成分，选取少数主成分就可保留原变量的绝大部分信息，这样就可用这几个主成分来代替原变量，从而达到降维的目的。</p>
+<p>但是，主成分分析法只适用于数据空间维度小于样本量的情况，当数据空间维度很高时，将不再适用。</p>
+<p>Lasso是另一种数据降维方法，该方法不仅适用于线性情况，也适用于非线性情况。Lasso是基于惩罚方法对样本数据进行变量选择，通过对原本的系数进行压缩，将原本很小的系数直接压缩至0，从而将这部分系数所对应的变量视为非显著性变量，将不显著的变量直接舍弃。</p>
+<h2 id="lasso回归"><a href="#lasso回归" class="headerlink" title="lasso回归"></a>lasso回归</h2><h3 id="普通线性模型"><a href="#普通线性模型" class="headerlink" title="普通线性模型"></a>普通线性模型</h3><p>普通线性模型</p>
+<script type="math/tex; mode=display">Y = X\beta + \epsilon</script><p>响应变量$Y = (y_1 + y_2 + … + y_n)^T$,协变量$X = (x^{(1)} + x^{(2)} + … + x^{(n)})$，对于每一个$X^{(j)}$有$X^{(j)} = (x^{(j)}_1 + x^{j}_2 + … + x^{(j)}_n)^T$.</p>
+<p>假设每个$X^{(j)} (i = 1,2,…,n, j = 1,2,…,d)$均中心化和标准化（<strong>实际操作中这一步很关键</strong>），随机误差项$\epsilon_i … N(0,\sigma^2),(i = 1,2,…,n),\epsilon = (\epsilon_1,\epsilon_2,…,\epsilon_n)^T$ 回归系数$\beta = (\beta_1,\beta_2,…,\beta_d)^T$</p>
+<p>当X为列满秩设计矩阵时，回归系数$\beta$可由普通最小二乘估计方法求得，</p>
+<script type="math/tex; mode=display">\hat{\beta} = (X^TX)^{-1}X^TY</script><p>当X不为列满秩设计矩阵时，普通最小二乘法将不再适用于求解回归系数$\beta$，惩罚方法应用较广。</p>
+<h3 id="惩罚方法"><a href="#惩罚方法" class="headerlink" title="惩罚方法"></a>惩罚方法</h3><p>当X不为列满秩设计矩阵时，普通最小二乘法将不再适用于求解回归系数，此时引入惩罚方法。该方法可以同时实现变量选择和参数估计，在参数估计时，通过将部分参数压缩为0来达到变量选择的效果。惩罚方法时取<strong>惩罚似然函数</strong>最小时的值作为回归系数的估计值，即<script type="math/tex">\hat{\beta} = arg min_{\beta∈R^d}(||Y - X\beta||^2 + P_{\lambda}(|\beta|))</script>  </p>
+<p>其中惩罚项$P_{\lambda}(|\beta|) = \lambda \sum_{j = 1}^{d}|\beta_j|^m,m&gt;=0$,$\lambda$为调节参数（也可以为向量）。m = 1时，得到$L_1$惩罚项（Lasso惩罚）；当m = 2时，得到$L_2$惩罚项（Ridge惩罚）。</p>
+<h3 id="Lasso方法"><a href="#Lasso方法" class="headerlink" title="Lasso方法"></a>Lasso方法</h3><p>Lasso方法是在普通线性模型中增加$L_1$惩罚项，对于普通线性模型的Lasso估计为<script type="math/tex">\hat{\beta_{Lasso}} = arg min_{\beta∈R^d}||Y - X\beta||^2 s.t. \sum_{j = 1}^{d}|\beta_j|<=t,t>=0</script> </p>
+<p>等价于<script type="math/tex">\hat{\beta_{Lasso}} = arg min_{\beta∈R^d}||Y - X\beta||^2 +\lambda \sum_{j = 1}^{d}|\beta_j|</script></p>
+<p>其中，t与$\lambda$一一对应，为调节系数。</p>
+<p>令<script type="math/tex">t_0 = \sum_{j = 1}^{d}|\hat{\beta_j}(OLS)|</script>，当t&lt;t0时，一部分系数就会被压缩至0，从而降低X的维度，达到减小模型复杂度的目的。</p>
+<p>参考文章<a href="https://blog.csdn.net/xiaozhu_1024/article/details/80585151" target="_blank" rel="noopener">Lasso回归</a></p>
+<h2 id="LARS"><a href="#LARS" class="headerlink" title="LARS"></a>LARS</h2><h3 id="一般性质"><a href="#一般性质" class="headerlink" title="一般性质"></a>一般性质</h3><p>lasso的两个等价形式:</p>
+<script type="math/tex; mode=display">\hat{\beta}(t) = arg\ min \frac 12\|Y-X\beta||_2^2\ \ \ \ s.t \ \  ||\beta||_1\leq t \tag{1}</script><script type="math/tex; mode=display">\hat{\beta}(\lambda) = arg\ min \frac 12 \ ||Y-X\beta||_2^2+\lambda\ ||\beta||_1 \tag{2}</script><blockquote>
+<p>$\forall t \geq 0,\exists \lambda \geq 0,$ 使得$ \hat{\beta}(\lambda)=\hat{\beta}(t).$</p>
+</blockquote>
+<p>记</p>
+<script type="math/tex; mode=display">\beta_j^+=\left\{\begin{array}{ll}\beta_j,& \beta_j\geq0\\
+0,& \beta_j< 0\end{array}\right., \quad\quad
+\beta_j^-=\left\{\begin{array}{ll}-\beta_j,& \beta_j\leq0\\
+0,& \beta_j>0\end{array}\right.</script><p>则有</p>
+<script type="math/tex; mode=display">\beta_j=\beta_j^+-\beta_j^- ,\quad  |\beta_j|=\beta_j^++\beta_j^-</script><blockquote>
+<p>在考虑引入正部和负部后，增加了两个约束条件，故拉格朗日函数为：  </p>
+</blockquote>
+<script type="math/tex; mode=display">\Gamma(\beta_j^+,\beta_j^-;\lambda)=\frac 12||Y-\sum(X_j(\beta_j^+-\beta_j^-))||_2^2+\lambda1_p^T(\beta_j^++\beta_j^-)-\sum{\lambda_j^+\beta_j^+}-\sum{\lambda_j^-\beta_j^-}\tag{3}</script><ul>
+<li><p>求解要求:<script type="math/tex">\begin{cases}\lambda_j^+\beta_j^+=0\\\lambda_j^-\beta_j^-=0\\ \beta_j^+\geq0 \\ \beta_j^-\geq0 \end{cases}</script></p>
+</li>
+<li><p>求导有：<script type="math/tex">\begin{cases}\frac{\partial \Gamma(\beta_j^+,\beta_j^-;\lambda)}{\partial \beta_j^+}=-X_j^T(Y-X\beta)+\lambda-\lambda_j^+=0 \\ 
+\frac{\partial \Gamma(\beta_j^+,\beta_j^-;\lambda)}{\partial \beta_j^-}=X_j^T(Y-X\beta)+\lambda-\lambda_j^-=0\end{cases}
+\tag{4}</script>    </p>
+</li>
+<li><p>由<em>互补松弛定理</em>有:  </p>
+<script type="math/tex; mode=display">\begin{cases}\lambda_j^+= 0,\quad \beta_j^+>0\\ \lambda_j^+\geq0,\quad \beta_j^+=0 \end{cases}</script></li>
+<li>同理<script type="math/tex">\begin{cases}\lambda_j^-= 0,\quad \beta_j^->0\\ \lambda_j^-\geq0,\quad \beta_j^-=0 \end{cases}</script></li>
+</ul>
+<blockquote>
+<p>令导数为0，于是式(4)退化为：</p>
+</blockquote>
+<script type="math/tex; mode=display">\begin{cases}若\beta_j^+(\lambda)\neq 0 ,\ \ \ X_j^T(Y-X\beta(\lambda))=\lambda  \\ 
+若\beta_j^-(\lambda)\neq 0 ,\ \ \ X_j^T(Y-X\beta(\lambda))=-\lambda   \\ 
+若\beta_j(\lambda)=0,\ \ \ |X_j^T(Y-X\beta(\lambda))|\leq\lambda\end{cases}\tag{5}</script><p><em>注</em>：</p>
+<ul>
+<li><p>$\lambda$和t的变化趋势相反，当t逐渐变大的时候，$\lambda$逐渐变小。  </p>
+</li>
+<li><p>记 </p>
+<script type="math/tex; mode=display">\lambda_0= \max\{|X_1^TY|,\cdots,|X_p^TY|\}, \quad
+j_0 = \arg\max\{|X_1^TY|,\cdots,|X_p^TY|\},</script><p>当$\lambda\geq\lambda_0$时,$\hat{\beta}(\lambda)=0.$</p>
+</li>
+<li><p>记活跃集为$A(\lambda)=\{j\ |\hat{\beta}_j(\lambda)\neq0\}$</p>
+</li>
+<li><p>存在$\lambda_k$, $k=0,\dots,$ 当$\lambda\in(\lambda_{k+1},\lambda_{k}),$<br>$A(\lambda)$保持不变 </p>
+</li>
+<li><p>当$\lambda =0$，该模型的解为最小二乘解</p>
+</li>
+</ul>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><blockquote>
+<p>$\exists\lambda_0$，当$\lambda\geq\lambda_0$时,$\hat{\beta}(\lambda)=0,$<br>解得<script type="math/tex">\lambda_0= \max\{|X_1^TY|,\cdots,|X_p^TY|\}, \quad
+j_0 = \arg\max\{|X_1^TY|,\cdots,|X_p^TY|\}.</script>  </p>
+</blockquote>
+<ul>
+<li><p>记活跃集为$A(\lambda)=\{j\ |\hat{\beta}_j(\lambda)\neq0\}$</p>
+</li>
+<li><p>存在$\lambda_k$, $k=0,\dots,$ 当$\lambda\in(\lambda_{k+1},\lambda_{k}),$<br>$A(\lambda)$保持不变</p>
+</li>
+<li><p>在$\lambda=\lambda_k$时，活跃集发生变化，或者有变量进入，或者有变量退出，但可以证明以下事实</p>
+<ul>
+<li>$\hat{\beta}(\lambda)$是连续的</li>
+<li>当$\lambda\in(\lambda_{k+1},\lambda_{k}),$ $\hat{\beta}(\lambda)$是分段线性的</li>
+</ul>
+</li>
+<li><p>所以，最小角度回归算法有两个关键点</p>
+<ul>
+<li>当$\lambda\in(\lambda_{k+1},\lambda_{k})$时，其线性形式是什么</li>
+<li>确定$\lambda_{k+1},$ 也就是分段线性形式改变的位置</li>
+</ul>
+</li>
+</ul>
+<h3 id="一般化、第k步"><a href="#一般化、第k步" class="headerlink" title="一般化、第k步"></a>一般化、第k步</h3><ul>
+<li>当$\lambda\in(\lambda_{k+1},\lambda_{k}),$ $A(\lambda)$保持不变, 记做$A_k$</li>
+<li>记$\beta_{A_k}=\beta_{A_k}(\lambda_k),$ $c_{k}=X_{A_K}^T(Y-X_{A_K}\beta_{A_K}),  $<br>$s_{A_K}=sign(c_{k})$ </li>
+<li>由式(5) <script type="math/tex">X_{A_K}^T(Y-X_{A_K}\hat{\beta}_{A_K}(\lambda))=s_{A_K}\lambda, \quad \quad\lambda\in(\lambda_{k+1},\lambda_k) \tag{6}</script></li>
+<li><p>可以验证，</p>
+<script type="math/tex; mode=display">X_{A_K}^T(Y-X_{A_K}\hat\beta_{A_K})=s_{A_K}\lambda_k\tag{7}</script></li>
+<li><p>式(7)减式(6)，</p>
+<script type="math/tex; mode=display">\hat\beta_{A_k}(\lambda)=\hat\beta_{A_k}+(\lambda_k-\lambda)(X_{A_k}^TX_{A_k})^{-1}S_{AK}</script></li>
+<li>记<script type="math/tex">d_{A_k}=(X_{A_k}^TX_{A_k})^{-1}s_{A_k}\quad\quad \gamma=\lambda_k-\lambda</script><br>则  <script type="math/tex; mode=display">\hat\beta_{A_k}(\lambda)=\hat\beta_{A_k}+\gamma d_{A_k}</script></li>
+</ul>
+<h4 id="活跃集，考虑变量进入"><a href="#活跃集，考虑变量进入" class="headerlink" title="活跃集，考虑变量进入"></a>活跃集，考虑变量进入</h4><blockquote>
+<p>首先定义以下变量</p>
+</blockquote>
+<ul>
+<li>记$A^C_k$为$A_k$的补集</li>
+<li>记<script type="math/tex">a_k=(X_{A^C_k}^TX_{A_k})d_{A_k},</script> $c_k$为处于非活跃集自变量与残差的相关系数，<script type="math/tex; mode=display">c_k=X_{A^C_k}^T(Y-X_{A_k}\hat{\beta}_{A_k})</script></li>
+<li>记$a_{kj}$是$a_k$的第$j$项, $c_j$是$c$的第j项</li>
+</ul>
+<blockquote>
+<p>那么，</p>
+</blockquote>
+<ul>
+<li>$a_{kj}\lambda_k\leq c_{kj}$时，$\gamma_j=\frac{\lambda_k-c_{kj}}{1-a_{kj}}$</li>
+<li>$a_{kj}\lambda_k&gt; c_{kj}$时，$\gamma_j=\frac{\lambda_k+c_{kj}}{1+a_{kj}}$ </li>
+</ul>
+<p><em>具体推导如下</em>：</p>
+<blockquote>
+<p>根据KKT条件，如果$A_k$保持不变，那么，</p>
+</blockquote>
+<script type="math/tex; mode=display">\left|X_{A^C_k}^T(Y-X_{A_k}\hat\beta_{A_k}({\gamma}))\right|\leq \lambda_k-\gamma,</script><blockquote>
+<p>式(3)中，$\hat\beta_{A_k}({\gamma})=\hat\beta_{A_k}+\gamma d_{A_k}，$ 所以</p>
+</blockquote>
+<script type="math/tex; mode=display">|c_k - \gamma a_k|\leq \lambda_k-\gamma</script><blockquote>
+<p>如果$A^C_k$中第$j$个元素率先进入活跃集，那么，$c_{kj}-\gamma a_{kj}=\pm(\lambda_k-\gamma)$ </p>
+</blockquote>
+<p><em>画图找交点</em></p>
+<ul>
+<li>若$c_{kj}&gt;0$  <script type="math/tex; mode=display">\gamma_j=\begin{cases}\frac{\lambda_k-c_{kj}}{1-a_{kj}},&-a_{kj}\geq -\frac{c_{kj}}{\lambda_k}\\ \frac{\lambda_k+c_{kj}}{1+a_{kj}},&-a_{kj}\leq -\frac{c_{kj}}{\lambda_k}\end{cases}</script></li>
+<li>若$c_{kj}&lt;0$  <script type="math/tex; mode=display">\gamma_j=\begin{cases}\frac{\lambda_k-c_{kj}}{1-a_{kj}},&-a_{kj}\geq -\frac{c_{kj}}{\lambda_k}\\ \frac{\lambda_k+c_{kj}}{1+a_{kj}},&-a_{kj}\leq -\frac{c_{kj}}{\lambda_k}\end{cases}</script></li>
+<li>综上，<script type="math/tex">\gamma_j=\begin{cases}\frac{\lambda_k-c_{kj}}{1-a_{kj}},&a_{kj}\lambda_k \leq c_{kj}\\ \frac{\lambda_k+c_{kj}}{1+a_{kj}},&a_{kj}\lambda_k> c_{kj}  \end{cases}</script></li>
+</ul>
+<h4 id="考虑变量退出"><a href="#考虑变量退出" class="headerlink" title="考虑变量退出"></a>考虑变量退出</h4><ul>
+<li>$\hat\beta_{A_k}({\gamma})=\hat\beta_{A_k}+\gamma d_{A_k}$，记$w_j$为$\beta_{A_k}$的第$j$个元素与$d_{A_k}$的第$j$个元素之比的相反数</li>
+<li>活跃集中第$j$个元素率先退出，那么$\gamma_j= w_j$</li>
+</ul>
+<h4 id="活跃集个数小于-p-时，变量的进入和退出"><a href="#活跃集个数小于-p-时，变量的进入和退出" class="headerlink" title="活跃集个数小于$p$时，变量的进入和退出"></a>活跃集个数小于$p$时，变量的进入和退出</h4><blockquote>
+<p>定义$\hat{\gamma}=\min^{+} \{\gamma_j,j=1,2,\cdots,p\}.$  </p>
+</blockquote>
+<h3 id="活跃集-p时"><a href="#活跃集-p时" class="headerlink" title="活跃集=p时"></a>活跃集=p时</h3><ul>
+<li>$\exists \gamma_j&gt;0$  <script type="math/tex; mode=display">记\hat{\gamma}=min{\{\gamma_j,j=1,2,\cdots,p\},其中\gamma_j>0}</script>则<script type="math/tex">\hat{\gamma}=\begin{cases}\hat{\gamma},&\lambda_k-\hat{\gamma}>0\\ \lambda_k,&\lambda_k-\hat{\gamma}\leq0 \end{cases}</script></li>
+<li>$\forall \gamma_j\leq0$<br>则<script type="math/tex">\hat{\gamma}=\lambda_k</script>  </li>
+<li>更新公式  <script type="math/tex; mode=display">\beta_{new}=\beta_{old}+\hat{\gamma}\cdot d_A</script><script type="math/tex; mode=display">\lambda_{new}=\lambda_{old}-\hat{\gamma}</script></li>
+</ul>
+<h3 id="RSS的更新"><a href="#RSS的更新" class="headerlink" title="RSS的更新"></a>RSS的更新</h3><script type="math/tex; mode=display">\begin{eqnarray}
+RSS&=&(Y-X_A(\beta_A+\gamma\cdot d_A))^T(Y-X_A(\beta_A+\gamma\cdot d_A)\\ 
+&=& (Y-X_A\beta_A)^T(Y-X_A\beta_A)-2\gamma(Y-X_A\beta_A)^TX_Ad_A+\gamma^2d_A^TX_A^TX_Ad_A\\ 
+&=& (Y-X_A\beta_A)^T(Y-X_A\beta_A)-2\gamma Y^TX_Ad_A+2\gamma\beta_A^TX_A^TX_Ad_A+\gamma^2d_A^TX_A^TX_Ad_A
+\end{eqnarray}</script><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line">l2norm &lt;- function(x)&#123;</span><br><span class="line">    return(sqrt(sum(x*x)))</span><br><span class="line">&#125;</span><br><span class="line">l1norm &lt;- function(x)&#123;</span><br><span class="line">    return(sum(abs(x)))</span><br><span class="line">&#125;</span><br><span class="line">l0norm &lt;- function(x)&#123;</span><br><span class="line">    return( sum(abs(x)&gt;1e-13))</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">library(ElemStatLearn)</span><br><span class="line">data(prostate)</span><br><span class="line">data &lt;- prostate[,-10]</span><br><span class="line">head(data)</span><br><span class="line">np &lt;- dim(data)</span><br><span class="line">n &lt;- np[1]</span><br><span class="line">p &lt;- np[2]-1</span><br><span class="line">xn &lt;- names(data)[1:p]</span><br><span class="line">x &lt;- as.matrix(data[,1:p])</span><br><span class="line">xm &lt;- apply(x,2,mean)</span><br><span class="line">X &lt;- sweep(x,2,xm,&quot;-&quot;)</span><br><span class="line"></span><br><span class="line">Xl2norm &lt;- apply(X,2,l2norm)</span><br><span class="line">X &lt;- sweep(X,2,Xl2norm,&quot;/&quot;)</span><br><span class="line">#apply(X,2,sd)</span><br><span class="line">#x &lt;- as.matrix( cbind(1,x) )</span><br><span class="line">y &lt;- data[,p+1]</span><br><span class="line">ym &lt;- mean(y)</span><br><span class="line">Y &lt;- (y-ym)</span><br><span class="line">Yl2norm &lt;- l2norm(Y)</span><br><span class="line">Y &lt;- Y/Yl2norm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">##############################</span><br><span class="line">XTX &lt;- t(X)%*%X</span><br><span class="line">XTY &lt;- drop(t(X)%*% Y) </span><br><span class="line">YY &lt;- sum(Y*Y)</span><br><span class="line">reA &lt;- NULL</span><br><span class="line">relamb &lt;- NULL</span><br><span class="line">reRSS &lt;- NULL</span><br><span class="line">reb &lt;- NULL</span><br><span class="line">########################</span><br><span class="line">A &lt;- rep(F,8)</span><br><span class="line">reA &lt;- rbind(reA, A)</span><br><span class="line">#df &lt;- sum(A)</span><br><span class="line">j &lt;- which.max( abs(XTY))</span><br><span class="line">#print(j)</span><br><span class="line">A[j] &lt;- !A[j]</span><br><span class="line">lamb &lt;- abs(XTY[j])</span><br><span class="line">b &lt;- rep(0,8)</span><br><span class="line">RSS &lt;- YY</span><br><span class="line"></span><br><span class="line">relamb &lt;- c(relamb, lamb)</span><br><span class="line">reb &lt;- rbind(reb ,b)</span><br><span class="line">reRSS &lt;- c(reRSS,RSS)</span><br><span class="line">#########################################</span><br><span class="line"></span><br><span class="line">############################</span><br><span class="line">while(TRUE)&#123;</span><br><span class="line">    CC &lt;- XTY - XTX %*% b</span><br><span class="line">    SCC = sign(CC)</span><br><span class="line">    SCCA &lt;- SCC[A]</span><br><span class="line">    XTXA &lt;- XTX[A,A,drop=F]</span><br><span class="line">    d = as.matrix(solve(XTXA, SCCA),ncol =1)</span><br><span class="line">    a = XTX[!A,A] %*% d</span><br><span class="line">  </span><br><span class="line">    gam=rep(0,8)</span><br><span class="line">    gam[A] = -b[A]/d</span><br><span class="line">    if(sum(A)&lt;=0 | sum(A)&gt;8 )&#123;</span><br><span class="line">        print(&quot;Something is wrong!&quot;)</span><br><span class="line">        break</span><br><span class="line">    &#125;</span><br><span class="line">    else if(sum(A)&lt;8)&#123;</span><br><span class="line">        gam[!A] =ifelse(a*lamb&lt;=CC[!A], (lamb-CC[!A])/(1-a),(lamb+CC[!A])/(1+a))</span><br><span class="line">        gamm= max(gam) +1</span><br><span class="line">        gam[gam&lt;=0]=gamm</span><br><span class="line">  </span><br><span class="line">        j = which.min(gam)</span><br><span class="line">        gammin = gam[j]</span><br><span class="line">        RSS &lt;- RSS - 2*gammin*sum(XTY[A]*d) + 2*gammin*sum(b[A]*SCCA)+</span><br><span class="line">               gammin^2*sum(d*SCCA)</span><br><span class="line">        b[A] =b[A] + gammin * d</span><br><span class="line">        lamb = lamb - gammin</span><br><span class="line">        reA = rbind(reA, A)</span><br><span class="line">        A[j] = !A[j]</span><br><span class="line">        reRSS &lt;- c(reRSS, RSS)</span><br><span class="line">        </span><br><span class="line">        relamb = c(relamb, lamb)</span><br><span class="line">        reb =rbind(reb ,b)</span><br><span class="line">  </span><br><span class="line">    &#125; else if (sum(A)==8) &#123;</span><br><span class="line">        if(sum(gam &gt; 0) &gt; 1) &#123;</span><br><span class="line">            gamm= max(gam) +1</span><br><span class="line">            gam[gam&lt;=0]=gamm</span><br><span class="line">    </span><br><span class="line">            j = which.min(gam)</span><br><span class="line">            gammin = gam[j]</span><br><span class="line">            if(lamb-gammin &gt;0)&#123;</span><br><span class="line">                RSS &lt;- RSS - 2*gammin*sum(XTY[A]*d) + 2*gammin*sum(b[A]*SCCA)+</span><br><span class="line">                       gammin^2*sum(d*SCCA)</span><br><span class="line">                b[A] =b[A] + gammin * d</span><br><span class="line">                lamb = lamb - gammin</span><br><span class="line">                reA = rbind(reA, A)</span><br><span class="line">                A[j] = !A[j]</span><br><span class="line">                reRSS &lt;- c(reRSS, RSS)</span><br><span class="line">                reA = rbind(reA, A)</span><br><span class="line">                relamb = c(relamb, lamb)</span><br><span class="line">                reb =rbind(reb ,b)                 </span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                gammin = lamb</span><br><span class="line">                RSS &lt;- RSS - 2*gammin*sum(XTY[A]*d) + 2*gammin*sum(b[A]*SCCA)+</span><br><span class="line">                       gammin^2*sum(d*SCCA)</span><br><span class="line">                </span><br><span class="line">                b[A] =b[A] + gammin * d</span><br><span class="line">                lamb = lamb - gammin</span><br><span class="line">                reRSS &lt;- c(reRSS, RSS)</span><br><span class="line">                reA = rbind(reA, A)</span><br><span class="line">                relamb = c(relamb, lamb)</span><br><span class="line">                reb =rbind(reb ,b)</span><br><span class="line">                break                </span><br><span class="line">            &#125;            </span><br><span class="line">        &#125; else &#123;</span><br><span class="line">             gammin = lamb</span><br><span class="line">             RSS &lt;- RSS - 2*gammin*sum(XTY[A]*d) + 2*gammin*sum(b[A]*SCCA)+</span><br><span class="line">                    gammin^2*sum(d*SCCA)</span><br><span class="line">             </span><br><span class="line">             b[A] =b[A] + gammin * d</span><br><span class="line">             lamb = lamb - gammin</span><br><span class="line">             reRSS &lt;- c(reRSS, RSS)</span><br><span class="line">             reA = rbind(reA, A)</span><br><span class="line">             relamb = c(relamb, lamb)</span><br><span class="line">             reb =rbind(reb ,b)</span><br><span class="line">             break</span><br><span class="line">        &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Cp &lt;- reRSS/RSS*(n-p) - n + 2*apply(reA,1,sum)</span><br><span class="line">re &lt;- list(b=reb,lambda=relamb,A=reA,RSS=reRSS,Cp=Cp)</span><br><span class="line">re</span><br></pre></td></tr></table></figure>
+<p>结果不贴了，大家跑一下就行啦。</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2019/04/16/190416LARSN/">
+                    https://konelane.github.io/2019/04/16/190416LARSN/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2019/04/20/0420houkai3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          不务正业|崩坏3战舰甲板清洗姿势指北（指空中劈叉）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/26/190326数据挖掘最优子集回归&最小角回归/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据挖掘|最优子集回归&amp;最小角回归</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

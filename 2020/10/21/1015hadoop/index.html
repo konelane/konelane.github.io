@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>分布式1015-1021-分布式回归分析 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、开始！今日信息量巨大大佬们展示肌肉。 回归部分还需要些数学根底。 代码后面也有一丢丢正文。">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式1015-1021-分布式回归分析">
+<meta property="og:url" content="https://konelane.github.io/2020/10/21/1015hadoop/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="一、开始！今日信息量巨大大佬们展示肌肉。 回归部分还需要些数学根底。 代码后面也有一丢丢正文。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2020/10/21/1015hadoop/10/21/1015hadoop/tu1.png">
+<meta property="og:updated_time" content="2020-12-30T08:21:42.816Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式1015-1021-分布式回归分析">
+<meta name="twitter:description" content="一、开始！今日信息量巨大大佬们展示肌肉。 回归部分还需要些数学根底。 代码后面也有一丢丢正文。">
+<meta name="twitter:image" content="https://konelane.github.io/2020/10/21/1015hadoop/10/21/1015hadoop/tu1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-1015hadoop" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/10/21/1015hadoop/" class="article-date">
+  	<time datetime="2020-10-20T16:00:00.000Z" itemprop="datePublished">2020-10-21</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      分布式1015-1021-分布式回归分析
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、开始！今日信息量巨大"><span class="toc-number">1.</span> <span class="toc-text">一、开始！今日信息量巨大</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#给出一个场景"><span class="toc-number">1.1.</span> <span class="toc-text">给出一个场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、分布式上的回归分析"><span class="toc-number">2.</span> <span class="toc-text">二、分布式上的回归分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、作业代码"><span class="toc-number">3.</span> <span class="toc-text">三、作业代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-简单线性回归"><span class="toc-number">3.1.</span> <span class="toc-text">1. 简单线性回归</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-清洗二手车数据"><span class="toc-number">3.2.</span> <span class="toc-text">2. 清洗二手车数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、总结"><span class="toc-number">4.</span> <span class="toc-text">四、总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#大家的问题："><span class="toc-number">4.1.</span> <span class="toc-text">大家的问题：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MapReduce如何在分布式系统上呈现的"><span class="toc-number">4.2.</span> <span class="toc-text">MapReduce如何在分布式系统上呈现的</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <h3 id="一、开始！今日信息量巨大"><a href="#一、开始！今日信息量巨大" class="headerlink" title="一、开始！今日信息量巨大"></a>一、开始！今日信息量巨大</h3><p>大佬们展示肌肉。</p>
+<p>回归部分还需要些数学根底。</p>
+<p>代码后面也有一丢丢正文。</p>
+<a id="more"></a>
+<p>先给一个linux服务器的方便功能。</p>
+<p>Screen -DR 加个名字，可以开启永远运行的窗口。</p>
+<p>Ctrl A + </p>
+<blockquote>
+<ol>
+<li>C 创建新窗口</li>
+<li>N 切换下一个窗口</li>
+<li>D 回到主界面（并未关闭窗口）<br>Exit 命令退出</li>
+</ol>
+</blockquote>
+<p>同学们的学习能力很强，可以打开vim编辑器并且退出了。（笑</p>
+<p>不不，是有与数据对话的能力了。</p>
+<p>希望脱颖而出，代码能力肯定比不上，但是我们有专业优势，即对<strong>数据分析</strong>的能力。我们懂模型，懂预测。</p>
+<p>至于为什么要用hadoop，因为数据多了，非常大。</p>
+<h4 id="给出一个场景"><a href="#给出一个场景" class="headerlink" title="给出一个场景"></a>给出一个场景</h4><p>场景：美国二手车，kaggle us-used-car。一共300w条记录，66个变量。</p>
+<p>因变量：Price，最主要的任务就是探究price受谁的影响。</p>
+<p>首先这么多变量中，存在很多数据缺失问题。去缺失。传到服务器上后，挑出一些缺失值少的变量。</p>
+<p>今天作业：<br>用这个数据，清理出一份可以回归的变量来。r里面有很多现成的东西。</p>
+<h3 id="二、分布式上的回归分析"><a href="#二、分布式上的回归分析" class="headerlink" title="二、分布式上的回归分析"></a>二、分布式上的回归分析</h3><p>如何在分布式上进行回归分析？区别在哪？（按行读取）</p>
+<p>原来的数据n乘p维，n很小100，p很小10。</p>
+<p>现在的数据n乘p维，n很大300w，p有66列，实际上会比这多得多，比如多个水平的哑变量就会占很多列。p很可能大于1k。</p>
+<p>原始数据9gb，存成双精度需要60g的内存。需要双倍的空间才能执行任务，单机不可能。但是我们有分布式。</p>
+<script type="math/tex; mode=display">
+Y = x \times \beta + \epsilon</script><p>beta不大，但是帽子阵根本求不了。要想解决这个问题，最难的在于计算：</p>
+<script type="math/tex; mode=display">
+（X^{t}X）^{-1}，X^{t}</script><p>有了目标，剩下的就很简单了。</p>
+<p><strong>第一个问题</strong>：如何构造把X^{t}Y求出来？</p>
+<p>如果x仅有一列，相当于 $ 1<em>n $ 与 $ n</em>1 $相乘，代数运算即一一对应相乘求和，放在转置前看，即每行的元素相乘。如果x有两列，最终结果是2乘1的两个数，第一行为x第一列与y的对应乘积求和，第二行为x第二列与y的对应元素乘积求和。（内积）</p>
+<p><strong>第二个问题</strong>：如何把X^{t}X构造出来？</p>
+<p>最终得到的是p乘p维的矩阵，第xij位置的元素，为x第i列与x第j列对应元素的乘积（内积）。i可以等于j。</p>
+<p>看到所有问题的答案，我们发现，所有的计算都是行内部的计算！那不是很舒服？分行计算就行啊！</p>
+<h3 id="三、作业代码"><a href="#三、作业代码" class="headerlink" title="三、作业代码"></a>三、作业代码</h3><h4 id="1-简单线性回归"><a href="#1-简单线性回归" class="headerlink" title="1. 简单线性回归"></a>1. 简单线性回归</h4><p>生成回归数据的r文件就不贴了。来看看我写的又臭又长的估计法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">readme.txt</span><br><span class="line">先使用Rscript reg.r建立reg.csv（回归数据集）</span><br><span class="line">再使用MapReduce</span><br><span class="line">mapper与process文件都是分行操作，使用1个process（reducer）求和就行</span><br></pre></td></tr></table></figure>
+<p>下面是生成数据用的R代码。代码中控制了beta的值，可以与最后结果比较。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env Rscript</span><br><span class="line"></span><br><span class="line">n = 1000</span><br><span class="line">p = 10</span><br><span class="line">x = matrix(rnorm(n*p), n, p)</span><br><span class="line">e = rnorm(n)</span><br><span class="line">beta = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)</span><br><span class="line">y = x%*%beta+0.3*e</span><br><span class="line">mydata = cbind(x, y)</span><br><span class="line">dim(mydata)</span><br><span class="line">write.table(mydata, &quot;linear.csv&quot;, sep = &quot;,&quot; , row.names = FALSE,  col.names = FALSE)</span><br><span class="line">colnames(mydata) = c(&quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;, &quot;x4&quot;, &quot;x5&quot;, &quot;x6&quot;, &quot;x7&quot;, &quot;x8&quot;, &quot;x9&quot;, &quot;x10&quot;, &quot;y&quot;)</span><br><span class="line">mydata = data.frame(mydata)</span><br><span class="line">myfit &lt;- lm(y~x1+x2+x3+x4+x5+x6+x7+x8+x9+x10, mydata)</span><br><span class="line">myfit$coefficients</span><br></pre></td></tr></table></figure>
+<p>这段代码是mapper。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#! usr/bin/env python3</span><br><span class="line"># 目标是做一些读取的工作，R做不了不同类型数据的存储</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"># 先按“读取，把文件里字符型数据中的逗号替换成其他符号</span><br><span class="line">def commakiller(abc):</span><br><span class="line">    i = 1</span><br><span class="line">    while(i&lt;len(abc)):</span><br><span class="line">        abc[i] = abc[i].replace(&quot;,&quot;,&quot;***&quot;)</span><br><span class="line">        a = &apos;&quot;&apos;</span><br><span class="line">        abc[i] = a + abc[i] + a</span><br><span class="line">        i = i + 2</span><br><span class="line">    b = &quot;&quot;</span><br><span class="line">    qline = b.join(abc)</span><br><span class="line">    return(qline)</span><br><span class="line"></span><br><span class="line">#reader = csv.reader(sys.stdin)</span><br><span class="line">#next(reader)</span><br><span class="line">times = 1</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    abc = line.split(&apos;&quot;&apos;)</span><br><span class="line">    data = commakiller(abc).split(&quot;,&quot;)</span><br><span class="line">    p = len(data)</span><br><span class="line">    if p &lt;= 1: continue</span><br><span class="line">    #if times == 1 : names = data;times = times + 1;continue</span><br><span class="line">    if p &gt; 1 :</span><br><span class="line">        data[p-1] = data[p-1][:-1]  # 每行后的换行符</span><br><span class="line">        datak = list(map(float, data))</span><br><span class="line">        xty = []</span><br><span class="line">        for i in range(p-1):</span><br><span class="line">            xty.append(datak[i] * datak[p-1]) # 默认第p个是因变量</span><br><span class="line">        print(&quot;*&quot;,&quot;,&quot;.join(str(i) for i in xty)) </span><br><span class="line">        xtx = np.outer(datak[0:(p-1)],datak[0:(p-1)])  # 外积</span><br><span class="line">        print(&quot;,&quot;.join(&quot;,&quot;.join(str(k) for k in qq) for qq in xtx.tolist()))</span><br></pre></td></tr></table></figure>
+<p>mapper把数据用逗号分隔，标准输出在屏幕上。<br>用管道将mapper的输出结果能够被吸入process.py（reducer，如下段代码）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#! usr/bin/env python3</span><br><span class="line">import sys</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">xtx = [];xty = [];temp = []</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    data = line.split(&apos;,&apos;)</span><br><span class="line">    #print(data)</span><br><span class="line">    p = len(data)</span><br><span class="line">    data[p-1] = data[p-1][:-1]</span><br><span class="line">    if line[0] == &quot;*&quot;:  # 说明是标记的xty</span><br><span class="line">        data[0] = data[0][2:]</span><br><span class="line">        p1 = len(data)</span><br><span class="line">        data = list(map(float, data))</span><br><span class="line">        if len(xty) == 0:</span><br><span class="line">            xty = data</span><br><span class="line">            continue</span><br><span class="line">        else:</span><br><span class="line">            xty = xty + np.array(data)</span><br><span class="line">            # 在新的xtx出现之前</span><br><span class="line">            if len(xtx) == 0:</span><br><span class="line">                xtx = temp</span><br><span class="line">            else:</span><br><span class="line">                xtx = np.array(xtx) + np.array(temp) # bug</span><br><span class="line">                len2 = len(temp)</span><br><span class="line">            temp = []  # 循环结束初始化</span><br><span class="line">    else:   # 其他都是xtx</span><br><span class="line">        data = list(map(float, data))</span><br><span class="line">        if len(temp) == 0:</span><br><span class="line">            temp = data</span><br><span class="line">        else:</span><br><span class="line">            temp = temp + data # 连接</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">xtx = np.asarray(xtx).reshape(int(p1),int(len2/p1))</span><br><span class="line">print(np.dot(np.linalg.inv(xtx),np.array(xty)))</span><br></pre></td></tr></table></figure>
+<p>原理与之前讲的相似，先计算xtx与xty，求逆（生成的矩阵有时候会奇异，那就重新生成一波）</p>
+<p>最后是我们的main主函数shell文件，这个没啥变化 (不要直接跑，我改了文件名)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">PWD=$(cd $(dirname $0); pwd)</span><br><span class="line">cd $PWD 1&gt; /dev/null 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">hadoop fs -put linear.csv /user/devel/hehe/reg</span><br><span class="line"></span><br><span class="line">TASKNAME=linear-hehe</span><br><span class="line">HADOOP_INPUT_DIR=/user/devel/hehe/reg/linear.csv</span><br><span class="line">HADOOP_OUTPUT_DIR=/user/devel/hehe/output/1020output</span><br><span class="line"></span><br><span class="line">echo $HADOOP_HOME</span><br><span class="line">echo $HADOOP_INPUT_DIR</span><br><span class="line">echo $HADOOP_OUTPUT_DIR</span><br><span class="line"></span><br><span class="line">hadoop fs -rm -r $HADOOP_OUTPUT_DIR</span><br><span class="line"></span><br><span class="line">hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \</span><br><span class="line">-D mapred.job.name=$TASKNAME \</span><br><span class="line">-D mapred.job.priority=HIGH \</span><br><span class="line">-D stream.memory.limit=1000 \</span><br><span class="line">-D mapred.reduce.tasks=1 \</span><br><span class="line">-D mapred.job.map.capacity=100 \</span><br><span class="line">-D mapred.job.map.capacity=100 \</span><br><span class="line">-input $&#123;HADOOP_INPUT_DIR&#125; \</span><br><span class="line">-output $&#123;HADOOP_OUTPUT_DIR&#125; \</span><br><span class="line">-mapper &quot;$PWD/mapper.py&quot; \</span><br><span class="line">-reducer &quot;$PWD/process.py&quot; \</span><br><span class="line">-file &quot;$PWD/mapper.py&quot; &quot;$PWD/process.py&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ $? -ne 0 ]; then</span><br><span class="line">    echo &apos;error&apos;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line">hadoop fs -touchz $&#123;HADOOP_OUTPUT_DIR&#125;/done</span><br><span class="line"></span><br><span class="line">hadoop fs -ls $HADOOP_OUTPUT_DIR | cat</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+<h4 id="2-清洗二手车数据"><a href="#2-清洗二手车数据" class="headerlink" title="2. 清洗二手车数据"></a>2. 清洗二手车数据</h4><p>二手车数据来自kaggle <a href="https://www.kaggle.com/ananaymital/us-used-cars-dataset" target="_blank" rel="noopener">给个链接</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">本文件仅适用于二手车数据</span><br><span class="line"></span><br><span class="line">仅进行了OLS回归，GLM需要在帽子阵计算中加权，未实现</span><br><span class="line"></span><br><span class="line">本地5w行数据计算成功，hadoop上还未测试</span><br><span class="line"></span><br><span class="line">na.py用于清洗数据，计算变量均值标准差，并给出适合的列。对300万原数据得到的结果存入vars.txt</span><br><span class="line"></span><br><span class="line">mapper.py用于简单正态插补，计算帽子矩阵</span><br><span class="line"></span><br><span class="line">reducer.py用于计算系数阵估计值betahat，得到的结果存入result1.txt中</span><br></pre></td></tr></table></figure>
+<p>先看na.py，这个代码对数据na等情况做了处理，有点长，这个文件在处理时单独运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line">#! usr/bin/env python3</span><br><span class="line">## 任务：计算每列的na、均值、方差、总量与内部情况</span><br><span class="line">times = 1</span><br><span class="line">import sys</span><br><span class="line">import re # 正则化</span><br><span class="line">import numpy as np</span><br><span class="line">import math</span><br><span class="line">from operator import itemgetter</span><br><span class="line"></span><br><span class="line"># 先按“读取，把文件里字符型数据中的逗号替换成其他符号</span><br><span class="line">def commakiller(abc):</span><br><span class="line">    i = 1</span><br><span class="line">    while(i&lt;len(abc)):</span><br><span class="line">        abc[i] = abc[i].replace(&quot;,&quot;,&quot;***&quot;)</span><br><span class="line">        a = &apos;&quot;&apos;</span><br><span class="line">        abc[i] = a + abc[i] + a</span><br><span class="line">        i = i + 2</span><br><span class="line">    b = &quot;&quot;</span><br><span class="line">    qline = b.join(abc)</span><br><span class="line">    return(qline)</span><br><span class="line"></span><br><span class="line">na_count = &#123;&#125;</span><br><span class="line">num_count = &#123;&#125;;var_count = &#123;&#125;</span><br><span class="line">strvalue = &#123;&#125;</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    data = line.split(&apos;&quot;&apos;)</span><br><span class="line">    items = commakiller(data).split(&apos;,&apos;)</span><br><span class="line">    #print(&quot;,&quot;.join(str(k) for k in items))</span><br><span class="line">    if(times == 1):</span><br><span class="line">        times += 1</span><br><span class="line">        names = items  # 后续遍历使用</span><br><span class="line">        continue</span><br><span class="line">    if(times &gt;= 2):</span><br><span class="line">        ## na的计算与插补需要把全数据遍历</span><br><span class="line">        for key, value in enumerate(items):</span><br><span class="line">            count = int((value == &apos;&apos;) | (value == &quot;--&quot;))</span><br><span class="line">            na_count[key] = na_count.get(key, 0) + count # 每行统计缺失值</span><br><span class="line">            # get函数，如果对应key是空值，则返回0（设置的默认值），有缺失会被上一行count记录下来</span><br><span class="line">            # 计算其他列属性，描述统计</span><br><span class="line">           </span><br><span class="line">            if ((value != &quot;&quot;) &amp; (value != &quot;--&quot;)):</span><br><span class="line">                #if len(value) &gt; 25:  # 超长取值一般都无法处理，删除</span><br><span class="line">                #    continue</span><br><span class="line">                try:</span><br><span class="line">                    val_num = float(value) # 如果是数值型变量</span><br><span class="line">                    num_count[key] = num_count.get(key,0) + val_num # 数值型直接求和</span><br><span class="line">                    var_count[key] = var_count.get(key,0) + val_num ** 2 # 平方求和</span><br><span class="line">                except(ValueError):</span><br><span class="line">                    try:</span><br><span class="line">                        # 数值型变量带单位的，如下处理</span><br><span class="line">                        if ((&quot;in&quot; in value[-5:])&amp;(re.findall(&apos;[a-z]in&apos;,value)==[])):</span><br><span class="line">                            val_num = float(re.sub(&apos;in&apos;,&apos;&apos;,value,1))</span><br><span class="line">                            num_count[key] = num_count.get(key,0) + val_num</span><br><span class="line">                            var_count[key] = var_count.get(key,0) + val_num ** 2</span><br><span class="line">                        elif ((&quot;seats&quot; in value[-8:])&amp;(re.findall(&apos;[a-z]seats&apos;,value)==[])):</span><br><span class="line">                            val_num = float(re.sub(&apos;seats&apos;,&apos;&apos;,value,1))</span><br><span class="line">                            num_count[key] = num_count.get(key,0) + val_num</span><br><span class="line">                            var_count[key] = var_count.get(key,0) + val_num ** 2</span><br><span class="line">                        elif ((&apos;gal&apos; in value[-6:])&amp;(re.findall(&apos;[a-z]gal&apos;,value)==[])):</span><br><span class="line">                            val_num = float(re.sub(&apos;gal&apos;,&apos;&apos;,value,1))</span><br><span class="line">                            num_count[key] = num_count.get(key,0) + val_num</span><br><span class="line">                            var_count[key] = var_count.get(key,0) + val_num ** 2</span><br><span class="line">                        #elif &apos;RPM&apos; in value[-3:]:</span><br><span class="line">                        #    val_num = float(re.sub(&apos;RPM&apos;,&apos;&apos;,value,1))</span><br><span class="line">                        #    num_count[key] = num_count.get(key,0) + val_num</span><br><span class="line">                        # 带单位的只有这几个，数值化后，全存进num_count的字典中 </span><br><span class="line">                        # 出了点问题，&apos;148 lb-ft @ 200 RPM&apos; 这什么意思（于是这列被删了）</span><br><span class="line">                        # 下面处理所有字符类型的变量，用字典存储元素，并计算种类和数量</span><br><span class="line">                        #print(num_count)</span><br><span class="line">                        else:</span><br><span class="line">                            strvalue.setdefault(key,&#123;&#125;)  # 设定每个变量默认字典初始值为空</span><br><span class="line">                            strvalue[key][value] = strvalue[key].get(value,0) + 1  # 每次更新对应元素的value，+1</span><br><span class="line">                    except(ValueError):</span><br><span class="line">                        #print(&apos;转换失败 第%s列\t%s&apos;%(key,names[key]))</span><br><span class="line">                        continue</span><br><span class="line">        times += 1</span><br><span class="line"></span><br><span class="line">### 1.处理 na</span><br><span class="line">abort = [];fix = [];perf = []</span><br><span class="line"></span><br><span class="line">print(&quot;,&quot;.join(str(k) for k in names))  # 变量名-1行</span><br><span class="line">sorted_na_count = sorted(na_count.items(), key=itemgetter(0))</span><br><span class="line">for num, count in sorted_na_count:</span><br><span class="line">    na01 = times - count - 1</span><br><span class="line">    print(&apos;%s\t%s\t%s&apos; % (num, count,times))  # 每列缺失值-66行</span><br><span class="line">    value = int(count)</span><br><span class="line">    key = int(num)</span><br><span class="line">    lendata = times - 1 # 数据长度</span><br><span class="line">    if key == 0:</span><br><span class="line">        abort.append(key)</span><br><span class="line">        continue # ID列直接加入废弃</span><br><span class="line">    if (value/lendata) &gt;= 0.3:</span><br><span class="line">        abort.append(key) # 把大于30% 的缺失列号加入废弃</span><br><span class="line">    elif ((value/lendata &gt; 0) &amp; (value/lendata &lt; 0.3)):</span><br><span class="line">        fix.append(key)</span><br><span class="line">    elif(value == 0):</span><br><span class="line">        perf.append(key)</span><br><span class="line"></span><br><span class="line">print(&quot;需要丢掉的列号：%s\n需要插补的列号：%s\n完美列号：%s&quot; % ((&quot;,&quot;.join(str(k) for k in abort)),(&quot;,&quot;.join(str(k) for k in fix)),(&quot;,&quot;.join(str(k) for k in perf))))</span><br><span class="line"></span><br><span class="line">### 2.数值型变量</span><br><span class="line">sorted_num_count = sorted(num_count.items(), key=itemgetter(0)) </span><br><span class="line">for num,count in sorted_num_count:</span><br><span class="line">    if int(num) in abort:</span><br><span class="line">        print(&apos;丢掉第%d列\t%s\t-是首列或因na过多&apos;%(num,names[num]))</span><br><span class="line">        continue</span><br><span class="line">    xbar = count/na01</span><br><span class="line">    if xbar &gt; 100000:</span><br><span class="line">        print(&apos;丢掉第%d列\t%s\t-xbar大于100000&apos;%(num,names[num]))</span><br><span class="line">        continue</span><br><span class="line">    sdlist = math.sqrt(var_count[num]/na01 - xbar**2) # EX2 - (EX)2</span><br><span class="line">    print(&apos;%s\t%s\t%s\t%s&apos; % (num, names[num], xbar, sdlist)) # num是列号，count是全元素和</span><br><span class="line">    ## 问题，会出现很多大均值的列，不清楚为什么，需要筛选</span><br><span class="line"></span><br><span class="line">### 3.字符型变量</span><br><span class="line">for key in strvalue.keys(): # 把所有字符型的key遍历一遍 (都是列号)</span><br><span class="line">    if int(key) in abort:</span><br><span class="line">        try:</span><br><span class="line">            print(&apos;丢掉第%d列\t%s\t-na过多&apos;%(key,names[key]))</span><br><span class="line">            continue</span><br><span class="line">        except(TypeError):</span><br><span class="line">            print(&apos;丢掉第%d列\t%s\t-数据出界&apos;%(key,names[key]))</span><br><span class="line">            continue </span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    if len(strvalue[key].keys()) &gt; 10 : # 字符型变量之内有个统计，也存成dict，现在要取值大于5类的变量都消灭掉</span><br><span class="line">        print(&apos;丢掉第%d列\t%s\t-类数大于10&apos;%(key,names[key]))</span><br><span class="line">        continue # 分行操作时，可能有些时候会保留一些取值本来很多的变量，不过没关系</span><br><span class="line">    sorted_str_count = sorted(strvalue[key].items(), key=itemgetter(0)) # 变量内部的字典-再计数，根据变量名这个key放回到names中找原位置</span><br><span class="line">    print(&apos;%s&apos;%(&apos;第%d列&apos;%(key))) </span><br><span class="line">    for num, count in sorted_str_count:</span><br><span class="line">        try:</span><br><span class="line">            print(&apos;%s\t%s\t%s&apos; % (num, names[key], count))</span><br><span class="line">        except(TypeError):</span><br><span class="line">            print(&apos;上一行的有问题，丢掉第%d列\t%s\t-type_error了&apos;%(key,names[key]))</span><br><span class="line">            continue</span><br></pre></td></tr></table></figure>
+<p>上面处理时，其实要十分了解原数据的含义和数据初始形式。在数据处理之前，尽可能选择取样观察，或者利用信息提前计划。</p>
+<p>na.py的处理中，会给出需要删除/不需删除，各列的均值与标准差等。结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br></pre></td><td class="code"><pre><span class="line">[devel@emr-header-1 1026]$ cat vars.txt</span><br><span class="line">vin,back_legroom,bed,bed_height,bed_length,body_type,cabin,city,city_fuel_economy,combine_fuel_economy,daysonmarket,dealer_zip,description,engine_cylinders,engine_displacement,engine_type,exterior_color,fleet,frame_damaged,franchise_dealer,franchise_make,front_legroom,fuel_tank_volume,fuel_type,has_accidents,height,highway_fuel_economy,horsepower,interior_color,isCab,is_certified,is_cpo,is_new,is_oemcpo,latitude,length,listed_date,listing_color,listing_id,longitude,main_picture_url,major_options,make_name,maximum_seating,mileage,model_name,owner_count,power,price,salvage,savings_amount,seller_rating,sp_id,sp_name,theft_title,torque,transmission,transmission_display,trimId,trim_name,vehicle_damage_category,wheel_system,wheel_system_display,wheelbase,width,year</span><br><span class="line"></span><br><span class="line">0       0       3000600</span><br><span class="line">1       242727  3000600</span><br><span class="line">2       2980472 3000600</span><br><span class="line">3       3000040 3000600</span><br><span class="line">4       2579859 3000600</span><br><span class="line">5       13543   3000600</span><br><span class="line">6       2936507 3000600</span><br><span class="line">7       0       3000600</span><br><span class="line">8       491285  3000600</span><br><span class="line">9       3000040 3000600</span><br><span class="line">10      0       3000600</span><br><span class="line">11      0       3000600</span><br><span class="line">12      77901   3000600</span><br><span class="line">13      100578  3000600</span><br><span class="line">14      172383  3000600</span><br><span class="line">15      100578  3000600</span><br><span class="line">16      0       3000600</span><br><span class="line">17      1426595 3000600</span><br><span class="line">18      1426595 3000600</span><br><span class="line">19      0       3000600</span><br><span class="line">20      572568  3000600</span><br><span class="line">21      175452  3000600</span><br><span class="line">22      160673  3000600</span><br><span class="line">23      82721   3000600</span><br><span class="line">24      1426595 3000600</span><br><span class="line">25      159733  3000600</span><br><span class="line">26      491266  3000600</span><br><span class="line">27      172383  3000600</span><br><span class="line">28      2       3000600</span><br><span class="line">29      1426595 3000600</span><br><span class="line">30      2999953 3000600</span><br><span class="line">31      2817055 3000600</span><br><span class="line">32      0       3000600</span><br><span class="line">33      2864591 3000600</span><br><span class="line">34      0       3000600</span><br><span class="line">35      159722  3000600</span><br><span class="line">36      0       3000600</span><br><span class="line">37      0       3000600</span><br><span class="line">38      0       3000600</span><br><span class="line">39      0       3000600</span><br><span class="line">40      369087  3000600</span><br><span class="line">41      200042  3000600</span><br><span class="line">42      0       3000600</span><br><span class="line">43      159766  3000600</span><br><span class="line">44      144387  3000600</span><br><span class="line">45      0       3000600</span><br><span class="line">46      1517012 3000600</span><br><span class="line">47      481415  3000600</span><br><span class="line">48      0       3000600</span><br><span class="line">49      1426595 3000600</span><br><span class="line">50      0       3000600</span><br><span class="line">51      40828   3000600</span><br><span class="line">52      52      3000600</span><br><span class="line">53      0       3000600</span><br><span class="line">54      1426595 3000600</span><br><span class="line">55      517782  3000600</span><br><span class="line">56      64166   3000600</span><br><span class="line">57      64166   3000600</span><br><span class="line">58      115826  3000600</span><br><span class="line">59      116293  3000600</span><br><span class="line">60      2999953 3000600</span><br><span class="line">61      146731  3000600</span><br><span class="line">62      146731  3000600</span><br><span class="line">63      159698  3000600</span><br><span class="line">64      159746  3000600</span><br><span class="line">65      0       3000600</span><br><span class="line">66      0       3000600</span><br><span class="line">67      0       3000600</span><br><span class="line">68      0       3000600</span><br><span class="line">69      0       3000600</span><br><span class="line">70      0       3000600</span><br><span class="line">71      0       3000600</span><br><span class="line">72      0       3000600</span><br><span class="line">73      0       3000600</span><br><span class="line">74      0       3000600</span><br><span class="line">75      0       3000600</span><br><span class="line">76      0       3000600</span><br><span class="line">77      0       3000600</span><br><span class="line">78      0       3000600</span><br><span class="line">79      0       3000600</span><br><span class="line">80      0       3000600</span><br><span class="line">81      0       3000600</span><br><span class="line">82      0       3000600</span><br><span class="line">83      0       3000600</span><br><span class="line">84      0       3000600</span><br><span class="line">85      0       3000600</span><br><span class="line">86      0       3000600</span><br><span class="line">87      0       3000600</span><br><span class="line">88      0       3000600</span><br><span class="line">89      0       3000600</span><br><span class="line">90      0       3000600</span><br><span class="line">91      0       3000600</span><br><span class="line">92      0       3000600</span><br><span class="line">93      0       3000600</span><br><span class="line">94      0       3000600</span><br><span class="line">95      0       3000600</span><br><span class="line">需要丢掉的列号：0,2,3,4,6,9,17,18,24,29,30,31,33,46,49,54,60</span><br><span class="line">需要插补的列号：1,5,8,12,13,14,15,20,21,22,23,25,26,27,28,35,40,41,43,44,47,51,52,55,56,57,58,59,61,62,63,64</span><br><span class="line">完美列号：7,10,11,16,19,32,34,36,37,38,39,42,45,48,50,53,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95</span><br><span class="line">丢掉第0列       vin     -是首列或因na过多</span><br><span class="line">1       back_legroom    34.88554152025584       10.803048024003107</span><br><span class="line">丢掉第4列       bed_length      -是首列或因na过多</span><br><span class="line">8       city_fuel_economy       18.973479961834286      11.637300445996951</span><br><span class="line">10      daysonmarket    76.0455595699392        108.87863896938518</span><br><span class="line">11      dealer_zip      50669.81150830218       27375.94715300726</span><br><span class="line">12      description     0.17846959890341893     255.2549902888531</span><br><span class="line">14      engine_displacement     2797.285075413276       1481.0219220754384</span><br><span class="line">16      exterior_color  2.260508282512925       442.6922512862191</span><br><span class="line">21      front_legroom   39.72592702320007       10.02756775400742</span><br><span class="line">22      fuel_tank_volume        17.608113546641402      6.7668815295322435</span><br><span class="line">25      height  62.35115022029862       16.541684822918757</span><br><span class="line">26      highway_fuel_economy    24.641676545249798      13.020379389747855</span><br><span class="line">27      horsepower      233.69342021376397      105.1379926203423</span><br><span class="line">28      interior_color  2.2194684128069095      559.1713000695153</span><br><span class="line">34      latitude        36.97614874552056       5.025653349279904</span><br><span class="line">35      length  183.34090699859522      47.80448637471194</span><br><span class="line">丢掉第38列      listing_id      -xbar大于100000</span><br><span class="line">39      longitude       -90.62260148008761      13.967765609990069</span><br><span class="line">43      maximum_seating 5.18447183379052        1.6826429709038224</span><br><span class="line">44      mileage 29640.29273455067       73067.93566116491</span><br><span class="line">45      model_name      58.31043968221012       333.09392240515734</span><br><span class="line">丢掉第46列      owner_count     -是首列或因na过多</span><br><span class="line">48      price   29926.953581444013      19568.717865222385</span><br><span class="line">50      savings_amount  550.8380996594346       1079.351149695568</span><br><span class="line">51      seller_rating   4.211379641169585       0.7130308234825646</span><br><span class="line">丢掉第52列      sp_id   -xbar大于100000</span><br><span class="line">59      trim_name       0.04460616030332584     10.331173669741302</span><br><span class="line">63      wheelbase       109.1642761329817       29.529077769800306</span><br><span class="line">64      width   74.1947137895581        19.1476096014168</span><br><span class="line">65      year</span><br><span class="line">        2017.2940512877597      29.89588340213624</span><br><span class="line">丢掉第0列       vin     -na过多</span><br><span class="line">丢掉第5列       body_type       -类数大于10</span><br><span class="line">丢掉第7列       city    -类数大于10</span><br><span class="line">丢掉第12列      description     -类数大于10</span><br><span class="line">丢掉第13列      engine_cylinders        -类数大于10</span><br><span class="line">丢掉第15列      engine_type     -类数大于10</span><br><span class="line">丢掉第16列      exterior_color  -类数大于10</span><br><span class="line">丢掉第19列      franchise_dealer        -类数大于10</span><br><span class="line">丢掉第20列      franchise_make  -类数大于10</span><br><span class="line">丢掉第23列      fuel_type       -类数大于10</span><br><span class="line">丢掉第28列      interior_color  -类数大于10</span><br><span class="line">丢掉第32列      is_new  -类数大于10</span><br><span class="line">丢掉第36列      listed_date     -类数大于10</span><br><span class="line">丢掉第37列      listing_color   -类数大于10</span><br><span class="line">丢掉第40列      main_picture_url        -类数大于10</span><br><span class="line">丢掉第41列      major_options   -类数大于10</span><br><span class="line">丢掉第42列      make_name       -类数大于10</span><br><span class="line">丢掉第45列      model_name      -类数大于10</span><br><span class="line">丢掉第47列      power   -类数大于10</span><br><span class="line">丢掉第53列      sp_name -类数大于10</span><br><span class="line">丢掉第55列      torque  -类数大于10</span><br><span class="line">丢掉第56列      transmission    -类数大于10</span><br><span class="line">丢掉第57列      transmission_display    -类数大于10</span><br><span class="line">丢掉第58列      trimId  -类数大于10</span><br><span class="line">丢掉第59列      trim_name       -类数大于10</span><br><span class="line">丢掉第61列      wheel_system    -类数大于10</span><br><span class="line">丢掉第62列      wheel_system_display    -类数大于10</span><br><span class="line">丢掉第17列      fleet   -na过多</span><br><span class="line">丢掉第18列      frame_damaged   -na过多</span><br><span class="line">丢掉第24列      has_accidents   -na过多</span><br><span class="line">丢掉第29列      isCab   -na过多</span><br><span class="line">丢掉第49列      salvage -na过多</span><br><span class="line">丢掉第54列      theft_title     -na过多</span><br><span class="line">丢掉第31列      is_cpo  -na过多</span><br><span class="line">丢掉第33列      is_oemcpo       -na过多</span><br><span class="line">丢掉第6列       cabin   -na过多</span><br><span class="line">丢掉第2列       bed     -na过多</span><br><span class="line">丢掉第1列       back_legroom    -类数大于10</span><br><span class="line">丢掉第3列       bed_height      -na过多</span><br><span class="line">丢掉第4列       bed_length      -na过多</span><br><span class="line">丢掉第8列       city_fuel_economy       -类数大于10</span><br><span class="line">丢掉第9列       combine_fuel_economy    -na过多</span><br><span class="line">丢掉第10列      daysonmarket    -类数大于10</span><br><span class="line">丢掉第11列      dealer_zip      -类数大于10</span><br><span class="line">丢掉第14列      engine_displacement     -类数大于10</span><br><span class="line">丢掉第21列      front_legroom   -类数大于10</span><br><span class="line">丢掉第25列      height  -类数大于10</span><br><span class="line">丢掉第26列      highway_fuel_economy    -类数大于10</span><br><span class="line">丢掉第27列      horsepower      -类数大于10</span><br><span class="line">丢掉第22列      fuel_tank_volume        -类数大于10</span><br><span class="line">丢掉第30列      is_certified    -na过多</span><br><span class="line">丢掉第34列      latitude        -类数大于10</span><br><span class="line">第35列</span><br><span class="line"> &apos;Backup Camera&apos;        length  1</span><br><span class="line"> 4-wheel antilock       length  1</span><br><span class="line"> Traction control - ABS and driveline   length  1</span><br><span class="line"> automatic high beam on/off|Glass       length  1</span><br><span class="line"> body-color (Not available on Double Cab models.)|Glass length  1</span><br><span class="line"> driver 8-way power|Seats       length  1</span><br><span class="line"> front passenger        length  1</span><br><span class="line"> heated driver and front passenger|Console front center with 2 cup holders and storage  length  1</span><br><span class="line"> includes rear storage drawer (Excludes storage drawer with (GAT) All Terrain with (ABD) 5-passenger seating.)|Power outlet       length  2</span><br><span class="line">第38列</span><br><span class="line"> 2 in front door panel  listing_id      1</span><br><span class="line"> 3-prong household style located on the rear of center console|Cup holders 2 in front center console    listing_id        1</span><br><span class="line"> Xenon headlights&quot;***V6***3600.0***V6***Silver***True***False***False******42.1 in***19 gal***Gasoline***False***59.1 in***28.0***304.0***Gray (Dark Grey)***True*********False******31.8552***202 in***2020-08-27***SILVER***280340040***-106.028***https://static.cargurus.com/images/forsale/2020/08/26/00/06/2016_cadillac_xts-pic-1844722391038826724-152x114.jpeg***&quot;[&apos;Leather Seats&apos;   listing_id      1</span><br><span class="line"> deep-tinted|Wipers     listing_id      1</span><br><span class="line"> folding|Dead pedal     listing_id      1</span><br><span class="line"> rear (Requires Crew Cab or Double Cab model. Deleted with (ZW9) pickup box delete.)|Bumper     listing_id1</span><br><span class="line"> tilt and telescopic|Display    listing_id      2</span><br><span class="line"> top|Tailgate   listing_id      1</span><br><span class="line">第39列</span><br><span class="line"> &apos;Navigation System&apos;    longitude       1</span><br><span class="line"> 2 bottle holders in front door panel   longitude       1</span><br><span class="line"> 2 in front door panel  longitude       1</span><br><span class="line"> EZ-Lift and Lower (Deleted when (ZW9) pickup box delete is ordered.)|Remote Locking Tailgate|Radio     longitude 1</span><br><span class="line"> driver instrument information enhanced longitude       2</span><br><span class="line"> driver|Steering wheel  longitude       1</span><br><span class="line"> front chrome|CornerStep        longitude       1</span><br><span class="line"> front intermittent     longitude       1</span><br><span class="line">第43列</span><br><span class="line"> &apos;Heated Seats&apos; maximum_seating 1</span><br><span class="line"> 3-channel programmable|Defogger        maximum_seating 2</span><br><span class="line"> 3-passenger (includes child seat top tether anchor)|Instrumentation    maximum_seating 1</span><br><span class="line"> HD|Floor covering      maximum_seating 1</span><br><span class="line"> chrome|4X4 chrome badge (Included and only available with 4X4 models.)|Grille surround maximum_seating 1</span><br><span class="line"> driver instrument information enhanced maximum_seating 1</span><br><span class="line"> miles/kilometers|Driver Information Center     maximum_seating 1</span><br><span class="line"> tilt and telescopic|Display    maximum_seating 1</span><br><span class="line">第44列</span><br><span class="line"> &apos;Android Auto&apos; mileage 1</span><br><span class="line"> 6-gauge cluster featuring speedometer  mileage 1</span><br><span class="line"> chrome|Headlamps       mileage 1</span><br><span class="line"> color-keyed carpeting|Driver Information Center        mileage 1</span><br><span class="line"> driver instrument information enhanced mileage 1</span><br><span class="line"> enhanced       mileage 1</span><br><span class="line"> one color|Sensor       mileage 1</span><br><span class="line"> rear-window electric|Cup holders 2 in front center console     mileage 2</span><br><span class="line">丢掉第46列      owner_count     -na过多</span><br><span class="line">第48列</span><br><span class="line"> &apos;Bluetooth&apos;    price   1</span><br><span class="line"> 10 total|Lighting      price   2</span><br><span class="line"> 3-channel programmable|Air conditioning        price   1</span><br><span class="line"> cargo box with switch on center switch bank (Deleted when (ZW9) pickup box delete is ordered.) (Deleted with (ZW9) pickup box delete.)|Fog lamps price   1</span><br><span class="line"> power  price   1</span><br><span class="line"> power with driver and passenger Express-Down/Up|Cruise control price   1</span><br><span class="line"> right front passenger and rear seat occupants|Defogger price   1</span><br><span class="line"> voltage and oil pressure|Driver Information Center     price   1</span><br><span class="line">第50列</span><br><span class="line"> &apos;Backup Camera&apos;        savings_amount  1</span><br><span class="line"> cargo compartment      savings_amount  2</span><br><span class="line"> halogen|Mirror caps    savings_amount  1</span><br><span class="line"> inside rearview manual day/night|Lighting      savings_amount  1</span><br><span class="line"> programmable|Pedals    savings_amount  1</span><br><span class="line"> right front passenger and rear seat occupants (Dual-zone climate control when (GAT) All Terrain is ordered. Tri-zone climate control on all other models.)|Defogger      savings_amount  1</span><br><span class="line"> steering wheel mounted|Mirror  savings_amount  1</span><br><span class="line"> warning messages and vehicle information|Windows       savings_amount  1</span><br><span class="line">第51列</span><br><span class="line"> &apos;Remote Start&apos;]&quot;***Cadillac***5 seats***64070.0***XTS***3.0***&quot;304 hp @ 6      seller_rating   1</span><br><span class="line"> body-color (Included and only available with (GAT) All Terrain HD Package.) (Included and only available with (GAT) All Terrain Package and mirror caps will be Black.)|Mirror caps      seller_rating   1</span><br><span class="line"> inside rearview manual day/night       seller_rating   1</span><br><span class="line"> interior with theater dimming  seller_rating   1</span><br><span class="line"> power with driver express up and down and express down on all other windows|Visors     seller_rating   1</span><br><span class="line"> power-adjustable for accelerator and brake|Climate control     seller_rating   1</span><br><span class="line"> rear-window electric|Mirror    seller_rating   1</span><br><span class="line">第52列</span><br><span class="line"> cargo compartment      sp_id   1</span><br><span class="line"> chrome|Glass   sp_id   1</span><br><span class="line"> driver and front passenger illuminated vanity mirrors|Assist handle    sp_id   1</span><br><span class="line"> frameless|Visors       sp_id   1</span><br><span class="line"> inside rearview auto-dimming|Lighting  sp_id   1</span><br><span class="line"> second row reading lamps integrated into dome light    sp_id   2</span><br><span class="line"> tri-zone automatic with individual climate settings for driver sp_id   1</span><br><span class="line">800 RPM&quot;***19950.0***False***65*********private seller***False***&quot;264 lb-ft @ 5 sp_id   1</span><br><span class="line">丢掉第60列      vehicle_damage_category -na过多</span><br><span class="line">第63列</span><br><span class="line"> &apos;Bluetooth&apos;    wheelbase       1</span><br><span class="line"> GMC Smart Driver       wheelbase       2</span><br><span class="line"> front reading lamps|Shift knob wheelbase       1</span><br><span class="line"> frontal and side impact for driver and front passenger driver inboard seat-mounted side-impact wheelbase1</span><br><span class="line"> interior with dome light       wheelbase       1</span><br><span class="line"> rear child security|Teen Driver mode a configurable feature that lets you activate customizable vehicle settings associated with a key fob       wheelbase       1</span><br><span class="line"> tachometer     wheelbase       1</span><br><span class="line">第64列</span><br><span class="line"> &apos;Backup Camera&apos;        width   1</span><br><span class="line"> Marketplace and more (Limitations apply. Not transferable. Standard connectivity available to original purchaser for ten years from the date of initial vehicle purchase for model year 2018 or newer GMC vehicles. See onstar.com for details and further plan limitations. Connected Access does not include emergency or security services. Availability and additional services enables by Connected Access are subject to change.)|Rear Vision Camera|Door locks  width   2</span><br><span class="line"> driver side knee and head curtain side-impact for all rows in outboard seating positions (Always use safety belts and the correct child restraints. Children are safer when properly secured in a rear seat in the appropriate child restraint. See the Owner&apos;s Manual for more information.)|Rear Vision Camera|Door locks width    1</span><br><span class="line"> driver- and passenger-side door switch with delayed entry feature      width   1</span><br><span class="line"> leather-wrapped|Brake  width   1</span><br><span class="line"> to encourage safe driving behavior. It can limit certain vehicle features      width   1</span><br><span class="line"> voltage and oil pressure|Driver Information Center     width   1</span><br><span class="line">第65列</span><br><span class="line"> &apos;CarPlay&apos;]&quot;***Chevrolet***6 seats***42921.0***Silverado 2500HD***1.0******56995.0***False***4549***4.814814814814815***285608***Platinum Auto Group***False******A***Automatic***t78815***LT Crew Cab 4WD******4WD***Four-Wheel Drive***153.7 in***80.5 in***2019</span><br><span class="line">&quot;       year</span><br><span class="line">        1</span><br><span class="line"> 4.2-inch diagonal color display includes driver personalization        year</span><br><span class="line">        1</span><br><span class="line"> and it prevents certain safety systems from being turned off. An in-vehicle report gives you information on your teen&apos;s driving habits and helps you to continue to coach your new driver|Tire pressure monitoring system|Horn     year</span><br><span class="line">        1</span><br><span class="line"> cargo lights   year</span><br><span class="line">        1</span><br><span class="line"> parking        year</span><br><span class="line">        1</span><br><span class="line"> rear child security|Rear seat reminder|Teen Driver configurable feature that lets you activate customizable vehicle settings associated with a key fob   year</span><br><span class="line">        2</span><br><span class="line"> rear child security|Teen Driver mode a configurable feature that lets you activate customizable vehicle settings associated with a key fob       year</span><br><span class="line">        1</span><br><span class="line">第66列</span><br></pre></td></tr></table></figure>
+<p>上面的结果就是我们处理的标准。</p>
+<p>下面看看mapper.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">#! usr/bin/env python3</span><br><span class="line"># 目标：插补na，并计算乘积 xtx与xty</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line">import re</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"># 先按“读取，把文件里字符型数据中的逗号替换成其他符号</span><br><span class="line">def commakiller(abc):</span><br><span class="line">    i = 1</span><br><span class="line">    while(i&lt;len(abc)):</span><br><span class="line">        abc[i] = abc[i].replace(&quot;,&quot;,&quot;***&quot;)</span><br><span class="line">        a = &apos;&quot;&apos;</span><br><span class="line">        abc[i] = a + abc[i] + a</span><br><span class="line">        i = i + 2</span><br><span class="line">    b = &quot;&quot;</span><br><span class="line">    qline = b.join(abc)</span><br><span class="line">    return(qline)</span><br><span class="line"></span><br><span class="line">num_list = &#123;&apos;1&apos;:[34.886,10.803],&apos;8&apos;:[18.973,11.637],&apos;10&apos;:[76.046,108.879],&apos;11&apos;:[50669.812,27375.947],&apos;14&apos;:[2797.2851,1481.0219],&apos;21&apos;:[39.726,10.028],&apos;22&apos;:[17.608,6.767],&apos;25&apos;:[62.351,16.542],&apos;26&apos;:[24.642,13.020],&apos;27&apos;:[233.693,105.138],&apos;35&apos;:[183.341,47.804],&apos;43&apos;:[5.184,1.683],&apos;44&apos;:[29640.293,73067.936],&apos;64&apos;:[74.195,19.148],&apos;51&apos;:[4.211,0.713],&apos;63&apos;:[109.164,29.529],&apos;48&apos;:[29926.954,19568.718]&#125;</span><br><span class="line">nafixed = []</span><br><span class="line">times = 1</span><br><span class="line">for line in sys.stdin:    </span><br><span class="line">    abc = line.split(&apos;&quot;&apos;)</span><br><span class="line">    items = commakiller(abc).split(&quot;,&quot;)</span><br><span class="line">    if(times == 1):</span><br><span class="line">        times += 1</span><br><span class="line">        names = items  # 列名，后续遍历使用</span><br><span class="line">        continue</span><br><span class="line">    if(times &gt;= 2):</span><br><span class="line">        times += 1</span><br><span class="line">        p = len(num_list.keys()) # 变量长度</span><br><span class="line">        ## 1. na fix</span><br><span class="line">        for key, value in enumerate(items):</span><br><span class="line">            if str(key) in num_list.keys() :</span><br><span class="line">                if((value == &apos;&apos;) | (value == &quot;--&quot;)):</span><br><span class="line">                    # 每行统计缺失值</span><br><span class="line">                    mu = num_list[str(key)][0] #期望</span><br><span class="line">                    sigma = num_list[str(key)][1]   #标准差</span><br><span class="line">                    nafixed.append(np.random.normal(mu, sigma, 1))</span><br><span class="line">                else: </span><br><span class="line">                    nafixed.append(value)</span><br><span class="line">            else:</span><br><span class="line">                continue</span><br><span class="line">        # 对变量取值处理</span><br><span class="line">        if p &lt;= 1: continue</span><br><span class="line">        if p &gt; 1 :</span><br><span class="line">            # 全部数值变量转换为浮点型数据</span><br><span class="line">            flag = 0 # 每行从0开始算</span><br><span class="line">            for value in nafixed:</span><br><span class="line">                try:</span><br><span class="line">                    nafixed[flag] = float(value)</span><br><span class="line">                    flag += 1</span><br><span class="line">                except(ValueError):</span><br><span class="line">                    try:</span><br><span class="line">                        ## 1.数值型变量带单位的，如下处理</span><br><span class="line">                        if ((&quot;in&quot; in value[-5:])&amp;(re.findall(&apos;[a-z]in&apos;,value)==[])):</span><br><span class="line">                            nafixed[flag] = float(re.sub(&apos;in&apos;,&apos;&apos;,value,1));flag += 1</span><br><span class="line">                        elif ((&quot;seats&quot; in value[-8:])&amp;(re.findall(&apos;[a-z]seats&apos;,value)==[])):</span><br><span class="line">                            nafixed[flag] = float(re.sub(&apos;seats&apos;,&apos;&apos;,value,1));flag += 1</span><br><span class="line">                        elif ((&apos;gal&apos; in value[-6:])&amp;(re.findall(&apos;[a-z]gal&apos;,value)==[])):</span><br><span class="line">                            nafixed[flag] = float(re.sub(&apos;gal&apos;,&apos;&apos;,value,1));flag += 1</span><br><span class="line">                        else:</span><br><span class="line">                            nafixed[flag] = np.random.normal(list(num_list.values())[flag][0],list(num_list.values())[flag][1],1) </span><br><span class="line">                            flag += 1</span><br><span class="line">                    except(ValueError):</span><br><span class="line">                        nafixed[flag] = np.random.normal(list(num_list.values())[flag][0],list(num_list.values())[flag][1],1) # 未经或无法转换的值当na，插补处理</span><br><span class="line">                        flag += 1</span><br><span class="line">                        continue</span><br><span class="line">            ## 3. computing XTX &amp; XTY            </span><br><span class="line">            xty = []</span><br><span class="line">            for i in range(p-1):</span><br><span class="line">                xty.append(nafixed[i] * nafixed[p-1]) # 默认第p个是因变量price (事先设定)</span><br><span class="line">            print(&quot;*&quot;,&quot;,&quot;.join(str(i) for i in xty)) </span><br><span class="line">            xtx = np.outer(nafixed[0:(p-1)],nafixed[0:(p-1)])  # 外积</span><br><span class="line">            print(&quot;,&quot;.join(&quot;,&quot;.join(str(k) for k in qq) for qq in xtx.tolist()))</span><br></pre></td></tr></table></figure>
+<p>mapper算出各行的xtx与xty，标准输出时以开头有无“*”来判定。</p>
+<p>下面看看reducer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#! usr/bin/env python3</span><br><span class="line">import sys</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">xtx = [];xty = [];temp = []</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">    data = line.split(&apos;,&apos;)</span><br><span class="line">    #print(data)</span><br><span class="line">    p = len(data)</span><br><span class="line">    data[p-1] = data[p-1][:-1]</span><br><span class="line">    if line[0] == &quot;*&quot;:  # 说明是标记的xty</span><br><span class="line">        data[0] = data[0][2:]</span><br><span class="line">        p1 = len(data)</span><br><span class="line">        data = list(map(float, data))</span><br><span class="line">        if len(xty) == 0:</span><br><span class="line">            xty = data</span><br><span class="line">            continue</span><br><span class="line">        else:</span><br><span class="line">            xty = xty + np.array(data)</span><br><span class="line">            # 在新的xtx出现之前</span><br><span class="line">            if len(xtx) == 0:</span><br><span class="line">                xtx = temp</span><br><span class="line">            else:</span><br><span class="line">                xtx = np.array(xtx) + np.array(temp) # bug</span><br><span class="line">                len2 = len(temp)</span><br><span class="line">            temp = []  # 循环结束初始化</span><br><span class="line">    else:   # 其他都是xtx</span><br><span class="line">        data = list(map(float, data))</span><br><span class="line">        if len(temp) == 0:</span><br><span class="line">            temp = data</span><br><span class="line">        else:</span><br><span class="line">            temp = temp + data # 连接</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">xtx = np.asarray(xtx).reshape(int(p1),int(len2/p1))</span><br><span class="line">print(xtx,&apos;\n&apos;)</span><br><span class="line">print(xty,&apos;\n&apos;)</span><br><span class="line">try:</span><br><span class="line">    print(np.dot(np.linalg.inv(xtx),np.array(xty)))</span><br><span class="line">except(LinAlgError):</span><br><span class="line">    continue</span><br></pre></td></tr></table></figure>
+<p>由于某些原因，分布式没跑成（大家都去运行，系统拥堵了），只用了五万数据单机测试了一下。最终结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[devel@emr-header-1 1026]$ cat result1.txt</span><br><span class="line">[-1.37866211e+01 -3.97949219e+00  4.95000000e+01 -1.43750000e+01</span><br><span class="line"> -1.50000000e+01 -1.48950195e+00 -8.51562500e-01 -3.92000000e+02</span><br><span class="line"> -6.60400391e-01  5.33750000e+01  1.35742188e-01  7.20000000e+03</span><br><span class="line"> -9.96875000e+00 -4.97070312e-01  9.94726562e+00 -8.00781250e-02]</span><br></pre></td></tr></table></figure>
+<p>最后附上main文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">PWD=$(cd $(dirname $0); pwd)</span><br><span class="line">cd $PWD 1&gt; /dev/null 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">hadoop fs -put used_cars_5w.csv /user/devel/2020210995wangyuanhe/reg</span><br><span class="line"></span><br><span class="line">TASKNAME=lm-usedcars-hehe</span><br><span class="line">HADOOP_INPUT_DIR=/user/devel/2020210995wangyuanhe/reg/used_cars_5w.csv</span><br><span class="line">HADOOP_OUTPUT_DIR=/user/devel/2020210995wangyuanhe/output/1026output</span><br><span class="line"></span><br><span class="line">echo $HADOOP_HOME</span><br><span class="line">echo $HADOOP_INPUT_DIR</span><br><span class="line">echo $HADOOP_OUTPUT_DIR</span><br><span class="line"></span><br><span class="line">hadoop fs -rm -r $HADOOP_OUTPUT_DIR</span><br><span class="line"></span><br><span class="line">hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \</span><br><span class="line">-D mapred.job.name=$TASKNAME \</span><br><span class="line">-D mapred.job.priority=NORMAL \</span><br><span class="line">-D mapred.reduce.tasks=1 \</span><br><span class="line">-file &quot;$PWD/mapper.py&quot; &quot;$PWD/reducer.py&quot; \</span><br><span class="line">-input $&#123;HADOOP_INPUT_DIR&#125; \</span><br><span class="line">-output $&#123;HADOOP_OUTPUT_DIR&#125; \</span><br><span class="line">-mapper &quot;$PWD/mapper.py&quot; \</span><br><span class="line">-reducer &quot;$PWD/reducer.py&quot; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ $? -ne 0 ]; then</span><br><span class="line">    echo &apos;error&apos;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line">hadoop fs -touchz $&#123;HADOOP_OUTPUT_DIR&#125;/done</span><br><span class="line"></span><br><span class="line">hadoop fs -ls $HADOOP_OUTPUT_DIR | cat</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+<p>至此，分布式的运用基本结束了。</p>
+<h3 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h3><p>先放一个系统卡住的样子</p>
+<img src="/2020/10/21/1015hadoop/10/21/1015hadoop/tu1.png" title="tu1">
+<p>同学的代码写的很糟，放上去跑不动，系统没资源……理由有很多，总之就是卡了。</p>
+<p>上面代码漏说了一个技巧：</p>
+<blockquote>
+<p>Tail -n 99 used_cars_data.csv<br>就可以只取一部分行</p>
+</blockquote>
+<p>我们可以把大文件一条一条读，与stdin一样，这样就能对数据按行操作。</p>
+<p>Slice 指每次读入多大的数据，如1024k，2000行。你想使用集成化工具时，可以这样做，当while循环跑到最后一行时停止。</p>
+<p>但这样太慢了。因为每次都在找，不能存入内存</p>
+<p>不过，SAS软件允许在很有限的内存中处理大量数据，每次只操作一行（有钱任性）</p>
+<p>分布式系统上，最好是stdin的形式，标准输入输出。</p>
+<p>处理中新的问题：<br>我现在有个很长的数据，其中有一列我知道是哑变量。</p>
+<p>需要统计：有多少个哑变量，有多少种type，占比如何？如何自动识别呢（频数统计）</p>
+<p>设置一个“其他”类，如果我要保证设定的“其他”类的占比大于20%，</p>
+<h4 id="大家的问题："><a href="#大家的问题：" class="headerlink" title="大家的问题："></a>大家的问题：</h4><p><strong>1.面向python的编程，而非面向MapReduce的编程</strong></p>
+<p>hadoop可以做到streaming，成为数据流。所有操作都应该在第一个循环下操作！这样才能完成对所有数据的处理，如果不能再这个缩进下操作，则代码不能面对分布式。</p>
+<p><strong>2.介绍了python中的log模块，记录了一些信息。不要随便把过程打印出来。</strong></p>
+<p>老师的程序：在大数据集上找到全部哑变量，并且把哑变量的top取出来</p>
+<p><a href="https://github.com/feng-li/dlsa/blob/master/dlsa/dummies.py" target="_blank" rel="noopener">可以用这个</a></p>
+<h4 id="MapReduce如何在分布式系统上呈现的"><a href="#MapReduce如何在分布式系统上呈现的" class="headerlink" title="MapReduce如何在分布式系统上呈现的"></a>MapReduce如何在分布式系统上呈现的</h4><p>最常听的：键值对。以标准输入输出来理解。key-value，将任何的行拆分成这两部分。必须尊重这两部分的对应关系。一般情况下，键值的对应有一个标准形式。</p>
+<p><strong>Map(key,value) ——&gt; list(key2,value2)</strong></p>
+<p>拿到了学号的姓名，现在要数一下名字有几画。拿到的是（学号-姓名），输出是（学号-笔画）。</p>
+<p>如何体现键值对的影响呢？比如有个数据，记录了某个地区的温度，以及记录温度的设备。位置信息就作为了键，对应的温度就是值。（csv数据是碰巧有换行符作为间隔值）</p>
+<p>如果我们把关心的数据拿出来（举个栗子：）</p>
+<blockquote>
+<p>1950，0<br>1950，22<br>1950，-11  </p>
+</blockquote>
+<p>这不是键值，这是一行中两个值，并非是键与值。但经过计算之后，就能得到新的键值对！</p>
+<p>map过的key可能变了，不再是原来的key。csv其实是打印换行符对应的一行数据，平时的cat也是一行一换。如果数据是不换行的键值对，那么就需要自己识别key，写自己的map函数。</p>
+<p>如果数据很大，那我们不能放进内存。  </p>
+<p>比如放入：swap交换分区，缓存，页面文件……都在硬盘上。map出来的结果，需要做一定的排序（主要是打乱），打乱之后，数据均匀，负载平衡。</p>
+<p>最后，代码的路径应该是：</p>
+<p><strong>Input —-&gt; Map —-&gt; shuffle —-&gt; reduce &gt; output</strong>  </p>
+<p>操作都以行为单位，都是以标准的键值对形式实施！map与reduce之间可以（且必要）加入排序，这个过程需要硬盘，或者需要很大内存的机器，读写频繁。</p>
+<p>MapReduce可以拆分开来，只有map，没有reduce。</p>
+<p>数据清洗时，这个很重要。只需要拆分，不需要合并。化整为零，所有资源就能一起打工（bushi）！</p>
+<p>也可以很多mapper很多reduce，拆分成很多份，但每一份都一定有键值对应关系。也可以很多mapper，但只使用<strong>一个</strong>reduce，此时reduce任务不重，可以在这里合并。</p>
+<p>（未完待续）</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/10/21/1015hadoop/">
+                    https://konelane.github.io/2020/10/21/1015hadoop/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/11/02/1102分布式计算/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          分布式1102-Hi,Hive!Hi,Spark!
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/10/13/1010CV/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据之学|交叉验证相关理论介绍</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

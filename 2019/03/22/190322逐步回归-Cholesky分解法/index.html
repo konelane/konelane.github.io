@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>数据挖掘|基于乔利斯基分解运算的逐步回归优化 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文介绍优化的逐步回归方法：基于Cholesky（乔利斯基）分解实用算法和一定矩阵计算简化方法的逐步回归。原文来自马景义老师的数据挖掘教学。 前排警告：本文变量众多，请耐心按顺序阅读研究。">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘|基于乔利斯基分解运算的逐步回归优化">
+<meta property="og:url" content="https://konelane.github.io/2019/03/22/190322逐步回归-Cholesky分解法/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="本文介绍优化的逐步回归方法：基于Cholesky（乔利斯基）分解实用算法和一定矩阵计算简化方法的逐步回归。原文来自马景义老师的数据挖掘教学。 前排警告：本文变量众多，请耐心按顺序阅读研究。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-22T05:43:41.287Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据挖掘|基于乔利斯基分解运算的逐步回归优化">
+<meta name="twitter:description" content="本文介绍优化的逐步回归方法：基于Cholesky（乔利斯基）分解实用算法和一定矩阵计算简化方法的逐步回归。原文来自马景义老师的数据挖掘教学。 前排警告：本文变量众多，请耐心按顺序阅读研究。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-190322逐步回归-Cholesky分解法" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2019/03/22/190322逐步回归-Cholesky分解法/" class="article-date">
+  	<time datetime="2019-03-21T16:00:00.000Z" itemprop="datePublished">2019-03-22</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      数据挖掘|基于乔利斯基分解运算的逐步回归优化
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#理论部分：Cholesky分解法"><span class="toc-number">1.</span> <span class="toc-text">理论部分：Cholesky分解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cholesky分解-实用算法part"><span class="toc-number">1.1.</span> <span class="toc-text">Cholesky分解 实用算法part</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前-回代法（Forward-Backward-Substitution）"><span class="toc-number">1.2.</span> <span class="toc-text">前/回代法（Forward/Backward Substitution）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现代码"><span class="toc-number">2.</span> <span class="toc-text">实现代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cholesky分解"><span class="toc-number">2.1.</span> <span class="toc-text">Cholesky分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#mchol函数"><span class="toc-number">2.1.1.</span> <span class="toc-text">mchol函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前-回代法求解"><span class="toc-number">2.2.</span> <span class="toc-text">前/回代法求解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#前代法-mforwardsolve函数"><span class="toc-number">2.2.1.</span> <span class="toc-text">前代法 - mforwardsolve函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#回代法-mbacksolve函数（与前代法结果相同，形式不同）"><span class="toc-number">2.2.2.</span> <span class="toc-text">回代法 - mbacksolve函数（与前代法结果相同，形式不同）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逐步回归"><span class="toc-number">3.</span> <span class="toc-text">逐步回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#减少一个变量-Lk-的计算"><span class="toc-number">3.1.</span> <span class="toc-text">减少一个变量: $Lk$ 的计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Givens变换-gives函数（先决知识）"><span class="toc-number">3.1.1.</span> <span class="toc-text">Givens变换 - gives函数（先决知识）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mgives函数"><span class="toc-number">3.1.2.</span> <span class="toc-text">mgives函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#增加一个变量-L-k-的计算"><span class="toc-number">3.2.</span> <span class="toc-text">增加一个变量:$L_k$的计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#forupdate函数"><span class="toc-number">3.2.1.</span> <span class="toc-text">forupdate函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#逐步回归的实现-实际操作"><span class="toc-number">3.3.</span> <span class="toc-text">逐步回归的实现(实际操作)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#最终函数"><span class="toc-number">3.3.1.</span> <span class="toc-text">最终函数</span></a></li></ol></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>本文介绍优化的逐步回归方法：基于Cholesky（乔利斯基）分解实用算法和一定矩阵计算简化方法的逐步回归。原文来自马景义老师的<a href="https://github.com/CUFESAM/Algorithm/blob/master/steplm.ipynb" target="_blank" rel="noopener">数据挖掘教学</a>。</p>
+<p>前排警告：本文变量众多，请耐心按顺序阅读研究。</p>
+<a id="more"></a>
+<h2 id="理论部分：Cholesky分解法"><a href="#理论部分：Cholesky分解法" class="headerlink" title="理论部分：Cholesky分解法"></a>理论部分：Cholesky分解法</h2><p><strong>Cholesky(乔利斯基)分解法</strong>,又称为<strong>平方根法</strong>，是求解对称正定线性方程组最常用的方法之一。Cholesky分解定理如下：</p>
+<p>若$A \in R^ {n \times n}$对称正定，则存在一个对角元均为正数的下三角阵$L \in R^ {n \times n}$，使得<br>$\begin{equation}A=LL^T. \end{equation}$</p>
+<p>因此，我们可按如下步骤求解方程组$Ax=b​$：<br>(1)计算$A​$的Cholesky分解：$A=LL^T​$;<br>(2)求解$Ly=b​$得$y​$;<br>(3)求解$L^Tx=y​$得$x​$.</p>
+<h3 id="Cholesky分解-实用算法part"><a href="#Cholesky分解-实用算法part" class="headerlink" title="Cholesky分解 实用算法part"></a>Cholesky分解 实用算法part</h3><p>$\begin{equation}A=LL^T.\end{equation}$<br>$A$中的元素记为$a_{ij}$<br>通常简单而实用的Cholesky分解方法是通过直接比较$A=LL^T$两边的对应元素来计算$L$。设</p>
+<script type="math/tex; mode=display">L= \left[\begin{matrix}l_{11} \\ l_{21}& l_{22}\\ \vdots & \vdots & \ddots\\l_{n1}& l_{n2} & \cdots & l_{nn}  \end{matrix}\right].</script><p>则$LL^T$的元素为</p>
+<script type="math/tex; mode=display">LL^T= \left[\begin{matrix}l_{11} \\ l_{21}& l_{22}\\ \vdots&\vdots&\ddots\\l_{n1}& l_{n2} & \cdots & l_{nn}  \end{matrix}\right]
+      \left[\begin{matrix}l_{11}&l_{21}& \cdots&l_{n1} \\ & l_{22} & \cdots & l_{n2}\\ & & \ddots&\vdots\\&  & & l_{nn}  \end{matrix}\right] =\left[\begin{matrix}a_{11}& a_{12}&\cdots &a_{1n} \\ a_{21}& a_{22} & \cdots& a_{2n}\\ \vdots & \vdots & \ddots\\a_{n1}& a_{n2} & \cdots & a_{nn}  \end{matrix}\right].</script><p>比较两边元素，有关系式：</p>
+<script type="math/tex; mode=display">a_{ij}=\sum_{p=1}^j l_{ip}l_{jp}， \ 1 \leq j \leq i \leq n.</script><p>可直接计算$L$的<strong>第一列</strong>元素：</p>
+<script type="math/tex; mode=display">l_{11}=\sqrt{a_{11}},</script><script type="math/tex; mode=display">l_{21}=a_{21}/l_{21},</script><p>……</p>
+<script type="math/tex; mode=display">l_{i1}=a_{i1}/l_{11}，i=2,…,n.</script><p>进一步地，假定已算出$L$的前$k-1$列元素。由</p>
+<script type="math/tex; mode=display">a_{kk}=\sum_{p=1}^k l_{kp}^2,</script><p>则可得</p>
+<script type="math/tex; mode=display">l_{kk}=(a_{kk}-\sum_{p=1}^{k-1} l_{kp}^2)^\frac{1}{2}.</script><p>再由</p>
+<script type="math/tex; mode=display">a_{ik}=\sum_{p=1}^{k-1} l_{ip}l_{kp} + l_{ik}l_{kk}, \ i = k+1,…,n,</script><p>得</p>
+<script type="math/tex; mode=display">l_{ik}=(a_{ik}-\sum_{p=1}^{k-1} l_{ip}l_{kp})/l_{kk}, \ i=k+1,…,n.</script><p>由此便可求出矩阵$L$。</p>
+<p>以上介绍可能过于数学化，下面以一个三阶方阵为例进行说明。设</p>
+<script type="math/tex; mode=display">L= \left[\begin{matrix}l_{11}&0&0 \\ l_{21}& l_{22}&0\\ l_{31}&l_{32}&l_{33}  \end{matrix}\right].</script><p>则$M_1=LL^T$的元素为</p>
+<script type="math/tex; mode=display">M_1= \left[\begin{matrix}l_{11}&0&0 \\ l_{21}& l_{22}&0\\ l_{31}&l_{32}&l_{33} \end{matrix}\right]
+    \left[\begin{matrix}l_{11}&l_{21}&l_{31} \\ 0& l_{22}&l_{32}\\ 0&0&l_{33}\end{matrix}\right]</script><script type="math/tex; mode=display">= \left[\begin{matrix}l_{11}^2&l_{11}l_{21}&l_{11}l_{31} \\ l_{11}l_{21}& l_{21}^2+l_{22}^2&l_{21}l_{31}+l_{22}l_{32}\\ l_{11}l_{31}&l_{31}l_{21}+l_{32}l_{22}&l_{31}^2+l_{32}^2+l_{33}^2 \end{matrix}\right]</script><p>可以以列为单位求解$L​$的元素。根据之前的叙述，$L​$的第一列元素可以很容易计算得到。另外，注意到$M_1​$删去第一行和第一列后余下的$2 \times 2​$矩阵（记为$M_{12}​$）的每一个分量的第一项为</p>
+<script type="math/tex; mode=display">\left[\begin{matrix} l_{21}^2 & l_{21}l_{31} \\ l_{31}l_{21} & l_{31}^2 \end{matrix}\right]
+=\left[\begin{matrix} l_{21}\\ l_{31}  \end{matrix}\right] 
+\left[\begin{matrix} l_{21} & l_{31} \end{matrix}\right] ​</script><p>因此，在计算出$L​$的第一列元素后，从$M_{12}​$中减去上述矩阵，得到$M_2​$：</p>
+<script type="math/tex; mode=display">M_{2}= \left[\begin{matrix} l_{22}^2 & l_{22}l_{32} \\ l_{32}l_{22} & l_{32}^2+l_{33}^2 \end{matrix}\right].​</script><p>注意到这与<strong>$M_1​$右下</strong>部分的形式完全一致，可以继续计算$L​$的第二列，进而求出$L​$.</p>
+<h3 id="前-回代法（Forward-Backward-Substitution）"><a href="#前-回代法（Forward-Backward-Substitution）" class="headerlink" title="前/回代法（Forward/Backward Substitution）"></a>前/回代法（Forward/Backward Substitution）</h3><p>对于方程组$Lx=b$和$Ux=b$（其中$L$和$U$分别是下三角矩阵和上三角矩阵），可以分别采用前代法和回代法求解。此处以下三角矩阵的前代法为例。</p>
+<p>设方程组$Lx=b$的$L$是已知的非奇异下三角阵（则其主对角线元素非零），则方程组的矩阵形式为：</p>
+<script type="math/tex; mode=display">\left[\begin{matrix}l_{11} \\ l_{21}& l_{22}\\ \vdots & \vdots & \ddots\\l_{n1}& l_{n2} & \cdots & l_{nn}  \end{matrix}\right]
+\left[\begin{matrix}x_1 \\ x_2 \\ \vdots\\ x_n  \end{matrix}\right]
+=\left[\begin{matrix}b_1 \\ b_2 \\ \vdots\\ b_n  \end{matrix}\right].</script><p>则由方程组的第一个方程可得：</p>
+<script type="math/tex; mode=display">x_1=b_1/l_{11};</script><p>进一步地，如果已求出$x_1,…,x_{i-1}$，就可以根据方程组的第$i$个方程</p>
+<script type="math/tex; mode=display">l_{i1}x_1+l_{i2}x_2+…+l_{i,i-1}x_{i-1}+l_{ii}x_{i}=b_{i}</script><p>求出</p>
+<script type="math/tex; mode=display">x_i=(b_i-\sum_{j=1}^{i-1} l_{ij}x_j)/l_{ii}</script><p>从而可以求出方程组的解。<br>求解上三角方程组的回代法的做法类似。</p>
+<p>氦核注：利用回代法求解矩阵的目的是优化r语言内部函数的矩阵计算，提升程序运行速度。<br>其中某些步骤使用反复回代，修改其中部分代码实现，逻辑比较复杂，需要数学验证。</p>
+<h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><h3 id="Cholesky分解"><a href="#Cholesky分解" class="headerlink" title="Cholesky分解"></a>Cholesky分解</h3><h4 id="mchol函数"><a href="#mchol函数" class="headerlink" title="mchol函数"></a>mchol函数</h4><p>mchol函数能够实现对对称正定矩阵的Cholesky分解。它以一个对称正定方阵为参数，返回其Cholesky因子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">mchol &lt;- function(x)</span><br><span class="line">&#123;</span><br><span class="line">  #目标是构造L矩阵，X = L*L&apos;</span><br><span class="line">  mn &lt;- dim(x)</span><br><span class="line">  m &lt;- mn[1] #行数</span><br><span class="line">  n &lt;- mn[2] #列数</span><br><span class="line">    </span><br><span class="line">  #检验传入参数是否符合要求</span><br><span class="line">  if(m != n) </span><br><span class="line">  &#123;</span><br><span class="line">    return (&quot;Wrong dimensions of matrix!&quot;) #检查是否为方阵</span><br><span class="line">  &#125;</span><br><span class="line">  if(sum(t(x) != x) &gt; 0) </span><br><span class="line">  &#123;</span><br><span class="line">    return (&quot;Input matrix is not symmetrical!&quot;) #检查是否对称</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  L &lt;- matrix(0, m, m) # 构造一个L矩阵，容纳L_ij</span><br><span class="line">  </span><br><span class="line">  for(i in 1:m)  #以列为单位求解L</span><br><span class="line">  &#123;</span><br><span class="line">    L[i,i] &lt;- sqrt(x[i,i])</span><br><span class="line">    if(i &lt; m)</span><br><span class="line">    &#123;</span><br><span class="line">      L[(i+1):m,i] &lt;- x[(i+1):m,i]/L[i,i]</span><br><span class="line"></span><br><span class="line">      #更新本次循环计算后的矩阵，便于下一次同样方法计算</span><br><span class="line">      TLV &lt;- L[(i+1):m,i] </span><br><span class="line">      #TLM &lt;- matrix(TLV, m-i, m-i)</span><br><span class="line">      #TLM &lt;- sweep(TLM, 2, TLV, &quot;*&quot;)</span><br><span class="line">      TLM &lt;- outer(TLV,TLV) #L的第一列正交</span><br><span class="line">      x[(i+1):m,(i+1):m] &lt;- x[(i+1):m,(i+1):m] - TLM #作差消去外层，得到新矩阵，再计算下一列</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  L  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>氦核注：这个函数妙处在于，虽然由两层循环构成，但是只需要变动<strong>一个参数i</strong>就可以完成整个下三角矩阵的计算。<br>下面是该函数的一个使用例子，直接出结果，没什么看的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">y=matrix(rnorm(20),5)</span><br><span class="line">x=t(y)%*%y  #构造对称正定矩阵</span><br><span class="line">mchol(x)</span><br><span class="line">t(chol(x)) #r语言自带函数，做出来是上三角阵，我们的函数为了方便思考，得到的结果正好对称</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>2.3637979    0.0000000    0.0000000    0.000000<br>1.2068850    1.7531628    0.0000000    0.000000<br>-0.3977667    -0.2948317    0.9732456    0.000000<br>0.8956632    0.6154149    0.6515290    1.175918</p>
+<p>2.3637979    0.0000000    0.0000000    0.000000<br>1.2068850    1.7531628    0.0000000    0.000000<br>-0.3977667    -0.2948317    0.9732456    0.000000<br>0.8956632    0.6154149    0.6515290    1.175918</p>
+</blockquote>
+<h3 id="前-回代法求解"><a href="#前-回代法求解" class="headerlink" title="前/回代法求解"></a>前/回代法求解</h3><h4 id="前代法-mforwardsolve函数"><a href="#前代法-mforwardsolve函数" class="headerlink" title="前代法 - mforwardsolve函数"></a>前代法 - mforwardsolve函数</h4><p>mforward()以方程组的系数矩阵L（下三角矩阵）和右端常数项b为参数，使用前代法求解方程组$Lx=b$，返回方程组的解。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mforwardsolve=function(L,b)</span><br><span class="line">&#123;</span><br><span class="line">  mn=dim(L); m=mn[1]; n=mn[2]</span><br><span class="line">  if(m!=n) return (&quot;Wrong dimensions of matrix L!&quot;)</span><br><span class="line">  if(m!=length(b)) return (&quot;Wrong dimensions of matrix L or vector b!&quot;) #检查输入参数是否符合要求</span><br><span class="line">  x=rep(0,m)</span><br><span class="line">  for(i in 1:m)</span><br><span class="line">  &#123;</span><br><span class="line">    x[i]=b[i]/L[i,i]</span><br><span class="line">    if(i&lt;m) b[(i+1):m]=b[(i+1):m]-x[i]*L[(i+1):m,i]   </span><br><span class="line">    #更新右端项，逐步减去已求出的未知量对右端项的贡献   </span><br><span class="line">  &#125;</span><br><span class="line">  x  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是使用mforward()的一个例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">y=matrix(rnorm(20),5)</span><br><span class="line">x=t(y)%*%y</span><br><span class="line">L=mchol(x); b=1:4</span><br><span class="line">mforwardsolve(L,b)</span><br><span class="line">forwardsolve(L,b) #R语言中自带函数的求解结果</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>0.510407168928626 0.954253346647569 1.24831106733918 3.88142767768075<br>0.510407168928626 0.954253346647569 1.24831106733918 3.88142767768075</p>
+</blockquote>
+<h4 id="回代法-mbacksolve函数（与前代法结果相同，形式不同）"><a href="#回代法-mbacksolve函数（与前代法结果相同，形式不同）" class="headerlink" title="回代法 - mbacksolve函数（与前代法结果相同，形式不同）"></a>回代法 - mbacksolve函数（与前代法结果相同，形式不同）</h4><p>mbacksolve()以方程组的系数矩阵L（<strong>上三角矩阵</strong>）和右端常数项b为参数，使用回代法求解方程组，返回方程组的解。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mbacksolve=function(L,b)&#123;</span><br><span class="line">  mn=dim(L); m=mn[1]; n=mn[2]</span><br><span class="line">  if(m!=n) return (&quot;Wrong dimensions of matrix L!&quot;)</span><br><span class="line">  if(m!=length(b)) return (&quot;Wrong dimensions of matrix L or vector b!&quot;) #检查输入参数是否符合要求</span><br><span class="line">  x=rep(0,m)</span><br><span class="line">  for(i in m:1)&#123; </span><br><span class="line">    #这里的循环条件是i从大到小，从下向上运算，因此得到的是上三角矩阵，原理相同</span><br><span class="line">    x[i]=b[i]/L[i,i]</span><br><span class="line">    if(i&gt;1) b[(i-1):1]=b[(i-1):1]-x[i]*L[(i-1):1,i]   #更新右端项   </span><br><span class="line">  &#125;</span><br><span class="line">  x  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是使用mbacksolved()的一个例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">y=matrix(rnorm(20),5)</span><br><span class="line">x=t(y)%*%y</span><br><span class="line">L=mchol(x); b=1:4</span><br><span class="line">mforwardsolve(L,b)</span><br><span class="line">forwardsolve(L,b)  #R语言自带函数的求解结果</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>0.471045013164262 1.75905390934574 1.69960995026223 16.4369180950282<br>0.471045013164262 1.75905390934574 1.69960995026223 16.4369180950282</p>
+</blockquote>
+<h2 id="逐步回归"><a href="#逐步回归" class="headerlink" title="逐步回归"></a>逐步回归</h2><h3 id="减少一个变量-Lk-的计算"><a href="#减少一个变量-Lk-的计算" class="headerlink" title="减少一个变量: $Lk$ 的计算"></a>减少一个变量: $Lk$ 的计算</h3><p>逐步回归时,在当前模型的基础之上减去一个变量,求解回归系数时,可以不需要重新计算新的$X_{k}^T X_{k}$的分解,而是可以借助上一步的分解$L$,使用<strong>Givens变换</strong>简化计算.具体的操作方法就是:如果现在要删掉第k个变量，那么对应$X_{k}^T X_{k}$的Cholesky因子$L_{k}$就是上一步的$L$删掉第k行,然后右乘Givens矩阵进行列变换,化为下三角矩阵$L_{k}$.下面举个例子.</p>
+<h4 id="Givens变换-gives函数（先决知识）"><a href="#Givens变换-gives函数（先决知识）" class="headerlink" title="Givens变换 - gives函数（先决知识）"></a>Givens变换 - gives函数（先决知识）</h4><p>变换的目标是<br>$ \left[\begin{matrix} a &amp; b \end{matrix}\right]<br>\left[\begin{matrix} g_{1} &amp; g_{2}\\ g_{3} &amp; g_{4} \end{matrix}\right]<br>=\left[\begin{matrix} c &amp; 0 \end{matrix}\right] ​$，<br>即通过变换，将最后一列变成0。<br>这个$ G ​$矩阵就是Givens变换要构造的矩阵。</p>
+<p>通常使用三角函数矩阵$\left[\begin{matrix} cos(\theta) &amp; -sin(\theta)\\ sin(\theta) &amp; cos(\theta) \end{matrix}\right] ​$。<br>这个矩阵与自己是正交的，不影响向量的长度$ \sqrt{a^2 + b^2}​$，<br>如$ \left[\begin{matrix} a &amp; b \end{matrix}\right] ​$中的a，b分别为3，4时，通过Givens变换的到的矩阵为$ \left[\begin{matrix} 5 &amp; 0 \end{matrix}\right] ​$，</p>
+<p>故可以构造Givens矩阵为$ \left[\begin{matrix} a/(\sqrt{a^2 + b^2}) &amp; -b/(\sqrt{a^2 + b^2})\\ b/(\sqrt{a^2 + b^2}) &amp; a/(\sqrt{a^2 + b^2})  \end{matrix}\right] $。</p>
+<p>首先给出构造Givens变换矩阵的函数.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">##构造Givens矩阵的函数</span><br><span class="line">gives &lt;- function(mx, lmx)&#123;</span><br><span class="line">    mc &lt;- mx[1]/lmx #lmx是mx的长度，mc是cos，ms是sin</span><br><span class="line">    ms &lt;- mx[2]/lmx</span><br><span class="line">    matrix(c(mc,ms,-ms,mc),ncol=2)</span><br><span class="line">&#125;</span><br><span class="line">x1 &lt;- c(3,4)</span><br><span class="line">lmx1 &lt;- sqrt(sum(x1*x1))</span><br><span class="line">lmx1</span><br><span class="line">x1%*%gives(x1,lmx1)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>5<br>5    -4.440892e-16</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">##原始的X矩阵和其Cholesky分解L</span><br><span class="line">x=matrix(rnorm(60),10)</span><br><span class="line">xtx=t(x)%*%x</span><br><span class="line">L=mchol(xtx)</span><br><span class="line">L</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>1.8958211    0.00000000    0.00000000    0.00000000    0.000000    0.000000<br>-1.2409637    3.60216335    0.00000000    0.00000000    0.000000    0.000000<br>-0.5486718    -0.44502336    2.87876658    0.00000000    0.000000    0.000000<br>-0.2459321    0.27392813    -0.52737167    2.81602139    0.000000    0.000000<br>-0.9724829    0.52179422    0.03686773    -0.05877291    1.500547    0.000000<br>0.3398855    -0.00289822    -0.23142886    0.80326680    -1.803605    1.795161</p>
+</blockquote>
+<p>下面的例子显示了$L$在<strong>删掉第二行</strong>后不再是一个下三角矩阵,而是在对角线上多出来一些非零元素.要得到$X_{k}^T X_{k}$的Cholesky因子$L_{k}$,就是要通过Givens变换将这些对角线上的非零元一步步化为0.下面是以第一步化简为例.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">##删掉了第二个变量后，对应的新的X的分解L只需在原来L的基础之上删去第二行，并使用Givens变换进行列变换化为下三角阵即可</span><br><span class="line">##下面是以第一步化简为例</span><br><span class="line">L2 =L[-2,] </span><br><span class="line">LL2 &lt;- L2</span><br><span class="line">L2 #注意！此处L2是一个5行6列的矩阵</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>1.8958211    0.00000000    0.00000000    0.00000000    0.000000    0.000000<br>-0.5486718    -0.44502336    <strong>2.87876658</strong>    0.00000000    0.000000    0.000000<br>-0.2459321    0.27392813    -0.52737167    2.81602139    0.000000    0.000000<br>-0.9724829    0.52179422    0.03686773    -0.05877291    1.500547    0.000000<br>0.3398855    -0.00289822    -0.23142886    0.80326680    -1.803605    1.795161</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mx &lt;- L2[2,2:3]  #需要将L2[2,3]这个对角线上的非零元化为0</span><br><span class="line">lmx &lt;- sqrt(sum(mx*mx))</span><br><span class="line">L2[2,2:3] &lt;- c(lmx,0) </span><br><span class="line">#givens变换将上面加粗的位置转化成了0</span><br><span class="line">L2[3:5,2:3] &lt;- L2[3:5,2:3] %*% gives(mx, lmx) #该向量下方的两列元素也被Given矩阵变换了，需要更新</span><br><span class="line"></span><br><span class="line">L2%*%t(L2)</span><br><span class="line">LL2%*%t(LL2)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>3.8059636    3.7800191    0.8021618    0.3828310    0.9020923<br>3.7800191    9.6332301    -2.7118229    0.5274355    -3.6169142<br>0.8021618    -2.7118229    7.5498592    -2.0486273    1.2750979<br>0.3828310    0.5274355    -2.0486273    3.3299015    0.6356107<br>0.9020923    -3.6169142    1.2750979    0.6356107    21.5283570</p>
+<p>3.8059636    3.7800191    0.8021618    0.3828310    0.9020923<br>3.7800191    9.6332301    -2.7118229    0.5274355    -3.6169142<br>0.8021618    -2.7118229    7.5498592    -2.0486273    1.2750979<br>0.3828310    0.5274355    -2.0486273    3.3299015    0.6356107<br>0.9020923    -3.6169142    1.2750979    0.6356107    21.5283570</p>
+</blockquote>
+<p>氦核注：虽然矩阵内部数字改变，但是<strong>正交结果</strong>不会变化，我们成功将该位置元素转化为0，而且没有损失信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">L[2:2,]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-0.00705475494350042 2.05665301740704 0 0 0 0</p>
+</blockquote>
+<p>整个化为下三角的过程可以用一个while控制.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">p &lt;- dim(x)[2] #x的列数</span><br><span class="line">k &lt;- 2  #被删掉的变量的下标</span><br><span class="line">Lk &lt;- L[-k,]</span><br><span class="line">Lk #删掉后第k个变量后的系数矩阵L</span><br><span class="line">mk &lt;- k</span><br><span class="line"></span><br><span class="line">##从第k列起，逐列将对角线以上的那个非零元约化为0</span><br><span class="line">#关键句if：使进行givens变换后那两项下面的部分，进行循环更新</span><br><span class="line">while( mk &lt; p )&#123;</span><br><span class="line">    mx &lt;- Lk[mk,mk:(mk+1)] #进行givens变换前的两项</span><br><span class="line">    lmx &lt;- sqrt(sum(mx*mx))</span><br><span class="line">    Lk[mk,mk:(mk+1)] &lt;- c(lmx,0) #进行givens变换后的两项</span><br><span class="line">    if( mk &lt; p-1 )Lk[(mk+1):(p-1), mk:(mk+1)] &lt;- Lk[(mk+1):(p-1), mk:(mk+1)] %*% gives(mx, lmx) </span><br><span class="line">    #注：p-1是为了指示系数发生变化的位置有没有到达最后一列（因为涉及到mk+1列上元素）</span><br><span class="line">    mk &lt;- mk + 1</span><br><span class="line">&#125;</span><br><span class="line">Lk</span><br><span class="line">Lk &lt;- Lk[,-p]</span><br><span class="line">Lk</span><br><span class="line"></span><br><span class="line">#与重新进行Cholesky分解的结果进行对比</span><br><span class="line">xtxk &lt;- xtx[-k, -k]</span><br><span class="line">mchol(xtxk)</span><br></pre></td></tr></table></figure>
+<h4 id="mgives函数"><a href="#mgives函数" class="headerlink" title="mgives函数"></a>mgives函数</h4><p>上面以一个例子展示了原理.下面的mgives函数就是实现这个功能的函数.这个函数在原有的$X_{k}^T X_{k}$的Cholesky分解的$L$基础之上,利用Givens变换计算删去第k个变量后新的$X_{k}^T X_{k}$的Cholesky分解$L_k$.它以上一步的$L_k$和这一次被删掉的变量的下标k为参数,返回$L_k$.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mgives &lt;- function(L,k)&#123;</span><br><span class="line">    p &lt;- dim(L)[1]</span><br><span class="line">    if( k&gt;p ) return (&quot;Wrong input of k!&quot;)</span><br><span class="line">    Lk &lt;- L[-k,]</span><br><span class="line">    mk &lt;- k </span><br><span class="line">    while( mk &lt; p )&#123;</span><br><span class="line">        mx &lt;- Lk[mk,mk:(mk+1)]</span><br><span class="line">        lmx &lt;- sqrt(sum(mx*mx))</span><br><span class="line">        Lk[mk,mk:(mk+1)] &lt;- c(lmx,0)</span><br><span class="line">        if( mk &lt; p-1 )&#123;</span><br><span class="line">            Lk[(mk+1):(p-1), mk:(mk+1)] &lt;- Lk[(mk+1):(p-1), mk:(mk+1)] %*% gives(mx, lmx)</span><br><span class="line">        &#125;</span><br><span class="line">        mk &lt;- mk + 1</span><br><span class="line">    &#125;</span><br><span class="line">    return(Lk[,-p])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">##查看每次删去一个变量后的Lk,并与重新进行Cholesky分解的结果比较</span><br><span class="line">for (k in 1:dim(L)[1])&#123;</span><br><span class="line">    print(&quot;k=&quot;)</span><br><span class="line">    print(k)</span><br><span class="line">    print(mgives(L,k))</span><br><span class="line">    xtxk &lt;- xtx[-k, -k]</span><br><span class="line">    print(mchol(xtxk)) #可以用paste写的更漂亮些。。。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>[1] “k=”<br>[1] 1<br>            [,1]       [,2]      [,3]      [,4]    [,5]<br>[1,]  2.05666512  0.0000000 0.0000000 0.0000000 0.00000<br>[2,]  0.15840137  3.4457975 0.0000000 0.0000000 0.00000<br>[3,] -0.74932067 -0.6720807 3.1096792 0.0000000 0.00000<br>[4,] -0.02895095  1.4368864 0.3519308 2.7493046 0.00000<br>[5,]  0.52731588  1.3429521 1.0401498 0.6622768 2.21406<br>            [,1]       [,2]      [,3]      [,4]    [,5]<br>[1,]  2.05666512  0.0000000 0.0000000 0.0000000 0.00000<br>[2,]  0.15840137  3.4457975 0.0000000 0.0000000 0.00000<br>[3,] -0.74932067 -0.6720807 3.1096792 0.0000000 0.00000<br>[4,] -0.02895095  1.4368864 0.3519308 2.7493046 0.00000<br>[5,]  0.52731588  1.3429521 1.0401498 0.6622768 2.21406<br>[1] “k=”<br>[1] 2<br>           [,1]       [,2]      [,3]      [,4]     [,5]<br>[1,]  2.4663786  0.0000000 0.0000000 0.0000000 0.000000<br>[2,]  1.0463703  3.2869014 0.0000000 0.0000000 0.000000<br>[3,] -1.4298928 -0.2854816 2.9252667 0.0000000 0.000000<br>[4,]  0.7702886  1.2597355 0.5508706 2.6952319 0.000000<br>[5,]  0.2755799  1.3455560 0.9281248 0.6243126 2.316575<br>           [,1]       [,2]      [,3]      [,4]     [,5]<br>[1,]  2.4663786  0.0000000 0.0000000 0.0000000 0.000000<br>[2,]  1.0463703  3.2869014 0.0000000 0.0000000 0.000000<br>[3,] -1.4298928 -0.2854816 2.9252667 0.0000000 0.000000<br>[4,]  0.7702886  1.2597355 0.5508706 2.6952319 0.000000<br>[5,]  0.2755799  1.3455560 0.9281248 0.6243126 2.316575<br>[1] “k=”<br>[1] 3<br>             [,1]        [,2]      [,3]     [,4]     [,5]<br>[1,]  2.466378596  0.00000000 0.0000000 0.000000 0.000000<br>[2,] -0.007054755  2.05665302 0.0000000 0.000000 0.000000<br>[3,] -1.429892844 -0.75422991 2.8407433 0.000000 0.000000<br>[4,]  0.770288640 -0.02630887 0.4336785 2.994311 0.000000<br>[5,]  0.275579906  0.52826428 0.9607745 1.164281 2.422916<br>             [,1]        [,2]      [,3]     [,4]     [,5]<br>[1,]  2.466378596  0.00000000 0.0000000 0.000000 0.000000<br>[2,] -0.007054755  2.05665302 0.0000000 0.000000 0.000000<br>[3,] -1.429892844 -0.75422991 2.8407433 0.000000 0.000000<br>[4,]  0.770288640 -0.02630887 0.4336785 2.994311 0.000000<br>[5,]  0.275579906  0.52826428 0.9607745 1.164281 2.422916<br>[1] “k=”<br>[1] 4<br>             [,1]        [,2]     [,3]      [,4]     [,5]<br>[1,]  2.466378596  0.00000000 0.000000 0.0000000 0.000000<br>[2,] -0.007054755  2.05665302 0.000000 0.0000000 0.000000<br>[3,]  1.046370303  0.16199157 3.282907 0.0000000 0.000000<br>[4,]  0.770288640 -0.02630887 1.262566 2.7495274 0.000000<br>[5,]  0.275579906  0.52826428 1.321126 0.8128221 2.396478<br>             [,1]        [,2]     [,3]      [,4]     [,5]<br>[1,]  2.466378596  0.00000000 0.000000 0.0000000 0.000000<br>[2,] -0.007054755  2.05665302 0.000000 0.0000000 0.000000<br>[3,]  1.046370303  0.16199157 3.282907 0.0000000 0.000000<br>[4,]  0.770288640 -0.02630887 1.262566 2.7495274 0.000000<br>[5,]  0.275579906  0.52826428 1.321126 0.8128221 2.396478<br>[1] “k=”<br>[1] 5<br>             [,1]       [,2]       [,3]     [,4]     [,5]<br>[1,]  2.466378596  0.0000000  0.0000000 0.000000 0.000000<br>[2,] -0.007054755  2.0566530  0.0000000 0.000000 0.000000<br>[3,]  1.046370303  0.1619916  3.2829071 0.000000 0.000000<br>[4,] -1.429892844 -0.7542299 -0.2486123 2.829844 0.000000<br>[5,]  0.275579906  0.5282643  1.3211265 1.080541 2.288278<br>             [,1]       [,2]       [,3]     [,4]     [,5]<br>[1,]  2.466378596  0.0000000  0.0000000 0.000000 0.000000<br>[2,] -0.007054755  2.0566530  0.0000000 0.000000 0.000000<br>[3,]  1.046370303  0.1619916  3.2829071 0.000000 0.000000<br>[4,] -1.429892844 -0.7542299 -0.2486123 2.829844 0.000000<br>[5,]  0.275579906  0.5282643  1.3211265 1.080541 2.288278<br>[1] “k=”<br>[1] 6<br>             [,1]        [,2]       [,3]     [,4]     [,5]<br>[1,]  2.466378596  0.00000000  0.0000000 0.000000 0.000000<br>[2,] -0.007054755  2.05665302  0.0000000 0.000000 0.000000<br>[3,]  1.046370303  0.16199157  3.2829071 0.000000 0.000000<br>[4,] -1.429892844 -0.75422991 -0.2486123 2.829844 0.000000<br>[5,]  0.770288640 -0.02630887  1.2625664 0.546270 2.694715<br>             [,1]        [,2]       [,3]     [,4]     [,5]<br>[1,]  2.466378596  0.00000000  0.0000000 0.000000 0.000000<br>[2,] -0.007054755  2.05665302  0.0000000 0.000000 0.000000<br>[3,]  1.046370303  0.16199157  3.2829071 0.000000 0.000000<br>[4,] -1.429892844 -0.75422991 -0.2486123 2.829844 0.000000<br>[5,]  0.770288640 -0.02630887  1.2625664 0.546270 2.694715</p>
+</blockquote>
+<h3 id="增加一个变量-L-k-的计算"><a href="#增加一个变量-L-k-的计算" class="headerlink" title="增加一个变量:$L_k$的计算"></a>增加一个变量:$L_k$的计算</h3><h4 id="forupdate函数"><a href="#forupdate函数" class="headerlink" title="forupdate函数"></a>forupdate函数</h4><p>上面一部分讲了减少一个变量后求解$L_k$的<strong>简化计算</strong>方法。那在增加一个变量的时候，同样可以通过矩阵运算简化计算。当在$X$的末尾再加一列$x_k$时,新的$X_{k}^T X_{k}$的分解$L_k$是在原来$L$的基础之上在底下多加了一行,多加的元素的计算可以通过矩阵运算很快的得到.下面的这个forupdate函数就是完成在$L$的基础之上计算$L_k$的功能的.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">forupdate &lt;- function(L, xxk, xkxk)&#123;</span><br><span class="line">    lk &lt;- mforwardsolve(L, xxk) #xxk是新的变量在变量列表里的位置（序号）</span><br><span class="line">    lkk &lt;- sqrt(xkxk - sum(lk*lk)) #lkk是化简用的矩阵，运算中间步骤</span><br><span class="line">    return( as.matrix( rbind( cbind(L,0),c(lk,lkk) ) ) )</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">x &lt;- matrix(rnorm(60),10)</span><br><span class="line">xtx &lt;- t(x)%*%x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#在3,2,4个变量的基础之上，加入第5个变量</span><br><span class="line">A &lt;- c(3,2,4)  #注意：A里面带有变量的顺序，因为有些情形需要对变量的重要性等进行目标规划</span><br><span class="line">L &lt;- mchol(xtx[A,A])  #三个变量的xtx的分解</span><br><span class="line">k &lt;- 5 #加入第五个变量</span><br><span class="line">xxk &lt;- xtx[A,k,drop=T] </span><br><span class="line">xkxk &lt;- xtx[k,k] #计算扩充L时所需要的数</span><br><span class="line">forupdate (L, xxk, xkxk)</span><br><span class="line"></span><br><span class="line">A &lt;- c(A, k)</span><br><span class="line">mchol(xtx[A,A]) #和重新分解对比</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>2.18726152    0.0000000    0.000000    0.000000<br>-0.31876255    2.5768506    0.000000    0.000000<br>-0.09862756    -1.7100174    2.244832    0.000000<br>0.17257491    0.2771965    1.469177    2.626423</p>
+<blockquote>
+<p>2.18726152    0.0000000    0.000000    0.000000<br>-0.31876255    2.5768506    0.000000    0.000000<br>-0.09862756    -1.7100174    2.244832    0.000000<br>0.17257491    0.2771965    1.469177    2.626423</p>
+</blockquote>
+</blockquote>
+<h3 id="逐步回归的实现-实际操作"><a href="#逐步回归的实现-实际操作" class="headerlink" title="逐步回归的实现(实际操作)"></a>逐步回归的实现(实际操作)</h3><p>很长的铺垫过后，我们已经得到逐步回归增减变量时<strong>简化计算</strong>的工具,下面就可以开始实现逐步回归算法了.首先导入数据并查看使用R自带的函数的回归结果.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">library(ElemStatLearn)</span><br><span class="line">data(prostate)</span><br><span class="line">data &lt;- prostate[,-10]</span><br><span class="line">head(data)</span><br></pre></td></tr></table></figure>
+<p>&gt;<br>lcavol    lweight    age    lbph    svi    lcp    gleason    pgg45    lpsa<br>-0.5798185    2.769459    50    -1.386294    0    -1.386294    6    0    -0.4307829<br>-0.9942523    3.319626    58    -1.386294    0    -1.386294    6    0    -0.1625189<br>-0.5108256    2.691243    74    -1.386294    0    -1.386294    7    20    -0.1625189<br>-1.2039728    3.282789    58    -1.386294    0    -1.386294    6    0    -0.1625189<br>0.7514161    3.432373    62    -1.386294    0    -1.386294    6    0    0.3715636<br>-1.0498221    3.228826    50    -1.386294    0    -1.386294    6    0    0.7654678</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lm1= lm(lpsa~.,data)</span><br><span class="line">summary(lm1)</span><br><span class="line">extractAIC(lm1) #  nln(RSS/n)+ 2*9, not AIC</span><br><span class="line">step(lm1, direction=&quot;both&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">summary(lm1)</span><br><span class="line">extractAIC(lm1)</span><br><span class="line">AIC(lm1)</span><br></pre></td></tr></table></figure>
+<p>结果没贴，大家粘贴一运行便知。</p>
+<p>下面实现我们写的逐步回归。</p>
+<p>首先是把所有变量都加入模型进行回归,求解系数,并计算该模型的RSS和AIC。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">np &lt;- dim(data)</span><br><span class="line">n &lt;- np[1]</span><br><span class="line">p &lt;- np[2]-1</span><br><span class="line">xn &lt;- names(data)[1:p]</span><br><span class="line">x &lt;- as.matrix( cbind(1,data[,1:p]) ) #将1与矩阵并联起来，将生成一列1，这是代码高手的简化写法（划重点）</span><br><span class="line">y &lt;- data[,p+1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">xtx &lt;- t(x)%*%x #x平方阵</span><br><span class="line">xty &lt;- drop(t(x)%*%y) </span><br><span class="line">yty &lt;- sum(y*y) #y平方阵</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">L &lt;- mchol(xtx) #进行Cholesky分解，下三角矩阵L</span><br><span class="line">tb &lt;- mforwardsolve(L, xty) </span><br><span class="line">b &lt;- mbacksolve(t(L), tb)</span><br><span class="line">b</span><br><span class="line"></span><br><span class="line">RSS &lt;- yty - sum(tb*tb)  ###神奇操作，如何理解？</span><br><span class="line">AICF &lt;- n*log(RSS/n) + 2*(p+1)</span><br><span class="line">AICF</span><br><span class="line"></span><br><span class="line">#A1 &lt;- rep(TRUE, p)</span><br><span class="line">#A &lt;- c(TRUE, A1)</span><br><span class="line"></span><br><span class="line">A &lt;- 1:(p+1)</span><br><span class="line">LA &lt;- L</span><br><span class="line">MAIC &lt;- AICF</span><br><span class="line">mAIC &lt;- AICF</span><br><span class="line">flag &lt;- rep(FALSE,p)</span><br></pre></td></tr></table></figure>
+<p>对于下段代码中的</p>
+<p>RSS &lt;- yty - sum(tb*tb)</p>
+<p>有如下解释：</p>
+<p>mforwardsolve(…)的结果为$L^T \cdot \beta$，其中$L$是$X^T X$经过Cholesky分解后的下三角阵，$L L^T=X^T X$。<br>$ \begin{equation}<br>RSS=(Y-X\beta)^T(Y-X\beta)\\<br>=Y^T Y-\beta^T X^T Y-Y^T X\beta+\beta^T X^T X \beta<br>\end{equation} $<br>因为$\beta^T X^T Y$是一个数，相乘的项一样，因此所得结果也必然一样，所以$\beta^T X^T Y=Y^T X\beta$，所以<br>$ \begin{equation}<br>RSS=Y^T Y-\beta^T X^T Y\\<br>=Y^T Y-\beta^T X^T X \beta\\<br>=Y^T Y-\beta^T L L^T \beta\\<br>=Y^T Y-(L^T \beta)^T(L^T \beta)<br>\end{equation} $</p>
+<p>整个逐步回归的过程由一个repeat完成.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">repeat&#123;</span><br><span class="line">    </span><br><span class="line">    #print(flag)</span><br><span class="line">    if( length(A) &lt; p+1 )&#123;</span><br><span class="line">        #B &lt;- setdiff( 1:(p+1), A)</span><br><span class="line">        B &lt;- (2:(p+1))[flag]</span><br><span class="line">        #flag[B-1] &lt;- TRUE</span><br><span class="line">        #print(flag)</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        B &lt;- NULL</span><br><span class="line">    &#125;</span><br><span class="line">    AB &lt;- c(A,B)</span><br><span class="line">    bm &lt;- matrix(0,p,p+1)</span><br><span class="line">    AICm &lt;- rep(0,p)</span><br><span class="line"></span><br><span class="line">    #A &lt;- c(TRUE, A1)</span><br><span class="line">    #a1 &lt;- (1:(p+1))[A]</span><br><span class="line">    #c1 &lt;- (1:(p+1))[!A]</span><br><span class="line">    #tp &lt;- length(a1)</span><br><span class="line">    ff &lt;- 2</span><br><span class="line">    #print(AB)</span><br><span class="line">    for(k in AB[2:(p+1)])&#123;</span><br><span class="line">        if( !flag[k-1])&#123;</span><br><span class="line">            </span><br><span class="line">            Lk &lt;- mgives(LA,ff)</span><br><span class="line">            tA &lt;- A[-ff]</span><br><span class="line">            xtyk &lt;- xty[ tA ]</span><br><span class="line">            #print(Lk)</span><br><span class="line">            #print(xtyk)</span><br><span class="line">            tbk &lt;- mforwardsolve(Lk, xtyk)</span><br><span class="line">            bk &lt;- mbacksolve(t(Lk), tbk)</span><br><span class="line">            #tA &lt;- c(1, tA)</span><br><span class="line">            #print(bk)</span><br><span class="line">            #print(tA)</span><br><span class="line">            bm[k-1,tA] &lt;- bk</span><br><span class="line">            #print(bk)</span><br><span class="line">            RSSk &lt;- yty - sum(tbk*tbk)  </span><br><span class="line">            AICk &lt;- n*log(RSSk/n) + 2*( length(A)-1)</span><br><span class="line">            AICm[k-1] &lt;- AICk</span><br><span class="line">            ff &lt;- ff+1</span><br><span class="line">            if( AICk &lt; mAIC )&#123;</span><br><span class="line">                mink &lt;- k</span><br><span class="line">                mtA &lt;- tA</span><br><span class="line">                mAIC &lt;- AICk</span><br><span class="line">                mLA &lt;- Lk</span><br><span class="line">                hb &lt;- bm[k-1,]</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            #print (k)</span><br><span class="line">            xxk &lt;- xtx[A,k,drop=T] </span><br><span class="line">            xkxk &lt;- xtx[k,k]</span><br><span class="line">            Lk &lt;- forupdate (LA, xxk, xkxk)</span><br><span class="line">            tA &lt;- c(A,k)</span><br><span class="line">            xtyk &lt;- xty[tA]</span><br><span class="line">            tbk &lt;- mforwardsolve(Lk, xtyk)</span><br><span class="line">            bk &lt;- mbacksolve(t(Lk), tbk)</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            bm[k-1,tA] &lt;- bk</span><br><span class="line">            RSSk &lt;- yty - sum(tbk*tbk)   ###神奇操作</span><br><span class="line">            AICk &lt;- n*log(RSSk/n) + 2*(length(A)+1)</span><br><span class="line">            AICm[k-1] &lt;- AICk</span><br><span class="line">            if( AICk &lt; mAIC )&#123;</span><br><span class="line">                mink &lt;- k</span><br><span class="line">                mtA &lt;- tA</span><br><span class="line">                mAIC &lt;- AICk</span><br><span class="line">                mLA &lt;- Lk</span><br><span class="line">                hb &lt;- bm[k-1,]</span><br><span class="line">            &#125;            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    #print(bm)</span><br><span class="line">    #print(AICm)</span><br><span class="line">    #print(flag)</span><br><span class="line">    </span><br><span class="line">    if(mAIC &gt;= MAIC) break</span><br><span class="line">    if (mAIC&lt;MAIC )&#123;</span><br><span class="line">        #print(flag)</span><br><span class="line">        flag[mink-1] = !flag[mink-1]</span><br><span class="line">        A &lt;- mtA</span><br><span class="line">        MAIC &lt;- mAIC</span><br><span class="line">        print(MAIC)</span><br><span class="line">        hhb &lt;- hb</span><br><span class="line">        LA &lt;- mLA</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">re &lt;- data.frame(matrix(hhb[c(TRUE,!flag)],nrow=1))</span><br><span class="line">names(re) &lt;- c(&quot;inter&quot;, xn[!flag])</span><br><span class="line">re</span><br><span class="line"></span><br><span class="line">#&#125;</span><br></pre></td></tr></table></figure>
+<p>将上述逐步回归的过程函数化,用一个steplm()来完成.它以样本数据(最后一列为因变量)为参数,返回最优的模型的结果.</p>
+<p>下面以上面加载的数据data为例,使用了这个函数.并且例子显示,不论变量顺序如何都不影响最终结果.</p>
+<h4 id="最终函数"><a href="#最终函数" class="headerlink" title="最终函数"></a>最终函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">steplm &lt;- function(data)&#123;</span><br><span class="line">    np &lt;- dim(data)</span><br><span class="line">    n &lt;- np[1]</span><br><span class="line">    p &lt;- np[2]-1</span><br><span class="line">    xn &lt;- c(&quot;inter&quot;, names(data)[1:p])</span><br><span class="line">    x &lt;- as.matrix( cbind(1,data[,1:p]) ) </span><br><span class="line">    y &lt;- data[,p+1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    xtx &lt;- t(x)%*%x #x的平方阵</span><br><span class="line">    xty &lt;- drop(t(x)%*%y)</span><br><span class="line">    yty &lt;- sum(y*y) #y的平方阵</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    L &lt;- mchol(xtx)</span><br><span class="line">    tb &lt;- mforwardsolve(L, xty)</span><br><span class="line">    b &lt;- mbacksolve(t(L), tb)</span><br><span class="line">    #b</span><br><span class="line"></span><br><span class="line">    RSS &lt;- yty - sum(tb*tb) </span><br><span class="line">    AICF &lt;- n*log(RSS/n) + 2*(p+1)</span><br><span class="line">    #AICF</span><br><span class="line"></span><br><span class="line">#A1 &lt;- rep(TRUE, p)</span><br><span class="line">#A &lt;- c(TRUE, A1)</span><br><span class="line"></span><br><span class="line">    A &lt;- 1:(p+1)</span><br><span class="line">    LA &lt;- L</span><br><span class="line">    MAIC &lt;- AICF</span><br><span class="line">    mAIC &lt;- AICF</span><br><span class="line">    MFLAG &lt;- c(TRUE, rep(FALSE, p))</span><br><span class="line">    flag &lt;- rep(TRUE,p+1)</span><br><span class="line">    hbb &lt;- b</span><br><span class="line">    repeat&#123;</span><br><span class="line">        if( length(A) &lt; p+1 )&#123;</span><br><span class="line">             B &lt;- (1:(p+1))[!flag]</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            B &lt;- NULL</span><br><span class="line">        &#125;</span><br><span class="line">        AB &lt;- c(A,B)</span><br><span class="line">        bm &lt;- matrix(0,p,p+1)</span><br><span class="line">        AICm &lt;- rep(0,p)</span><br><span class="line"></span><br><span class="line">        ff &lt;- 1</span><br><span class="line">        #print(AB)</span><br><span class="line">        for(k in AB)&#123;</span><br><span class="line">            if(MFLAG[k])&#123;</span><br><span class="line">                ff &lt;- ff+1</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                if(flag[k])&#123;</span><br><span class="line">                    Lk &lt;- mgives(LA,ff)</span><br><span class="line">                    tA &lt;- A[-ff]</span><br><span class="line">                    xtyk &lt;- xty[ tA ]</span><br><span class="line">                    ff &lt;- ff+1</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    xxk &lt;- xtx[A,k,drop=T] </span><br><span class="line">                    xkxk &lt;- xtx[k,k]</span><br><span class="line">                    Lk &lt;- forupdate (LA, xxk, xkxk)</span><br><span class="line">                    tA &lt;- c(A,k)</span><br><span class="line">                    xtyk &lt;- xty[tA]</span><br><span class="line">                &#125;</span><br><span class="line">                #print(A)</span><br><span class="line">                #print(B)</span><br><span class="line">                #print(k)</span><br><span class="line">                tbk &lt;- mforwardsolve(Lk, xtyk)</span><br><span class="line">                bk &lt;- mbacksolve(t(Lk), tbk)</span><br><span class="line">            #tA &lt;- c(1, tA)</span><br><span class="line">                #print(tbk)</span><br><span class="line">            #print(tA)</span><br><span class="line">                bm[k-1,tA] &lt;- bk</span><br><span class="line">            #print(bk)</span><br><span class="line">                RSSk &lt;- yty - sum(tbk*tbk)  </span><br><span class="line">                AICk &lt;- n*log(RSSk/n) + 2*length(tA)</span><br><span class="line">                AICm[k-1] &lt;- AICk</span><br><span class="line">       </span><br><span class="line">                if( AICk &lt; mAIC )&#123;</span><br><span class="line">                    mink &lt;- k</span><br><span class="line">                    mtA &lt;- tA</span><br><span class="line">                    mAIC &lt;- AICk</span><br><span class="line">                    mLA &lt;- Lk</span><br><span class="line">                    hb &lt;- bm[k-1,]</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(mAIC &gt;= MAIC) break</span><br><span class="line">        if ( mAIC&lt;MAIC )&#123;</span><br><span class="line">            flag[mink] = !flag[mink]</span><br><span class="line">            A &lt;- mtA</span><br><span class="line">            MAIC &lt;- mAIC</span><br><span class="line">            hhb &lt;- hb</span><br><span class="line">            LA &lt;- mLA</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    re &lt;- data.frame(matrix(hhb[c(flag)],nrow=1))</span><br><span class="line">    names(re) &lt;- xn[flag]</span><br><span class="line">    return(re)</span><br><span class="line">&#125;</span><br><span class="line">steplm(data)</span><br><span class="line">data &lt;- data[,c(sample(1:8,8),9)]</span><br><span class="line">steplm(data)</span><br></pre></td></tr></table></figure>
+<p>下面是R自带的逐步回归的函数.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">coef(step(lm1, direction=&quot;both&quot;))</span><br></pre></td></tr></table></figure>
+<p>注：理论部分参考：徐树方, 高立, 张平文. 数值线性代数.第2版[M]. 北京大学出版社, 2013.</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2019/03/22/190322逐步回归-Cholesky分解法/">
+                    https://konelane.github.io/2019/03/22/190322逐步回归-Cholesky分解法/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2019/03/26/190326数据挖掘最优子集回归&最小角回归/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          数据挖掘|最优子集回归&amp;最小角回归
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/06/190306偏差方差分解&模型评价/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据挖掘|偏差方差分解&amp;模型评价标准</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

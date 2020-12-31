@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>python联萌|今天康康numpy（怒骂朋友库 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最后编辑于：2020.02.05 12:30 Numpy库Numpy库是Python的一种开源的数值计算扩展。 Numpy可用来存储和处理大型矩阵，比Python自身的嵌套列表结构要高效很多。 据说Numpy将Pyhon变成了一种免费的更强大的Matlab系统。 本文介绍性文字转载自万旷网。氦核感觉notebook形式更适合学习，有机会把丘比特文件给大家附上。">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python联萌|今天康康numpy（怒骂朋友库">
+<meta property="og:url" content="https://konelane.github.io/2020/02/05/200205numpy/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="最后编辑于：2020.02.05 12:30 Numpy库Numpy库是Python的一种开源的数值计算扩展。 Numpy可用来存储和处理大型矩阵，比Python自身的嵌套列表结构要高效很多。 据说Numpy将Pyhon变成了一种免费的更强大的Matlab系统。 本文介绍性文字转载自万旷网。氦核感觉notebook形式更适合学习，有机会把丘比特文件给大家附上。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2020/02/05/200205numpy/02/05/200205numpy/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/02/05/200205numpy/02/05/200205numpy/tu2.png">
+<meta property="og:updated_time" content="2020-02-05T05:26:34.465Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python联萌|今天康康numpy（怒骂朋友库">
+<meta name="twitter:description" content="最后编辑于：2020.02.05 12:30 Numpy库Numpy库是Python的一种开源的数值计算扩展。 Numpy可用来存储和处理大型矩阵，比Python自身的嵌套列表结构要高效很多。 据说Numpy将Pyhon变成了一种免费的更强大的Matlab系统。 本文介绍性文字转载自万旷网。氦核感觉notebook形式更适合学习，有机会把丘比特文件给大家附上。">
+<meta name="twitter:image" content="https://konelane.github.io/2020/02/05/200205numpy/02/05/200205numpy/tu1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-200205numpy" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/02/05/200205numpy/" class="article-date">
+  	<time datetime="2020-02-04T16:00:00.000Z" itemprop="datePublished">2020-02-05</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      python联萌|今天康康numpy（怒骂朋友库
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Numpy库"><span class="toc-number">1.</span> <span class="toc-text">Numpy库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、数组array"><span class="toc-number">2.</span> <span class="toc-text">一、数组array</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-数组array生成"><span class="toc-number">2.1.</span> <span class="toc-text">1.数组array生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-数组array性质"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 数组array性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数组——一元函数"><span class="toc-number">2.2.1.</span> <span class="toc-text">数组——一元函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-数组array间运算"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 数组array间运算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数组——二元函数"><span class="toc-number">2.3.1.</span> <span class="toc-text">数组——二元函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-数组array集合运算"><span class="toc-number">2.4.</span> <span class="toc-text">1.4 数组array集合运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-数组array切片进阶"><span class="toc-number">2.5.</span> <span class="toc-text">1.5 数组array切片进阶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-数组排序"><span class="toc-number">2.6.</span> <span class="toc-text">1.6 数组排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-数组拼接"><span class="toc-number">2.7.</span> <span class="toc-text">1.7 数组拼接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-数组分解"><span class="toc-number">2.8.</span> <span class="toc-text">1.8 数组分解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、常用数组"><span class="toc-number">3.</span> <span class="toc-text">二、常用数组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-np-arange-起始数，终止数，间隔"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 np.arange(起始数，终止数，间隔)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-np-linspace-起始数-终止数-产生数的个数"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 np.linspace(起始数,终止数,产生数的个数)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-常用矩阵"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 常用矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-np-tile-函数"><span class="toc-number">3.4.</span> <span class="toc-text">2.4 np.tile()函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、Numpy常用常量"><span class="toc-number">4.</span> <span class="toc-text">三、Numpy常用常量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、Numpy随机数产生"><span class="toc-number">5.</span> <span class="toc-text">四、Numpy随机数产生</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、Numpy矩阵性质"><span class="toc-number">6.</span> <span class="toc-text">五、Numpy矩阵性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、Numpy矩阵运算"><span class="toc-number">7.</span> <span class="toc-text">六、Numpy矩阵运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、多项式曲线拟合"><span class="toc-number">8.</span> <span class="toc-text">七、多项式曲线拟合</span></a></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>最后编辑于：2020.02.05 12:30</p>
+<h2 id="Numpy库"><a href="#Numpy库" class="headerlink" title="Numpy库"></a>Numpy库</h2><p>Numpy库是Python的一种开源的数值计算扩展。</p>
+<p>Numpy可用来存储和处理大型矩阵，比Python自身的嵌套列表结构要高效很多。</p>
+<p>据说Numpy将Pyhon变成了一种免费的更强大的Matlab系统。</p>
+<p>本文介绍性文字转载自<a href="https://www.windquant.com/" target="_blank" rel="noopener">万旷网</a>。氦核感觉notebook形式更适合学习，有机会把丘比特文件给大家附上。</p>
+<a id="more"></a>
+<p>Numpy库包含了：</p>
+<p>&gt;</p>
+<blockquote>
+<p>强大的N维数组对象<br>精密的函数<br>连接C/C++和Fortran代码的工具<br>常用的线性代数，傅里叶变换和随机数生成  </p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#首先导入 numpy 库</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+<p>氦核：惯用的导入法，最好延用。</p>
+<h2 id="一、数组array"><a href="#一、数组array" class="headerlink" title="一、数组array"></a>一、数组array</h2><p>数组array和列表list类似，但是数据array可以定义维度，且适合做数学代数运算</p>
+<h3 id="1-数组array生成"><a href="#1-数组array生成" class="headerlink" title="1.数组array生成"></a>1.数组array生成</h3><p>数据使用windapi提取。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> WindPy <span class="keyword">import</span> *</span><br><span class="line">w.start()</span><br><span class="line">a = w.wsd(<span class="string">"000001.SZ"</span>, <span class="string">"close"</span>, <span class="string">"2018-07-05"</span>, <span class="string">"2018-07-11"</span>, <span class="string">""</span>)</span><br><span class="line">b = w.wsd(<span class="string">"000002.SZ"</span>, <span class="string">"close,open"</span>, <span class="string">"2018-07-05"</span>, <span class="string">"2018-07-11"</span>, <span class="string">""</span>)</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
+<p>氦核：取的是收盘价和开盘价。</p>
+<pre><code>.ErrorCode=0
+.Codes=[000002.SZ]
+.Fields=[CLOSE,OPEN]
+.Times=[20180705,20180706,20180709,20180710,20180711]
+.Data=[[23.05,23.21,24.01,24.15,23.46],[23.02,23.34,23.37,24.2,23.48]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">a1 = np.array(a.Data[<span class="number">0</span>])</span><br><span class="line">a2 = np.array(b.Data)</span><br><span class="line">print(<span class="string">'这是一个一维数组：\n'</span>,a1)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'这是一个二维数组：\n'</span>,a2)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看a1的长度：\n'</span>,len(a1))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'查看a2的长度：\n'</span>,len(a2))</span><br></pre></td></tr></table></figure>
+<p>氦核：len可以求数组长度，指数组里有几个list。</p>
+<pre><code>这是一个一维数组：
+ [8.6  8.66 9.03 8.98 8.78]
+
+这是一个二维数组：
+ [[23.05 23.21 24.01 24.15 23.46]
+ [23.02 23.34 23.37 24.2  23.48]]
+
+查看a1的长度：
+ 5
+
+查看a2的长度：
+ 2
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a2</span><br></pre></td></tr></table></figure>
+<pre><code>array([[23.05, 23.21, 24.01, 24.15, 23.46],
+       [23.02, 23.34, 23.37, 24.2 , 23.48]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a2[<span class="number">0</span>,<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>23.21
+</code></pre><h3 id="1-2-数组array性质"><a href="#1-2-数组array性质" class="headerlink" title="1.2 数组array性质"></a>1.2 数组array性质</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''数组元素整数转化为浮点数'''</span></span><br><span class="line">print(<span class="string">'数组类型：'</span>,a1.dtype)</span><br><span class="line">float_arr = a1.astype(np.int)</span><br><span class="line">print(<span class="string">'改变数组类型后：'</span>,float_arr.dtype)</span><br></pre></td></tr></table></figure>
+<p>氦核：dtype可以查看类型，astype可以转换类型。不同类型变换后会产生不同结果。</p>
+<pre><code>数组类型： float64
+改变数组类型后： int32
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''字符串数字转化为浮点数'''</span></span><br><span class="line">numeric_string = np.array([<span class="string">'1.11'</span>,<span class="string">'2.22'</span>,<span class="string">'3.33'</span>])</span><br><span class="line">print(numeric_string, numeric_string.dtype)</span><br><span class="line">print(numeric_string.astype(np.float),numeric_string.astype(np.float).dtype)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;1.11&#39; &#39;2.22&#39; &#39;3.33&#39;] &lt;U4
+[1.11 2.22 3.33] float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''字符串数字转化为浮点数'''</span></span><br><span class="line">numeric_string = np.array([<span class="string">'1.11'</span>,<span class="string">'2.22'</span>,<span class="string">'3.33'</span>])</span><br><span class="line">print(numeric_string, numeric_string.dtype)</span><br><span class="line">print(numeric_string.astype(np.float),numeric_string.astype(np.float).dtype)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;1.11&#39; &#39;2.22&#39; &#39;3.33&#39;] &lt;U4
+[1.11 2.22 3.33] float64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">print(a2)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'第二行第三列元素(第二行索引为1，第三列索引为2)：\n'</span>,a2[<span class="number">1</span>,<span class="number">2</span>]) </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'倒数第一行(注意索引为-1)：\n'</span>,a2[<span class="number">-1</span>,:]) </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'第三列(索引为2)：\n'</span>,a2[:,<span class="number">2</span>])</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'a2形状：\n'</span>,a2.shape)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'a2形状重构：\n'</span>,a2.reshape(<span class="number">5</span>,<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>[[23.05 23.21 24.01 24.15 23.46]
+ [23.02 23.34 23.37 24.2  23.48]]
+
+第二行第三列元素(第二行索引为1，第三列索引为2)：
+ 23.37
+
+倒数第一行(注意索引为-1)：
+ [23.02 23.34 23.37 24.2  23.48]
+
+第三列(索引为2)：
+ [24.01 23.37]
+
+a2形状：
+ (2, 5)
+
+a2形状重构：
+ [[23.05 23.21]
+ [24.01 24.15]
+ [23.46 23.02]
+ [23.34 23.37]
+ [24.2  23.48]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'维度解锁：'</span>,a2.ravel())  <span class="comment">#  ravel()函数可以将高维数组转化为一维数组</span></span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'按列求和：'</span>,a2.sum(axis=<span class="number">0</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'按列求积：'</span>,a2.prod(axis=<span class="number">0</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'全局最大值：'</span>,a2.max(),<span class="string">'全局最小值：'</span>,a2.min())</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'按行求最大值：'</span>,a2.max(axis=<span class="number">0</span>),<span class="string">'按列求最小值：'</span>,a2.min(axis=<span class="number">1</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'按列求均值：'</span>,a2.mean(axis=<span class="number">0</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'按行求标准差：'</span>,a2.std(axis=<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>维度解锁： [23.05 23.21 24.01 24.15 23.46 23.02 23.34 23.37 24.2  23.48]
+
+按列求和： [46.07 46.55 47.38 48.35 46.94]
+
+按列求积： [530.611  541.7214 561.1137 584.43   550.8408]
+
+全局最大值： 24.2 全局最小值： 23.02
+
+按行求最大值： [23.05 23.34 24.01 24.2  23.48] 按列求最小值： [23.05 23.02]
+
+按列求均值： [23.035 23.275 23.69  24.175 23.47 ]
+
+按行求标准差： [0.015 0.065 0.32  0.025 0.01 ]
+</code></pre><p>氦核：这些计算都是可以接受方向的。按列或按行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'原矩阵：\n'</span>,a2)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'按列求和：\n'</span>,a2.sum(axis=<span class="number">0</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'按行求均值：\n'</span>,a2.mean(axis=<span class="number">1</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'按行累加：\n'</span>,a2.cumsum(axis=<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>原矩阵：
+ [[23.05 23.21 24.01 24.15 23.46]
+ [23.02 23.34 23.37 24.2  23.48]]
+
+按列求和：
+ [46.07 46.55 47.38 48.35 46.94]
+
+按行求均值：
+ [23.576 23.482]
+
+按行累加：
+ [[ 23.05  46.26  70.27  94.42 117.88]
+ [ 23.02  46.36  69.73  93.93 117.41]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'矩阵所有元素求指数：\n'</span>,np.exp(a2))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵所有元素求根号：\n'</span>,np.sqrt(a2))</span><br></pre></td></tr></table></figure>
+<p>氦核：np.exp功能是“求e的幂次方”。</p>
+<pre><code>矩阵所有元素求指数：
+ [[1.02444302e+10 1.20219502e+10 2.67553422e+10 3.07759692e+10
+  1.54364896e+10]
+ [9.94166153e+09 1.36909381e+10 1.41078893e+10 3.23538868e+10
+  1.57483274e+10]]
+
+矩阵所有元素求根号：
+ [[4.80104155 4.81767579 4.9        4.91426495 4.84355242]
+ [4.79791621 4.83114893 4.83425279 4.91934955 4.84561658]]
+</code></pre><p>小数位数控制和取整</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'小数位数：\n'</span>,a1.round(decimals=<span class="number">2</span>)) <span class="comment">#控制小数位数</span></span><br></pre></td></tr></table></figure>
+<pre><code>小数位数：
+ [8.6  8.66 9.03 8.98 8.78]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'原数组：\n'</span>,a1)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'向上取整：\n'</span>,np.floor(a1))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'向下取整：\n'</span>,np.ceil(a1))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'四舍五入(控制小数为2位)：\n'</span>,np.round(a1,<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>原数组：
+ [8.6  8.66 9.03 8.98 8.78]
+
+向上取整：
+ [8. 8. 9. 8. 8.]
+
+向下取整：
+ [ 9.  9. 10.  9.  9.]
+
+四舍五入(控制小数为2位)：
+ [8.6  8.66 9.03 8.98 8.78]
+</code></pre><h4 id="数组——一元函数"><a href="#数组——一元函数" class="headerlink" title="数组——一元函数"></a>数组——一元函数</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abs、fabs</td>
+<td>计算整数、浮点数或复数的绝对值。对于非复数，使用fabs更快</td>
+</tr>
+<tr>
+<td>sqrt、square、exp</td>
+<td>计算各元素的平方根、平方、指数𝑒𝑥</td>
+</tr>
+<tr>
+<td>log、log10、log2、log1p</td>
+<td>自然对数、底数10的对数、底数2的对数、𝑙𝑛(1+𝑥)</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>计算各元素的正负号：正1,零0,负-1</td>
+</tr>
+<tr>
+<td>ceil</td>
+<td>计算各元素的取整：大于等于该数的最小整数</td>
+</tr>
+<tr>
+<td>floor</td>
+<td>计算各元素的取整：小于等于该数的最大整数</td>
+</tr>
+<tr>
+<td>rint</td>
+<td>各元素四舍五入最接近的整数，dtype不变</td>
+</tr>
+<tr>
+<td>modf</td>
+<td>将数组各元素的小数和整数部分以两个独立数组的形式返回</td>
+</tr>
+<tr>
+<td>isnan、isfinite、isinf</td>
+<td>判断各元素是否为NaN、是否有穷、是否为无穷</td>
+</tr>
+<tr>
+<td>cos、cosh、sin、sinh、tan、tanh</td>
+<td>一般和双曲型的三角函数</td>
+</tr>
+<tr>
+<td>arccos、arccosh、arcsin、arcsinh、arctan、arctanh</td>
+<td>反三角函数</td>
+</tr>
+<tr>
+<td>sum、mean</td>
+<td>数组全部或者按某个轴的方向进行求和、求均值</td>
+</tr>
+<tr>
+<td>std、var</td>
+<td>标准差、方差，自由度可以调整</td>
+</tr>
+<tr>
+<td>min、max、argmin、argmax</td>
+<td>最小和最大值、最小和最大元素的索引</td>
+</tr>
+<tr>
+<td>cumsum、cumprod</td>
+<td>数组全部或者按某个轴的方向进行累计和、累计积</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="1-3-数组array间运算"><a href="#1-3-数组array间运算" class="headerlink" title="1.3 数组array间运算"></a>1.3 数组array间运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c, r = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]), np.array([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br><span class="line">print(c)</span><br><span class="line">print(r)</span><br></pre></td></tr></table></figure>
+<pre><code>[1 2 3 4]
+[2 3 4 5]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'数组相加：'</span>,c + r)</span><br><span class="line">print(<span class="string">'数组相乘：'</span>,c * r)</span><br><span class="line">print(<span class="string">'数组乘方：'</span>,c **r)</span><br><span class="line">print(<span class="string">'数组判断：'</span>,c &gt;= <span class="number">2</span>)</span><br><span class="line">print(<span class="string">'向量内积：'</span>,c.dot(r.T))</span><br></pre></td></tr></table></figure>
+<pre><code>数组相加： [3 5 7 9]
+数组相乘： [ 2  6 12 20]
+数组乘方： [   1    8   81 1024]
+数组判断： [False  True  True  True]
+向量内积： 40
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'取两个数组中的较大值组成新的数组：'</span>,np.maximum(c,r))</span><br><span class="line">print(<span class="string">'取两个数组中的较小者组成新的数组：'</span>,np.minimum(c,r))</span><br></pre></td></tr></table></figure>
+<pre><code>取两个数组中的较大值组成新的数组： [2 3 4 5]
+取两个数组中的较小者组成新的数组： [1 2 3 4]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x1 = np.array([<span class="keyword">True</span>,<span class="keyword">False</span>,<span class="keyword">True</span>])</span><br><span class="line">x2 = np.array([<span class="keyword">False</span>,<span class="keyword">False</span>,<span class="keyword">True</span>])</span><br><span class="line">print(x1)</span><br><span class="line">print(x2)</span><br><span class="line">print(np.logical_and(x1,x2))</span><br><span class="line">print(np.logical_or(x1,x2))</span><br><span class="line">print(np.logical_xor(x1,x2))</span><br></pre></td></tr></table></figure>
+<p>氦核：逻辑运算一样很简单，logical_xor是异或运算。一般逻辑函数用于检验数组内容，筛选出需要的元素（通常得到的是位置）。可以完成“检查a中元素是否存在于b中”这样的问题。简便操作详细见下面集合运算。</p>
+<pre><code>[ True False  True]
+[False False  True]
+[False False  True]
+[ True False  True]
+[ True False False]
+</code></pre><h4 id="数组——二元函数"><a href="#数组——二元函数" class="headerlink" title="数组——二元函数"></a>数组——二元函数</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add、multiply</td>
+<td>数组中对应的元素相加、相乘</td>
+</tr>
+<tr>
+<td>substract</td>
+<td>第一个数组减去第二个数组中的元素</td>
+</tr>
+<tr>
+<td>divide、floor_divide</td>
+<td>除法、向下圆整除法(余数直接舍弃)</td>
+</tr>
+<tr>
+<td>power</td>
+<td>对于第一个数组中的元素，根据第二个数组中的对应元素，进行幂运算</td>
+</tr>
+<tr>
+<td>maximum、fmax</td>
+<td>元素级的最大值、fmax功能相同只是忽略NaN</td>
+</tr>
+<tr>
+<td>minimum、fmin</td>
+<td>元素级的最小值、fmin功能相同只是忽略NaN</td>
+</tr>
+<tr>
+<td>mod</td>
+<td>元素级的求余</td>
+</tr>
+<tr>
+<td>copysign</td>
+<td>将第二个数组中的值的符号复制给第一个数组中的值</td>
+</tr>
+<tr>
+<td>greater、greater_equal、less、less_equal、equal、not_equal</td>
+<td>元素级的比较运算，产生True或者False为元素的数组</td>
+</tr>
+<tr>
+<td>logical_and、logical_or、logical_xor</td>
+<td>元素级的逻辑判断(且、或者、不等于)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="1-4-数组array集合运算"><a href="#1-4-数组array集合运算" class="headerlink" title="1.4 数组array集合运算"></a>1.4 数组array集合运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">10</span>,<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>])</span><br><span class="line">y = np.array([<span class="number">100</span>,<span class="number">20</span>,<span class="number">40</span>,<span class="number">10</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>])</span><br><span class="line">print(<span class="string">'数组x中的唯一元素：\n'</span>,np.unique(x))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'数组x和y的公共元素：\n'</span>,np.intersect1d(x,y))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'数组x和y的并集：\n'</span>,np.union1d(x,y))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'数组x中的元素是否包含于y：\n'</span>,np.in1d(x,y))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'集合差_在x中而不在y中的元素：\n'</span>,np.setdiff1d(x,y))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'只存在某个数组中，而不同时存在于两个数组中：\n'</span>,np.setxor1d(x,y))</span><br></pre></td></tr></table></figure>
+<pre><code>数组x中的唯一元素：
+ [ 1  2  3  4  5 10 20 30]
+
+数组x和y的公共元素：
+ [ 1  2  3 10 20]
+
+数组x和y的并集：
+ [  1   2   3   4   5  10  20  30  40 100]
+
+数组x中的元素是否包含于y：
+ [ True  True  True  True  True  True False False  True  True  True False]
+
+集合差_在x中而不在y中的元素：
+ [ 4  5 30]
+
+只存在某个数组中，而不同时存在于两个数组中：
+ [  4   5  30  40 100]
+</code></pre><h3 id="1-5-数组array切片进阶"><a href="#1-5-数组array切片进阶" class="headerlink" title="1.5 数组array切片进阶"></a>1.5 数组array切片进阶</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#还是以000001收盘价为例</span></span><br><span class="line">a1</span><br></pre></td></tr></table></figure>
+<pre><code>array([8.6 , 8.66, 9.03, 8.98, 8.78])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果我们想 按偶数来选取 即选择数组中的0,2,4,6,8</span></span><br><span class="line">print(a1[::<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果想 按奇数来选择呢</span></span><br><span class="line">print(a1[<span class="number">1</span>::<span class="number">2</span>]) <span class="comment">#这里的1表示从索引1开始截取</span></span><br></pre></td></tr></table></figure>
+<p>氦核：上面片段中的2代表步长。</p>
+<pre><code>[8.6  9.03 8.78]
+[8.66 8.98]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#我们取多个指标看一下</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#五粮液</span></span><br><span class="line"><span class="keyword">from</span> WindPy <span class="keyword">import</span> *</span><br><span class="line">w.start()</span><br><span class="line">w = w.wsd(<span class="string">"000858.SZ"</span>, <span class="string">"open,high,low,close,pct_chg"</span>, <span class="string">"2018-07-05"</span>, <span class="string">"2018-07-11"</span>, <span class="string">""</span>)</span><br><span class="line">w</span><br></pre></td></tr></table></figure>
+<p>氦核：开，高，低，收。</p>
+<pre><code>.ErrorCode=0
+.Codes=[000858.SZ]
+.Fields=[OPEN,HIGH,LOW,CLOSE,PCT_CHG]
+.Times=[20180705,20180706,20180709,20180710,20180711]
+.Data=[[71.69,69.9,71.58,73.57,71.2],[72.71,71.98,73.55,74.13,72.64],[69.7,68.88,70.4,72.08,70.93],[70.82,70.62,73.54,73.37,72.08],[0.16973125884014886,1.5822798147378172,4.134806003964902,-0.23116671199347652,-1.7582118031893383]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">w1 = np.array(w.Data)</span><br><span class="line">w1</span><br></pre></td></tr></table></figure>
+<pre><code>array([[71.69      , 69.9       , 71.58      , 73.57      , 71.2       ],
+       [72.71      , 71.98      , 73.55      , 74.13      , 72.64      ],
+       [69.7       , 68.88      , 70.4       , 72.08      , 70.93      ],
+       [70.82      , 70.62      , 73.54      , 73.37      , 72.08      ],
+       [ 0.16973126,  1.58227981,  4.134806  , -0.23116671, -1.7582118 ]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'截取第1行第4,5个元素：\n'</span>,w1[<span class="number">0</span>, <span class="number">3</span>:<span class="number">5</span>])</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'截取第5行至最后，第5列至最后的元素：\n'</span>,w1[<span class="number">4</span>:, <span class="number">4</span>:])</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'截取第3，5行，第1,3,5列\n'</span>,w1[<span class="number">2</span>::<span class="number">2</span>, ::<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>截取第1行第4,5个元素：
+ [73.57 71.2 ]
+
+截取第5行至最后，第5列至最后的元素：
+ [[-1.7582118]]
+
+截取第3，5行，第1,3,5列
+ [[69.7        70.4        70.93      ]
+ [ 0.16973126  4.134806   -1.7582118 ]]
+</code></pre><h3 id="1-6-数组排序"><a href="#1-6-数组排序" class="headerlink" title="1.6 数组排序"></a>1.6 数组排序</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> WindPy <span class="keyword">import</span> *</span><br><span class="line">w.start()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 000001.SZ收益率为例</span></span><br><span class="line">sy = w.wsd(<span class="string">"000001.SZ"</span>, <span class="string">"pct_chg"</span>, <span class="string">"2018-07-05"</span>, <span class="string">"2018-07-11"</span>, <span class="string">""</span>)</span><br><span class="line">sy</span><br></pre></td></tr></table></figure>
+<pre><code>.ErrorCode=0
+.Codes=[000001.SZ]
+.Fields=[PCT_CHG]
+.Times=[20180705,20180706,20180709,20180710,20180711]
+.Data=[[-0.11614401858303243,0.6976744186046501,4.272517321016162,-0.5537098560354228,-2.2271714922049117]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sy2 = np.array(sy.Data[<span class="number">0</span>])</span><br><span class="line">sy2</span><br></pre></td></tr></table></figure>
+<pre><code>array([-0.11614402,  0.69767442,  4.27251732, -0.55370986, -2.22717149])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对一个数组array，想找到其中大于0的数所在的索引位置 可以用where函数</span></span><br><span class="line">print(<span class="string">'大于0元素所在的索引：\n'</span>,np.where(sy2&gt;<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>大于0元素所在的索引：
+ (array([1, 2], dtype=int64),)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对于exp这个数组，希望对其按元素大小进行排序</span></span><br><span class="line">print(<span class="string">'从小到大排序：\n'</span>,np.sort(sy2))</span><br></pre></td></tr></table></figure>
+<pre><code>从小到大排序：
+ [-2.22717149 -0.55370986 -0.11614402  0.69767442  4.27251732]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'排序后元素所在的原索引位置'</span>,np.argsort(sy2))</span><br></pre></td></tr></table></figure>
+<pre><code>排序后元素所在的原索引位置 [4 3 0 1 2]
+</code></pre><h3 id="1-7-数组拼接"><a href="#1-7-数组拼接" class="headerlink" title="1.7 数组拼接"></a>1.7 数组拼接</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a1</span><br></pre></td></tr></table></figure>
+<pre><code>array([8.6 , 8.66, 9.03, 8.98, 8.78])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a3 = np.array(w.wsd(<span class="string">"000858.SZ"</span>, <span class="string">"close"</span>, <span class="string">"2018-07-05"</span>, <span class="string">"2018-07-11"</span>, <span class="string">""</span>).Data)[<span class="number">0</span>]</span><br><span class="line">a3</span><br></pre></td></tr></table></figure>
+<pre><code>array([70.82, 70.62, 73.54, 73.37, 72.08])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'纵向拼接:\n'</span>,np.vstack((a1,a3)))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'横向拼接:\n'</span>,np.hstack((a1,a3)))</span><br></pre></td></tr></table></figure>
+<pre><code>纵向拼接:
+ [[ 8.6   8.66  9.03  8.98  8.78]
+ [70.82 70.62 73.54 73.37 72.08]]
+
+横向拼接:
+ [ 8.6   8.66  9.03  8.98  8.78 70.82 70.62 73.54 73.37 72.08]
+</code></pre><p>使用np.r_和np.c_也可以实现拼接的功能</p>
+<p>注意纵向拼接的时候，np.c_产生的结果是5∗2，而np.r_产生的结果是2∗5</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'横向拼接：\n'</span>,np.r_[a1,a3])</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'纵向拼接：\n'</span>,np.c_[a1,a3])</span><br></pre></td></tr></table></figure>
+<pre><code>横向拼接：
+ [ 8.6   8.66  9.03  8.98  8.78 70.82 70.62 73.54 73.37 72.08]
+
+纵向拼接：
+ [[ 8.6  70.82]
+ [ 8.66 70.62]
+ [ 9.03 73.54]
+ [ 8.98 73.37]
+ [ 8.78 72.08]]
+</code></pre><h3 id="1-8-数组分解"><a href="#1-8-数组分解" class="headerlink" title="1.8 数组分解"></a>1.8 数组分解</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a4 = np.array(w.wsd(<span class="string">"000858.SZ"</span>, <span class="string">"close,open,low"</span>, <span class="string">"2018-07-05"</span>, <span class="string">"2018-07-11"</span>, <span class="string">""</span>).Data)</span><br><span class="line">a4</span><br></pre></td></tr></table></figure>
+<pre><code>array([[70.82, 70.62, 73.54, 73.37, 72.08],
+       [71.69, 69.9 , 71.58, 73.57, 71.2 ],
+       [69.7 , 68.88, 70.4 , 72.08, 70.93]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'横向分解为5个数组：\n'</span>,np.hsplit(a4,<span class="number">5</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'纵向分解为3个数组：\n'</span>,np.vsplit(a4,<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>横向分解为5个数组：
+ [array([[70.82],
+       [71.69],
+       [69.7 ]]), array([[70.62],
+       [69.9 ],
+       [68.88]]), array([[73.54],
+       [71.58],
+       [70.4 ]]), array([[73.37],
+       [73.57],
+       [72.08]]), array([[72.08],
+       [71.2 ],
+       [70.93]])]
+
+纵向分解为3个数组：
+ [array([[70.82, 70.62, 73.54, 73.37, 72.08]]), array([[71.69, 69.9 , 71.58, 73.57, 71.2 ]]), array([[69.7 , 68.88, 70.4 , 72.08, 70.93]])]
+</code></pre><h2 id="二、常用数组"><a href="#二、常用数组" class="headerlink" title="二、常用数组"></a>二、常用数组</h2><p>在工作或者学习中，有些数组是我们常用的，利用numpy中的函数可以容易地产生这些数组。</p>
+<h3 id="2-1-np-arange-起始数，终止数，间隔"><a href="#2-1-np-arange-起始数，终止数，间隔" class="headerlink" title="2.1 np.arange(起始数，终止数，间隔)"></a>2.1 np.arange(起始数，终止数，间隔)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># np.arange()函数 终止数并不产生 </span></span><br><span class="line">print(np.arange(<span class="number">1</span>,<span class="number">10</span>,<span class="number">1</span>)) </span><br><span class="line">print()</span><br><span class="line">print(np.arange(<span class="number">1</span>,<span class="number">10</span>,<span class="number">0.1</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>[1 2 3 4 5 6 7 8 9]
+
+[1.  1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.  2.1 2.2 2.3 2.4 2.5 2.6 2.7
+ 2.8 2.9 3.  3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4.  4.1 4.2 4.3 4.4 4.5
+ 4.6 4.7 4.8 4.9 5.  5.1 5.2 5.3 5.4 5.5 5.6 5.7 5.8 5.9 6.  6.1 6.2 6.3
+ 6.4 6.5 6.6 6.7 6.8 6.9 7.  7.1 7.2 7.3 7.4 7.5 7.6 7.7 7.8 7.9 8.  8.1
+ 8.2 8.3 8.4 8.5 8.6 8.7 8.8 8.9 9.  9.1 9.2 9.3 9.4 9.5 9.6 9.7 9.8 9.9]
+</code></pre><h3 id="2-2-np-linspace-起始数-终止数-产生数的个数"><a href="#2-2-np-linspace-起始数-终止数-产生数的个数" class="headerlink" title="2.2 np.linspace(起始数,终止数,产生数的个数)"></a>2.2 np.linspace(起始数,终止数,产生数的个数)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在指定区间返回均匀间隔的数字</span></span><br><span class="line">print(np.linspace(<span class="number">1</span>,<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">print()</span><br><span class="line">print(np.linspace(<span class="number">-1</span>,<span class="number">1</span>,<span class="number">20</span>))</span><br><span class="line"><span class="comment"># np.linspace()函数 终止数是产生的</span></span><br></pre></td></tr></table></figure>
+<pre><code>[ 1.  2.  3.  4.  5.  6.  7.  8.  9. 10.]
+
+[-1.         -0.89473684 -0.78947368 -0.68421053 -0.57894737 -0.47368421
+ -0.36842105 -0.26315789 -0.15789474 -0.05263158  0.05263158  0.15789474
+  0.26315789  0.36842105  0.47368421  0.57894737  0.68421053  0.78947368
+  0.89473684  1.        ]
+</code></pre><h3 id="2-3-常用矩阵"><a href="#2-3-常用矩阵" class="headerlink" title="2.3 常用矩阵"></a>2.3 常用矩阵</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'元素都为1的方阵：\n'</span>,np.ones((<span class="number">3</span>,<span class="number">3</span>)))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'元素都为0的方阵：\n'</span>,np.zeros((<span class="number">3</span>,<span class="number">3</span>)))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'单位阵：\n'</span>,np.eye(<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>元素都为1的方阵：
+ [[1. 1. 1.]
+ [1. 1. 1.]
+ [1. 1. 1.]]
+
+元素都为0的方阵：
+ [[0. 0. 0.]
+ [0. 0. 0.]
+ [0. 0. 0.]]
+
+单位阵：
+ [[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+</code></pre><h3 id="2-4-np-tile-函数"><a href="#2-4-np-tile-函数" class="headerlink" title="2.4 np.tile()函数"></a>2.4 np.tile()函数</h3><p>该函数的作用是重复某个对象为一定的结构</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">short = np.arange(<span class="number">1</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line">print(short)</span><br><span class="line">long = np.tile(short,<span class="number">3</span>)</span><br><span class="line">print(long)</span><br></pre></td></tr></table></figure>
+<pre><code>[1 2 3]
+[1 2 3 1 2 3 1 2 3]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">small = np.eye(<span class="number">2</span>)</span><br><span class="line">print(small)</span><br><span class="line">big = np.tile(small, (<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line">print(big)</span><br></pre></td></tr></table></figure>
+<pre><code>[[1. 0.]
+ [0. 1.]]
+[[1. 0. 1. 0.]
+ [0. 1. 0. 1.]
+ [1. 0. 1. 0.]
+ [0. 1. 0. 1.]]
+</code></pre><h2 id="三、Numpy常用常量"><a href="#三、Numpy常用常量" class="headerlink" title="三、Numpy常用常量"></a>三、Numpy常用常量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'自然底数：'</span>,np.e)</span><br><span class="line">print(<span class="string">'缺失值：'</span>,np.NaN)</span><br><span class="line">print(<span class="string">'无穷大：'</span>,np.inf)</span><br><span class="line">print(<span class="string">'圆周率：'</span>,np.pi)</span><br></pre></td></tr></table></figure>
+<pre><code>自然底数： 2.718281828459045
+缺失值： nan
+无穷大： inf
+圆周率： 3.141592653589793
+</code></pre><h2 id="四、Numpy随机数产生"><a href="#四、Numpy随机数产生" class="headerlink" title="四、Numpy随机数产生"></a>四、Numpy随机数产生</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'一维正态随机数：\n'</span>,np.random.randn(<span class="number">5</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'二维正态随机数：\n'</span>,np.random.randn(<span class="number">2</span>,<span class="number">2</span>)) </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'二维0-1均匀分布随机数：\n'</span>,np.random.rand(<span class="number">2</span>,<span class="number">2</span>))   </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'5个10-20的均匀随机整数：'</span>,np.random.randint(<span class="number">10</span>,<span class="number">20</span>,<span class="number">5</span>))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'二维均匀随机整数：\n'</span>,np.random.randint(<span class="number">10</span>,<span class="number">50</span>,(<span class="number">2</span>,<span class="number">2</span>)))</span><br></pre></td></tr></table></figure>
+<pre><code>一维正态随机数：
+ [-0.65240628  1.07426523 -0.86730208 -0.91339241  1.20066541]
+
+二维正态随机数：
+ [[ 0.9663628  -1.32891237]
+ [-0.54264665 -1.29035995]]
+
+二维0-1均匀分布随机数：
+ [[0.52527192 0.17719291]
+ [0.10103986 0.41623399]]
+
+5个10-20的均匀随机整数： [17 18 14 12 11]
+
+二维均匀随机整数：
+ [[38 24]
+ [24 38]]
+</code></pre><p><strong>numpy.random函数</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>seed</td>
+<td>随机数生成器的种子</td>
+</tr>
+<tr>
+<td>permutation</td>
+<td>序列的随机排列或者随机排列的范围，不改变原数组</td>
+</tr>
+<tr>
+<td>shuffle</td>
+<td>序列就地随机排列，改变原数组</td>
+</tr>
+<tr>
+<td>rand</td>
+<td>均匀分布样本值</td>
+</tr>
+<tr>
+<td>randint</td>
+<td>给定上下限随机产生整数</td>
+</tr>
+<tr>
+<td>randn</td>
+<td>正态分布样本值</td>
+</tr>
+<tr>
+<td>binomial</td>
+<td>二项分布样本值</td>
+</tr>
+<tr>
+<td>normal</td>
+<td>正态分布样本值</td>
+</tr>
+<tr>
+<td>beta</td>
+<td>beta分布样本值</td>
+</tr>
+<tr>
+<td>chisquare</td>
+<td>卡方分布样本值</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td>Gamma分布样本值</td>
+</tr>
+<tr>
+<td>uniform</td>
+<td>[0,1)均匀分布样本值</td>
+</tr>
+<tr>
+<td>choice</td>
+<td>从数组中随机选择若干个元素</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = np.arange(<span class="number">1</span>,<span class="number">11</span>,<span class="number">1</span>)</span><br><span class="line">print(a)</span><br><span class="line">np.random.shuffle(a)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'随机打乱a中的元素顺序：\n'</span>,a)</span><br></pre></td></tr></table></figure>
+<pre><code>[ 1  2  3  4  5  6  7  8  9 10]
+
+随机打乱a中的元素顺序：
+ [10  3  2  6  1  9  8  7  4  5]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(a)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'随机从a中选取5个元素：\n'</span>,np.random.choice(a,<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>[10  3  2  6  1  9  8  7  4  5]
+
+随机从a中选取5个元素：
+ [5 3 8 9 4]
+</code></pre><h2 id="五、Numpy矩阵性质"><a href="#五、Numpy矩阵性质" class="headerlink" title="五、Numpy矩阵性质"></a>五、Numpy矩阵性质</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.randint(<span class="number">1</span>,<span class="number">10</span>,(<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">print(<span class="string">'原矩阵：\n'</span>,x)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵对角线：\n'</span>,np.diag(x))  </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵上三角：\n'</span>,np.triu(x))  </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵下三角：\n'</span>,np.tril(x))  </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵的迹：\n'</span>,np.trace(x))  </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵的转置：\n'</span>,x.T)</span><br></pre></td></tr></table></figure>
+<pre><code>原矩阵：
+ [[4 3 6]
+ [2 7 1]
+ [2 3 8]]
+
+矩阵对角线：
+ [4 7 8]
+
+矩阵上三角：
+ [[4 3 6]
+ [0 7 1]
+ [0 0 8]]
+
+矩阵下三角：
+ [[4 0 0]
+ [2 7 0]
+ [2 3 8]]
+
+矩阵的迹：
+ 19
+
+矩阵的转置：
+ [[4 2 2]
+ [3 7 3]
+ [6 1 8]]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = np.random.randint(<span class="number">1</span>,<span class="number">10</span>,(<span class="number">3</span>,<span class="number">3</span>))</span><br><span class="line">print(<span class="string">'原矩阵：\n'</span>,x)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵元素向右循环移动2位：\n'</span>,np.roll(x,<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>原矩阵：
+ [[1 1 6]
+ [7 3 3]
+ [7 6 5]]
+
+矩阵元素向右循环移动2位：
+ [[6 5 1]
+ [1 6 7]
+ [3 3 7]]
+</code></pre><h2 id="六、Numpy矩阵运算"><a href="#六、Numpy矩阵运算" class="headerlink" title="六、Numpy矩阵运算"></a>六、Numpy矩阵运算</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># numpy下的子模块linalg是一个线性代数运算库，关于矩阵运算主要使用该库来完成</span></span><br><span class="line"><span class="keyword">import</span> numpy.linalg <span class="keyword">as</span> la</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以000001行情数据为例</span></span><br><span class="line">a5 = np.array(w.wsd(<span class="string">"000001.SZ"</span>, <span class="string">"close,open,low"</span>, <span class="string">"2018-07-08"</span>, <span class="string">"2018-07-11"</span>, <span class="string">""</span>).Data)</span><br><span class="line">a5</span><br></pre></td></tr></table></figure>
+<pre><code>array([[9.03, 8.98, 8.78],
+       [8.69, 9.02, 8.76],
+       [8.68, 8.89, 8.68]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'原矩阵：\n'</span>,a5)</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵的行列式：\n'</span>,la.det(a5)) </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵的逆：\n'</span>,la.inv(a5)) </span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵的特征值分解：\n'</span>,la.eig(a5))</span><br><span class="line">print()</span><br><span class="line">print(<span class="string">'矩阵的奇异值分解：\n'</span>,la.svd(a5))</span><br></pre></td></tr></table></figure>
+<pre><code>原矩阵：
+ [[9.03 8.98 8.78]
+ [8.69 9.02 8.76]
+ [8.68 8.89 8.68]]
+
+矩阵的行列式：
+ 0.0967539999999976
+
+矩阵的逆：
+ [[  4.31196643   1.11416582  -5.48607809]
+ [  6.27984373  22.42801331 -28.98691527]
+ [-10.74374186 -24.08479236  35.28949708]]
+
+矩阵的特征值分解：
+ (array([2.65036938e+01, 2.08824580e-01, 1.74815890e-02]), array([[-0.58362007, -0.78625042, -0.09211654],
+       [-0.57657184,  0.5886538 , -0.64732544],
+       [-0.57179763,  0.18787491,  0.75662693]]))
+
+矩阵的奇异值分解：
+ (array([[-0.58355077,  0.78217367, -0.21834112],
+       [-0.5766266 , -0.58842029, -0.56680096],
+       [-0.57181314, -0.20485584,  0.79439526]]), array([2.65057682e+01, 2.11310491e-01, 1.72745790e-02]), array([[-0.57510827, -0.58571691, -0.57112711],
+       [ 0.81163598, -0.49595222, -0.30867203],
+       [-0.10245733, -0.64106715,  0.76061515]]))
+</code></pre><p><strong>numpy.linalg函数</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>diag</td>
+<td>以一维数组的形式返回方阵的对角线元素或将一维数组转化为方阵</td>
+</tr>
+<tr>
+<td>dot、trace、det</td>
+<td>矩阵乘法、矩阵的迹运算、矩阵行列式</td>
+</tr>
+<tr>
+<td>eig、inv、pinv</td>
+<td>方阵的特征值和特征向量、方阵的逆、矩阵的Moore-Penrose伪逆</td>
+</tr>
+<tr>
+<td>qr、svd</td>
+<td>矩阵的QR分解、奇异值分解</td>
+</tr>
+<tr>
+<td>solve</td>
+<td>解线性方程组 $𝑋\beta = 𝑦$，其中$𝑋$为方阵</td>
+</tr>
+<tr>
+<td>lstsq</td>
+<td>计算$𝑋\beta = 𝑦$的最小二乘解</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="七、多项式曲线拟合"><a href="#七、多项式曲线拟合" class="headerlink" title="七、多项式曲线拟合"></a>七、多项式曲线拟合</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt   <span class="comment"># 导入作图库  为了更好展示曲线拟合的结果</span></span><br><span class="line">plt.style.use(<span class="string">'ggplot'</span>)</span><br></pre></td></tr></table></figure>
+<p>例如，对于下面的这些散点进行多项式拟合。观察散点的形态，采用直线取拟合</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x = np.linspace(<span class="number">-10</span>,<span class="number">10</span>,<span class="number">100</span>)</span><br><span class="line">y = <span class="number">2</span>*x + <span class="number">1</span> + np.random.randn(<span class="number">100</span>)*<span class="number">2</span></span><br><span class="line">fig = plt.subplots(figsize=(<span class="number">14</span>,<span class="number">8</span>))</span><br><span class="line">plt.plot(x, y, <span class="string">'rx'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/2020/02/05/200205numpy/02/05/200205numpy/tu1.png" title="图1">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> polyfit,poly1d</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">coef_fit = polyfit(x, y, <span class="number">1</span>)  <span class="comment">#进行线性拟合 1代表的是多项式拟合的多项式的阶数  这里指的是线性拟合</span></span><br><span class="line">coef_fit    <span class="comment">#查看拟合的系数</span></span><br></pre></td></tr></table></figure>
+<pre><code>array([1.96386726, 1.11375232])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fig = plt.subplots(figsize=(<span class="number">14</span>,<span class="number">8</span>))</span><br><span class="line">plt.plot(x, y, <span class="string">'rx'</span>,label=<span class="string">'真实散点'</span>)</span><br><span class="line">plt.plot(x, coef_fit[<span class="number">0</span>] * x + coef_fit[<span class="number">1</span>], <span class="string">'k-'</span>,label=<span class="string">'拟合直线'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'best'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<pre><code>D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:211: RuntimeWarning: Glyph 30495 missing from current font.
+  font.set_text(s, 0.0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:211: RuntimeWarning: Glyph 23454 missing from current font.
+  font.set_text(s, 0.0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:211: RuntimeWarning: Glyph 25955 missing from current font.
+  font.set_text(s, 0.0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:211: RuntimeWarning: Glyph 28857 missing from current font.
+  font.set_text(s, 0.0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:211: RuntimeWarning: Glyph 25311 missing from current font.
+  font.set_text(s, 0.0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:211: RuntimeWarning: Glyph 21512 missing from current font.
+  font.set_text(s, 0.0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:211: RuntimeWarning: Glyph 30452 missing from current font.
+  font.set_text(s, 0.0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:211: RuntimeWarning: Glyph 32447 missing from current font.
+  font.set_text(s, 0.0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 30495 missing from current font.
+  font.set_text(s, 0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 23454 missing from current font.
+  font.set_text(s, 0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 25955 missing from current font.
+  font.set_text(s, 0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 28857 missing from current font.
+  font.set_text(s, 0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 25311 missing from current font.
+  font.set_text(s, 0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 21512 missing from current font.
+  font.set_text(s, 0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 30452 missing from current font.
+  font.set_text(s, 0, flags=flags)
+D:\anaconda\lib\site-packages\matplotlib\backends\backend_agg.py:180: RuntimeWarning: Glyph 32447 missing from current font.
+  font.set_text(s, 0, flags=flags)
+</code></pre><img src="/2020/02/05/200205numpy/02/05/200205numpy/tu2.png" title="图2">
+<p>从上图可以看到，直线拟合的结果还是比较好的（报错可能是汉字bug</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f = poly1d(coef_fit)   <span class="comment">#也可以直接产生拟合的函数解析式</span></span><br><span class="line">print(<span class="string">'拟合函数：'</span>,f)</span><br></pre></td></tr></table></figure>
+<pre><code>拟合函数：  
+1.964 x + 1.114
+</code></pre><p>氦核：numpy库很有“大计算器”的味道了，其实不会用的时候再去查也可以，主要是应该了解有什么基础功能，否则就会出现“自己实现某些基础算法”的乌龙（某种意义上也是好事，笑）。一起加油吧。</p>
+<p>（完）</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/02/05/200205numpy/">
+                    https://konelane.github.io/2020/02/05/200205numpy/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/02/06/200206pandaslearning/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          python联萌|pandas（国宝库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/02/01/20200201WindAPI/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python联萌|初探WindAPI</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>数据挖掘|决策树 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="数据挖掘|决策树和相关算法数据挖掘笔记 记录：氦核   最后编辑时间：20190508 前排简介，本文不涉及实战，仅仅举例。文章中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘|决策树">
+<meta property="og:url" content="https://konelane.github.io/2019/05/07/190507decisiontree/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="数据挖掘|决策树和相关算法数据挖掘笔记 记录：氦核   最后编辑时间：20190508 前排简介，本文不涉及实战，仅仅举例。文章中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-08T13:08:20.138Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据挖掘|决策树">
+<meta name="twitter:description" content="数据挖掘|决策树和相关算法数据挖掘笔记 记录：氦核   最后编辑时间：20190508 前排简介，本文不涉及实战，仅仅举例。文章中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-190507decisiontree" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2019/05/07/190507decisiontree/" class="article-date">
+  	<time datetime="2019-05-06T16:00:00.000Z" itemprop="datePublished">2019-05-07</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      数据挖掘|决策树
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据挖掘-决策树和相关算法"><span class="toc-number">1.</span> <span class="toc-text">数据挖掘|决策树和相关算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#预测数据集"><span class="toc-number">1.1.</span> <span class="toc-text">预测数据集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#信息增益的计算"><span class="toc-number">1.1.1.</span> <span class="toc-text">信息增益的计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#方法1：ID3"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">方法1：ID3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#方法2：GINI-INDEX"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">方法2：GINI INDEX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#过度拟合问题"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">过度拟合问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#剪枝"><span class="toc-number">1.2.</span> <span class="toc-text">剪枝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#预剪枝：提前停止树的构建"><span class="toc-number">1.2.1.</span> <span class="toc-text">预剪枝：提前停止树的构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后剪枝"><span class="toc-number">1.2.2.</span> <span class="toc-text">后剪枝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他剪枝方法"><span class="toc-number">1.2.3.</span> <span class="toc-text">其他剪枝方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一倍标准差规则"><span class="toc-number">1.2.4.</span> <span class="toc-text">一倍标准差规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连续型变量的树处理"><span class="toc-number">1.3.</span> <span class="toc-text">连续型变量的树处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部分代码实现（R"><span class="toc-number">1.4.</span> <span class="toc-text">部分代码实现（R)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#其他实操要注意的（其实是讲代码时候突然提到的，没地方记了）"><span class="toc-number">1.4.1.</span> <span class="toc-text">其他实操要注意的（其实是讲代码时候突然提到的，没地方记了）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#决策树方法不好的地方"><span class="toc-number">1.5.</span> <span class="toc-text">决策树方法不好的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何评价树的好坏？"><span class="toc-number">1.5.1.</span> <span class="toc-text">如何评价树的好坏？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#几个处理决策树精度的方法"><span class="toc-number">1.6.</span> <span class="toc-text">几个处理决策树精度的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#boostrap（自助法）"><span class="toc-number">1.6.1.</span> <span class="toc-text">boostrap（自助法）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Out-Of-Bag"><span class="toc-number">1.6.2.</span> <span class="toc-text">Out Of Bag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bagging方法"><span class="toc-number">1.6.3.</span> <span class="toc-text">Bagging方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分类问题的bagging方法"><span class="toc-number">1.6.3.1.</span> <span class="toc-text">分类问题的bagging方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#一些讨论"><span class="toc-number">1.6.3.2.</span> <span class="toc-text">一些讨论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adaboost算法"><span class="toc-number">1.6.4.</span> <span class="toc-text">Adaboost算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于决策树的一些说明"><span class="toc-number">1.6.5.</span> <span class="toc-text">关于决策树的一些说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-二叉树还是多叉树"><span class="toc-number">1.6.5.1.</span> <span class="toc-text">1.二叉树还是多叉树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-单棵树构建的探讨"><span class="toc-number">1.6.5.2.</span> <span class="toc-text">2.单棵树构建的探讨</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-缺失值的处理"><span class="toc-number">1.6.5.3.</span> <span class="toc-text">3.缺失值的处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-算法的稳定性"><span class="toc-number">1.6.5.4.</span> <span class="toc-text">4.算法的稳定性</span></a></li></ol></li></ol></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <h1 id="数据挖掘-决策树和相关算法"><a href="#数据挖掘-决策树和相关算法" class="headerlink" title="数据挖掘|决策树和相关算法"></a>数据挖掘|决策树和相关算法</h1><p>数据挖掘笔记</p>
+<p>记录：氦核   最后编辑时间：20190508</p>
+<p>前排简介，本文不涉及实战，仅仅举例。文章中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。</p>
+<a id="more"></a>
+<h2 id="预测数据集"><a href="#预测数据集" class="headerlink" title="预测数据集"></a>预测数据集</h2><p>年龄、性别、家庭所得、是否购买</p>
+<p>目标：用前面三列的数据预测是否购买</p>
+<p>&gt;<br>root node根节点<br>non-leaf node：非叶结点<br>branches：分支<br>leaf node：叶子节点</p>
+<p>注：树不一定对称。很多时候会有一个偏态<br>树分为两种，一种是分类树（离散变量），一种是回归树（连续变量）。</p>
+<p>对每一个变量进行大致分类：  </p>
+<blockquote>
+<p>1.年龄-小于35、大于等于35<br>2.家庭所得：低、高、小康<br>3.性别：男、女    </p>
+</blockquote>
+<p>此时，只有年龄是我们希望看到的根节点分类。</p>
+<p>如何分节点呢？最常见的方式是计算<strong>信息增益</strong></p>
+<h3 id="信息增益的计算"><a href="#信息增益的计算" class="headerlink" title="信息增益的计算"></a>信息增益的计算</h3><h4 id="方法1：ID3"><a href="#方法1：ID3" class="headerlink" title="方法1：ID3"></a>方法1：ID3</h4><script type="math/tex; mode=display">I = -(P_1*log_2(p_1) + ... + P_k*log_2(p_k)) = - \sum_{i = 1}^{k}{P_i*log_2(p_i)}</script><script type="math/tex; mode=display">Gain(X) = I(n,n_1) - E(X)  ​</script><p>注：  </p>
+<script type="math/tex; mode=display">I(n,n_1) = -(n_1/n)*log_2(n_1/n) + (n-n_1)/n *log_2((n-n_1)/n)</script><script type="math/tex; mode=display">E(X) = m_1 /n * I(m_1,m_{11}) + m_2 /n * I(m_2,m_{21}) +...+ m_k /n * I(m_k,m_{k1})</script><p>节点分开后，对另外的变量进行信息增益的计算</p>
+<p>一棵树，三个节点</p>
+<p>总结一下：信息增益——基于熵的概念（搞信息的人常用）</p>
+<p>做分支前后熵的差值</p>
+<h4 id="方法2：GINI-INDEX"><a href="#方法2：GINI-INDEX" class="headerlink" title="方法2：GINI INDEX"></a>方法2：GINI INDEX</h4><script type="math/tex; mode=display">i(t) = \sum_{i≠j}p(i/t)p(j/t)​</script><script type="math/tex; mode=display">gini_{split}(T) = \frac{N_1}{N} gini(T_1) + \frac{N_2}{N} gini(T_2)​</script><p>将基尼系数最小的作为划分属性</p>
+<p>做统计的常用，比较简便</p>
+<p>注：ID3（信息增益）</p>
+<p>当ID3确定根节点以及后续节点后，当满足一下条件该分支可以结束：  </p>
+<p>1.该群数据的每一个数据都已经归类到同一类别中</p>
+<p>2.该群数据已经没办法找到新的属性进行节点分割</p>
+<p>3.该群数据已经没有尚未处理的数据</p>
+<h4 id="过度拟合问题"><a href="#过度拟合问题" class="headerlink" title="过度拟合问题"></a>过度拟合问题</h4><p>并不一定是好事，有可能发生过度拟合，在推广模型时产生较大误差。</p>
+<p>两种过度拟合：</p>
+<p>1.噪声导致的过度拟合，如错误的分类，或者属性值</p>
+<p>2.缺乏代表性的样本导致，如数据有偏</p>
+<p>出现过度拟合时处理方式：剪枝</p>
+<h2 id="剪枝"><a href="#剪枝" class="headerlink" title="剪枝"></a>剪枝</h2><h3 id="预剪枝：提前停止树的构建"><a href="#预剪枝：提前停止树的构建" class="headerlink" title="预剪枝：提前停止树的构建"></a>预剪枝：提前停止树的构建</h3><p>1.定义一个高度，到达时停止生长</p>
+<p>2.达到某个节点的实例具有相同的特征向量，即使这些实例不属于同一类，也可以停止决策树的生长。这个方法对于处理数据的数据冲突问题比较有效</p>
+<p>3.定义一个阈值，当达到某个节点的实例个数小于阈值时，停止生长（常用）</p>
+<p>4.定义一个阈值，通过计算每次扩张对系统性能的增益，并比较增益值与该阈值大小来决定是否停止生长</p>
+<p>思考：有没有什么不太好的地方</p>
+<p>第二个比较特别，特殊情况特殊考虑。第四个更容易接受，理由是比较客观。因为阈值不好设置，需要经验。</p>
+<p>因此预剪枝的方式好理解，但是多采用后剪枝的方式。但是要求计算量和计算速度。</p>
+<h3 id="后剪枝"><a href="#后剪枝" class="headerlink" title="后剪枝"></a>后剪枝</h3><p>首先构造完整的决策树，允许树过度拟合训练数据，然后对那些置信度不够的结点子树用叶子结点来代替，该叶子的类标号用该结点子树中最频繁的类标记。</p>
+<p>相比于预剪枝，这种方法更常用。</p>
+<h3 id="其他剪枝方法"><a href="#其他剪枝方法" class="headerlink" title="其他剪枝方法"></a>其他剪枝方法</h3><p>Minimal cost-complexity  pruning<br><strong>CCP代价复杂度剪枝</strong></p>
+<script type="math/tex; mode=display">R_\alpha(T) = R(T) + \alpha |T| ​</script><script type="math/tex; mode=display">R_\alpha(T(\alpha)) = min_{T <= T_(max) } R_\alpha (T) ​</script><p>该算法为子树<script type="math/tex">T_t</script>定义了代价和复杂度以及一个可由用户设置的衡量代价与复杂度之间关系的参数<script type="math/tex">\alpha</script></p>
+<p><strong>代价</strong>指在剪枝过程中因子树<script type="math/tex">T_t</script>被叶节点替代而增加的错分样本</p>
+<p>复杂度表示剪枝后子树<script type="math/tex">T_t​</script>减少的叶结点数</p>
+<script type="math/tex; mode=display">\alpha$$ 则表示剪枝后树的复杂度降低程度与代价间的关系
+
+$$ \alpha =  \frac{R(t) - R(T_t)}{|N_1| - 1} ​</script><p>|N1|：子树<script type="math/tex">T_t</script>中的叶节点数，衡量树的复杂度</p>
+<p>R(t) ：结点t的错误代价</p>
+<p>R(t) = r(t) ∗p(t) ， r(t)为结点t的错分样本率 p(t)为落入结点t的样本占所有样本的比例</p>
+<p>R(<script type="math/tex">T_t</script>)：子树Tt错误代价</p>
+<p>R(<script type="math/tex">T_t</script>)=$\sum$R(i)，i为子树<script type="math/tex">T_t​</script>的叶节点</p>
+<p><strong>步骤：</strong></p>
+<p>1.对于完全决策树T的每个非叶结点计算α值，<strong>循环剪掉</strong>具有最小α值的子树，直到剩下根节点。在该步可得到一系列的剪枝树｛T0，T1，T2……Tm｝,其中T0为原有的完全决策树，Tm为根结点，$T_{i+1}​$为对$T_i​$进行剪枝的结果；</p>
+<p>2.从子树序列中，根据真实的误差估计选择最佳决策树。</p>
+<p>即：几个分对了，几个分错了</p>
+<h3 id="一倍标准差规则"><a href="#一倍标准差规则" class="headerlink" title="一倍标准差规则"></a>一倍标准差规则</h3><p>有一个cp（复杂度参量）取不同值的table，</p>
+<p>展示每个样本的CP，nsplit，rel error，xerror，xstd</p>
+<p>原则首先保证一定的预测误差（通过交叉验证获得，训练模型放进预测模型验证，k轮交叉验证后获得误差的平均xerror）尽量小，但不一定要取最小值，而是允许它在<em>“最小的误差+或-一个相应标准差”</em>的范围内，然后再此范围内选取尽量小的复杂性参量，进而以它为依据进行剪枝。</p>
+<p>CP值越大模型越精简（小的时候需要剪枝），CP不断减小时，xerror先变小后变大（树预测结果先变好，后过拟合）。我们要找xerror最小的行，同时也要综合CP值，选一个较大的。</p>
+<h2 id="连续型变量的树处理"><a href="#连续型变量的树处理" class="headerlink" title="连续型变量的树处理"></a>连续型变量的树处理</h2><p>自变量连续条件可以由树处理</p>
+<p>甚至因变量连续也可以（决策树回归）</p>
+<p>如何处理？也得分支，建树</p>
+<p>利用<strong>大于小于分支</strong></p>
+<h2 id="部分代码实现（R"><a href="#部分代码实现（R" class="headerlink" title="部分代码实现（R)"></a>部分代码实现（R)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fit &lt;- rpart(Species~., data=iris,method=&quot;class&quot;)</span><br><span class="line">    #建立分类树的模型</span><br><span class="line">fit2 &lt;-rpart(Species~.,data=iris,control=rpart.control(cp=.05))</span><br><span class="line"></span><br><span class="line">print(fit)                      #展示分类树的主要输出结果</span><br><span class="line">path.rpart(fit, node=c(1,2,3))  #展示前四个节点的分枝情况</span><br><span class="line"></span><br><span class="line">plot(fit, asp=4, compress=T)</span><br><span class="line">text(fit, cex=1,use.n=T)        #画出分类树的图</span><br></pre></td></tr></table></figure>
+<p>method参数：class“离散型”，anova“连续型”，poisson”计数型“，exp“生存分析型”</p>
+<p>control：用来控制每个节点的最小样本量、交叉验证的次数、复杂性参量（cp）。这个参数意味着对每一步拆分，模型的拟合优度必须提高的程度</p>
+<h3 id="其他实操要注意的（其实是讲代码时候突然提到的，没地方记了）"><a href="#其他实操要注意的（其实是讲代码时候突然提到的，没地方记了）" class="headerlink" title="其他实操要注意的（其实是讲代码时候突然提到的，没地方记了）"></a>其他实操要注意的（其实是讲代码时候突然提到的，没地方记了）</h3><p>混淆矩阵再两分类比较好分析，错分情况的概率好解释。但如果维数较高，就不好解释了。实际含义与二维相比可能有所不同。</p>
+<h2 id="决策树方法不好的地方"><a href="#决策树方法不好的地方" class="headerlink" title="决策树方法不好的地方"></a>决策树方法不好的地方</h2><p>鸢尾花数据，抽选部分数据做模型，“建一棵树”的方法用在不同的数据集上时，结果会一样吗？</p>
+<p>决策树方法很不稳定</p>
+<h3 id="如何评价树的好坏？"><a href="#如何评价树的好坏？" class="headerlink" title="如何评价树的好坏？"></a>如何评价树的好坏？</h3><blockquote>
+<p>1.K 折交叉验证</p>
+<p>2.留1验证</p>
+<p>3.oob估计</p>
+</blockquote>
+<p>k折交叉验证是以前讲过的方法，做很多轮。k取很大或很小都不好：k取很大时即留1验证；k取很小时测试得到的误差太不稳定。</p>
+<p>留1验证即每次只留一个作为测试样本</p>
+<h2 id="几个处理决策树精度的方法"><a href="#几个处理决策树精度的方法" class="headerlink" title="几个处理决策树精度的方法"></a>几个处理决策树精度的方法</h2><h3 id="boostrap（自助法）"><a href="#boostrap（自助法）" class="headerlink" title="boostrap（自助法）"></a>boostrap（自助法）</h3><p>最重要特点：从n个样品中，<strong>等概率</strong>地<strong>有放回</strong>地抽样。</p>
+<p>抽出n个，抽多轮。称为bootstrap抽样集。</p>
+<p>对训练集L进行bootstrap抽样(样本量为n)获得新的训练集，从训练集中等概率、有放回的重新抽取样本，得到bootstrap抽样数据集。</p>
+<p>对于一个样本点i来说，它出现在bootstrap抽样数据集$Z^∗$中的概率 </p>
+<script type="math/tex; mode=display">P(x_i,y_i )∈Z^∗)=1-(1-1/N)^N≈0.632</script><p>换句话说，由于bootstrap抽样的性质，<strong>L中大约每次约有37%的样本点不在$L_m$中</strong>。</p>
+<p>可以将bootstrap抽样理解成从数据Z的经验分布中的抽样。即可以将训练集和bootstrap抽样训练集理解为<strong>来自同一分布</strong>的。</p>
+<p>每一轮抽取时，未被bootstrap抽中的（37%），当作测试集。</p>
+<h3 id="Out-Of-Bag"><a href="#Out-Of-Bag" class="headerlink" title="Out Of Bag"></a>Out Of Bag</h3><p>对训练集L进行bootstrap抽样(样本量为N)获得新的训练集${ L_m,m = 1,2,…,M}​$时，由于bootstrap抽样的性质，L中大约每次有37%的样本点不在$L_m​$中，这些样本点对于应用$L_m​$构建的预测器$H_m(x,L_m)​$来说，可以看作是未被使用的测试样本。</p>
+<p>假设M=100，则某一个固定的样本点$(x_n,y_n)$，大概有37个$H_m(x,L_m) $没有使用该样本点。我们称这些样本点为“out-of-bag”样本点.</p>
+<p>对这些样本点的预测可以用来准确估计某些重要指标:</p>
+<blockquote>
+<p>–比如在分类树中，可以用“out-of-bag”估计每个样本点属于第j类的概率，也可以用来估计节点概率；</p>
+<p>–应用到回归树中，可以用来估计节点均方误差；</p>
+<p>–应用“out-of-bag”的预测值可以用来构建更准确的回归树；</p>
+<p>–也可以用来估计组合预测器的推广误差(generalization error)。</p>
+</blockquote>
+<h3 id="Bagging方法"><a href="#Bagging方法" class="headerlink" title="Bagging方法"></a>Bagging方法</h3><p>Bagging 是bootstrap aggregating的缩写</p>
+<p>它指的是利用bootstrap 抽样的方法对训练集抽样，得到一系列新的训练集，对每个训练集构建一个预测器，最后组合所有的预测器得到最终的预测模型。</p>
+<p><strong>对于分类问题</strong>，最终的预测模型是所有基预测器“投票”的结果。</p>
+<p><strong>对于回归问题</strong>，最终的预测模型是所有基预测器“平均”的结果。</p>
+<p>基预测器：我的理解是第一次预测产生的模型，称为最初的预测器</p>
+<p>例如组合的是一棵树（基预测器），那么得到最终的预测模型会变比开始要稳定；如果基预测器组合的是k近邻方法（自身本来就相对稳定的方法），那么得到最终的预测模型提升肯定不会高。</p>
+<h4 id="分类问题的bagging方法"><a href="#分类问题的bagging方法" class="headerlink" title="分类问题的bagging方法"></a>分类问题的bagging方法</h4><p>设训练样本集合L为$((x_n,y_n),n = 1,2,…,N)$其中$x_n$为p 维向量，是预测变量；$y_n$为因变量，是取值$(1,2,…,J)$的分类变量。</p>
+<p>对此数据集，我们可以构建一棵决策树$H_B(x,L)$(也可以使用其它基分类器)来预测y。</p>
+<p>假设我们有一系列与L有同样分布的训练集${ L_m,m = 1,2,…,M}$，每个训练集$L_m$都包含N个独立样本。因此我们可以构建M棵决策树$H_m(x,L_m)$，我们的目的是组合这M棵树得到最终分类器$H_{agg}$，以提高预测精度。</p>
+<p>一种自然而然可以想到的组合方法是“投票”(voting)。令<script type="math/tex">N_j = \sum_{m=1}^{M}(I(H_m(x,L_m) = j))</script></p>
+<p>其中$I(.)$为示性函数，在$H_m(x,L_m) = j$时取值为1，其它情况取值为0。那么$N_j$表示所有M棵树预测x属于类$j$的总个数；则$H_{agg}(x) = arg max_jN_j$，即最终组合的分类器$H_{agg}$预测x属于使得$N_j$取最大值的$j$ 。</p>
+<p>通常我们只有一个训练样本集合L，我们如何得到与其具有相同分布的训练集$L_m$呢？答案是对L进行Bootstrap 抽样。即对$((x_n,y_n),n = 1,2,…,N)$中N个样本点进行概率为1/N的等概率有放回的抽样，样本量为N。通过这样的抽样方法得到的最终组合分类器$H_{agg}$记为$H_B$，该预测方法称为bagging预测方法。</p>
+<p>综上所述，分类问题的Bagging算法如下：</p>
+<p>(1) $m = 1,2,…,M​$</p>
+<p>对L进行Bootstrap 抽样，得到样本量为N的训练样本集$L_m$，对$L_m$构建分类器(决策树)$H_m(x,L_m)$</p>
+<p>(2) 组合M棵决策树得到最终分类器$H_B$，$H_B$对x的预测为：$argmax_jN_j$，即使得$N_j$取最大值的$j$。</p>
+<p>其中<script type="math/tex">N_j = \sum_{m=1}^{M}(I(H_m(x,L_m) = j))</script>，$I(.)$为示性函数。</p>
+<p>注：回归问题的Bagging算法如下：</p>
+<p>(1)  $m = 1,2,…,M$</p>
+<p>对L进行Bootstrap 抽样，得到样本量为N的训练样本集$L_m$，对$L_m$构建回归(回归树)$f_m(x,L_m)$</p>
+<p>(2) 组合M棵决策树得到最终分类器$F_B$，$F_B$对x的预测为：</p>
+<script type="math/tex; mode=display">F_B(x) = \sum_{m=1}^{M}(f_m(x,L_m))/M</script><h4 id="一些讨论"><a href="#一些讨论" class="headerlink" title="一些讨论"></a>一些讨论</h4><p>可以看到，对于不稳定的基预测器(比如说决策树)，使用bagging算法虽然我们失去了一个简单的可解释的树型结构，但是却大大提高了预测的准确度。</p>
+<p>但是它也有局限性，我们在应用该算法的时候应该注意以下几点。如果预测结果很糟，那么bagging方法还能将结果变好吗？</p>
+<p>如分类的结果都在0~0.5附近时，bagging甚至会让结果更加糟糕。</p>
+<p>Bagging算法对于基预测器不稳定的情况很有作用，对于稳定的基预测器，bagging并不有效。</p>
+<p>在分类问题的bagging 算法中我们进行bootstrap抽样50次，即M=50，在回归问题中M=25。这并不表示25或者50是充分的，也不表示其是必要的，只是比较合理的。</p>
+<p>对于waveform数据集我们分别对M=10,25, 50和100进行了计算。可以看到在M=25之后，分类误差的提高已经并不明显。且M过大时，会将原始训练集的数据过多得使用在分类器上，产生过拟合问题（不确定是不是这个原因），总之不好。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CART</th>
+<th>Bagging M=10</th>
+<th>M=25</th>
+<th>M=50</th>
+<th>M=100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>错分率</td>
+<td>29.5</td>
+<td>23.1</td>
+<td>21.8</td>
+<td>20.7</td>
+<td>21.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Breiman建议对于回归问题的M值可以取得小一些，对于分类问题，尤其是y的类别比较多的时候，M的取值应该相应的大一些。</p>
+<p>M取值的大小对于bagging CART影响并不明显，因为相对来讲构建CART决策树的时间比较快。但是对于神经网络算法，因为其耗时较长，所以如果M取值很大的话，通常需要很久才能得到结果。</p>
+<p>注：M在实战中就多做几个，看看，选合适的。</p>
+<p>每次进行bootstrap抽样的时候，我们选择的样本量相等于原始训练集的样本量。因为bootstrap是有放回的重复抽样，所以有些样本点被抽中的次数超过一次，有些样本点没有被抽中。</p>
+<p>根据bootstrap抽样的理论，当样本量为时，大约有37%的样本点没有被抽中。增加bootstrap抽样样本量的个数(我们知道，按照bootstrap抽样技术，一般是按照等于原始数据集的样本量进行抽样，但从理论上讲，bootstrap抽样的样本量既可以大于又可以小于)，是否可以提高bagging算法的精度呢？</p>
+<p>对这个问题的经验回答是否定的，当提高bootstrap抽样样本量的个数至2后，大约有14%的样本点没有被抽中，但是bagging算法的精度并没有提高。</p>
+<p>如果从偏差方差分解的角度理解bagging算法，它可以提高不稳定基预测器的预测精度，<strong>实质上是减小了预测的方差(variance)，但并没有降低偏差(bias)</strong>。</p>
+<p>从这个角度出发，Breiman(2001)提出了迭代(iterated) bagging算法同时减小预测的偏差及方差。</p>
+<p>Breiman, Leo (2001a), Using Iterated Bagging to Debias Regressions, <em>Machine Learning</em>, 45, 261-277</p>
+<p>Buhlmann 和 Yu (2002)进一步从理论上探讨了bagging方法对偏差及方差的降低，提出了subbagging算法，与bagging方法相比，它有相同的预测精度，但却可以大大节省计算时间。这人厉害。</p>
+<h3 id="Adaboost算法"><a href="#Adaboost算法" class="headerlink" title="Adaboost算法"></a>Adaboost算法</h3><p>相较于bagging，更加精细，更好。</p>
+<p>具体步骤如下：</p>
+<p>(1) <em>m=</em>1，以bootstrap方法(即等概率$p_1(n)=1/N$有放回重复抽样)对训练样本集$L{(x_n,y_n), n=1,…,N}$抽样得到新的训练集$L_1$，样本量为<em>N</em>。</p>
+<p>对$L_1​$构建决策树$H_1(x,L_1)​$。应用$H_1(x,L_1)​$预测训练集<em>L</em>中所有样本点$(x_n,y_n), n=1,…,N​$，如果$H_1​$对$(x_n,y_n)​$预测错误，</p>
+<p>令$d_1(n)=1$，否则$d_1(n)=0$。d_1(n)就是预测正误标记，对了就是0，错了就是1.</p>
+<p>计算:</p>
+<script type="math/tex; mode=display">\epsilon_1 = \sum_{n}p_1(n)d_1(n);​</script><script type="math/tex; mode=display">\beta_1 = (1-\epsilon_1)/\epsilon_1;$$ 先理解为正确和错误的比重
+
+$$C_1 = log(\beta_1)​</script><p>(2) 对于<em>m</em>=2,…,<em>M</em></p>
+<p>更新第<em>m</em>次抽样概率为</p>
+<script type="math/tex; mode=display">p_m(n) = p_{m-1}(n)\beta_{m-1}^{d_{m-1}(n)}/\sum_{n}p_{m-1}(n) \beta_{m-1}^{d_{m-1}(n)}</script><p>以概率$p_m(n)​$对训练集<em>L</em>进行有放回重复抽样得到新的训练集$L_m​$，并对$L_m$构建决策树$H_m(x,L_m)​$</p>
+<p>应用$H_m(x,L_m)$预测训练集<em>L</em>中所有样本点$(x_n,y_n), n=1,…,N$，如果$H_m$对$(x_n,y_n)$预测错误，令$d_m(n)=1$，否则$d_m(n)=0$。</p>
+<p>计算:</p>
+<script type="math/tex; mode=display">\epsilon_m = \sum_{n}p_m(n)d_m(n);​</script><script type="math/tex; mode=display">\beta_m = (1-\epsilon_m)/\epsilon_m;$$ 先理解为正确和错误的比重
+
+$$C_m = log(\beta_m)</script><p>(3) 计算$W_m=C_m/\sum_{m}C_m$，（类似权重）</p>
+<p>组合<em>M</em>棵决策树得到最终分类器$H_A (x)$ ，使得</p>
+<script type="math/tex; mode=display">H_A (x) = arg max_{y∈(1,2,...,K)}(\sum_{m=1}^{M}W_mI(h_B(x,L_m)=y))</script><p> 其中$I(.) ​$为示性函数。</p>
+<p>这个判别是一个递进的过程，是统计可加模型。</p>
+<p>现在最流行的是XGBboost</p>
+<h3 id="关于决策树的一些说明"><a href="#关于决策树的一些说明" class="headerlink" title="关于决策树的一些说明"></a>关于决策树的一些说明</h3><h4 id="1-二叉树还是多叉树"><a href="#1-二叉树还是多叉树" class="headerlink" title="1.二叉树还是多叉树"></a>1.二叉树还是多叉树</h4><p>多叉树经常导致数据被分到每个节点，没有足够的数据进行后续的分枝。多叉树可以通过多层二叉树实现，<strong>建议使用二叉树</strong>。</p>
+<p>多个水平如何二分叉：有一些专门的方法进行选择。自变量多水平，有时也可以当作连续变化（ordered var） </p>
+<h4 id="2-单棵树构建的探讨"><a href="#2-单棵树构建的探讨" class="headerlink" title="2.单棵树构建的探讨"></a>2.单棵树构建的探讨</h4><p>ID3是最早的，后来又经历商业包装，出现了其他算法C4.0、C5.0等</p>
+<h4 id="3-缺失值的处理"><a href="#3-缺失值的处理" class="headerlink" title="3.缺失值的处理"></a>3.缺失值的处理</h4><p>删除、替代、保留：保留方法很重要，在决策树这里有很好的效果。</p>
+<h4 id="4-算法的稳定性"><a href="#4-算法的稳定性" class="headerlink" title="4.算法的稳定性"></a>4.算法的稳定性</h4><p>如果生成基预测器的算法是不稳定的(unstable)，通过bagging得到的最终预测模型的预测精度往往会大大高于单个基预测器的预测精度。</p>
+<p><strong>“不稳定” ：</strong>当训练样本集合有很小的变动，由此生成的预测器有很大的变化。</p>
+<p><strong>不稳定的算法</strong>: 决策树，神经网络，MARS (multivariate splines)，和子集回归(subset regression)等等；</p>
+<p><strong>稳定的算法</strong>:岭回归(ridge regression)，最近邻方法(K-nearest neighbor)，和线性判别方法(Linear discriminate)等等。</p>
+<p>（未完</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2019/05/07/190507decisiontree/">
+                    https://konelane.github.io/2019/05/07/190507decisiontree/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2019/05/14/190514adaboost/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          数据挖掘|adaboost原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/20/0420houkai3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">不务正业|崩坏3战舰甲板清洗姿势指北（指空中劈叉）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

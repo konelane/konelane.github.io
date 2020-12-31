@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>数据之学|交叉验证相关理论介绍 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="交叉验证相关理论介绍2020.10.13 1.1 场景构建源禾同学和正阳同学在某次考试都考了100分，正阳同学实力强劲，学习踏实，掌握核心科技，考了100是实力的体现，因为卷子上只有100分。而源禾同学考100分，因为源禾使用了败者食尘，他课下做了这张卷子的所有题，背了题，考了100分是因为记性好。 谁才是老师喜爱的同学呢？">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据之学|交叉验证相关理论介绍">
+<meta property="og:url" content="https://konelane.github.io/2020/10/13/1010CV/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="交叉验证相关理论介绍2020.10.13 1.1 场景构建源禾同学和正阳同学在某次考试都考了100分，正阳同学实力强劲，学习踏实，掌握核心科技，考了100是实力的体现，因为卷子上只有100分。而源禾同学考100分，因为源禾使用了败者食尘，他课下做了这张卷子的所有题，背了题，考了100分是因为记性好。 谁才是老师喜爱的同学呢？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/1010CV/10/13/1010CV/图1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/1010CV/10/13/1010CV/图2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/1010CV/10/13/1010CV/图3.jpg">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/1010CV/10/13/1010CV/图4.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/1010CV/10/13/1010CV/图5.png">
+<meta property="og:updated_time" content="2020-10-16T01:53:21.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据之学|交叉验证相关理论介绍">
+<meta name="twitter:description" content="交叉验证相关理论介绍2020.10.13 1.1 场景构建源禾同学和正阳同学在某次考试都考了100分，正阳同学实力强劲，学习踏实，掌握核心科技，考了100是实力的体现，因为卷子上只有100分。而源禾同学考100分，因为源禾使用了败者食尘，他课下做了这张卷子的所有题，背了题，考了100分是因为记性好。 谁才是老师喜爱的同学呢？">
+<meta name="twitter:image" content="https://konelane.github.io/2020/10/13/1010CV/10/13/1010CV/图1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-1010CV" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/10/13/1010CV/" class="article-date">
+  	<time datetime="2020-10-12T16:00:00.000Z" itemprop="datePublished">2020-10-13</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      数据之学|交叉验证相关理论介绍
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#交叉验证相关理论介绍"><span class="toc-number">1.</span> <span class="toc-text">交叉验证相关理论介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-场景构建"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 场景构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-模型-算法的选择"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 模型/算法的选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-出路-重抽样（resampling）"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 出路 - 重抽样（resampling）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-验证集方法（validation-set-approach）"><span class="toc-number">1.4.</span> <span class="toc-text">2.1 验证集方法（validation set approach）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-留一交叉验证（leave-one-out-cross-validation）"><span class="toc-number">1.5.</span> <span class="toc-text">2.2 留一交叉验证（leave-one-out cross-validation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-K折交叉验证（K-fold-CV）"><span class="toc-number">1.6.</span> <span class="toc-text">2.3 K折交叉验证（K-fold CV）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-总结"><span class="toc-number">1.7.</span> <span class="toc-text">2.4 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-补充"><span class="toc-number">1.8.</span> <span class="toc-text">2.5 补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文献"><span class="toc-number">1.9.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <h2 id="交叉验证相关理论介绍"><a href="#交叉验证相关理论介绍" class="headerlink" title="交叉验证相关理论介绍"></a>交叉验证相关理论介绍</h2><p>2020.10.13</p>
+<h3 id="1-1-场景构建"><a href="#1-1-场景构建" class="headerlink" title="1.1 场景构建"></a>1.1 场景构建</h3><p>源禾同学和正阳同学在某次考试都考了100分，正阳同学实力强劲，学习踏实，掌握核心科技，考了100是实力的体现，因为卷子上只有100分。而源禾同学考100分，因为源禾使用了败者食尘，他课下做了这张卷子的所有题，背了题，考了100分是因为记性好。</p>
+<p>谁才是老师喜爱的同学呢？</p>
+<a id="more"></a>
+<p>在对模型进行测试时，不可以照着“考卷”疯狂练习。尤其是在样本量小的时候，换一张卷子就会原形毕露。</p>
+<p>那么不妨站在老师的角度想，如果题库只有这么多题，该怎么出题才能真正考察学生的实力呢？</p>
+<h3 id="1-2-模型-算法的选择"><a href="#1-2-模型-算法的选择" class="headerlink" title="1.2 模型/算法的选择"></a>1.2 模型/算法的选择</h3><p>在建模时，可选用的模型很多，我们想选用何种模型，此时就需要对模型的<strong>“泛化误差”</strong>（generalization-error，指在独立测试样本上的期望预测误差，也称测试误差test-error或预测误差prediction-error）进行评估。</p>
+<p>在实际建模中，很少能得到样本的精确分布，也无法直接计算泛化误差。基于训练样本得到的样本上平均损失的训练误差是它的一个直接估计，可训练误差会随着模型复杂度（光滑度，自由度）的增加而减小，直至减小到0。（训练均方误差 vs 测试均方误差）</p>
+<p>如果训练均方误差很小但测试均方误差较大时，我们称该数据被过拟合。（模型开始背题了）</p>
+<img src="/2020/10/13/1010CV/10/13/1010CV/图1.png" title="图1">
+<blockquote>
+<p>源禾：任何难处都可以靠增加数据量来解决。<br>（当然解决不了的除外）</p>
+</blockquote>
+<p>事实上，这里涉及到偏差方差权衡（bias-variance trade-off）的问题，如果一个统计模型被称为测试性能好，那么要去该模型具有较小的方差和较小的偏差。直觉上我们会选择有极小偏差可是有很大方差的方法（如画一条通过所有观测的曲线，下图的绿线）</p>
+<img src="/2020/10/13/1010CV/10/13/1010CV/图2.png" title="图2">
+<blockquote>
+<p>源禾：虽然没有完美的模型，但是有完美模型的传说。</p>
+</blockquote>
+<p>为一个模型来选择何适的光滑度的过程即<strong>模型选择</strong>。这个问题在训练集较小时，被产生的过拟合现象加大了难度。</p>
+<h3 id="1-3-出路-重抽样（resampling）"><a href="#1-3-出路-重抽样（resampling）" class="headerlink" title="1.3 出路 - 重抽样（resampling）"></a>1.3 出路 - 重抽样（resampling）</h3><p>应当找到一个方法解决过拟合，而唯一的限制是，没那么多数据。</p>
+<p>于是人们想了个办法：让这个测试集来源于训练集。我反复从训练集中抽取样本，对每一个样本重新拟合一个模型，来获取关于拟合模型的附加信息。这就是<strong>重抽样</strong>方法。在拟合过程中，保留（holding out）训练观测的一个子集，然后对保留的观测运用统计学习方法，从而来估计其<strong>测试错误率</strong>（test error rate）。</p>
+<img src="/2020/10/13/1010CV/10/13/1010CV/图3.jpg" title="图3">
+<blockquote>
+<p>源禾：预测集神圣不可侵犯。</p>
+</blockquote>
+<h3 id="2-1-验证集方法（validation-set-approach）"><a href="#2-1-验证集方法（validation-set-approach）" class="headerlink" title="2.1 验证集方法（validation set approach）"></a>2.1 验证集方法（validation set approach）</h3><p>首先随机地把观测集分成两部分：一个训练集（training set），一个验证集（validation set），或者叫保留集（hold-out set）。模型在训练集上拟合，然后用拟合的模型来预测验证集中观测的响应变量。最后得到的验证集错误率——通常用均方误差作为定量响应变量的误差度量——提供了对于测试错误率的一个估计。</p>
+<p>附一个“上帝”的比例：70%的训练集，30%的测试集。</p>
+<blockquote>
+<p>验证集方法原理简单，易于执行，但它有两个潜在的<strong>缺陷</strong>：<br>1.测试错误率的验证法估计的波动很大，这取决于具体哪些观测被包括在训练集中，哪些观测被包括在验证集中。<br>2.在验证法中，只有一部分观测被用于拟合模型，由于被训练的观测越少，统计方法的表现越不好，意味着验证集错误率可能会<strong>高估</strong>在整个数据集上拟合模型的测试错误率。</p>
+</blockquote>
+<p>统计分析中通过多次重复试验来减小方差。</p>
+<h3 id="2-2-留一交叉验证（leave-one-out-cross-validation）"><a href="#2-2-留一交叉验证（leave-one-out-cross-validation）" class="headerlink" title="2.2 留一交叉验证（leave-one-out cross-validation）"></a>2.2 留一交叉验证（leave-one-out cross-validation）</h3><p>留一交叉验证（LOOCV）与验证集方法很相似，但这种方法尝试解决验证集方法遗留的缺陷问题。</p>
+<p>LOOCV将观测集分为两部分，但不同于把观测集分为两个大小相当的子集，留一交叉验证法将一个单独的观测$(x_1, y_1)$作为验证集，剩下的观测$\{(x_2, y_2),(x_3, y_3), … ,(x_n, y_n)\}$组成训练集。由于拟合中没有用到$(x_1, y_1)$，所以$MSE_1 = (y_1 - \hat{y_1})^2$ 提供了对于测试误差的一个渐进无偏估计。</p>
+<p>能看出，由于$MSE_1$是基于一个单独的观测计算得出的，故具有很高的波动性。</p>
+<p>重复上面计算$MSE_1$的步骤，计算出全部的$MSE_1, MSE_2, …, MSE_n$，对测试均方误差的LOOCV估计是这n个测试误差估计的均值：</p>
+<script type="math/tex; mode=display">CV_{(n)} = \frac{1}{n} \sum^{n}_{i=1}MSE_i</script><p>相对于验证集方法，LOOCV方法更不容易高估测试错误率，也能彻底解决训练集和验证集分割时随机性导致的结果不同问题。</p>
+<h3 id="2-3-K折交叉验证（K-fold-CV）"><a href="#2-3-K折交叉验证（K-fold-CV）" class="headerlink" title="2.3 K折交叉验证（K-fold CV）"></a>2.3 K折交叉验证（K-fold CV）</h3><p>k折交叉验证法是LOOCV的一个替代，这种方法将观测集随机地分成K个大小基本一致的组，或者说<strong>折（fold）</strong>。第一折作为验证集，然后在剩下的k-1折上拟合模型。均方误差$MSE_1$由保留的观测计算得出。</p>
+<img src="/2020/10/13/1010CV/10/13/1010CV/图4.png" title="图4">
+<p>重复这个步骤k次（注意一般k大于2），每一次把不同的观测组作为验证集（分组只是第一次分）。整个过程会得到k个测试误差的估计，$MSE_1, MSE_2, …, MSE_k$。k折CV估计由这些值求平均计算得到：</p>
+<script type="math/tex; mode=display">CV_{(k)} = \frac{1}{k} \sum^{k}_{i=1}MSE_i</script><p>不难发现，<strong>k等于n时，LOOCV方法是k折交叉验证的一个特例</strong>。</p>
+<p>k一般取5或10。不取n的原因果然还是因为<strong>好算啊</strong>。几乎对于任一种统计学习方法适用，都有更好的可行性。</p>
+<blockquote>
+<p>源禾：在计算简便和尽可能减少估计的波动面前，一个能“我全都要”的方法谁不喜欢呢？</p>
+</blockquote>
+<p>k折交叉验证的结果也会因观测分折的随机性产生一定波动。同时对$Err$估计时也会因训练集样本容量大小产生一定的高估。</p>
+<img src="/2020/10/13/1010CV/10/13/1010CV/图5.png" title="图5">
+<p>由上图可知，训练集在150+时，训练效果已经不再随着训练集样本量增加而增加。但训练集样本容量在0至50时，会明显低估$1-Err$。</p>
+<h3 id="2-4-总结"><a href="#2-4-总结" class="headerlink" title="2.4 总结"></a>2.4 总结</h3><p>先画一张表在这：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>优点</th>
+<th>缺点</th>
+<th>计算复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>验证集方法(validation set approach)</td>
+<td>原理简单，易于执行</td>
+<td>A.测试错误率的验证法估计的波动很大，与分组关系很大。B.验证集错误率可能会高估在整个数据集上拟合模型的测试错误率。</td>
+<td>计算最简单，方便对比称一个<strong>计算单步</strong>（对数据进行多次重复划分时计算复杂度会相应高）</td>
+</tr>
+<tr>
+<td>留一交叉验证法(Leave-one-out cross-validation)</td>
+<td>A.偏差较小，不易高估错误率。训练模型最接近原始样本的分布。B.LOOCV方法能解决训练集和验证集分割的随机性。实验可复制。</td>
+<td>A.模型需拟合n次，非常耗时。（<em>但是最小二乘法来拟合线性或多项式回归时只消耗一个计算单步</em>）B.方差较大。</td>
+<td>除左栏提到的线性/多项式回归外，需要<strong>n个计算单步</strong>。大样本情况时，对于某些算法来说数据划分为n份也不可接受。svm和朴素贝叶斯分类器。</td>
+</tr>
+<tr>
+<td>k折交叉验证(k-fold CV)</td>
+<td>A.偏差问题不大,方差较小。有效避免过拟合和欠拟合情况发生。B.计算方便，计算开销小。</td>
+<td>A.选择K折交叉验证的<strong>“K”</strong>时比较随机。B.会产生一定波动。偏差大小会随训练集样本容量变化而改变。</td>
+<td><strong>k个计算单步</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>k折CV方法相对于LOOCV方法除了计算优势外，它对测试错误率的估计通常来说更加准确。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>验证集方法</th>
+<th>LOOCV方法</th>
+<th>k折CV方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>偏差角度</td>
+<td>高估</td>
+<td>近似无偏</td>
+<td>中等程度偏差</td>
+</tr>
+<tr>
+<td>方差角度</td>
+<td></td>
+<td>k&lt;n时方差大于k折CV方法</td>
+<td>k&lt;n时方差小于LOOCV方法</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>由上表可知，选择方法时，需要进行偏差-方差权衡。在选择k折CV的折数时，一般k=5或10使得测试错误率的估计不会有过大的偏差或方差。</p>
+<h3 id="2-5-补充"><a href="#2-5-补充" class="headerlink" title="2.5 补充"></a>2.5 补充</h3><p>一、</p>
+<p>之前提到交叉验证方法可以应用于多个场景，举个例子，交叉验证在分类器模型的应用：</p>
+<p>其实只需要修改“泛化误差”为“损失函数”（$MSE$ to $Err$），比如k折CV错误率的形式：</p>
+<script type="math/tex; mode=display">CV_{(k)} = \frac{1}{k} \sum^{k}_{i=1}Err_i</script><p>其中$Err_i = I(y_i \ne \hat{y_i}) $。LOOCV和验证集错误率也可类似定义。</p>
+<p>二、</p>
+<p>上文提到，在LOOCV方法中，最小二乘法来拟合线性或多项式回归时将只计算一次。</p>
+<script type="math/tex; mode=display">CV_{(n)} = \frac{1}{n} \sum^{n}_{i=1}(\frac{y_i - \hat{y_i}}{1-h_i})^2</script><p>其中$\hat{y_i}$为用原始最小二乘拟合的第i个拟合值，$h_i$为杠杆统计量：</p>
+<script type="math/tex; mode=display">h_i = \frac{1}{n} + \frac{(x_{i} - \bar{x})^2}{\sum^n_{i'}(x_{i'} - \bar{x})^2}</script><p>区别仅在于第i个残差除了一个系数$(1-h_i)$。杠杆值的大小在0到1之间，反映了一个观测对自己拟合值的影响大小。因此，该公式表明高杠杆值的残差根据它本身偏离数据的程度进行了等量的放大。</p>
+<p>三、</p>
+<p>若样本量非常小，非常非常小，我们还可以使用重抽样的另一种方法：<strong>自助法</strong>（bootstrap）。</p>
+<p>比如我们有m个样本（m较小），每次在这m个样本中随机采集一个样本，放入训练集，采样完后把样本放回。这样重复采集m次，我们得到m个样本组成的训练集。当然，这m个样本中很有可能有<strong>重复</strong>的样本数据。同时，用原始的m个样本做测试集。这样接着进行交叉验证。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>[1]James G , Witten D , Hastie T , et al. An Introduction to Statistical Learning[M]. Springer New York, 2013.</p>
+<p>[2]杨柳,王钰.泛化误差的各种交叉验证估计方法综述[J].计算机应用研究,2015,32(05):1287-1290+1297.</p>
+<p>[3]范永东. 模型选择中的交叉验证方法综述[D].山西大学,2013.</p>
+<p>[4]Hastie, Trevor J. The Elements of Statistical Learning[M]. 世界图书出版公司, 2015.</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/10/13/1010CV/">
+                    https://konelane.github.io/2020/10/13/1010CV/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/10/21/1015hadoop/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          分布式1015-1021-分布式回归分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/10/07/1007分布式计算/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式1007-Map-Reduce的文字流</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

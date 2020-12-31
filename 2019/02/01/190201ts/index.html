@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>数据分析报告|Valve-Steam“买断制”游戏平均价格时间序列模型 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最后编辑于：2020.01.02 14:18 Valve-Steam“买断制”游戏平均价格时间序列模型一、背景作为精神文明消费品，游戏已成为每一个人或多或少都会接触的事物。游戏消费已经成为当代大学生重要的开支，而valve-steam游戏软件消费平台作为近乎垄断的最大的pc（个人电脑）游戏中介平台，已成为大多数电脑游戏玩家不可或缺的电脑软件。 很多游戏也有“年货”之称，而很多游戏的发布时机和销售价">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据分析报告|Valve-Steam“买断制”游戏平均价格时间序列模型">
+<meta property="og:url" content="https://konelane.github.io/2019/02/01/190201ts/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="最后编辑于：2020.01.02 14:18 Valve-Steam“买断制”游戏平均价格时间序列模型一、背景作为精神文明消费品，游戏已成为每一个人或多或少都会接触的事物。游戏消费已经成为当代大学生重要的开支，而valve-steam游戏软件消费平台作为近乎垄断的最大的pc（个人电脑）游戏中介平台，已成为大多数电脑游戏玩家不可或缺的电脑软件。 很多游戏也有“年货”之称，而很多游戏的发布时机和销售价">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu1.jpg">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu2.jpg">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu3.jpg">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu4.jpg">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu5.jpg">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu6.jpg">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu7.jpg">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu8.jpg">
+<meta property="og:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu9.jpg">
+<meta property="og:updated_time" content="2020-02-05T04:29:06.168Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据分析报告|Valve-Steam“买断制”游戏平均价格时间序列模型">
+<meta name="twitter:description" content="最后编辑于：2020.01.02 14:18 Valve-Steam“买断制”游戏平均价格时间序列模型一、背景作为精神文明消费品，游戏已成为每一个人或多或少都会接触的事物。游戏消费已经成为当代大学生重要的开支，而valve-steam游戏软件消费平台作为近乎垄断的最大的pc（个人电脑）游戏中介平台，已成为大多数电脑游戏玩家不可或缺的电脑软件。 很多游戏也有“年货”之称，而很多游戏的发布时机和销售价">
+<meta name="twitter:image" content="https://konelane.github.io/2019/02/01/190201ts/02/01/190201ts/tu1.jpg">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-190201ts" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2019/02/01/190201ts/" class="article-date">
+  	<time datetime="2019-01-31T16:00:00.000Z" itemprop="datePublished">2019-02-01</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      数据分析报告|Valve-Steam“买断制”游戏平均价格时间序列模型
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Valve-Steam“买断制”游戏平均价格时间序列模型"><span class="toc-number">1.</span> <span class="toc-text">Valve-Steam“买断制”游戏平均价格时间序列模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、背景"><span class="toc-number">1.1.</span> <span class="toc-text">一、背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、变量说明"><span class="toc-number">1.2.</span> <span class="toc-text">二、变量说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、探索性数据分析"><span class="toc-number">1.3.</span> <span class="toc-text">三、探索性数据分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、模型探索"><span class="toc-number">1.4.</span> <span class="toc-text">四、模型探索</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-简单线性回归"><span class="toc-number">1.4.1.</span> <span class="toc-text">1.简单线性回归</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-对数线性模型"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.对数线性模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、时间序列模型识别"><span class="toc-number">1.5.</span> <span class="toc-text">五、时间序列模型识别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-ARIMA时间序列模型"><span class="toc-number">1.5.1.</span> <span class="toc-text">1.ARIMA时间序列模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-模型评价"><span class="toc-number">1.5.2.</span> <span class="toc-text">2.模型评价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-乘法季节模型"><span class="toc-number">1.5.3.</span> <span class="toc-text">3.乘法季节模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、模型评估"><span class="toc-number">1.6.</span> <span class="toc-text">六、模型评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、模型预测"><span class="toc-number">1.7.</span> <span class="toc-text">七、模型预测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、原因探讨与结论"><span class="toc-number">1.8.</span> <span class="toc-text">八、原因探讨与结论</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>最后编辑于：2020.01.02 14:18</p>
+<h2 id="Valve-Steam“买断制”游戏平均价格时间序列模型"><a href="#Valve-Steam“买断制”游戏平均价格时间序列模型" class="headerlink" title="Valve-Steam“买断制”游戏平均价格时间序列模型"></a>Valve-Steam“买断制”游戏平均价格时间序列模型</h2><h3 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h3><p>作为精神文明消费品，游戏已成为每一个人或多或少都会接触的事物。游戏消费已经成为当代大学生重要的开支，而valve-steam游戏软件消费平台作为近乎垄断的最大的pc（个人电脑）游戏中介平台，已成为大多数电脑游戏玩家不可或缺的电脑软件。</p>
+<p>很多游戏也有“年货”之称，而很多游戏的发布时机和销售价格都有一定的变化规律。本研究将基于steamspy中的steam游戏消费数据，希望探索对游戏的月平均价格的变化趋势。</p>
+<p>（数据来源于<a href="http://steamspy.com/year/" target="_blank" rel="noopener">steamspy</a>）</p>
+<a id="more"></a>
+<h3 id="二、变量说明"><a href="#二、变量说明" class="headerlink" title="二、变量说明"></a>二、变量说明</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>变量名</th>
+<th>含义</th>
+<th>变量水平</th>
+<th>变量简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AVERAGE_PRICE</td>
+<td>Steam平台上售卖的游戏的平均价格</td>
+<td>连续型</td>
+<td>发行游戏总价值/发行游戏总数</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>月平均价格对应的时间</td>
+<td>整数连续</td>
+<td>04年1月到18年12月</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Value-Steam平台售卖的游戏软件只计算了买断游戏的价格，不包括游戏内购项目的花费。因此本报告仅以“买断制”游戏的平均价格为研究对象。同时，为研究游戏市场整体的行情，我们不以游戏销量作为权重，单纯研究价格的变化趋势。</p>
+<h3 id="三、探索性数据分析"><a href="#三、探索性数据分析" class="headerlink" title="三、探索性数据分析"></a>三、探索性数据分析</h3><p>“买断制”游戏往往受公司销售业务安排的影响，拥有固定的折扣期，折扣期能很好地促进游戏的销量。value-steam游戏销售平台也拥有自己的折扣期，这使得游戏价格在原有基础上产生了上下波动的现象。</p>
+<p>根据图1，我们能看出平均价格总体呈现增长趋势，并且有一定的波动模式。随机性趋势有但是不明显，且没有非常明显的季节趋势。</p>
+<p>自相关图和偏相关图都表明有一定的自相关性，在二阶以前都存在显著不为零的部分，能够初步识别时间序列的ARIMA模型阶数。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu1.jpg" title="图1">
+<h3 id="四、模型探索"><a href="#四、模型探索" class="headerlink" title="四、模型探索"></a>四、模型探索</h3><h4 id="1-简单线性回归"><a href="#1-简单线性回归" class="headerlink" title="1.简单线性回归"></a>1.简单线性回归</h4><p>首先使用简单线性回归模型对数据进行简单拟合。以AVERAGE_PRICE（平均价格）为因变量，以Time（时间）为自变量进行线性回归。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu2.jpg" title="图2">
+<p>图二展示了用最小二乘线性模型拟合数据的结果，线性拟合只能拟合出线性增长的趋势，但是完全无法显示出随机波动的趋势。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>estimate</th>
+<th>Std.error</th>
+<th>T value</th>
+<th>Pr(&gt;t)</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(Intercept)</td>
+<td>3.957189</td>
+<td>0.222438</td>
+<td>17.790</td>
+<td>&lt; 2e-16</td>
+<td>***</td>
+</tr>
+<tr>
+<td>x</td>
+<td>0.009442</td>
+<td>0.002155</td>
+<td>4.381</td>
+<td>2.03e-05</td>
+<td>***</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Signif. codes:  0  ‘***’  0.001  ‘**’  0.01  ‘*’  0.05  ‘.’  0.1  ‘ ’  1</p>
+<p>Multiple R-squared:  0.09832,  Adjusted R-squared:  0.09319 </p>
+<p>F-statistic: 19.19 on 1 and 176 DF,  p-value: 2.028e-05</p>
+<p>虽然拟合参数都显著通过，通过观察调整的R方，我们能够看到模型的解释能力不足10%，拟合效果并不好。因此我们采取数据变换的方式尝试调整模型。</p>
+<h4 id="2-对数线性模型"><a href="#2-对数线性模型" class="headerlink" title="2.对数线性模型"></a>2.对数线性模型</h4><p>对原始数据做对数变换，再使用线性模型拟合。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>estimate</th>
+<th>Std.error</th>
+<th>T value</th>
+<th>Pr(&gt;t)</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(Intercept)</td>
+<td>1.2602098</td>
+<td>0.0495757</td>
+<td>25.420</td>
+<td>&lt; 2e-16</td>
+<td>***</td>
+</tr>
+<tr>
+<td>x</td>
+<td>0.0028057</td>
+<td>0.0004804</td>
+<td>5.841</td>
+<td>2.46e-08</td>
+<td>***</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Signif. codes:  0  ‘***’  0.001  ‘**’  0.01  ‘*’  0.05  ‘.’  0.1  ‘ ’  1</p>
+<p>Multiple R-squared:  0.1624,         Adjusted R-squared:  0.1576 </p>
+<p>F-statistic: 34.11 on 1 and 176 DF,  p-value: 2.459e-08</p>
+<p>拟合参数依然显著通过，通过观察调整的R方，我们看出模型有了一定的优化，但依然拟合不好。可能不是数据的问题，所以接下来我们对模型进行调整。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu3.jpg" title="图3">
+<p>图3表明，对数变换后的数据虽然有很好的上升趋势，但是随机波动也随之变大，模型太过简单，损失了很多波动信息。不应采用。</p>
+<h3 id="五、时间序列模型识别"><a href="#五、时间序列模型识别" class="headerlink" title="五、时间序列模型识别"></a>五、时间序列模型识别</h3><h4 id="1-ARIMA时间序列模型"><a href="#1-ARIMA时间序列模型" class="headerlink" title="1.ARIMA时间序列模型"></a>1.ARIMA时间序列模型</h4><p>首先，我们对模型进行一阶差分，去数据的趋势，削减模型的不平稳性。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu4.jpg" title="图4">
+<p>通过看到数据趋势基本消除，模型虽有波动，但是趋于规律。观察自相关函数和偏自相关函数，发现自相关性，初步推断模型是ma1与ar4的结合。通过R软件自动拟合，我们能够得到下表估计的模型系数。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ar1</th>
+<th>ar2</th>
+<th>ar3</th>
+<th>ar4</th>
+<th>ma1</th>
+<th>intercept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系数</td>
+<td>0.1020</td>
+<td>0.3871</td>
+<td>-0.1103</td>
+<td>0.0033</td>
+<td>-1.0000</td>
+<td>0.0099</td>
+</tr>
+<tr>
+<td>s.e.</td>
+<td>0.0753</td>
+<td>0.0757</td>
+<td>0.0767</td>
+<td>0.0811</td>
+<td>0.0192</td>
+<td>0.0032</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>sigma^2 estimated as 1.833:  log likelihood = -307.08,  aic = 628.15</p>
+<p>我们发现ma1的系数为-1，该ARIMA模型不可逆，于是尝试增加一阶来拟合。利用R软件得到新拟合模型估计的参数。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><code> </code></th>
+<th><code>ar1</code></th>
+<th><code>ar2</code></th>
+<th><code>ar3</code></th>
+<th><code>ar4</code></th>
+<th><code>ma1</code></th>
+<th><code>ma2</code></th>
+<th><code>intercept</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>系数</code></td>
+<td><code>-0.7327</code></td>
+<td><code>0.4642</code></td>
+<td><code>0.2125</code></td>
+<td><code>-0.0646</code></td>
+<td><code>-0.1614</code></td>
+<td><code>-0.8385</code></td>
+<td><code>0.0099</code></td>
+</tr>
+<tr>
+<td><code>s.e.</code></td>
+<td><code>0.2219</code></td>
+<td><code>0.0975</code></td>
+<td><code>0.1262</code></td>
+<td><code>0.0887</code></td>
+<td><code>0.2085</code></td>
+<td><code>0.2082</code></td>
+<td><code>0.0032</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>sigma^2 estimated as 1.83:  log likelihood = -306.91,  aic = 629.81</p>
+<p>可看到，如此调整，模型的aic有稍许的增加。但是模型平稳可逆，性质好。</p>
+<h4 id="2-模型评价"><a href="#2-模型评价" class="headerlink" title="2.模型评价"></a>2.模型评价</h4><p>首先对模型残差进行shapiro正态性检验，利用R软件输出结果如下：</p>
+<p>W = 0.93636, p-value = 4.695e-07</p>
+<p>拒绝了残差正态性假定，说明模型拟合的还不够好。</p>
+<p>接着分析模型自变量因变量的残差，进行Ljung-Box检验，利用R软件输出结果如下：</p>
+<p>X-squared = 1.7957e-06, df = 1, p-value = 0.9989</p>
+<p>对残差进行游程检验，p值0.881，不能拒绝其纯随机假定。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu5.jpg" title="图5">
+<p>再进行McLeod-Li检验，看到模型不存在条件异方差。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu6.jpg" title="图6">
+<p>根据图5，观察模型残差的Q-Q图也可知残差无正态性。</p>
+<p>以上分析表明，非季节项表明可以使用的模型为arima(4,1,2)或arima(4,1,1)，考虑模型更好的性质，使用ARIMA(4,1,2)更优秀。</p>
+<h4 id="3-乘法季节模型"><a href="#3-乘法季节模型" class="headerlink" title="3.乘法季节模型"></a>3.乘法季节模型</h4><p>根据原始数据的PACF偏自相关（图7）看出，在季节性周期lags12处有spike，因此进一步做季节差分。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu7.jpg" title="图7">
+<p>在进行季节差分后，对差分后数据进行探索性数据分析。画出趋势图、ACF和、PACF图进行研究。</p>
+<p>由图8能够看出，季节差分后，模型趋势几乎完全消失，只剩下周期性较强的波动和随机性特点。自相关函数和偏自相关函数都显示了模型的一定特征，再lag为12处依然能看出较强的相关性，但是其他位置也存在一定相关性。</p>
+<p>所以对于非季节项，我们只做了一阶非季节差分，故d=1,从PACF看出p=4，从ACF看出q=2。</p>
+<p>而对于季节项，也只做了一阶季节差分，故D=1，再看在lag12,24处看是否有spike,从PACF看出P=3,从ACF看出Q=1。</p>
+<p>因此综上所述，识别阶段最终确定的模型为Arima(4,1,2)(1,1,3)[12]。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu8.jpg" title="图8">
+<h3 id="六、模型评估"><a href="#六、模型评估" class="headerlink" title="六、模型评估"></a>六、模型评估</h3><p>利用R软件，对原始数据进行自动拟合分析，得到以下含有趋势的需要进一步差分。因为对aic计算时利用了近似，可能产生一定的误差。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>ARIMA(2,1,2) with drift</th>
+<th>:   624.6381</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ARIMA(0,1,0) with drift</td>
+<td>:   748.4041</td>
+</tr>
+<tr>
+<td>ARIMA(1,1,0) with drift</td>
+<td>:   646.942</td>
+</tr>
+<tr>
+<td>ARIMA(0,1,1) with drift</td>
+<td>:   647.6507</td>
+</tr>
+<tr>
+<td>ARIMA(0,1,0)</td>
+<td>:   746.4034</td>
+</tr>
+<tr>
+<td>ARIMA(1,1,2) with drift</td>
+<td>:   631.9857</td>
+</tr>
+<tr>
+<td>ARIMA(3,1,2) with drift</td>
+<td>:   626.6319</td>
+</tr>
+<tr>
+<td>ARIMA(2,1,1) with drift</td>
+<td>:   631.1114</td>
+</tr>
+<tr>
+<td>ARIMA(2,1,3) with drift</td>
+<td>:   625.6269</td>
+</tr>
+<tr>
+<td>ARIMA(1,1,1) with drift</td>
+<td>:   645.4117</td>
+</tr>
+<tr>
+<td>ARIMA(3,1,3) with drift</td>
+<td>:   623.1056</td>
+</tr>
+<tr>
+<td>ARIMA(3,1,3)</td>
+<td>:   621.1225</td>
+</tr>
+<tr>
+<td>ARIMA(2,1,3)</td>
+<td>:   626.5835</td>
+</tr>
+<tr>
+<td>ARIMA(4,1,3)</td>
+<td>:   608.4453</td>
+</tr>
+<tr>
+<td><strong>ARIMA(4,1,2)</strong></td>
+<td><strong>: 606.3408</strong></td>
+</tr>
+<tr>
+<td>ARIMA(3,1,1)</td>
+<td>:   624.4274</td>
+</tr>
+<tr>
+<td>ARIMA(5,1,3)</td>
+<td>:   611.0288</td>
+</tr>
+<tr>
+<td>ARIMA(4,1,2) with drift</td>
+<td>:   Inf</td>
+</tr>
+<tr>
+<td>ARIMA(3,1,2)</td>
+<td>:   624.5451</td>
+</tr>
+<tr>
+<td>ARIMA(5,1,2)</td>
+<td>:   609.452</td>
+</tr>
+<tr>
+<td><strong>ARIMA(4,1,1)</strong></td>
+<td><strong>: 612.635</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Now re-fitting the best model(s) without approximations…</p>
+<p> ARIMA(4,1,2)                    : 632.7907</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><code> </code></th>
+<th><code>ar1</code></th>
+<th><code>ar2</code></th>
+<th><code>ar3</code></th>
+<th><code>ar4</code></th>
+<th><code>ma1</code></th>
+<th><code>ma2</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>系数</code></td>
+<td><code>-0.3316</code></td>
+<td><code>0.4072</code></td>
+<td><code>0.0356</code></td>
+<td><code>-0.0492</code></td>
+<td><code>-0.5276</code></td>
+<td><code>-0.3943</code></td>
+</tr>
+<tr>
+<td><code>s.e.</code></td>
+<td><code>NaN</code></td>
+<td><code>NaN</code></td>
+<td><code>NaN</code></td>
+<td><code>0.0543</code></td>
+<td><code>NaN</code></td>
+<td><code>NaN</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>sigma^2 estimated as 1.971:  log likelihood=-309.06</p>
+<p>AIC=632.13   AICc=632.79   BIC=654.36</p>
+<p>Best model: ARIMA(4,1,2)，即依靠AIC筛选出非季节项的模型是ARIMA(4,1,2)，模型的精确aicc为632.7907，bic为654.36，选取该模型和我们之前的分析的选择相同。</p>
+<h3 id="七、模型预测"><a href="#七、模型预测" class="headerlink" title="七、模型预测"></a>七、模型预测</h3><p>用确定的模型Arima(4,1,2)(1,1,3)[12]预测接下来的五个阶段的平均价格。利用R软件得到的预测值见下表。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Point   Forecast</th>
+<th>Lo   80</th>
+<th>Hi   80</th>
+<th>Lo   95</th>
+<th>Hi   95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>6.878770</td>
+<td>5.079546</td>
+<td>8.677993</td>
+<td>4.127095</td>
+<td>9.630444</td>
+</tr>
+<tr>
+<td>2</td>
+<td>6.508401</td>
+<td>4.691427</td>
+<td>8.325374</td>
+<td>3.729579</td>
+<td>9.287222</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6.068549</td>
+<td>4.087607</td>
+<td>8.049491</td>
+<td>3.038959</td>
+<td>9.098139</td>
+</tr>
+<tr>
+<td>4</td>
+<td>6.042168</td>
+<td>4.060691</td>
+<td>8.023644</td>
+<td>3.011761</td>
+<td>9.072574</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5.920171</td>
+<td>3.904982</td>
+<td>7.935360</td>
+<td>2.838205</td>
+<td>9.002137</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Lo指下界，Hi指上界；80、95指显著性水平0.2、0.05。</p>
+<img src="/2019/02/01/190201ts/02/01/190201ts/tu9.jpg" title="图9">
+<p>短期内呈现下降的波动趋势，但是长期来看却呈现上涨态势。预测区间较大，长期预测精确度不够。</p>
+<h3 id="八、原因探讨与结论"><a href="#八、原因探讨与结论" class="headerlink" title="八、原因探讨与结论"></a>八、原因探讨与结论</h3><p>由于物价上涨，生活成本不断提高，游戏购买价格也随着游戏开发成本不断增加而上涨，但是由于游戏独特的促销手段，使其价格受折扣波动非常明显。而每年都有固定的折扣季，促进了游戏的消费。</p>
+<p>但是同时需要注意的是，预测范围还是较大，长期精度较低，但是产业总体的发展趋势依然较好识别。建议消费者在购买游戏时，尽量赶在游戏的折扣期购买。相关企业进入市场时，也要注意游戏销售的价格。</p>
+<blockquote>
+<p>参考文献<br>[1]刘杰华.2018年上半年游戏产业报告[R]. 北京: 伽马数据（CNG中新游戏研究）.2018.</p>
+</blockquote>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2019/02/01/190201ts/">
+                    https://konelane.github.io/2019/02/01/190201ts/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2019/02/02/190314规划/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          规划一波|研究生考试复习企划
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/14/181214京东数据分析心得w/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">京东数据分析心得</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

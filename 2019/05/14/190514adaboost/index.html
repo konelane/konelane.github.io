@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>数据挖掘|adaboost原理 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="adaboost原理（包含权重详细解释）参考网页 现阶段流行的boosting算法有adaboost，XGBboost，不要求对数据有什么假定，通过迭代不断完善对模型的建设，是非参数方向的升华，一定程度上解决了高维灾难。 最后更新时间：190514/23:31">
+<meta name="keywords" content="数据分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘|adaboost原理">
+<meta property="og:url" content="https://konelane.github.io/2019/05/14/190514adaboost/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="adaboost原理（包含权重详细解释）参考网页 现阶段流行的boosting算法有adaboost，XGBboost，不要求对数据有什么假定，通过迭代不断完善对模型的建设，是非参数方向的升华，一定程度上解决了高维灾难。 最后更新时间：190514/23:31">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56400756efeba718bd6UyH7Q.jpg">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56401556efebaf547888bI18.jpg">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56402456efebb8252e3qBm8H.jpg">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56403256efebc0df292cbfn8.jpg">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56404156efebc97f7e5JYTHI.jpg">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56426056efeca4ed1e3ffsxX.png">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56427256efecb0f1ee8gntDJ.png">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56426056efeca4ed1e3ffsxX.png">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56427256efecb0f1ee8gntDJ.png">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56436356efed0b0d6a8XTjJo.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56436356efed0b0d6a8XTjJo.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56436356efed0b0d6a8XTjJo.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56437356efed15438a5ABAwY.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56476556efee9d70e34hyQO7.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56477756efeea91d0f0a0MzR.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56476556efee9d70e34hyQO7.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56477756efeea91d0f0a0MzR.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56479356efeeb9a19f899ez6.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56475756efee95ba0a6yWnd7.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56469856efee5ae57dfwaAa5.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56470756efee63d9c62cMKGX.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56469856efee5ae57dfwaAa5.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56449956efed9384397XiGA6.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56472156efee713bdf6gdBEF.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56464856efee2865cf9bAxXM.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56436356efed0b0d6a8XTjJo.gif">
+<meta property="og:image" content="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif">
+<meta property="og:updated_time" content="2019-06-04T06:46:00.870Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据挖掘|adaboost原理">
+<meta name="twitter:description" content="adaboost原理（包含权重详细解释）参考网页 现阶段流行的boosting算法有adaboost，XGBboost，不要求对数据有什么假定，通过迭代不断完善对模型的建设，是非参数方向的升华，一定程度上解决了高维灾难。 最后更新时间：190514/23:31">
+<meta name="twitter:image" content="http://static.yihaodou.com/tec_data/2016/03/56400756efeba718bd6UyH7Q.jpg">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-190514adaboost" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2019/05/14/190514adaboost/" class="article-date">
+  	<time datetime="2019-05-13T16:00:00.000Z" itemprop="datePublished">2019-05-14</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      数据挖掘|adaboost原理
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#adaboost原理（包含权重详细解释）"><span class="toc-number">1.</span> <span class="toc-text">adaboost原理（包含权重详细解释）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Adaboost是什么"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 Adaboost是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Adaboost算法流程"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.2 Adaboost算法流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Adaboost的一个例子"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.3 Adaboost的一个例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Adaboost的误差界-建议先学习第三部分"><span class="toc-number">1.2.</span> <span class="toc-text">2 Adaboost的误差界(建议先学习第三部分)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Adaboost-指数损失函数推导"><span class="toc-number">1.3.</span> <span class="toc-text">3 Adaboost 指数损失函数推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-加法模型和前向分步算法"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 加法模型和前向分步算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-前向分步算法与Adaboost的关系"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 前向分步算法与Adaboost的关系</span></a></li></ol></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <h1 id="adaboost原理（包含权重详细解释）"><a href="#adaboost原理（包含权重详细解释）" class="headerlink" title="adaboost原理（包含权重详细解释）"></a>adaboost原理（包含权重详细解释）</h1><p><a href="https://blog.csdn.net/mousever/article/details/52038198" target="_blank" rel="noopener">参考网页</a></p>
+<p>现阶段流行的boosting算法有adaboost，XGBboost，不要求对数据有什么假定，通过迭代不断完善对模型的建设，是非参数方向的升华，一定程度上解决了高维灾难。</p>
+<p>最后更新时间：190514/23:31</p>
+<a id="more"></a>
+<h2 id="1-1-Adaboost是什么"><a href="#1-1-Adaboost是什么" class="headerlink" title="1.1 Adaboost是什么"></a>1.1 Adaboost是什么</h2><p>AdaBoost，是英文”Adaptive Boosting”（自适应增强）的缩写，由Yoav Freund和Robert Schapire在1995年提出。它的自适应在于：前一个基本分类器分错的样本会得到加强，加权后的全体样本再次被用来训练下一个基本分类器。同时，在每一轮中加入一个新的弱分类器，直到达到某个预定的足够小的错误率或达到预先指定的最大迭代次数。</p>
+<p>具体说来，整个Adaboost 迭代算法就3步：</p>
+<ol>
+<li>初始化训练数据的权值分布。如果有N个样本，则每一个训练样本最开始时都被赋予相同的权值：1/N。</li>
+<li>训练弱分类器（也叫做基分类器）。具体训练过程中，如果某个样本点已经被准确地分类，那么在构造下一个训练集中，它的权值就被降低；相反，如果某个样本点没有被准确地分类，那么它的权值就得到提高。然后，权值更新过的样本集被用于训练下一个分类器，整个训练过程如此迭代地进行下去。</li>
+<li>将各个训练得到的弱分类器组合成强分类器。各个弱分类器的训练过程结束后，加大分类误差率小的弱分类器的权重，使其在最终的分类函数中起着较大的决定作用，而降低分类误差率大的弱分类器的权重，使其在最终的分类函数中起着较小的决定作用。换言之，误差率低的弱分类器在最终分类器中占的权重较大，否则较小。</li>
+</ol>
+<h3 id="1-2-Adaboost算法流程"><a href="#1-2-Adaboost算法流程" class="headerlink" title="1.2 Adaboost算法流程"></a>1.2 Adaboost算法流程</h3><p>给定一个训练数据集T={(x1,y1), (x2,y2)…(xN,yN)}，其中实例$x\in X$，而实例空间$X\subset \R^n​$ ，yi属于标记集合{-1,+1}，Adaboost的目的就是从训练数据中学习一系列弱分类器或基本分类器，然后将这些弱分类器组合成一个强分类器。</p>
+<p>Adaboost的算法流程如下：</p>
+<ul>
+<li><strong>步骤1.</strong> 首先，初始化训练数据的权值分布。每一个训练样本最开始时都被赋予相同的权值：1/N。</li>
+</ul>
+<script type="math/tex; mode=display">D_1 = (w_{11},w_{12},w_{13},...,w_{1N}), w_{1i} = \frac{1}{N}, i = 1,2,...,N</script><ul>
+<li><strong>步骤2.</strong> 进行多轮迭代，用m = 1,2, …, M表示迭代的第多少轮</li>
+</ul>
+<p><strong>a</strong>. 使用具有权值分布Dm的训练数据集学习，得到基本分类器（选取让误差率最低的阈值来设计基本分类器）：</p>
+<script type="math/tex; mode=display">G_m(x): \chi -> {-1,+1}</script><p>会得到原始的和预测的y，+1，-1。</p>
+<p><strong>b</strong>. 计算Gm(x)在训练数据集上的分类误差率</p>
+<script type="math/tex; mode=display">e_m = P(G_m(x_i)≠y_i) = \sum_{i=1}^{N}I(G_m(x_i) ≠ y_i) \tag{误差率}</script><p>这是一个错分情况。</p>
+<p>由上述式子可知，Gm(x)在训练数据集上的<strong>误差率</strong>em就是被Gm(x)误分类样本的权值之和</p>
+<p><strong>c</strong>. 计算Gm(x)的系数，am表示Gm(x)在最终分类器中的重要程度（目的：得到基本分类器在最终分类器中所占的权重）：</p>
+<script type="math/tex; mode=display">\alpha_m = \frac{1}{2}log\frac{1-e_m}{e_m}​</script><p>注：$\alpha_m​$是一棵树的权重，直接根据每棵树的错分情况来的。</p>
+<p>由上述式子可知，$e_m \leq 1/2​$时，am &gt;= 0，且am随着em的减小而增大，意味着分类误差率越小的基本分类器在最终分类器中的作用越大。</p>
+<p><strong>d</strong>. 更新训练数据集的权值分布（目的：得到样本的新的权值分布），用于下一轮迭代</p>
+<script type="math/tex; mode=display">D_1 = (w_{m+1,1},w_{m+1,2},w_{m+1,3},...,w_{m+1,N}),​</script><script type="math/tex; mode=display">w_{m+1,i} = \frac{w_{m,i}}{Z_m}exp(-\alpha_m\gamma_iG_m(x_i)), i = 1,2,...,N \tag{权值更新公式}</script><p>这是一个指数损失$w_{1i}$,$Z_m$是在做规范化。</p>
+<p>使得被基本分类器Gm(x)误分类样本的权值增大，而被正确分类样本的权值减小。就这样，通过这样的方式，AdaBoost方法能“重点关注”或“聚焦于”那些较难分的样本上。</p>
+<p>其中，$Z_m$是规范化因子，使得$D_{m+1}$成为一个概率分布：</p>
+<script type="math/tex; mode=display">Z_m = \sum_{i=1}^{N}exp(-\alpha_my_iG_m(x_i)) \tag{规范化因子}</script><ul>
+<li><strong>步骤3.</strong> 组合各个弱分类器</li>
+</ul>
+<script type="math/tex; mode=display">f(x) = \sum_{m=1}^{M}\alpha_m G_m(x)​</script><p>注：分类对应投票，组合对应回归。</p>
+<p>从而得到最终分类器，如下：</p>
+<script type="math/tex; mode=display">G(x) = sign(f(x)) = sign(\sum_{m=1}^{M}\alpha_mG_m(x)) ​</script><p>如果概念模型很抽象，那么来看一个例子吧。</p>
+<h3 id="1-3-Adaboost的一个例子"><a href="#1-3-Adaboost的一个例子" class="headerlink" title="1.3 Adaboost的一个例子"></a>1.3 Adaboost的一个例子</h3><p>下面，给定下列训练样本，请用AdaBoost算法学习一个强分类器。(二分类问题)</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+<td>-1</td>
+<td>-1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>求解过程：初始化训练数据的权值分布，令每个权值$W_{1i} = \frac{1}{N} = 0.1​$，其中，N = 10，i = 1,2, …, 10，然后分别对于m = 1,2,3, …等值进行迭代。</p>
+<p>拿到这10个数据的训练样本后，根据 X 和 Y 的对应关系，要把这10个数据分为两类，一类是“1”，一类是“-1”，根据数据的特点发现：“0 1 2”这3个数据对应的类是“1”，“3 4 5”这3个数据对应的类是“-1”，“6 7 8”这3个数据对应的类是“1”，9是比较孤独的，对应类“-1”。抛开孤独的9不讲，“0 1 2”、“3 4 5”、“6 7 8”这是3类不同的数据，分别对应的类是1、-1、1，直观上推测可知，可以找到对应的数据分界点，比如2.5、5.5、8.5 将那几类数据分成两类。当然，这只是主观臆测，下面实际计算下这个具体过程。</p>
+<p><strong>迭代过程1</strong></p>
+<p>对于m=1，在权值分布为D1（10个数据，每个数据的权值皆初始化为0.1）的训练数据上，经过计算可得：</p>
+<ol>
+<li>阈值v取2.5时误差率为0.3（x &lt; 2.5时取1，x &gt; 2.5时取-1，则6 7 8分错，误差率为0.3），</li>
+<li>阈值v取5.5时误差率最低为0.4（x &lt; 5.5时取1，x &gt; 5.5时取-1，则3 4 5 6 7 8皆分错，误差率0.6大于0.5，不可取。故令x &gt; 5.5时取1，x &lt; 5.5时取-1，则0 1 2 9分错，误差率为0.4），<em>注：判错概率较高</em></li>
+<li>阈值v取8.5时误差率为0.3（x &lt; 8.5时取1，x &gt; 8.5时取-1，则3 4 5分错，误差率为0.3）。</li>
+</ol>
+<p>可以看到，无论阈值v取2.5，还是8.5，总得分错3个样本，故可任取其中任意一个如2.5，弄成第一个基本分类器为：</p>
+<script type="math/tex; mode=display">G_1(x) = \begin{cases}  
+1, & x < 2.5 \\
+-1& x>2.5
+\end{cases}​</script><p>上面说阈值v取2.5时则6 7 8分错，所以误差率为0.3，更加详细的解释是：因为样本集中</p>
+<ol>
+<li><ol>
+<li>0 1 2对应的类（Y）是1，因它们本身都小于2.5，所以被G1(x)分在了相应的类“1”中，分对了。</li>
+<li>3 4 5本身对应的类（Y）是-1，因它们本身都大于2.5，所以被G1(x)分在了相应的类“-1”中，分对了。</li>
+<li>但6 7 8本身对应类（Y）是1，却因它们本身大于2.5而被G1(x)分在了类”-1”中，所以这3个样本被分错了。</li>
+<li>9本身对应的类（Y）是-1，因它本身大于2.5，所以被G1(x)分在了相应的类“-1”中，分对了。</li>
+</ol>
+</li>
+</ol>
+<p>从而得到G1(x)在训练数据集上的<strong>误差率</strong>（被G1(x)误分类样本“6 7 8”的权值之和）<strong>e1=P(G1(xi)≠yi) = 3*0.1 = 0.3</strong>。</p>
+<p>然后根据误差率e1计算G1的系数：</p>
+<script type="math/tex; mode=display">\alpha_1 = \frac{1}{2} log\frac{1-e_1}{e_1} = 0.4236​</script><p>这个a1代表G1(x)在最终的分类函数中所占的权重（这颗树的权重），为0.4236。<br>接着更新训练数据的权值分布，用于下一轮迭代：</p>
+<script type="math/tex; mode=display">D_1 = (w_{m+1,1},w_{m+1,2},w_{m+1,3},...,w_{m+1,N}),​</script><script type="math/tex; mode=display">w_{m+1,i} = \frac{w_{m,i}}{Z_m}exp(-\alpha_m\gamma_iG_m(x_i)), i = 1,2,...,N​</script><p>（注：原文上一个公式开头是$w_{m+i}​$，疑似写错）</p>
+<p>值得一提的是，由权值更新的公式可知，<strong>每个样本的新权值是变大还是变小，取决于它是被分错还是被分正确。</strong></p>
+<p>即如果某个样本被分错了，则yi <em> Gm(xi)为负，负负得正，结果使得整个式子变大（样本权值变大），否则变小。</em>注：简单地说，上一轮判错，权重则增大*</p>
+<p>第一轮迭代后，最后得到各个数据<strong>新</strong>的权值分布<strong>D2</strong> = (0.0715, 0.0715, 0.0715, 0.0715, 0.0715,  0.0715,0.1666, 0.1666, 0.1666, 0.0715)。由此可以看出，因为样本中是数据“6 7 8”被G1(x)分错了，所以它们的权值由之前的0.1增大到0.1666，反之，其它数据皆被分正确，所以它们的权值皆由之前的0.1减小到0.0715。</p>
+<p>分类函数<script type="math/tex">f1(x)= a1*G1(x) = 0.4236G1(x)​</script>.</p>
+<p>此时，得到的第一个基本分类器sign(f1(x))在训练数据集上有3个误分类点（即6 7 8）。</p>
+<p>从上述第一轮的整个迭代过程可以看出：被误分类样本的权值之和影响误差率，误差率影响基本分类器在最终分类器中所占的权重。</p>
+<p><strong>迭代过程2</strong></p>
+<p>对于m=2，在权值分布为<strong>D2</strong> = (0.0715, 0.0715, 0.0715, 0.0715, 0.0715,  0.0715, 0.1666, 0.1666, 0.1666, 0.0715)的训练数据上，经过计算可得：</p>
+<ol>
+<li><ol>
+<li>阈值v取2.5时误差率为0.1666<em>3（x &lt; 2.5时取1，x &gt; 2.5时取-1，则6 7 8分错，误差率为0.1666</em>3），</li>
+<li>阈值v取5.5时误差率最低为0.0715<em>4（x &gt; 5.5时取1，x &lt; 5.5时取-1，则0 1 2 9分错，误差率为0.0715</em>3 + 0.0715），</li>
+<li><strong>阈值v取8.5</strong>时误差率为0.0715<em>3（x &lt; 8.5时取1，x &gt; 8.5时取-1，<strong>则3 4 5分错</strong>，误差率为0.0715</em>3）。</li>
+</ol>
+</li>
+</ol>
+<p>所以，阈值v取8.5时误差率最低，故第二个基本分类器为：</p>
+<script type="math/tex; mode=display">G_2(x) = \begin{cases}  
+1, & x < 8.5 \\
+-1& x>8.5
+\end{cases}​</script><p>面对的还是下述样本：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+<td>-1</td>
+<td>-1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>很明显，G2(x)把样本“3 4 5”分错了，根据D2可知它们的权值为0.0715, 0.0715,  0.0715，所以G2(x)在训练数据集上的误差率e2=P(G2(xi)≠yi) = 0.0715 * 3 = 0.2143。</p>
+<p>计算G2的系数：</p>
+<script type="math/tex; mode=display">\alpha_2 = \frac{1}{2} log\frac{1-e_2}{e_2} = 0.6496​</script><p>更新训练数据的权值分布：</p>
+<script type="math/tex; mode=display">D_{m+1} = (w_{m+1,1},w_{m+1,2},w_{m+1,3},...,w_{m+1,N}),​</script><script type="math/tex; mode=display">w_{m+i} = \frac{w_{mi}}{Z_m}exp(-\alpha_m\gamma_iG_m(x_i)), i = 1,2,...,N</script><p><strong>D3</strong> = (0.0455, 0.0455, 0.0455, 0.1667, 0.1667,  0.01667, 0.1060, 0.1060, 0.1060, 0.0455)。被分错的样本“3 4 5”的权值变大，其它被分对的样本的权值变小。<br>f2(x)=0.4236G1(x) + 0.6496G2(x)</p>
+<p>此时，得到的第二个基本分类器sign(f2(x))在训练数据集上有3个误分类点（即3 4 5）。</p>
+<p><strong>迭代过程3</strong></p>
+<p>对于m=3，在权值分布为<strong>D3</strong> = (0.0455, 0.0455, 0.0455, 0.1667, 0.1667,  0.01667, 0.1060, 0.1060, 0.1060, 0.0455)的训练数据上，经过计算可得：</p>
+<ol>
+<li>阈值v取2.5时误差率为0.1060<em>3（x &lt; 2.5时取1，x &gt; 2.5时取-1，则6 7 8分错，误差率为0.1060</em>3），</li>
+<li><strong>阈值v取5.5</strong>时误差率最低为0.0455<em>4（x &gt; 5.5时取1，x &lt; 5.5时取-1，<strong>则0 1 2 9分错</strong>，误差率为0.0455</em>3 + 0.0715），</li>
+<li>阈值v取8.5时误差率为0.1667<em>3（x &lt; 8.5时取1，x &gt; 8.5时取-1，则3 4 5分错，误差率为0.1667</em>3）。</li>
+</ol>
+<p>所以阈值v取5.5时误差率最低，故第三个基本分类器为：</p>
+<script type="math/tex; mode=display">G_3x) = \begin{cases}  
+1, & x < 5.5 \\
+-1& x>5.5
+\end{cases}</script><p>面对的还是下述样本</p>
+<p>依然还是原样本：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>X</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>X</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Y</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+<td>-1</td>
+<td>-1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>此时，被误分类的样本是：0 1 2 9，这4个样本所对应的权值皆为0.0455，</p>
+<p>所以G3(x)在训练数据集上的<strong>误差率e3</strong> = P(G3(xi)≠yi) = <strong>0.0455*4</strong> = 0.1820。</p>
+<p>计算G3的系数：</p>
+<script type="math/tex; mode=display">\alpha_3 = \frac{1}{2} log\frac{1-e_3}{e_3} = 0.7514</script><p>更新训练数据的权值分布：</p>
+<script type="math/tex; mode=display">D_{m+1} = (w_{m+1,1},w_{m+1,2},w_{m+1,3},...,w_{m+1,N}),</script><script type="math/tex; mode=display">w_{m+i} = \frac{w_{mi}}{Z_m}exp(-\alpha_m\gamma_iG_m(x_i)), i = 1,2,...,N</script><p><strong>D4</strong> = (0.125, 0.125, 0.125, 0.102, 0.102,  0.102, 0.065, 0.065, 0.065, 0.125)。被分错的样本“0 1 2 9”的权值变大，其它被分对的样本的权值变小。</p>
+<p>f3(x)=0.4236G1(x) + 0.6496G2(x)+0.7514G3(x)</p>
+<p>此时，得到的第三个基本分类器sign(f3(x))在训练数据集上有0个误分类点。至此，整个训练过程结束。</p>
+<p>现在，咱们来总结下3轮迭代下来，各个样本权值和误差率的变化，如下所示（其中，样本权值D中加了下划线的表示在上一轮中被分错的样本的新权值）：</p>
+<ol>
+<li>训练之前，各个样本的权值被初始化为D1 = (0.1, 0.1,0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1)；</li>
+<li><strong>第一轮迭代</strong>中，样本“<strong>6 7 8”</strong>被分错，对应的误差率为<script type="math/tex">e_1=P(G_1(x_i)≠y_i) = 3*0.1 = 0.3</script>，此第一个基本分类器在最终的分类器中所占的权重为<script type="math/tex">a_1 = 0.4236</script>。第一轮迭代过后，样本新的权值为<script type="math/tex">D_2 = (0.0715, 0.0715, 0.0715, 0.0715, 0.0715,  0.0715, 0.1666, 0.1666, 0.1666, 0.0715)；​</script></li>
+<li><strong>第二轮迭代</strong>中，样本<strong>“3 4 5”</strong>被分错，对应的误差率为<script type="math/tex">e_2=P(G_2(x_i)≠y_i) = 0.0715 * 3 = 0.2143</script>，此第二个基本分类器在最终的分类器中所占的权重为<script type="math/tex">a_2 = 0.6496</script>。第二轮迭代过后，样本新的权值为D3 = (0.0455, 0.0455, 0.0455, 0.1667, 0.1667,  0.01667, 0.1060, 0.1060, 0.1060, 0.0455)；</li>
+<li><strong>第三轮迭代</strong>中，样本<strong>“0 1 2 9”</strong>被分错，对应的误差率为<script type="math/tex">e_3 = P(G_3(x_i)≠y_i) = 0.0455*4 = 0.1820</script>，此第三个基本分类器在最终的分类器中所占的权重为<script type="math/tex">a_3 = 0.7514</script>。第三轮迭代过后，样本新的权值为<script type="math/tex">D_4 = (0.125, 0.125, 0.125, 0.102, 0.102,  0.102, 0.065, 0.065, 0.065, 0.125)。</script></li>
+</ol>
+<p>从上述过程中可以发现，如果某些个样本被分错，它们在下一轮迭代中的权值将被增大，反之，其它被分对的样本在下一轮迭代中的权值将被减小。就这样，分错样本权值增大，分对样本权值变小，而在下一轮迭代中，总是选取让误差率最低的阈值来设计基本分类器，所以误差率e（所有被Gm(x)误分类样本的权值之和）不断降低。</p>
+<p>综上，将上面计算得到的a1、a2、a3各值代入G(x)中，<script type="math/tex">G(x) = sign[f3(x)] = sign[ a1 * G1(x) + a2 * G2(x) + a3 * G3(x) ]​</script>，得到<strong>最终的分类器</strong>为：</p>
+<script type="math/tex; mode=display">G(x) = sign[f_3(x)] = sign[ 0.4236G_1(x) + 0.6496G_2(x)+0.7514G_3(x) ]。</script><h2 id="2-Adaboost的误差界-建议先学习第三部分"><a href="#2-Adaboost的误差界-建议先学习第三部分" class="headerlink" title="2 Adaboost的误差界(建议先学习第三部分)"></a>2 Adaboost的误差界(建议先学习第三部分)</h2><p>通过上面的例子可知，Adaboost在学习的过程中不断减少训练误差e，直到各个弱分类器组合成最终分类器，那这个最终分类器的误差界到底是多少呢？</p>
+<p>事实上，Adaboost 最终分类器的训练误差的上界为：</p>
+<script type="math/tex; mode=display">\frac{1}{N} \sum_{i=1}^{N}I(G(x_i)≠y_i)≤\frac{1}{N} \sum_{i=1}^{N}exp(-y_if(x_i)) = \prod_{m-1}^{M}Z_m​</script><p>注：$Z_m​$是将所有概率做归一化的那个因子</p>
+<p>下面，咱们来通过推导来证明下上述式子。</p>
+<p>当G(xi)≠yi时，yi<em>f(xi)&lt;0，因而exp(-yi</em>f(xi))≥1，因此前半部分得证。</p>
+<p>关于后半部分，别忘了：（为下面的推导铺垫）</p>
+<script type="math/tex; mode=display">w_{m+1,i} = \frac{w_{m,i}}{Z_m}exp(-\alpha_m\gamma_iG_m(x_i)), i = 1,2,...,N​</script><script type="math/tex; mode=display">Z_mw_{m+1,i} = w_{m,i}exp(-\alpha_m\gamma_iG_m(x_i))​</script><p>整个的推导过程如下：</p>
+<script type="math/tex; mode=display">\frac{1}{N}\sum_{i}exp(-\sum_{m=1}^{M}\alpha_m\gamma_iG_m(x_i))</script><script type="math/tex; mode=display">=  w_{1i}\sum_{i}exp(-\sum_{m=1}^{M}\alpha_m\gamma_iG_m(x_i))$$ 注意：$\frac{1}{N}$第一次迭代的权重  
+
+$$ =  w_{1i}\prod_{m=1}^{M}exp(-\alpha_m\gamma_iG_m(x_i))​</script><script type="math/tex; mode=display">=  Z_1\sum_{i}w_{2i}\prod_{m=2}^{M}exp(-\alpha_m\gamma_iG_m(x_i))$$ 此步需要依靠上面的提到过的式子   
+
+$$ =  Z_1Z_2\sum_{i}w_{3i}\prod_{m=3}^{M}exp(-\alpha_m\gamma_iG_m(x_i))​</script><script type="math/tex; mode=display">=  Z_1Z_2...Z_{M-1}\sum_{i}w_{Mi}exp(-\alpha_m\gamma_iG_m(x_i))</script><script type="math/tex; mode=display">= \prod_{m-1}^{M}Z_m</script><p><strong>结论：这个结果说明，可以在每一轮选取适当的Gm使得Zm最小，从而使训练误差下降最快。</strong></p>
+<p>接着，咱们来继续求上述结果的上界。</p>
+<p>对于二分类而言，有如下结果：</p>
+<blockquote>
+<p><a href="http://static.yihaodou.com/tec_data/2016/03/56400756efeba718bd6UyH7Q.jpg" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56400756efeba718bd6UyH7Q.jpg" alt="Adaboost 算法的原理,by 5lulu.com"></a></p>
+</blockquote>
+<p>其中，<a href="http://static.yihaodou.com/tec_data/2016/03/56401556efebaf547888bI18.jpg" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56401556efebaf547888bI18.jpg" alt="Adaboost 算法的原理,by 5lulu.com"></a>。</p>
+<p>继续证明下这个结论。</p>
+<p>由之前Zm的定义式跟本节最开始得到的结论可知：</p>
+<blockquote>
+<p><a href="http://static.yihaodou.com/tec_data/2016/03/56402456efebb8252e3qBm8H.jpg" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56402456efebb8252e3qBm8H.jpg" alt="Adaboost 算法的原理,by 5lulu.com"></a></p>
+</blockquote>
+<p>而这个不等式<a href="http://static.yihaodou.com/tec_data/2016/03/56403256efebc0df292cbfn8.jpg" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56403256efebc0df292cbfn8.jpg" alt="Adaboost 算法的原理,by 5lulu.com"></a>可先由e^x和1-x的开根号，在点x的泰勒展开式推出。</p>
+<p>值得一提的是，如果取γ1, γ2… 的最小值，记做γ（显然，γ≥γi&gt;0，i=1,2,…m），则对于所有m，有：</p>
+<blockquote>
+<p><a href="http://static.yihaodou.com/tec_data/2016/03/56404156efebc97f7e5JYTHI.jpg" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56404156efebc97f7e5JYTHI.jpg" alt="Adaboost 算法的原理,by 5lulu.com"></a></p>
+</blockquote>
+<p>这个结论表明，AdaBoost的训练误差是以指数速率下降的。另外，AdaBoost算法不需要事先知道下界γ，AdaBoost具有自适应性，它能适应弱分类器各自的训练误差率 。</p>
+<p>最后，Adaboost 还有另外一种理解，即可以认为其模型是加法模型、损失函数为指数函数、学习算法为前向分步算法的二类分类学习方法，下个月即12月份会再推导下，然后更新此文。而在此之前，有兴趣的可以参看《统计学习方法》第8.3节或其它相关资料。</p>
+<h2 id="3-Adaboost-指数损失函数推导"><a href="#3-Adaboost-指数损失函数推导" class="headerlink" title="3 Adaboost 指数损失函数推导"></a>3 Adaboost 指数损失函数推导</h2><p>事实上，在上文1.2节Adaboost的算法流程的步骤3中，我们构造的各个基本分类器的线性组合</p>
+<script type="math/tex; mode=display">f(x) = \sum_{m=1}^{M}\alpha_mG_m(x)</script><p>是一个<strong>加法模型</strong>，而Adaboost算法其实是前向分步算法的特例。那么问题来了，什么是加法模型，什么又是前向分步算法呢？</p>
+<p>注意，adaboost算法理论性质并非提出伊始就全部得知，后来在公认的好的解释中逐渐完善。了解：<strong>可加模型，指数损失，二分类算法</strong></p>
+<h3 id="3-1-加法模型和前向分步算法"><a href="#3-1-加法模型和前向分步算法" class="headerlink" title="3.1 加法模型和前向分步算法"></a>3.1 加法模型和前向分步算法</h3><p>如下图所示的便是一个<strong>加法模型</strong></p>
+<script type="math/tex; mode=display">f(x) = \sum_{m=1}^{M}\beta_mb(x;\gamma_m)​</script><p>其中，$b(x;\gamma_m)​$称为基函数，$\gamma_m​$称为基函数的参数，$\beta_m​$称为基函数的系数。</p>
+<p>在给定训练数据及损失函数$L(y,f( x))$的条件下，学习加法模型$f(x)$成为<strong>经验风险</strong>极小化问题，即损失函数极小化问题：</p>
+<script type="math/tex; mode=display">\underset{\beta_m,\gamma_m}{min} \underset{m=1} {\overset{M} \sum}\beta_m b(x_i;\gamma_m)</script><p>注：boosting中可以有各种各样的损失，这只是两种损失而已（指数损失，经验风险损失）。同时注意，adaboost并未对总体做假定，使用的更倾向于非参数的方法，在较低维空间有好效果，高维会出现维数灾难（详情见LASSO算法的介绍章节）</p>
+<p>随后，该问题可以作如此简化：从前向后，每一步只学习一个基函数及其系数，逐步逼近上式，即：每步只优化如下损失函数：</p>
+<script type="math/tex; mode=display">\underset{\beta,\gamma}\min\sum_{i=1}^{N},L(y_i,\beta b(x_i;\gamma))</script><p>这个优化方法便就是所谓的前向分步算法。</p>
+<p>下面，咱们来具体看下<strong>前向分步算法</strong>的算法流程：</p>
+<ul>
+<li><p>输入：训练数据集$T = {(x_1,y_1),(x_2,y_2),…,(x_N,y_N)}​$</p>
+</li>
+<li><p>损失函数：$L(y,f(x))​$</p>
+</li>
+<li><p>基函数集：${b(x;\gamma)}$</p>
+</li>
+<li><p>输出：加法模型$f(x )$</p>
+</li>
+<li><p>算法步骤：</p>
+<p>1.初始化$f_0(x) = 0$</p>
+<p>2.对于m=1,2,..M</p>
+<ul>
+<li>a)极小化损失函数</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<script type="math/tex; mode=display">(\beta_m,\gamma_m) = arg \underset{\beta,\gamma}{min} \sum_{i=1}^{N},L(y_i,f(_{m-1}(x_i) + \beta b(x_i;\gamma))​</script><p>得到参数<script type="math/tex">\beta_m,\gamma_m​</script></p>
+</blockquote>
+<ul>
+<li>b)更新</li>
+</ul>
+<script type="math/tex; mode=display">f_m(x) = f_{m-1}(x) + \beta_mb(x;\gamma_m)​</script><ul>
+<li>3.最终得到加法模型</li>
+</ul>
+<script type="math/tex; mode=display">f(x) = f_{M}(x) = \underset{m=1} {\overset{M}\sum} \beta_mb(x;\gamma_m)​</script><p>就这样，前向分步算法将同时求解从m=1到M的所有参数（<a href="http://tec.5lulu.com/upload/2016/03/56426056efeca4ed1e3ffsxX.png" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56426056efeca4ed1e3ffsxX.png" alt="img"></a>、<a href="http://tec.5lulu.com/upload/2016/03/56427256efecb0f1ee8gntDJ.png" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56427256efecb0f1ee8gntDJ.png" alt="img"></a>）的优化问题简化为逐次求解各个<a href="http://tec.5lulu.com/upload/2016/03/56426056efeca4ed1e3ffsxX.png" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56426056efeca4ed1e3ffsxX.png" alt="img"></a>、<a href="http://static.yihaodou.com/tec_data/2016/03/56427256efecb0f1ee8gntDJ.png" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56427256efecb0f1ee8gntDJ.png" alt="Adaboost 算法的原理,by 5lulu.com"></a>（1≤m≤M）的优化问题。</p>
+<h3 id="3-2-前向分步算法与Adaboost的关系"><a href="#3-2-前向分步算法与Adaboost的关系" class="headerlink" title="3.2 前向分步算法与Adaboost的关系"></a>3.2 前向分步算法与Adaboost的关系</h3><p>在上文第2节最后，我们说Adaboost 还有另外一种理解，即可以认为其模型是加法模型、损失函数为指数函数、学习算法为前向分步算法的二类分类学习方法。其实，Adaboost算法就是前向分步算法的一个特例，Adaboost 中，各个基本分类器就相当于加法模型中的基函数，且其损失函数为指数函数。</p>
+<p>换句话说，当前向分步算法中的基函数为Adaboost中的基本分类器时，加法模型等价于Adaboost的最终分类器</p>
+<script type="math/tex; mode=display">f( x) = \underset{m=1} {\overset{M}\sum} \alpha_mG_m(x )</script><p>你甚至可以说，这个最终分类器其实就是一个加法模型。只是这个加法模型由基本分类器<a href="http://tec.5lulu.com/upload/2016/03/56436356efed0b0d6a8XTjJo.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56436356efed0b0d6a8XTjJo.gif" alt="img"></a>及其系数<a href="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif" alt="Adaboost 算法的原理,by 5lulu.com"></a>组成，m = 1, 2, …, M。前向分步算法逐一学习基函数的过程，与Adaboost算法逐一学习各个基本分类器的过程一致。</p>
+<p>下面，咱们便来证明：<strong>当前向分步算法的损失函数是指数损失函数</strong></p>
+<script type="math/tex; mode=display">L(y,f(x)) = exp(-yf(x))​</script><p><strong>时，其学习的具体操作等价于Adaboost算法的学习过程</strong>。</p>
+<p>假设经过m-1轮迭代，前向分步算法已经得到$f_{m-1}(x)$：</p>
+<script type="math/tex; mode=display">f_{m-1}(x) = f_{m-2}(x) + \alpha_{m-1}G_{m-1}(x) = \alpha_{1}G_{1}(x) + ... + \alpha_{m-1}G_{m-1}(x)​</script><p>而后在第m轮迭代得到$\alpha_m$、$G_m(x)$、$f_m(x)$，其中$f_m(x)$为：</p>
+<script type="math/tex; mode=display">f_m(x) = f_{m-1}(x) + \alpha_mG_m(x)  \tag{模型 }</script><p>而<a href="http://tec.5lulu.com/upload/2016/03/56435556efed031f385djuKh.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif" alt="img"></a>和<a href="http://tec.5lulu.com/upload/2016/03/56436356efed0b0d6a8XTjJo.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56436356efed0b0d6a8XTjJo.gif" alt="img"></a>未知。所以，现在咱们的目标便是根据前向分步算法训练<a href="http://tec.5lulu.com/upload/2016/03/56435556efed031f385djuKh.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif" alt="img"></a>和<a href="http://tec.5lulu.com/upload/2016/03/56436356efed0b0d6a8XTjJo.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56436356efed0b0d6a8XTjJo.gif" alt="img"></a>，使得最终<a href="http://static.yihaodou.com/tec_data/2016/03/56437356efed15438a5ABAwY.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56437356efed15438a5ABAwY.gif" alt="Adaboost 算法的原理,by 5lulu.com"></a>在训练数据集T上的指数损失最小，即</p>
+<script type="math/tex; mode=display">(\alpha_m,G_m(x)) = arg \underset{\alpha,G}{min} \sum_{i=1}^{N}exp(-y_i(f_{m-1}(x_i) + \alpha G(x_i) ))​</script><p>针对这种需要求解多个参数的情况，可以先固定其它参数，求解其中一两个参数，然后逐一求解剩下的参数。例如我们可以固定<script type="math/tex">G_1(x),...,G_{m-1}(x)​</script>和<script type="math/tex">\alpha_1,...,\alpha_{m-1}​</script>，只针对$G_m(x)​$,$\alpha_m ​$做优化。</p>
+<p>换言之，在面对<script type="math/tex">G_1(x),...,G_{m-1}(x),G_m(x)​</script>和<script type="math/tex">\alpha_1,...,\alpha_{m-1},\alpha_m ​</script> 这2m个参数都未知的情况下，可以：</p>
+<ol>
+<li>先假定<script type="math/tex">G_1(x),...,G_{m-1}(x)</script>和<script type="math/tex">\alpha_1,...,\alpha_{m-1}</script>已知，求解出$G_m(x)$和$\alpha_m $；</li>
+<li>然后再逐一求解其它未知参数。</li>
+</ol>
+<p>且考虑到上式中的 <script type="math/tex">exp(-y_if_{m-1}(x_i))</script>既不依赖 $\alpha$ 也不依赖G，所以是个与最小化无关的固定值，记为<script type="math/tex">\bar{w}_{mi }</script>，即<script type="math/tex">\bar{w}_{mi } = exp(-y_if_{m-1}(x_i))</script>，则上式可以表示为（后面要多次用到这个式子，简记为<script type="math/tex">(\alpha_m, G_m(x ))</script>：</p>
+<script type="math/tex; mode=display">(\alpha_m,G_m(x)) = arg \underset{\alpha,G}{min} \sum_{i=1}^{N} \bar{w}_{mi } exp(-y_i \alpha G(x_i))</script><p>只需要找到<script type="math/tex">(\alpha_m,G_m(x)) ​</script>使得式子最小就行了。</p>
+<p>值得一提的是，$\bar{w}_{mi}​$虽然与最小化无关，但$\bar{w}_{mi}​$依赖于$f_{m-1}(x)​$，随着每一轮迭代而发生变化。</p>
+<p>接下来，便是要证<strong>使得上式达到最小的<script type="math/tex">\alpha_m^* 和 G^*_m(x)​</script>就是Adaboost算法所求解得到的</strong><script type="math/tex">\alpha_m 和 G_m(x)​</script>。</p>
+<p>为求解上式，咱们先求<script type="math/tex">G^*_m(x)​</script>再求<script type="math/tex">\alpha_m^* ​</script>。</p>
+<p>首先求<script type="math/tex">G^*_m(x)</script>。对于任意<script type="math/tex">\alpha >0</script>，<strong>使上式<script type="math/tex">(\alpha_m,G_m(x))</script>最小的G(x)由下式得到：</strong></p>
+<script type="math/tex; mode=display">G_m^*(x) = arg \underset{G}{min}\sum_{i=1}^N\bar{w}_{mi}I(y_i ≠ G(x_i))​</script><p>注意：$y_i ≠G(x_i)​$的时候示性函数取值为1。</p>
+<p>别忘了，<script type="math/tex">\bar{w}_{mi} = exp(-y_i,f_{m-1}(x_i))​</script>。</p>
+<p>跟1.2节所述的误差率的计算公式对比下：</p>
+<script type="math/tex; mode=display">e_m = P(G_m(x_i) ≠ y_i)  =  \sum _{i=1}^{N} w_{mi}I(y_i ≠ G_m(x_i))​</script><p>可知，上面得到的<a href="http://tec.5lulu.com/upload/2016/03/56476556efee9d70e34hyQO7.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56476556efee9d70e34hyQO7.gif" alt="img"></a>便是Adaboost算法的基本分类器<a href="http://tec.5lulu.com/upload/2016/03/56477756efeea91d0f0a0MzR.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56477756efeea91d0f0a0MzR.gif" alt="img"></a>，因为它是在第m轮加权训练数据时，使分类误差率最小的基本分类器。换言之，这个<a href="http://tec.5lulu.com/upload/2016/03/56476556efee9d70e34hyQO7.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56476556efee9d70e34hyQO7.gif" alt="img"></a>便是Adaboost算法所要求的<a href="http://static.yihaodou.com/tec_data/2016/03/56477756efeea91d0f0a0MzR.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56477756efeea91d0f0a0MzR.gif" alt="Adaboost 算法的原理,by 5lulu.com"></a>，别忘了，在Adaboost算法的每一轮迭代中，都是选取让误差率最低的阈值来设计基本分类器。</p>
+<p><strong>然后求<img src="http://static.yihaodou.com/tec_data/2016/03/56479356efeeb9a19f899ez6.gif" alt="img"></strong>。还是回到之前的这个式子<a href="http://static.yihaodou.com/tec_data/2016/03/56475756efee95ba0a6yWnd7.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56475756efee95ba0a6yWnd7.gif" alt="Adaboost 算法的原理,by 5lulu.com"></a>上：</p>
+<script type="math/tex; mode=display">(\alpha_m,G_m(x))=  arg \underset{\alpha, G}{min} \sum _{i=1}^{N} \bar{w}_{mi}exp(-y_i \alpha G(x_i))​</script><p>这个式子的后半部分可以进一步化简，得：<strong>（这一部分是求解目标）</strong></p>
+<blockquote>
+<script type="math/tex; mode=display">\sum_{i=1}^{N}\bar{w}_{mi}exp(-y_i\alpha G(x_i))</script><script type="math/tex; mode=display">= \sum_{y_i = G_m(x_i)}\bar{w}_{mii}e^{-\alpha} + \sum_{y_i ≠ G_m(x_i)}\bar{w}_{mii}e^{\alpha}</script><script type="math/tex; mode=display">= (e^\alpha - e^{-\alpha})\sum_{i=1}^{N}\bar{w}_{mi}I(y_i ≠ G(x_i)) + e^{-\alpha}\sum_{i=1}^{N}\bar{w}_{mi}</script></blockquote>
+<p>疑问：第二行拆开之后如何理解呢？这两项求和是什么东西呢？</p>
+<p>前一个看成一个1，后一个看成错误率，再求导就好算了</p>
+<p>接着将上面求得的$G_m^*(x)$</p>
+<script type="math/tex; mode=display">G_m^*(x) = arg \underset{G}{min} \sum _{i=1}^{N} \bar{w}_{mi}I(y_i ≠ G_m(x_i))​</script><p>代入上式中，且对<a href="http://tec.5lulu.com/upload/2016/03/56469856efee5ae57dfwaAa5.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56469856efee5ae57dfwaAa5.gif" alt="img"></a>求导，令其求导结果为0，即得到使得<a href="http://tec.5lulu.com/upload/2016/03/56470756efee63d9c62cMKGX.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56470756efee63d9c62cMKGX.gif" alt="img"></a>一式最小的<a href="http://static.yihaodou.com/tec_data/2016/03/56469856efee5ae57dfwaAa5.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56469856efee5ae57dfwaAa5.gif" alt="Adaboost 算法的原理,by 5lulu.com"></a>，即为：</p>
+<blockquote>
+<p><a href="http://static.yihaodou.com/tec_data/2016/03/56449956efed9384397XiGA6.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56449956efed9384397XiGA6.gif" alt="Adaboost 算法的原理,by 5lulu.com"></a></p>
+</blockquote>
+<p>这里的<a href="http://tec.5lulu.com/upload/2016/03/56472156efee713bdf6gdBEF.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56472156efee713bdf6gdBEF.gif" alt="img"></a>跟上文1.2节中<strong><img src="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif" alt="Adaboost 算法的原理,by 5lulu.com"></strong>的计算公式完全一致。</p>
+<p>此外，毫无疑问，上式中的<a href="http://static.yihaodou.com/tec_data/2016/03/56464856efee2865cf9bAxXM.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56464856efee2865cf9bAxXM.gif" alt="Adaboost 算法的原理,by 5lulu.com"></a>便是误差率：</p>
+<script type="math/tex; mode=display">e_m = \frac{\sum_{i=1}^{N} \bar{w}_{mi } I(y_i ≠G(x_i))} {\sum_{i=1}^{N} \bar{w}_{mi } } = \sum_{i=1}^{N} \bar{w}_{mi } I(y_i ≠G(x_i)) ​</script><p>即$e_m $就是被$G_m(x) $误分类样本的权值之和。</p>
+<p>就这样，结合模型<script type="math/tex">f_m(x) = f_{m-1}(x) + \alpha_mG_m(x)</script>，跟<script type="math/tex">\bar{w}_{mi } = exp[-y_if_{m-1}(x_i)]</script>，可以推出</p>
+<script type="math/tex; mode=display">\bar{w}_{m+1,i} = exp[-y_if_m(x_i)]​</script><script type="math/tex; mode=display">= exp[-y_i(f_{m-1}(x_i)+ \alpha_mG_m(x))]​</script><script type="math/tex; mode=display">= exp[-y_if_{m-1}(x_i)]+ exp[-y_i\alpha_mG_m(x))]​</script><p>从而有：</p>
+<script type="math/tex; mode=display">\bar{w}_{m+1,i} = \bar{w}_{m,i} exp(-y_i \alpha_mG_m(x))​</script><p>与上文1.2节介绍的权值更新公式</p>
+<script type="math/tex; mode=display">\bar{w}_{m+1,i} = \frac{\bar{w}_{m,i}}{Z_m} exp(-\alpha_m y_i G_m(x_i)), i = 1,2,...,N</script><p>相比，只相差一个规范化因子，即后者多了一个</p>
+<script type="math/tex; mode=display">Z_m = \sum_{i=1}^{N}exp(- \alpha_m y_iG_m(x_i))​</script><p>所以，整个过程下来，我们可以看到，前向分步算法逐一学习基函数的过程，确实是与Adaboost算法逐一学习各个基本分类器的过程一致，两者完全等价。</p>
+<p>综上，本节不但提供了Adaboost的另一种理解：加法模型，损失函数为指数函数，学习算法为前向分步算法，而且也解释了最开始1.2节中基本分类器<a href="http://tec.5lulu.com/upload/2016/03/56436356efed0b0d6a8XTjJo.gif" target="_blank" rel="noopener"><img src="http://static.yihaodou.com/tec_data/2016/03/56436356efed0b0d6a8XTjJo.gif" alt="img"></a>及其系数<strong><img src="http://static.yihaodou.com/tec_data/2016/03/56435556efed031f385djuKh.gif" alt="Adaboost 算法的原理,by 5lulu.com"></strong>的由来，以及对权值更新公式的解释，你甚至可以认为本节就是对上文整个1.2节的解释</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2019/05/14/190514adaboost/">
+                    https://konelane.github.io/2019/05/14/190514adaboost/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2019/05/17/190508数据挖掘某不科学的笔记总结（持续更新）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          数据挖掘|某不科学的笔记总结（持续更新）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/05/07/190507decisiontree/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据挖掘|决策树</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>
