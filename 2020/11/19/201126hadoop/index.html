@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>分布式1126-Spark文本分析 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="spark的文本分析功能。 具体代码参考李丰老师课件L07.2-Text-Processing-with-Spark。">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式1126-Spark文本分析">
+<meta property="og:url" content="https://konelane.github.io/2020/11/19/201126hadoop/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="spark的文本分析功能。 具体代码参考李丰老师课件L07.2-Text-Processing-with-Spark。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-01-04T03:23:07.159Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式1126-Spark文本分析">
+<meta name="twitter:description" content="spark的文本分析功能。 具体代码参考李丰老师课件L07.2-Text-Processing-with-Spark。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 15px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 16.67px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-201126hadoop" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/11/19/201126hadoop/" class="article-date">
+  	<time datetime="2020-11-18T16:00:00.000Z" itemprop="datePublished">2020-11-19</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      分布式1126-Spark文本分析
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、大数据文本分析的需求"><span class="toc-number">1.</span> <span class="toc-text">一、大数据文本分析的需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、Spark的解决方案"><span class="toc-number">2.</span> <span class="toc-text">二、Spark的解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一些新的想法："><span class="toc-number">2.1.</span> <span class="toc-text">一些新的想法：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LDA"><span class="toc-number">2.2.</span> <span class="toc-text">LDA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、实战"><span class="toc-number">3.</span> <span class="toc-text">三、实战</span></a></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>spark的文本分析功能。</p>
+<p>具体代码参考李丰老师课件<a href="https://github.com/feng-li/Distributed-Statistical-Computing/tree/master/L07-Machine-Learning-with-Spark" target="_blank" rel="noopener">L07.2-Text-Processing-with-Spark</a>。</p>
+<a id="more"></a>
+<h3 id="一、大数据文本分析的需求"><a href="#一、大数据文本分析的需求" class="headerlink" title="一、大数据文本分析的需求"></a>一、大数据文本分析的需求</h3><p>利用分布式系统，进行文本处理。</p>
+<p>现在有很多文本型数据，到底会遇见什么不一样的地方，spark提供了那些工具</p>
+<p>从基本概念和流程开始。</p>
+<blockquote>
+<p>术语：</p>
+<p>语料库。corpora。</p>
+</blockquote>
+<p>是一个包含大量感兴趣文本的集合，比如说，人民日报创刊以来所有的新闻社论。每个版2-3篇文章，一天做成一个行向量（可以是个很长的字典/列表），写入系统。</p>
+<p>语料库最早是语言学家使用，处理语言问题。如研究50年代的语法，用于习惯。经济学角度，政治角度，统计学角度，等等。</p>
+<p>几十年前，如果研究人文类，会成为纯文科的事。而今，可以利用计算机，做<strong>词频统计</strong>等等。</p>
+<p>来源，可能是工作就有，可能是自己采集。可以自己构建语料库。</p>
+<p>n乘k的语料矩阵，可以转成n乘m的语义数值阵，这一步很难，且有争议。解读和设定都比较主观，没有统一的标准。如何提取稳定的信息，就需要统计模型。</p>
+<p>语料和数值型差距较大。</p>
+<p>一个外国（说英语的）大学生，词汇量有两万多。构成文章，是这些词的排列组合，会有非常非常多的可能，计算机无法处理。也就无法将词作为基本单元来处理了。</p>
+<p>于是需要化简，在处理中就是：断句分词。</p>
+<p>逗号之间，段落内拆分成很小很多的单元。我们学句读，就是在训练自己，把自己变成解释器。</p>
+<p>拆分成单词，就会丢失句子的信息。</p>
+<p>而当今很多语言模型不能就“序”进行建模。 我爱北京天安门，北京天安门爱我。这两句在家语言模型中可能是相同的。红黄蓝，蓝黄红，如果顺序有个权重，就完蛋了。</p>
+<p>中文更特别，单词间没有空格，于是需要拆分词。在线翻译依然很垃圾，主要原因是文本实在是太难了。</p>
+<p>新闻信息：语音录制工具（记录，转文本），做摘要，重新做新的填空，再做快报。</p>
+<p>庭审记录员：解放书记员，书记员的记录会出错/有倾向性。背后有语义模型。</p>
+<p>体育赛事：捕捉球员的用语，捕捉球员的兴奋状态。NBA以及是统计模型的竞赛了。</p>
+<blockquote>
+<p>好的文本处理工具，可以让我们对语言不再束手无策。</p>
+<p>——李丰老师</p>
+</blockquote>
+<p>停词中，把相类似相近的东西都替换成相关的内容。语言处理需要大量经验。斯坦福的自然语言处理，中国中科院，哈工大，都有自己的语料库。有趣而无聊的操作。</p>
+<p>很多互联网公司提供了免费的api，根据其语料库分词。造就了当今输入法。</p>
+<p>举个海底捞的例子，海底捞商标，河底捞商标，侵权了吗。（氦核：老师这举的啥例子。。笑）</p>
+<h3 id="二、Spark的解决方案"><a href="#二、Spark的解决方案" class="headerlink" title="二、Spark的解决方案"></a>二、Spark的解决方案</h3><p>现在看看上面的操作，spark如何操作。</p>
+<p>英文：对每一行都做了split拆分，词频矩阵</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HashingTF(inputCol = <span class="string">'words'</span>,outputCol = <span class="string">'rawFeatures'</span>)</span><br></pre></td></tr></table></figure>
+<p>另一个工具叫IDF，每天要过滤很多网络信息，很多没用的信息。</p>
+<p>三千封邮件中，有两份出现了“爆炸”“枪”，两个词同时出现。关联性的信息很强。就要适当放大权重。（这就是通过IDF来实现的）把那些我们在常用词里不关心，但低频词在多个文档都出现的，增加权重。</p>
+<p>再比如，有很多政治新闻，会影响原油价格。我想回归，把政治新闻当做协变量。谷歌找了一个办法，把文本信息做成向量Word2VecModel（word2vec），里面还要信号强度。通过两层的神经网络，重新转化成一个数值型向量。</p>
+<p>去除停词StopWordsRemover</p>
+<h4 id="一些新的想法："><a href="#一些新的想法：" class="headerlink" title="一些新的想法："></a>一些新的想法：</h4><p>扩大相关性：</p>
+<p>以一个词为中心，向左组词，向右组词，这个情况叫bi-gram，i向右扩1个，扩2个……信息的离散度越高。确定性的信息越少。不能无限扩大，常见的是2或3，能够体现相关性，重新构建词频矩阵。</p>
+<p>我爱北京天安门</p>
+<p>1我2爱3北京4天安门</p>
+<p>5我爱6爱北京7我爱北京（567以爱为中心）</p>
+<h4 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h4><p>根据相似性聚合在一起，这个过程叫狄利克雷过程，也叫中国餐馆过程。哈哈。</p>
+<p>如果这里面每一个客人，都是单词，我们就能通过统计学的聚类工具，自动把文章分为不同的主题。</p>
+<p><strong>主题模型建模</strong>发展目前正趋于成熟。</p>
+<h3 id="三、实战"><a href="#三、实战" class="headerlink" title="三、实战"></a>三、实战</h3><p>略过建立sc的步骤</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line">textFile = sc.textFile(<span class="string">"test.txt"</span>)</span><br><span class="line">textFile.first()</span><br><span class="line"><span class="comment">## 展示结果： </span></span><br><span class="line"><span class="comment">## 'Title: The Romance of Wills and Testaments'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">type(textFile)</span><br><span class="line"><span class="comment">## 展示结果： </span></span><br><span class="line"><span class="comment">## pyspark.rdd.RDD</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 去空行</span></span><br><span class="line">print(textFile.count())</span><br><span class="line">text0 = textFile.filter(<span class="keyword">lambda</span> x: len(x)&gt;<span class="number">1</span>) <span class="comment"># 留下符合要求的行</span></span><br><span class="line">print(text0.count())</span><br><span class="line"><span class="comment">## 展示结果： </span></span><br><span class="line"><span class="comment">## 1129</span></span><br><span class="line"><span class="comment">## 492</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pyspark.ml.feature <span class="keyword">import</span> HashingTF, IDF, Tokenizer</span><br><span class="line">tokenizer = Tokenizer(inputCol=<span class="string">"sentence"</span>, outputCol=<span class="string">"words"</span>)</span><br><span class="line">tokenizer</span><br><span class="line"><span class="comment">## 展示结果： </span></span><br><span class="line"><span class="comment">## Tokenizer_39744db6461e</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意数据格式</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">sentenceData = spark.createDataFrame([</span></span><br><span class="line"><span class="string">    (0.0, "Hi I heard about Spark"),</span></span><br><span class="line"><span class="string">    (0.0, "I wish Java could use case classes"),</span></span><br><span class="line"><span class="string">    (1.0, "Logistic regression models are neat")</span></span><br><span class="line"><span class="string">], ["label", "sentence"])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 此处要用 开始创建的sparksession创建DataFrame</span></span><br><span class="line">sentenceData= ss.createDataFrame(</span><br><span class="line">    list(zip(list(map(float,range(len(text0.collect())<span class="number">-1</span>))), text0.collect())) <span class="comment"># 元祖信息</span></span><br><span class="line">,[<span class="string">'label'</span>,<span class="string">'sentence'</span>])</span><br><span class="line">sentenceData</span><br><span class="line"><span class="comment">## DataFrame[label: double, sentence: string]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 载入分词引擎</span></span><br><span class="line">wordsData = tokenizer.transform(sentenceData)</span><br><span class="line">wordsData.show()</span><br><span class="line"><span class="comment">## 展示结果： </span></span><br><span class="line"><span class="comment">## +-----+--------------------+--------------------+</span></span><br><span class="line"><span class="comment">## |label|            sentence|               words|</span></span><br><span class="line"><span class="comment">## +-----+--------------------+--------------------+</span></span><br><span class="line"><span class="comment">## |  0.0|Title: The Romanc...|[title:, the, rom...|</span></span><br><span class="line"><span class="comment">## |  1.0|Author: Edgar Vin...|[author:, edgar, ...|</span></span><br><span class="line"><span class="comment">## |  2.0|             PREFACE|           [preface]|</span></span><br><span class="line"><span class="comment">## |  3.0|By way of preface...|[by, way, of, pre...|</span></span><br><span class="line"><span class="comment">## |  4.0|As in death, so i...|[as, in, death,, ...|</span></span><br><span class="line"><span class="comment">## |  5.0|Different types a...|[different, types...|</span></span><br><span class="line"><span class="comment">## |  6.0|It is desired to ...|[it, is, desired,...|</span></span><br><span class="line"><span class="comment">## |  7.0|Again, there are ...|[again,, there, a...|</span></span><br><span class="line"><span class="comment">## |  8.0|Especial acknowle...|[especial, acknow...|</span></span><br><span class="line"><span class="comment">## |  9.0|The idea of this ...|[the, idea, of, t...|</span></span><br><span class="line"><span class="comment">## | 10.0|Since these essay...|[since, these, es...|</span></span><br><span class="line"><span class="comment">## | 11.0|Scattered about t...|[scattered, about...|</span></span><br><span class="line"><span class="comment">## | 12.0|Other references ...|[other, reference...|</span></span><br><span class="line"><span class="comment">## | 13.0|       E. VINE HALL.|   [e., vine, hall.]|</span></span><br><span class="line"><span class="comment">## | 14.0|          Wimbledon.|        [wimbledon.]|</span></span><br><span class="line"><span class="comment">## | 15.0|           CHAPTER I|        [chapter, i]|</span></span><br><span class="line"><span class="comment">## | 16.0|THE ROMANCE OF WILLS|[the, romance, of...|</span></span><br><span class="line"><span class="comment">## | 17.0|��The older I gro...|[��the, older, i,...|</span></span><br><span class="line"><span class="comment">## | 18.0|The words of the ...|[the, words, of, ...|</span></span><br><span class="line"><span class="comment">## | 19.0|Historically they...|[historically, th...|</span></span><br><span class="line"><span class="comment">## +-----+--------------------+--------------------+</span></span><br><span class="line"><span class="comment">## only showing top 20 rows</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hashingTF = HashingTF(inputCol=<span class="string">"words"</span>, outputCol=<span class="string">"rawFeatures"</span>, numFeatures=<span class="number">20</span>)</span><br><span class="line">featurizedData = hashingTF.transform(wordsData)</span><br><span class="line">featurizedData.show()</span><br><span class="line"><span class="comment">## 展示结果： </span></span><br><span class="line"><span class="comment">## +-----+--------------------+--------------------+--------------------+</span></span><br><span class="line"><span class="comment">## |label|            sentence|               words|         rawFeatures|</span></span><br><span class="line"><span class="comment">## +-----+--------------------+--------------------+--------------------+</span></span><br><span class="line"><span class="comment">## |  0.0|Title: The Romanc...|[title:, the, rom...|(20,[6,10,11,12,1...|</span></span><br><span class="line"><span class="comment">## |  1.0|Author: Edgar Vin...|[author:, edgar, ...|(20,[1,2,7,8],[1....|</span></span><br><span class="line"><span class="comment">## |  2.0|             PREFACE|           [preface]|      (20,[2],[1.0])|</span></span><br><span class="line"><span class="comment">## |  3.0|By way of preface...|[by, way, of, pre...|(20,[1,2,3,4,6,7,...|</span></span><br><span class="line"><span class="comment">## |  4.0|As in death, so i...|[as, in, death,, ...|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## |  5.0|Different types a...|[different, types...|(20,[0,1,3,4,5,6,...|</span></span><br><span class="line"><span class="comment">## |  6.0|It is desired to ...|[it, is, desired,...|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## |  7.0|Again, there are ...|[again,, there, a...|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## |  8.0|Especial acknowle...|[especial, acknow...|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## |  9.0|The idea of this ...|[the, idea, of, t...|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## | 10.0|Since these essay...|[since, these, es...|(20,[0,1,2,3,5,6,...|</span></span><br><span class="line"><span class="comment">## | 11.0|Scattered about t...|[scattered, about...|(20,[1,2,3,4,5,6,...|</span></span><br><span class="line"><span class="comment">## | 12.0|Other references ...|[other, reference...|(20,[0,1,3,4,5,6,...|</span></span><br><span class="line"><span class="comment">## | 13.0|       E. VINE HALL.|   [e., vine, hall.]|(20,[0,2,18],[1.0...|</span></span><br><span class="line"><span class="comment">## | 14.0|          Wimbledon.|        [wimbledon.]|      (20,[8],[1.0])|</span></span><br><span class="line"><span class="comment">## | 15.0|           CHAPTER I|        [chapter, i]|(20,[9,16],[1.0,1...|</span></span><br><span class="line"><span class="comment">## | 16.0|THE ROMANCE OF WILLS|[the, romance, of...|(20,[6,11,15,17],...|</span></span><br><span class="line"><span class="comment">## | 17.0|��The older I gro...|[��the, older, i,...|(20,[0,1,2,3,5,6,...|</span></span><br><span class="line"><span class="comment">## | 18.0|The words of the ...|[the, words, of, ...|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## | 19.0|Historically they...|[historically, th...|(20,[0,1,3,4,5,7,...|</span></span><br><span class="line"><span class="comment">## +-----+--------------------+--------------------+--------------------+</span></span><br><span class="line"><span class="comment">## only showing top 20 rows</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># alternatively, CountVectorizer can also be used to get term frequency vectors</span></span><br><span class="line">idf = IDF(inputCol=<span class="string">"rawFeatures"</span>, outputCol=<span class="string">"features"</span>)</span><br><span class="line">idfModel = idf.fit(featurizedData)</span><br><span class="line">rescaledData = idfModel.transform(featurizedData)</span><br><span class="line">rescaledData.select(<span class="string">"label"</span>, <span class="string">"features"</span>).show()</span><br><span class="line"><span class="comment">## 展示结果： </span></span><br><span class="line"><span class="comment">## +-----+--------------------+</span></span><br><span class="line"><span class="comment">## |label|            features|</span></span><br><span class="line"><span class="comment">## +-----+--------------------+</span></span><br><span class="line"><span class="comment">## |  0.0|(20,[6,10,11,12,1...|</span></span><br><span class="line"><span class="comment">## |  1.0|(20,[1,2,7,8],[0....|</span></span><br><span class="line"><span class="comment">## |  2.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## |  3.0|(20,[2],[1.060380...|</span></span><br><span class="line"><span class="comment">## |  4.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## |  5.0|(20,[1,2,3,4,6,7,...|</span></span><br><span class="line"><span class="comment">## |  6.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## |  7.0|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## |  8.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## |  9.0|(20,[0,1,3,4,5,6,...|</span></span><br><span class="line"><span class="comment">## | 10.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## | 11.0|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## | 12.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## | 13.0|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## | 14.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## | 15.0|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## | 16.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## | 17.0|(20,[0,1,2,3,4,5,...|</span></span><br><span class="line"><span class="comment">## | 18.0|(20,[12],[0.07923...|</span></span><br><span class="line"><span class="comment">## | 19.0|(20,[0,1,2,3,5,6,...|</span></span><br><span class="line"><span class="comment">## +-----+--------------------+</span></span><br><span class="line"><span class="comment">## only showing top 20 rows</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># word2Vec</span></span><br><span class="line"><span class="keyword">from</span> pyspark.ml.feature <span class="keyword">import</span> Word2Vec</span><br><span class="line"><span class="comment"># 每个向量代表文档的词汇表中每个词语出现的次数。</span></span><br><span class="line"><span class="comment"># Input data: Each row is a bag of words from a sentence or document.</span></span><br><span class="line">documentDF = ss.createDataFrame([</span><br><span class="line">    (<span class="string">"Hi I heard about Spark"</span>.split(<span class="string">" "</span>), ),</span><br><span class="line">    (<span class="string">"I wish Java could use case classes"</span>.split(<span class="string">" "</span>), ),</span><br><span class="line">    (<span class="string">"Logistic regression models are neat"</span>.split(<span class="string">" "</span>), )</span><br><span class="line">], [<span class="string">"text"</span>])</span><br><span class="line"></span><br><span class="line"><span class="string">'''textsplit = []</span></span><br><span class="line"><span class="string">## 太慢了，慎重运行</span></span><br><span class="line"><span class="string">for i in range(len(text0.collect())-1):</span></span><br><span class="line"><span class="string">    textsplit.append((text0.collect()[i].split(' '),))</span></span><br><span class="line"><span class="string">textsplit'''</span></span><br><span class="line"><span class="comment"># 对上一行操作的替代</span></span><br><span class="line">textsplit = text0.map(<span class="keyword">lambda</span> x:x.split(<span class="string">' '</span>) )</span><br><span class="line">textsplit</span><br><span class="line"><span class="comment">## 展示结果： </span></span><br><span class="line"><span class="comment">## [(['Title:', 'The', 'Romance', 'of', 'Wills', 'and', 'Testaments'],),</span></span><br><span class="line"><span class="comment">##  (['Author:', 'Edgar', 'Vine', 'Hall'],),</span></span><br><span class="line"><span class="comment">##  (['PREFACE'],),</span></span><br><span class="line"><span class="comment">##  (['By',</span></span><br><span class="line"><span class="comment">##    'way',</span></span><br><span class="line"><span class="comment">##    'of',</span></span><br><span class="line"><span class="comment">##    'preface',</span></span><br><span class="line"><span class="comment">##    'it',</span></span><br><span class="line"><span class="comment">##    'is',</span></span><br><span class="line"><span class="comment">##    'necessary',</span></span><br><span class="line"><span class="comment">##    'to',</span></span><br><span class="line"><span class="comment">##    'explain',</span></span><br><span class="line"><span class="comment">##    'the',</span></span><br><span class="line"><span class="comment">##    'sources',</span></span><br><span class="line"><span class="comment">##    'from',</span></span><br><span class="line"><span class="comment">##    'which'...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># word2vec</span></span><br><span class="line"><span class="keyword">from</span> pyspark.ml.feature <span class="keyword">import</span> Word2Vec</span><br><span class="line">docDF = ss.createDataFrame(list(</span><br><span class="line">    zip(textsplit.collect())</span><br><span class="line">)).toDF(<span class="string">"text"</span>)</span><br><span class="line">word2Vec = Word2Vec(vectorSize=<span class="number">3</span>, minCount=<span class="number">0</span>, inputCol=<span class="string">"text"</span>, outputCol=<span class="string">"result"</span>)</span><br><span class="line">model = word2Vec.fit(docDF)</span><br><span class="line"></span><br><span class="line">result = model.transform(docDF)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> result.collect():</span><br><span class="line">    text, vector = row</span><br><span class="line">    print(<span class="string">"Text: [%s] =&gt; \nVector: %s\n"</span> % (<span class="string">", "</span>.join(text), str(vector)))</span><br><span class="line"><span class="comment">## 展示结果：    </span></span><br><span class="line"><span class="comment">## Text: [Title:, The, Romance, of, Wills, and, Testaments] =&gt; </span></span><br><span class="line"><span class="comment">## Vector: [0.07510965237660067,0.10043827923280851,0.19377085047640968]</span></span><br><span class="line"><span class="comment">## </span></span><br><span class="line"><span class="comment">## Text: [Author:, Edgar, Vine, Hall] =&gt; </span></span><br><span class="line"><span class="comment">## Vector: [-0.07176287146285176,-0.10652108257636428,-0.012149352580308914]</span></span><br><span class="line"><span class="comment">## </span></span><br><span class="line"><span class="comment">## Text: [PREFACE] =&gt; </span></span><br><span class="line"><span class="comment">## Vector: [0.006923258304595947,-0.002445697784423828,0.12241993099451065]</span></span><br><span class="line"><span class="comment">## </span></span><br><span class="line"><span class="comment">## Text: [By, way, of, preface, it, is, necessary, to, explain, the, sources, from, which, the, material, for, the, following, pages, is, taken., The, chief, feature, of, these, essays, consists,, I, think,, in, the, large, amount, of, original, matter, rescued, from, the, multitudinous, MS., volumes, of, wills,, &amp;c.,, which, are, preserved, at, Somerset, House, and, elsewhere.] =&gt; </span></span><br><span class="line"><span class="comment">## Vector: [0.030354710200939463,0.10534696077445038,0.05815259900582195]</span></span><br></pre></td></tr></table></figure>
+<p>（未完待续）</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/11/19/201126hadoop/">
+                    https://konelane.github.io/2020/11/19/201126hadoop/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/11/19/201119hadoop/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          分布式1119-Spark做些实战-以及为之后的实战铺路
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/12/201112hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式1112-Spark简单功能补充介绍</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2021 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>

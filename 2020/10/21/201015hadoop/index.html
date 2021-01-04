@@ -11,16 +11,16 @@
 <meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分布式1015-1021-分布式回归分析">
-<meta property="og:url" content="https://konelane.github.io/2020/10/21/1015hadoop/index.html">
+<meta property="og:url" content="https://konelane.github.io/2020/10/21/201015hadoop/index.html">
 <meta property="og:site_name" content="KOneLane">
 <meta property="og:description" content="一、开始！今日信息量巨大大佬们展示肌肉。 回归部分还需要些数学根底。 代码后面也有一丢丢正文。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://konelane.github.io/2020/10/21/1015hadoop/tu1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/21/201015hadoop/tu1.png">
 <meta property="og:updated_time" content="2020-12-30T08:21:42.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分布式1015-1021-分布式回归分析">
 <meta name="twitter:description" content="一、开始！今日信息量巨大大佬们展示肌肉。 回归部分还需要些数学根底。 代码后面也有一丢丢正文。">
-<meta name="twitter:image" content="https://konelane.github.io/2020/10/21/1015hadoop/tu1.png">
+<meta name="twitter:image" content="https://konelane.github.io/2020/10/21/201015hadoop/tu1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -123,7 +123,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/R/" style="font-size: 16px;">R</a> <a href="/tags/填词/" style="font-size: 14px;">填词</a> <a href="/tags/大数据/" style="font-size: 16px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 12px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 14px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+						<a href="/tags/R/" style="font-size: 15px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 16.67px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
 					</div>
 				</section>
 				
@@ -255,7 +255,7 @@
 
 	
 </div>
-      <div class="body-wrap"><article id="post-1015hadoop" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-201015hadoop" class="article article-type-post" itemscope itemprop="blogPost">
     <script>
         $("html").niceScroll({
             cursorcolor: "#2a2929",
@@ -269,7 +269,7 @@
     </script>
     
     <div class="article-meta">
-        <a href="/2020/10/21/1015hadoop/" class="article-date">
+        <a href="/2020/10/21/201015hadoop/" class="article-date">
   	<time datetime="2020-10-20T16:00:00.000Z" itemprop="datePublished">2020-10-21</time>
 </a>
 
@@ -406,7 +406,7 @@ Y = x \times \beta + \epsilon</script><p>beta不大，但是帽子阵根本求�
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">PWD=$(cd $(dirname $0); pwd)</span><br><span class="line">cd $PWD 1&gt; /dev/null 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">hadoop fs -put used_cars_5w.csv /user/devel/2020210995wangyuanhe/reg</span><br><span class="line"></span><br><span class="line">TASKNAME=lm-usedcars-hehe</span><br><span class="line">HADOOP_INPUT_DIR=/user/devel/2020210995wangyuanhe/reg/used_cars_5w.csv</span><br><span class="line">HADOOP_OUTPUT_DIR=/user/devel/2020210995wangyuanhe/output/1026output</span><br><span class="line"></span><br><span class="line">echo $HADOOP_HOME</span><br><span class="line">echo $HADOOP_INPUT_DIR</span><br><span class="line">echo $HADOOP_OUTPUT_DIR</span><br><span class="line"></span><br><span class="line">hadoop fs -rm -r $HADOOP_OUTPUT_DIR</span><br><span class="line"></span><br><span class="line">hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-3.1.3.jar \</span><br><span class="line">-D mapred.job.name=$TASKNAME \</span><br><span class="line">-D mapred.job.priority=NORMAL \</span><br><span class="line">-D mapred.reduce.tasks=1 \</span><br><span class="line">-file &quot;$PWD/mapper.py&quot; &quot;$PWD/reducer.py&quot; \</span><br><span class="line">-input $&#123;HADOOP_INPUT_DIR&#125; \</span><br><span class="line">-output $&#123;HADOOP_OUTPUT_DIR&#125; \</span><br><span class="line">-mapper &quot;$PWD/mapper.py&quot; \</span><br><span class="line">-reducer &quot;$PWD/reducer.py&quot; </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if [ $? -ne 0 ]; then</span><br><span class="line">    echo &apos;error&apos;</span><br><span class="line">    exit 1</span><br><span class="line">fi</span><br><span class="line">hadoop fs -touchz $&#123;HADOOP_OUTPUT_DIR&#125;/done</span><br><span class="line"></span><br><span class="line">hadoop fs -ls $HADOOP_OUTPUT_DIR | cat</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
 <p>至此，分布式的运用基本结束了。</p>
 <h3 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h3><p>先放一个系统卡住的样子</p>
-<img src="/2020/10/21/1015hadoop/tu1.png" title="tu1">
+<img src="/2020/10/21/201015hadoop/tu1.png" title="tu1">
 <p>同学的代码写的很糟，放上去跑不动，系统没资源……理由有很多，总之就是卡了。</p>
 <p>上面代码漏说了一个技巧：</p>
 <blockquote>
@@ -447,8 +447,8 @@ Y = x \times \beta + \epsilon</script><p>beta不大，但是帽子阵根本求�
 
             </br>
             <p>本文链接：
-                <a href="https://konelane.github.io/2020/10/21/1015hadoop/">
-                    https://konelane.github.io/2020/10/21/1015hadoop/
+                <a href="https://konelane.github.io/2020/10/21/201015hadoop/">
+                    https://konelane.github.io/2020/10/21/201015hadoop/
                 </a>
             </p>
             <p>-- <acronym title="End of File">EOF</acronym> --</p>
@@ -508,7 +508,7 @@ Y = x \times \beta + \epsilon</script><p>beta不大，但是帽子阵根本求�
     </a>
   
   
-    <a href="/2020/10/13/1010CV/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/10/13/201010CV/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">数据之学|交叉验证相关理论介绍</div>
       <strong class="article-nav-caption">></strong>
     </a>
@@ -589,7 +589,7 @@ Y = x \times \beta + \epsilon</script><p>beta不大，但是帽子阵根本求�
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 Little Hehe
+    		&copy; 2021 Little Hehe
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten

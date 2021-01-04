@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>分布式1119-Spark做些实战-以及为之后的实战铺路 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="讲解作业，炒鸡复杂（其实也罢了）的air-delay数据清洗。 附带可以认识spark的强大之处。">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分布式1119-Spark做些实战-以及为之后的实战铺路">
+<meta property="og:url" content="https://konelane.github.io/2020/11/19/201119hadoop/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="讲解作业，炒鸡复杂（其实也罢了）的air-delay数据清洗。 附带可以认识spark的强大之处。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-01-04T03:01:30.805Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分布式1119-Spark做些实战-以及为之后的实战铺路">
+<meta name="twitter:description" content="讲解作业，炒鸡复杂（其实也罢了）的air-delay数据清洗。 附带可以认识spark的强大之处。">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 15px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 16.67px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-201119hadoop" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2020/11/19/201119hadoop/" class="article-date">
+  	<time datetime="2020-11-18T16:00:00.000Z" itemprop="datePublished">2020-11-19</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      分布式1119-Spark做些实战-以及为之后的实战铺路
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、作业集锦"><span class="toc-number">1.</span> <span class="toc-text">一、作业集锦</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-数据展示"><span class="toc-number">1.1.</span> <span class="toc-text">1.数据展示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-哑变量处理"><span class="toc-number">1.2.</span> <span class="toc-text">2.哑变量处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-引入sql"><span class="toc-number">1.3.</span> <span class="toc-text">3.引入sql</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-分类变量的问题"><span class="toc-number">1.4.</span> <span class="toc-text">4.分类变量的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-小心使用toPandas"><span class="toc-number">1.5.</span> <span class="toc-text">5.小心使用toPandas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-某种转化因子变量的方法（我的期末作业里是另一种方式）"><span class="toc-number">1.6.</span> <span class="toc-text">6.某种转化因子变量的方法（我的期末作业里是另一种方式）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-自己写个新函数get-sdummies"><span class="toc-number">1.7.</span> <span class="toc-text">7.自己写个新函数get_sdummies</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、成果展示"><span class="toc-number">2.</span> <span class="toc-text">二、成果展示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、稍微讲了点新课"><span class="toc-number">3.</span> <span class="toc-text">三、稍微讲了点新课</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-需求"><span class="toc-number">3.1.</span> <span class="toc-text">1.需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Pipelines（管道）"><span class="toc-number">3.2.</span> <span class="toc-text">2.Pipelines（管道）</span></a></li></ol></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <p>讲解作业，炒鸡复杂（其实也罢了）的air-delay数据清洗。</p>
+<p>附带可以认识spark的强大之处。</p>
+<a id="more"></a>
+<h3 id="一、作业集锦"><a href="#一、作业集锦" class="headerlink" title="一、作业集锦"></a>一、作业集锦</h3><p>上一次作业里提出，我们从kaggle上download了一份巨大的数据，一共有五百万行，但只有19列。老师希望大家能处理好这个数据，清洗到能够建模的地步。</p>
+<p>我记录了一些汇报亮点，但是大部分都消散在那节课中了。</p>
+<h4 id="1-数据展示"><a href="#1-数据展示" class="headerlink" title="1.数据展示"></a>1.数据展示</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">air.groupby(&apos;Month&apos;).count().collect() ## collect可以看到所有列</span><br><span class="line"># count默认不排序</span><br></pre></td></tr></table></figure>
+<p>累计求和百分比，计算占比较大的类，作为重要的变量<br>结合sql语句<br>spark命令结合sql</p>
+<h4 id="2-哑变量处理"><a href="#2-哑变量处理" class="headerlink" title="2.哑变量处理"></a>2.哑变量处理</h4><p>陈曦同学：对老师的代码的理解：<br>students/2020211004chenxi/1112work</p>
+<h4 id="3-引入sql"><a href="#3-引入sql" class="headerlink" title="3.引入sql"></a>3.引入sql</h4><p>周童给出了引入sql的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql_accumulated = f&quot;&quot;&quot;&#123;参数&#125;</span><br><span class="line">	select *</span><br><span class="line">		from ( select &#123;col_name&#125;</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="4-分类变量的问题"><a href="#4-分类变量的问题" class="headerlink" title="4.分类变量的问题"></a>4.分类变量的问题</h4><p>注意，3分类只要两个变量，否则有共线性。有k个变量都有可能哑变量，总体应该drop掉2的k次方-k个。全都是0-1的话，就如此。计算机里叫onehot，统计就叫哑变量。</p>
+<p>特别地，onehot存储的形式就会改变：[40,38]一共40个数，第38个位为1</p>
+<h4 id="5-小心使用toPandas"><a href="#5-小心使用toPandas" class="headerlink" title="5.小心使用toPandas"></a>5.小心使用toPandas</h4><p>有一种储存方式是选择将sdf转化成pandas，toPandas对于count都是单机的操作。如果数据量不大，可以这样，因为这样会把数据存上master。</p>
+<h4 id="6-某种转化因子变量的方法（我的期末作业里是另一种方式）"><a href="#6-某种转化因子变量的方法（我的期末作业里是另一种方式）" class="headerlink" title="6.某种转化因子变量的方法（我的期末作业里是另一种方式）"></a>6.某种转化因子变量的方法（我的期末作业里是另一种方式）</h4><p>用一个if else，把所有factor变成0-1，不过这样生成的矩阵就不是稀疏矩阵（spark里可以）</p>
+<blockquote>
+<p>某同学构建了：是否延误-各种定性变量的不同取值情况列联表。</p>
+<p>列联表，这看着像统计人干的。</p>
+<p>——李丰老师</p>
+</blockquote>
+<h4 id="7-自己写个新函数get-sdummies"><a href="#7-自己写个新函数get-sdummies" class="headerlink" title="7.自己写个新函数get_sdummies"></a>7.自己写个新函数get_sdummies</h4><p>pandas里有个getdummy函数，于是老师写了一个sdummies，即get_sdummies。</p>
+<p>输入spark的df，只能具体的哪一个dummycol做修改，保持累计比例，自动删除那一列，最后有一个dummy_info=[]</p>
+<p>如何在spark上自己生成？</p>
+<p>1，清理</p>
+<p>2，多少行，对所有dummy列循环</p>
+<p>如果info空，则创建一个新的，放入所有变量</p>
+<p>3，spark里的数据框根据对应的dummycol做一个计数和排序。</p>
+<p>对于所有count从上往下求和，分母是所有的行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Window.partitionby.orderby.rowsbetween(-sys.maxsize,<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>就能获取前%多少的dummy变量</p>
+<p>cumperc是累计求和除以总行数。累计百分比只保留（filter）小于我的top值</p>
+<p>于是就能找到topdummy，且不用算到结束，算到出结果就停止</p>
+<h3 id="二、成果展示"><a href="#二、成果展示" class="headerlink" title="二、成果展示"></a>二、成果展示</h3><p>下面是李丰老师与cx同学代码的解析，太强了，点个赞！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env python3</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">500000*19 去掉缺失值</span><br><span class="line">转化成delay 判断是否延误 √</span><br><span class="line">dlsa-project 参考</span><br><span class="line">常用变量继承，增加dummy列（航空公司）</span><br><span class="line">通过</span><br><span class="line">500000*180</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">###################################################开启</span><br><span class="line">import findspark</span><br><span class="line">findspark.init(&apos;/usr/lib/spark-current&apos;)</span><br><span class="line">from pyspark.sql import SparkSession</span><br><span class="line">##session封装了conf</span><br><span class="line">spark = SparkSession.builder.appName(&quot;chenxi session&quot;).getOrCreate()</span><br><span class="line">###################################################读入数据</span><br><span class="line">#处理schema</span><br><span class="line">from pyspark.sql.types import *</span><br><span class="line">schema_sdf = StructType([</span><br><span class="line">        StructField(&apos;Year&apos;, IntegerType(), True),</span><br><span class="line">        StructField(&apos;Month&apos;, IntegerType(), True),</span><br><span class="line">        StructField(&apos;DayofMonth&apos;, IntegerType(), True),</span><br><span class="line">        StructField(&apos;DayOfWeek&apos;, IntegerType(), True),</span><br><span class="line">        StructField(&apos;DepTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;CRSDepTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;ArrTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;CRSArrTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;UniqueCarrier&apos;, StringType(), True),</span><br><span class="line">        StructField(&apos;FlightNum&apos;, StringType(), True),</span><br><span class="line">        StructField(&apos;TailNum&apos;, StringType(), True),</span><br><span class="line">        StructField(&apos;ActualElapsedTime&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;CRSElapsedTime&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;AirTime&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;ArrDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;DepDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;Origin&apos;, StringType(), True),</span><br><span class="line">        StructField(&apos;Dest&apos;,  StringType(), True),</span><br><span class="line">        StructField(&apos;Distance&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;TaxiIn&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;TaxiOut&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;Cancelled&apos;,  IntegerType(), True),</span><br><span class="line">        StructField(&apos;CancellationCode&apos;,  StringType(), True),</span><br><span class="line">        StructField(&apos;Diverted&apos;,  IntegerType(), True),</span><br><span class="line">        StructField(&apos;CarrierDelay&apos;, DoubleType(), True),</span><br><span class="line">        StructField(&apos;WeatherDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;NASDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;SecurityDelay&apos;,  DoubleType(), True),</span><br><span class="line">        StructField(&apos;LateAircraftDelay&apos;,  DoubleType(), True)</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">air00 = spark.read.options(header=&apos;true&apos;).schema(schema_sdf).csv(&quot;/data/airdelay_small.csv&quot;) #这是spark dataframe，不是pd的那个</span><br><span class="line">use_columns=[</span><br><span class="line">    &apos;ArrDelay&apos;, #double</span><br><span class="line">    &apos;Year&apos;, #int</span><br><span class="line">    &apos;Month&apos;, #int</span><br><span class="line">    &apos;DayofMonth&apos;, #int</span><br><span class="line">    &apos;DayOfWeek&apos;, #int</span><br><span class="line">    &apos;DepTime&apos;, #double</span><br><span class="line">    &apos;CRSDepTime&apos;, #double</span><br><span class="line">    &apos;CRSArrTime&apos;, #double</span><br><span class="line">    &apos;UniqueCarrier&apos;, #str</span><br><span class="line">    &apos;ActualElapsedTime&apos;,  #double&apos;,</span><br><span class="line">    &apos;Origin&apos;,#str</span><br><span class="line">    &apos;Dest&apos;, #str</span><br><span class="line">    &apos;Distance&apos; #double</span><br><span class="line">]</span><br><span class="line">air=air00.select(use_columns).na.drop()</span><br><span class="line">#####################################################处理因变量########################</span><br><span class="line">def delay(x):</span><br><span class="line">    if x&gt;0:</span><br><span class="line">        return 1</span><br><span class="line">    else :</span><br><span class="line">        return 0</span><br><span class="line"></span><br><span class="line">#参考 https://blog.csdn.net/wulishinian/article/details/105817409 spark中生成新列的各种方法，不能直接定义了</span><br><span class="line">import pyspark.sql.functions as F</span><br><span class="line">yfunc = F.udf(delay, StringType())#类似apply的使用，对该列每个数做个操作</span><br><span class="line">air = air.withColumn(&quot;delay_or_not&quot;, yfunc(&quot;ArrDelay&quot;))</span><br><span class="line"></span><br><span class="line">#####################################################处理自变量#########################</span><br><span class="line">#注意，pyspark好像识别不了空行和换行（在一行一行跑的时候）</span><br><span class="line">####################先把一些列转成others</span><br><span class="line">#使用老师给的代码统计哪些类别归入others</span><br><span class="line">import pickle</span><br><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import os</span><br><span class="line">from collections import Counter</span><br><span class="line"></span><br><span class="line">def dummy_factors_counts(pdf, dummy_columns):</span><br><span class="line">    &apos;&apos;&apos;Function to count unique dummy factors for given dummy columns</span><br><span class="line">    pdf: pandas data frame</span><br><span class="line">    dummy_columns: list. Numeric or strings are both accepted.</span><br><span class="line">    return: dict same as dummy columns</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    # Check if current argument is numeric or string</span><br><span class="line">    pdf_columns = pdf.columns # Fetch data frame header</span><br><span class="line">    dummy_columns_isint = all(isinstance(item, int) for item in dummy_columns)</span><br><span class="line">    #isinstance() 判断item是否是int</span><br><span class="line">    #all()用于判断给定的可迭代参数 iterable 中的所有元素是否都为 TRUE，如果是返回 True，否则返回 False</span><br><span class="line">    if dummy_columns_isint:</span><br><span class="line">        dummy_columns_names = [pdf_columns[i] for i in dummy_columns]</span><br><span class="line">    else:</span><br><span class="line">        dummy_columns_names = dummy_columns</span><br><span class="line">    factor_counts = &#123;&#125;</span><br><span class="line">    for i in dummy_columns_names:</span><br><span class="line">        factor_counts[i] = (pdf[i]).value_counts().to_dict()</span><br><span class="line">    #统计每一列里的不同值的个数</span><br><span class="line">    return factor_counts</span><br><span class="line"></span><br><span class="line">###合并两个字典，并计算同一key的和（两个字典都有子字典）</span><br><span class="line">def cumsum_dicts(dict1, dict2):</span><br><span class="line">    &apos;&apos;&apos;Merge two dictionaries and accumulate the sum for the same key where each dictionary</span><br><span class="line">    containing sub-dictionaries with elements and counts.</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    # If only one dict is supplied, do nothing.</span><br><span class="line">    if len(dict1) == 0:</span><br><span class="line">        dict_new = dict2</span><br><span class="line">    elif len(dict2) == 0:</span><br><span class="line">        dict_new = dict1</span><br><span class="line">    else:</span><br><span class="line">        dict_new = &#123;&#125;</span><br><span class="line">        for i in dict1.keys():</span><br><span class="line">            dict_new[i] = dict(Counter(dict1[i]) + Counter(dict2[i]))</span><br><span class="line">    return dict_new</span><br><span class="line">#counter是python计数器类，返回元素取值的字典,且按频数降序</span><br><span class="line"></span><br><span class="line">def select_dummy_factors(dummy_dict, keep_top, replace_with, pickle_file):</span><br><span class="line">    &apos;&apos;&apos;Merge dummy key with frequency in the given file</span><br><span class="line">    dummy_dict: dummy information in a dictionary format</span><br><span class="line">    keep_top: list</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    dummy_columns_name = list(dummy_dict)#本身词典里就是取值</span><br><span class="line">    # nobs = sum(dummy_dict[dummy_columns_name[1]].values())#没用到</span><br><span class="line">    factor_set = &#123;&#125;  # The full dummy sets——————注意，是空字典，不是集合</span><br><span class="line">    factor_selected = &#123;&#125;  # Used dummy sets</span><br><span class="line">    factor_dropped = &#123;&#125;  # Dropped dummy sets</span><br><span class="line">    factor_selected_names = &#123;&#125;  # Final revised factors</span><br><span class="line">    for i in range(len(dummy_columns_name)):</span><br><span class="line">        column_i = dummy_columns_name[i] #给出列来</span><br><span class="line">        factor_set[column_i] = list((dummy_dict[column_i]).keys())#第i列的可能取值表</span><br><span class="line">        factor_counts = list((dummy_dict[column_i]).values())#第i列的值的个数</span><br><span class="line">        factor_cumsum = np.cumsum(factor_counts)#累加</span><br><span class="line">        factor_cumpercent = factor_cumsum / factor_cumsum[-1]#累积比率</span><br><span class="line">        factor_selected_index = np.where(factor_cumpercent &lt;= keep_top[i])#top这个是给定的</span><br><span class="line">        factor_dropped_index = np.where(factor_cumpercent &gt; keep_top[i])</span><br><span class="line">        factor_selected[column_i] = list(</span><br><span class="line">            np.array(factor_set[column_i])[factor_selected_index])#一列有一堆可用取值</span><br><span class="line">        factor_dropped[column_i] = list(</span><br><span class="line">            np.array(factor_set[column_i])[factor_dropped_index])</span><br><span class="line">        # Replace dropped dummies with indicators like `others`</span><br><span class="line">        if len(factor_dropped_index[0]) == 0:</span><br><span class="line">            factor_new = []</span><br><span class="line">        else:</span><br><span class="line">            factor_new = [replace_with]</span><br><span class="line">        factor_new.extend(factor_selected[column_i])#extend列表末尾一次性追加另一个序列中的多个值</span><br><span class="line">        factor_selected_names[column_i] = [column_i + &apos;_&apos; + str(x) for x in factor_new]</span><br><span class="line">    dummy_info = &#123;</span><br><span class="line">        &apos;factor_set&apos;: factor_set,</span><br><span class="line">        &apos;factor_selected&apos;: factor_selected,</span><br><span class="line">        &apos;factor_dropped&apos;: factor_dropped,</span><br><span class="line">        &apos;factor_selected_names&apos;: factor_selected_names&#125;</span><br><span class="line">    pickle.dump(dummy_info, open(os.path.expanduser(pickle_file), &apos;wb&apos;))</span><br><span class="line">    print(&quot;dummy_info saved in:\t&quot; + pickle_file)</span><br><span class="line">    return dummy_info #返回了一个包含处理信息的字典</span><br><span class="line"></span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">pickle提供了一个简单的持久化功能。可以将对象以文件的形式存放在磁盘上</span><br><span class="line">pickle.dump(obj, file[, protocol])</span><br><span class="line">　　序列化对象，并将结果数据流写入到文件对象中。参数protocol是序列化模式，默认值为0，表示以文本的形式序列化。protocol的值还可以是1或2，表示以二进制的形式序列化。</span><br><span class="line">　　pickle.load(file)</span><br><span class="line">　　反序列化对象。将文件中的数据解析为一个Python对象。</span><br><span class="line"></span><br><span class="line">其中要注意的是，在load(file)的时候，要让python能够找到类的定义，否则会报错：</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def select_dummy_factors_from_file(file, header, dummy_columns, keep_top,</span><br><span class="line">                                   replace_with, pickle_file):</span><br><span class="line">    &apos;&apos;&apos;Memory constrained algorithm to select dummy factors from a large file</span><br><span class="line">    对大文件使用内存约束算法选择dummy，一个真正的分布式的算法</span><br><span class="line">    要输入文件路径、表头，要变成哑变量的列，保留的比例，</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    dummy_dict = &#123;&#125;</span><br><span class="line">    buffer_num = 0</span><br><span class="line">    with open(file) as f:</span><br><span class="line">        while True:</span><br><span class="line">            buffer = f.readlines(</span><br><span class="line">                1024000)  # Returns *at most* 1024000 bytes, maybe less</span><br><span class="line">            if len(buffer) == 0:</span><br><span class="line">                break</span><br><span class="line">            else:</span><br><span class="line">                buffer_list = [x.strip().split(&quot;,&quot;) for x in buffer]</span><br><span class="line">                buffer_num += 1</span><br><span class="line">                if ((buffer_num == 1) and (header is True)):</span><br><span class="line">                    buffer_header = buffer_list[0]</span><br><span class="line">                    buffer_starts = 1</span><br><span class="line">                else:</span><br><span class="line">                    buffer_starts = 0</span><br><span class="line">                buffer_pdf = pd.DataFrame(buffer_list[buffer_starts:])</span><br><span class="line">                if header is True:</span><br><span class="line">                    buffer_pdf.columns = buffer_header</span><br><span class="line">                dummy_dict_new = dummy_factors_counts(buffer_pdf,</span><br><span class="line">                                                      dummy_columns)</span><br><span class="line">                dummy_dict = cumsum_dicts(dummy_dict, dummy_dict_new)</span><br><span class="line">    dummy_info = select_dummy_factors(dummy_dict, keep_top, replace_with,</span><br><span class="line">                                      pickle_file)</span><br><span class="line">    return (dummy_info)</span><br><span class="line"></span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">#####看一下情况确定要不要＋others列</span><br><span class="line">air.groupby(&apos;Month&apos;).count().show() #没有比例差异</span><br><span class="line">air.groupby(&apos;DayofMonth&apos;).count().show(31) #没有比例差异</span><br><span class="line">air.groupby(&apos;DayofWeek&apos;).count().show()#没有比例差异</span><br><span class="line">air.groupby(&apos;Year&apos;).count().collect()#没有比例差异</span><br><span class="line">air.groupby(&apos;UniqueCarrier&apos;).count().collect()#</span><br><span class="line">air.groupby(&apos;UniqueCarrier&apos;).count().orderBy(&apos;count&apos;).show(50)</span><br><span class="line">m=air.groupby(&apos;Origin&apos;).count()</span><br><span class="line">#air.groupby(&apos;UniqueCarrier&apos;).count().rdd.foreach(print) 为什么打印不出来？</span><br><span class="line">m.orderBy(-m(&apos;count&apos;)).collect()</span><br><span class="line">m.sort(desc(&apos;count&apos;)).collect()</span><br><span class="line">.collect()</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line"></span><br><span class="line">    # User settings</span><br><span class="line">    file = os.path.expanduser(&quot;/home/devel/data/airdelay_small.csv&quot;)</span><br><span class="line">    header = True</span><br><span class="line">    dummy_columns = [&apos;UniqueCarrier&apos;, &apos;Origin&apos;, &apos;Dest&apos;]</span><br><span class="line">    keep_top = [0.8, 0.8, 0.8]</span><br><span class="line">    replace_with = &apos;00_OTHERS&apos;</span><br><span class="line">    pickle_file = os.path.expanduser(&quot;/home/devel/students/2020211004chenxi/1112work/airdelay_dummy_info_latest.pkl&quot;)</span><br><span class="line">    dummy_info = select_dummy_factors_from_file(file, header, dummy_columns,keep_top, replace_with,pickle_file)</span><br><span class="line"></span><br><span class="line">#得到应该记为others的列名</span><br><span class="line">drop_uc=dummy_info[&apos;factor_dropped&apos;][&apos;UniqueCarrier&apos;]</span><br><span class="line">drop_o=dummy_info[&apos;factor_dropped&apos;][&apos;Origin&apos;]</span><br><span class="line">drop_d=dummy_info[&apos;factor_dropped&apos;][&apos;Dest&apos;]</span><br><span class="line">sle_uc=dummy_info[&apos;factor_selected&apos;][&apos;UniqueCarrier&apos;]</span><br><span class="line">sle_o=dummy_info[&apos;factor_selected&apos;][&apos;Origin&apos;]</span><br><span class="line">sle_d=dummy_info[&apos;factor_selected&apos;][&apos;Dest&apos;]</span><br><span class="line">########################使用字典把很小的类别更改成others</span><br><span class="line">#生成字典</span><br><span class="line">drop_all=drop_uc+drop_o+drop_d</span><br><span class="line">sle_all=sle_uc+sle_o+sle_d</span><br><span class="line">v=[&quot;others&quot;]*len(drop_all)</span><br><span class="line">dic=dict(zip(sle_all+drop_all,sle_all+v))</span><br><span class="line">air11=air.na.replace(dic,1,&apos;UniqueCarrier&apos;)</span><br><span class="line">air11=air11.na.replace(dic,1,&apos;Origin&apos;)</span><br><span class="line">air11=air11.na.replace(dic,1,&apos;Dest&apos;)</span><br><span class="line">print(&apos;替换others后的数据\n&apos;)</span><br><span class="line">air11.show(10)#更改后的结果</span><br><span class="line">#报错好像是内存太小？</span><br><span class="line">###########################################################独热编码################</span><br><span class="line">&apos;&apos;&apos;sample</span><br><span class="line">from pyspark.ml.feature import OneHotEncoder,StringIndexer</span><br><span class="line">indexer = StringIndexer(inputCol=&apos;Month&apos;, outputCol=&apos;MonthIndex&apos;)</span><br><span class="line">model = indexer.fit(air)</span><br><span class="line">indexed = model.transform(air)</span><br><span class="line">onehotencoder = OneHotEncoder(inputCol=&apos;MonthIndex&apos;, outputCol=&apos;MonthVec&apos;)</span><br><span class="line">oncoded = onehotencoder.transform(indexed)</span><br><span class="line">oncoded.show(5)</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">#https://github.com/spark-in-action/first-edition/blob/master/ch08/python/ch08-listings.py</span><br><span class="line">#先生成index</span><br><span class="line">def indexStringColumns(df, cols):</span><br><span class="line">    from pyspark.ml.feature import StringIndexer</span><br><span class="line">    #variable newdf will be updated several times</span><br><span class="line">    newdf = df</span><br><span class="line">    for c in cols:</span><br><span class="line">        si = StringIndexer(inputCol=c, outputCol=c+&quot;-num&quot;)</span><br><span class="line">        sm = si.fit(newdf)</span><br><span class="line">        newdf = sm.transform(newdf).drop(c)</span><br><span class="line">        newdf = newdf.withColumnRenamed(c+&quot;-num&quot;, c)</span><br><span class="line">    return newdf</span><br><span class="line"></span><br><span class="line">#根据index进行独热编码</span><br><span class="line">def oneHotEncodeColumns(df, cols):</span><br><span class="line">    from pyspark.ml.feature import OneHotEncoder</span><br><span class="line">    newdf = df</span><br><span class="line">    for c in cols:</span><br><span class="line">        onehotenc = OneHotEncoder(inputCol=c, outputCol=c+&quot;-onehot&quot;, dropLast=False)</span><br><span class="line">        newdf = onehotenc.transform(newdf).drop(c)</span><br><span class="line">        newdf = newdf.withColumnRenamed(c+&quot;-onehot&quot;, c)</span><br><span class="line">    return newdf</span><br><span class="line">cols=[&apos;Year&apos;,&apos;Month&apos;,&apos;DayofMonth&apos;,&apos;DayOfWeek&apos;,&apos;UniqueCarrier&apos;,&apos;Origin&apos;,&apos;Dest&apos;]</span><br><span class="line">dff=indexStringColumns(air11,[&apos;Year&apos;,&apos;Month&apos;,&apos;DayofMonth&apos;,&apos;DayOfWeek&apos;,&apos;UniqueCarrier&apos;,&apos;Origin&apos;,&apos;Dest&apos;])</span><br><span class="line">dfhot = oneHotEncodeColumns(dff, cols)</span><br><span class="line">print(&apos;编码后形式\n&apos;)</span><br><span class="line">dfhot.take(2)</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">py4j.protocol.Py4JJavaError: An error occurred while calling o1290.transform.</span><br><span class="line">: java.lang.IllegalArgumentException: Field &quot;DayofWeek&quot; does not exist</span><br><span class="line">Available fields: ArrDelay, DepTime, CRSDepTime, CRSArrTime, ActualElapsedTime, Distance, DayOfWeek, UniqueCarrier, Origin, Dest, Year, Month, DayofMonth</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">#转换成能使用的形式</span><br><span class="line">from pyspark.ml.feature import VectorAssembler#把所有字符型向量转换成数值型的后，可以合并,能直接在MLlib里用</span><br><span class="line">va = VectorAssembler(outputCol=&quot;features&quot;, inputCols=dfhot.columns[0:])#取除最后一列外的所有值</span><br><span class="line">lpoints = va.transform(dfhot).select(&quot;features&quot;)</span><br><span class="line">print(&apos;最终结果\n&apos;)</span><br><span class="line">lpoints.take(2)</span><br><span class="line"></span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">问题1：独热编码没有办法设定基准组，默认count中的最后一个是基准组，并不是数据最少的那个————如果替换了others，问题应该不是很大</span><br><span class="line">问题2：要求是矩阵形式怎么办？——可以尝试vector分列，有合适的写法，但是没能实现</span><br><span class="line">###尝试把一个vector分列，但是报错没有numpy？</span><br><span class="line">#vectors = lpoints.select(&quot;features&quot;).rdd.map(lambda row: row.features)#PipelinedRDD</span><br><span class="line">#疑问：退出后就没有以前的操作了，怎么办？ 有没有类似screen或者保存工作空间的操作？</span><br><span class="line">&apos;&apos;&apos;</span><br></pre></td></tr></table></figure>
+<h3 id="三、稍微讲了点新课"><a href="#三、稍微讲了点新课" class="headerlink" title="三、稍微讲了点新课"></a>三、稍微讲了点新课</h3><h4 id="1-需求"><a href="#1-需求" class="headerlink" title="1.需求"></a>1.需求</h4><p>机器学习，可分成一些步骤：</p>
+<p>Featurization-特征选取。</p>
+<p>40个观测，并非特征越多，模型越好（要选，steplm之类）</p>
+<p>下来变换清理数据。</p>
+<p>0-1，降维……等等问题都涌现出来。</p>
+<p>这些都叫“特征工程”，这个变量矩阵本身就是分布式的（spark）。</p>
+<p>最后使用模型建模，得到想要的信息等等。</p>
+<h4 id="2-Pipelines（管道）"><a href="#2-Pipelines（管道）" class="headerlink" title="2.Pipelines（管道）"></a>2.Pipelines（管道）</h4><p>spark通过管道把不同的流程结合起来。</p>
+<p>pipline来自于python机器学习模块中scikit-learn。</p>
+<p>persistence（工具性）模型存储，加载。</p>
+<p>utilities：线性代数，统计学等等。</p>
+<p>旧版本的mllib中，基于rdd形式。现在逐渐转化成df（好处是能和sql结合）。这是由于sql很难被直接用在rdd形式上。</p>
+<p>不过，根据上面所说的，其实可以将df转化（Transformer、Estimator）</p>
+<p>Pipeline 提供了一个能够完整工作流的链（Parameter）</p>
+<p>比如有个文本数据：</p>
+<blockquote>
+<p>pipeline：</p>
+<p>————1.Tokenizer————2.hashingTF———3.logistic regression</p>
+<p>pipeline的流：</p>
+<p>0.5Rawtext————1.5words————2.5feature vectors</p>
+<p> （数字表示时间顺序）</p>
+</blockquote>
+<p>课件以逻辑回归为例，regparam是惩罚。fit结果，不用规定x和y，因为默认的需要标记y为label，x标记为features。（机器学习的默认规则，那些函数的默认参数都是features，头大）</p>
+<p>（未完待续，下节课讲文本处理）</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2020/11/19/201119hadoop/">
+                    https://konelane.github.io/2020/11/19/201119hadoop/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+    <a href="/2020/11/20/20-21分布式计算汇总文件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          大数据|分布式计算课程作业（持续更新）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/19/201126hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式1126-Spark文本分析</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2021 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>
