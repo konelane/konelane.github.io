@@ -5,20 +5,20 @@
   <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
 <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
   
-  <title>委屈西红柿 | KOneLane</title>
+  <title>分布式1210-Spark与Scala | KOneLane</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="坐在电脑前，想写点什么。其实也没什么说的，但又总想说点什么，不说话憋得慌。当代青年是要发声的，不发声就没有“当代”的感觉。">
-<meta name="keywords" content="文章">
+  <meta name="description" content="spark的基础语法-Scala，做了一些思想性的介绍。 具体代码参考李丰老师课件L10.1-Introduction-to-Scala。">
+<meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="委屈西红柿">
-<meta property="og:url" content="https://konelane.github.io/2018/02/24/恶魔西红柿/index.html">
+<meta property="og:title" content="分布式1210-Spark与Scala">
+<meta property="og:url" content="https://konelane.github.io/2020/12/10/201210hadoop/index.html">
 <meta property="og:site_name" content="KOneLane">
-<meta property="og:description" content="坐在电脑前，想写点什么。其实也没什么说的，但又总想说点什么，不说话憋得慌。当代青年是要发声的，不发声就没有“当代”的感觉。">
+<meta property="og:description" content="spark的基础语法-Scala，做了一些思想性的介绍。 具体代码参考李丰老师课件L10.1-Introduction-to-Scala。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T15:22:01.867Z">
+<meta property="og:updated_time" content="2021-01-04T08:13:26.339Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="委屈西红柿">
-<meta name="twitter:description" content="坐在电脑前，想写点什么。其实也没什么说的，但又总想说点什么，不说话憋得慌。当代青年是要发声的，不发声就没有“当代”的感觉。">
+<meta name="twitter:title" content="分布式1210-Spark与Scala">
+<meta name="twitter:description" content="spark的基础语法-Scala，做了一些思想性的介绍。 具体代码参考李丰老师课件L10.1-Introduction-to-Scala。">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -253,7 +253,7 @@
 
 	
 </div>
-      <div class="body-wrap"><article id="post-恶魔西红柿" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-201210hadoop" class="article article-type-post" itemscope itemprop="blogPost">
     <script>
         $("html").niceScroll({
             cursorcolor: "#2a2929",
@@ -267,8 +267,8 @@
     </script>
     
     <div class="article-meta">
-        <a href="/2018/02/24/恶魔西红柿/" class="article-date">
-  	<time datetime="2018-02-23T16:00:00.000Z" itemprop="datePublished">2018-02-24</time>
+        <a href="/2020/12/10/201210hadoop/" class="article-date">
+  	<time datetime="2020-12-09T16:00:00.000Z" itemprop="datePublished">2020-12-10</time>
 </a>
 
     </div>
@@ -282,7 +282,7 @@
             
   
     <h1 class="article-title" itemprop="name">
-      委屈西红柿
+      分布式1210-Spark与Scala
     </h1>
   
 
@@ -292,7 +292,7 @@
         <div class="article-info article-info-post">
             
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/文章/">文章</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
 	</div>
 
 
@@ -308,7 +308,7 @@
             
             <p class="toc-button">目录</p>
 <div id="toc" class="toc-article" style="display:none;">
-    
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、Scala介绍"><span class="toc-number">1.</span> <span class="toc-text">一、Scala介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、一些实用操作"><span class="toc-number">2.</span> <span class="toc-text">二、一些实用操作</span></a></li></ol>
 </div>
 <script>
     $(function(){
@@ -339,22 +339,38 @@
             
 
             
-            <p>坐在电脑前，想写点什么。其实也没什么说的，但又总想说点什么，不说话憋得慌。当代青年是要发声的，不发声就没有“当代”的感觉。</p>
+            <p>spark的基础语法-Scala，做了一些思想性的介绍。</p>
+<p>具体代码参考李丰老师课件<a href="https://github.com/feng-li/Distributed-Statistical-Computing/tree/master/L10-Spark-with-Scala" target="_blank" rel="noopener"><strong>L10.1-Introduction-to-Scala</strong></a>。</p>
 <a id="more"></a>
-<p>我曾经不是这样的。当我还是个小孩子的时候，我是不喜欢说话的人。作为家里没有发言权的弱势群体，小孩子在各种需要意见的场合通常是沉默的。这沉默通常有好有坏：好在小孩子从此得以成为明眼人，把大人看不懂的事看明白并立刻想到和自己的关联；坏就坏在，小孩子在家里往往无奈屈服于家长们看似讲理的“道理”。</p>
-<p>我小时候不懂这些。只知道我很讨厌吃炒西红柿，而我爸却很反感我挑食的习惯。倒不是说我爸做的有多难吃，现在吃起来那炒西红柿也是手艺高超，但是小时候却对西红柿丝毫没有感觉。如果饭菜中有西红柿的身影，我必定会食欲大减。倘若再让西红柿连同汤汁浇在米饭上，那顿饭恐怕直接就饱了。</p>
-<p>作为土生土长的陕西人，我也思考过这个问题，我把原因归咎于西红柿的口味。老陕秉承“无辣不欢”的理念，一日三餐都泡在辣子中，而西红柿酸酸甜甜，两种香味完全没有干系，于是接受了正统关中辣食教育的我大概不喜欢这个蔬菜品种。我心想，长大大概就能接受了。</p>
-<p>虽然还是抵触着，但是西红柿其中的营养也是可以被其他品种蔬菜水果取代的。初中时中午在学校食堂吃饭，我有了伙食决定权。从此，但凡是在学校吃的午餐，我便再未吃过西红柿。就连户县软面和三合一刀削面我都不再涉足，更别提西红柿盖浇面了。其实对于我这个面客来说很是折磨。西红柿不是圣女果，连同圣女果一起都是恶魔之果，有一段时间我在心里暗暗想到。</p>
-<p>但是在家就不那么轻松了，家里隔三差五还是会炒西红柿。家里吃饭因为人少，流行“包干制”，每样菜不做多，够一家人吃刚刚好。因此吃饭要求就很严格，不能逮着一道菜猛吃，也最好不能剩菜。我爸依然把西红柿奉为上品，天天在我耳边念叨的就是“西红柿多有营养啊”之类，当然，我也斗不过他，只好吃掉。</p>
-<p>那时候我还是个初中少年，能做的唯一的抵抗就是在舀西红柿炒鸡蛋时注意西红柿和鸡蛋的比例，并一定要将西红柿放在一顿饭的最后时刻吃。当我在最饿的时候，吃了最喜欢的菜，最后用西红柿拌饭来填饱肚子。当然，我当时还有一套严密的定义：为了享受美食叫吃饭，为了填饱肚子叫进食。所以我对西红柿的摄取是生命活动的需求，是进食需要，这样想来我的心理负担就没那么重了。</p>
-<p>在高中时，我的伙食就比较轻松了，在学校食堂依然从来不点西红柿，回家我爸也由着我，基本不会做西红柿这道菜。偶尔凉拌一个西红柿蘸糖，我吃着还是很带劲的。仿佛忘了以前对西红柿的抵触。到了大学依然如此，回家以后总是去爷爷奶奶姥姥姥爷家蹭饭，吃家里做的饭就更少了，于是我也不再担心吃西红柿的问题，偶尔遇见了，也总有其他菜可以代替。</p>
-<p>今年过年前，有个比赛让我到太原一个同学家去短住，同学家人待我非常热情，每顿饭都盛情款待，太原美食也吃了无数。不过印象深刻的一顿饭里，阿姨做了道西红柿炒鸡蛋，见我迟迟没动筷子，向我推荐了这道菜。我便往碗里舀了满满一勺，吃起来香甜可口。回家以后我习惯性地没有主动吃西红柿炒鸡蛋，但是却对讨厌吃西红柿的日子变得怀念了。可能我那时抵触的不仅仅是炒西红柿，抵触的是一种看不见的什么吧。这可能就是我为数不多可笑又可爱的叛逆时刻了。</p>
-<p>（完）</p>
+<h3 id="一、Scala介绍"><a href="#一、Scala介绍" class="headerlink" title="一、Scala介绍"></a>一、Scala介绍</h3><p>scala语言，面向大数据编程的语言。</p>
+<p>这个语言只有十来年的历史。这个语言没有排在前二十的常见语言上，但确实进步最快的语言。因为它可以对海量数据进行高强度高密度的计算。</p>
+<p>c语言是编译语言，快，但是写的麻烦。89十年代改用写起来快，跑起来快的python之流。现在就是写起来好写，且跑起来快。</p>
+<p>新版本的spark，<strong>底层语言</strong>大部分是scala了。java不支持交互式输入，必须编译成机器码。而现在的编程习惯更多是交互式的。一部分习惯于python，另一部分习惯于scala。下面来比较一下这两种语言。</p>
+<p>scala比python快十倍以上。spark比python快100倍（nb）。使用了java虚拟机机制，允许程序在运行中进行编译，比起python这种纯解释性的动态语言要快一个量级。</p>
+<p>传统的c和java快，但是机器语言不好写。</p>
+<p>对应的库上看，spark同时有scala和python的库，很多最新的特性都从scala上出现，再传递给python。</p>
+<p>scala可以当做普通变成语言，也可以单机上使用。可以与hadoop结合。</p>
+<p>考虑scala的学习曲线，python很好上手，有循环基础基本上1周就能写程序。scala比python略复杂，scala有一些特殊特性是原来不具有的（保证了速度的提升）。如果简单操作，完全可以用python写。如果计算速度会成为项目的瓶颈，那么可以选择scala。</p>
+<p>语法最简单的是c语言，c++更难，java甚之，python处于三者之中，好写，慢。</p>
+<p>比起python，scala更擅长处理复杂工作模式。</p>
+<p>易用性上，python上有很多机器学习库可以使用，scala没有那么多。</p>
+<p>很难把python语句导入scala。在多线程中，python经常阻塞，出问题。scala是内置的。</p>
+<p>比起java，scala对内存要求不贪婪。spark就是个例子。scala可以快速释放内存，能较好地管理内存。</p>
+<p>对于用户，需要知道一些常用的库，上手之后就比较舒服了。但有些环境很少工具，离不开原来的环境。比如自然语言处理用的都是python，scala需要很多操作。spark上python就很好用。</p>
+<p>最后，定义一下：</p>
+<p>scala面向对象，高级语言。静态语言，语法有时候比python更可读。（主要是，python的numpy、pandas用法读法都不一样，不同的库用法也不同。）</p>
+<h3 id="二、一些实用操作"><a href="#二、一些实用操作" class="headerlink" title="二、一些实用操作"></a>二、一些实用操作</h3><p>（上参考网站更全面更系统一些）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//注释</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">可以注释多行</span><br><span class="line">*/</span><br></pre></td></tr></table></figure></p>
+<p>scala在定义变量时，有个特有类型：mutable 与 immutable变量，广播的变量时不可修改的，是immutable的。可以定义更加方便使用的变量。val是value，凡是用val定义的，都不可修改，凡是用var定义的，都是可修改的。</p>
+<p>spark里直接输入scala，可以进入scala的交互对话框。</p>
+<p>1.0双精度，迭代次数很多时求导会接近0。因此需要一些超长精度的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Val b = 0 +: ints //往右侧加</span><br><span class="line"></span><br><span class="line">:+ // 往左侧加</span><br><span class="line"></span><br><span class="line">if（A）&#123;&#125;</span><br><span class="line"></span><br><span class="line">else&#123;B&#125;</span><br></pre></td></tr></table></figure>
+<p>scala比python快，但是不一定比scala易用。但将来一定更易用。</p>
+<p>（具体方法省略了很多，更多内容请上参考网站。scala在平时学习中用的不多，且有一定门槛）</p>
 
             </br>
             <p>本文链接：
-                <a href="https://konelane.github.io/2018/02/24/恶魔西红柿/">
-                    https://konelane.github.io/2018/02/24/恶魔西红柿/
+                <a href="https://konelane.github.io/2020/12/10/201210hadoop/">
+                    https://konelane.github.io/2020/12/10/201210hadoop/
                 </a>
             </p>
             <p>-- <acronym title="End of File">EOF</acronym> --</p>
@@ -404,18 +420,18 @@
         
 <nav id="article-nav">
   
-    <a href="/2018/03/04/R语言 + Markdown/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/01/04/20-21分布式计算汇总文件/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          【转载】R + Markdown简介
+          大数据|分布式计算课程笔记（持续更新）
         
       </div>
     </a>
   
   
-    <a href="/2018/02/08/R语言基本操作/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">R语言与数据挖掘：公式；数据；方法</div>
+    <a href="/2020/11/26/201126hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式1126-Spark文本分析</div>
       <strong class="article-nav-caption">></strong>
     </a>
   

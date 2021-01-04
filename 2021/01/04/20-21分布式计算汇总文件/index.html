@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="KOneLane">
 <meta property="og:description" content="还是熟悉的feng.li老师，还是熟悉的瓜皮禾禾，哈哈哈哈。 没想到研究生依然能听李丰老师的课。欢迎参观李丰老师主页，课程主页 李丰老师合著的参考书依然在编">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-01-04T07:08:12.812Z">
+<meta property="og:updated_time" content="2021-01-04T08:39:12.325Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据|分布式计算课程笔记（持续更新）">
 <meta name="twitter:description" content="还是熟悉的feng.li老师，还是熟悉的瓜皮禾禾，哈哈哈哈。 没想到研究生依然能听李丰老师的课。欢迎参观李丰老师主页，课程主页 李丰老师合著的参考书依然在编">
@@ -308,7 +308,7 @@
             
             <p class="toc-button">目录</p>
 <div id="toc" class="toc-article" style="display:none;">
-    
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#做个综述-Why-Distributed-Statistical-Computing？"><span class="toc-number">1.</span> <span class="toc-text">做个综述-Why Distributed Statistical Computing？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#老师的研究"><span class="toc-number">2.</span> <span class="toc-text">老师的研究</span></a></li></ol>
 </div>
 <script>
     $(function(){
@@ -353,9 +353,71 @@
 <p><a href="https://konelane.github.io/2020/11/12/201112hadoop">分布式1112-Spark简单功能补充介绍</a></p>
 <p><a href="https://konelane.github.io/2020/11/19/201119hadoop">分布式1119-Spark做些实战-以及为之后的实战铺路</a></p>
 <p><a href="https://konelane.github.io/2020/11/26/201126hadoop">分布式1126-Spark文本分析</a></p>
+<p><a href="https://konelane.github.io/2020/12/10/201210hadoop">分布式1210-Spark与Scala</a></p>
+<h3 id="做个综述-Why-Distributed-Statistical-Computing？"><a href="#做个综述-Why-Distributed-Statistical-Computing？" class="headerlink" title="做个综述-Why Distributed Statistical Computing？"></a>做个综述-Why Distributed Statistical Computing？</h3><p>现成的统计软件提供了常用的计算方式。</p>
+<p>我们学牛顿迭代，学QR分解，可以用在广义线性模型里。</p>
+<p>这些方法，可以适用于各种模型。并非是重复应用现成统计工具。统计计算旨在让你理解工具，并且实现新的目标。一个线性回归，也有很多的东西。</p>
+<p>上面是传统的统计计算的目标。</p>
+<p>下来类推到分布式计算。</p>
+<p>spark里也可以做线性回归与逻辑回归。Spark.ml（里有机器学习，有回归）</p>
+<p>为何要花时间学hadoop版本的线性回归，目的是能够<strong>把知识平行迁移到分布式平台上</strong>。</p>
+<p>不仅仅是告诉我们ml下有什么模型，这个是初级阶段。</p>
+<p>如果某一天，spark里没有机器学习模块了，而我们仍然有能力写自己的模型。</p>
+<p>在很多时候，能够写出自己的模型是有优势的。</p>
+<p>如，现有一份稠密的数据，我想做一个分布式的模型。我想做一个ar模型，我想做screening，我想做分位数回归，可是spark上没有。但是作为统计学背景的，我们知道很多统计方法，结合现在这个分布式计算的时代，适当地借助现有的工具，在spark上实现这样的操作，那么这门课就步入中级了。</p>
+<p>如果自己开发了个spark，那就是高级了。（氦核：啊这）</p>
+<p>r软件里写这样的相对容易。spark里则是有难度的。如果你不善于整理归纳，统计学很多方法、算法可能看起来非常混乱。真正意义上的统计学只有八十年，统计计算开始于上世纪90年代。</p>
 <blockquote>
-<p>Hadoop不是编程语言，是分布式计算架构。<br>——李丰老师</p>
+<p>1.数据状态（静态线下数据—动态实时大样本全量数据）</p>
+<p>2.计算模式（单机存储单机计算—分布式存储分布式计算）</p>
+<p>3.数据存储（统计模型与数据一体化—统计模型部署到数据）对y和x没要求，分布式中很挑剔，rdd还是dataframe，是稀疏矩阵还是稠密矩阵是sparkml（dataframe形式）还是mllab（rdd形式）</p>
+<p>4.计算逻辑（单个模型对应单个算法实现—所有模型一体化计算框架）</p>
+<p>5.需求实现（模型评估与应用—实时模型评估与预测需求）</p>
 </blockquote>
+<p>我们对数据要有一定的认识。比如数据必须保存成特征（feature）+标签（label）的形式。</p>
+<p>先写一个目标函数，然后优化。常见的优化算法，列出来12345。计算机背景的人，首先定义一个损失函数Loss，第二选一个合适的数据，第三做优化（牛顿迭代，梯度下降）。一二三就是一个流水线，通过管道（pipe）来进行。</p>
+<p>我们搞统计的，就应该适应这种<strong>管道形式</strong>的建模思路，分布式的建模策略。</p>
+<p>很多时候，我们的模型假设性太强，但现在的分布式平台中，根本没法满足传统假设。原来的统计方法还能否适用？传统的统计学家不关心。这好吗，这不好。要迁移到分布式的计算上来，要有很多新的观念上的转变，要有持续的转变思维。</p>
+<p>比如，时间序列数据在分布式平台上就很缺乏。如果我们做开发，那么我们的平台/接口一定要有计算性+可延展性：即需要易用性、通用性，能使用户拥有比较统一的输入和输出，全流程都能解决，通过统一的分布式接口，使你的平台将来能更好地被别人所接受。</p>
+<blockquote>
+<p>统计学，每个学科都要学。计算机，经济学，管理学，等等都要学统计。</p>
+<p>——李丰老师</p>
+</blockquote>
+<p>我们要有新的平台，在最后做一个组合，能够完成大多数场景的统计计算，<strong>Hadoop就是一个足够好的分布式计算平台，但是hadoop不是足够好的统计计算平台</strong>。有一天你也能开发出足够好的统计计算平台。</p>
+<p>海量数据下，现有应用场景，再想在应用场景下的工具。产品经理与算法工程师都是如此，用什么方法不重要，重要的是能够支持负载，能把这些都算出来，保证不宕机。</p>
+<p>当前的情况不一样了，举一个例子：后台监管中，可能刻意回避一些东西。曾经有个跨境交易不能超过20w美元，风险点。于是各大银行会把跨境的交易全部拆成199美元。这些东西必须要学习模型来识别。核酸检测也是如此，识别feature。再比如，人类的基因组计划，ATCG的特征，每个人都要产生很大的核酸数据。</p>
+<p>三步走： </p>
+<blockquote>
+<p>应用场景：稳定性检测预警+动态监测与预报+样本实时监测</p>
+<p>1.实时数据</p>
+<p>2.统计计算</p>
+<p>3.需求：分布式模型选择，分布式模型选择准则，约束下模型选择与决策</p>
+<p>实时数据源：历史数据集+实时采集数据集</p>
+</blockquote>
+<p>现在不像以前那么简单了。不过，蓝图应如此。 </p>
+<h3 id="老师的研究"><a href="#老师的研究" class="headerlink" title="老师的研究"></a>老师的研究</h3><p><a href="https://github.com/feng-li/dlsa" target="_blank" rel="noopener">DLSA分布式的最小二乘近似</a></p>
+<p>如何在现有平台上开发出自己的东西呢？</p>
+<p>最小二乘近似，这是面对统计计算的接口。</p>
+<p>能够使各种各样的统计模型都能应用在分布式平台上。</p>
+<p>数据不动，最后算完合并。性质不好。</p>
+<p>NIPS讨论了以更好方式重新对参数进行聚合，保证聚合的效果。2014</p>
+<p>用在具体模型中，比如主成分。2017（范剑青老师的文章）</p>
+<p>每次开发成本较高。每次一个新模型都要适配。</p>
+<p>若采用一次性的估计，效率很有问题。而采用多次的时候迭代中通讯成本较高。</p>
+<p>如果想把大数据合成小块，其实有个默认假设：数据随机分布。</p>
+<p>一个桶倒满之后，再倒第二个桶，是增量的形式。如果完全利用one-shot（之前有介绍，是一种稀疏数据储存方式）会损失很多信息。</p>
+<p>老师就希望提供一个解决方案。希望提供一个有效地估计，在计算节点上也有效，且有普适性，能够迁移到其他算法中。</p>
+<p>此时，就轮到<strong>DLSA分布式的最小二乘近似</strong>出场了。（严格证明略）</p>
+<p>给定某一个参数theta，似然函数就是当前数据所有特征最大的体现。</p>
+<p>如果n个样本，这个似然函数可能是对n个密度的求和。</p>
+<p>如果让似然函数除以n，则变成了一个损失函数。此时与机器学习中的方案对应起来了。</p>
+<p>对似然函数没有任何假设。线性、非线性、时间序列都行。</p>
+<p>对似然函数二阶导展开，展开后变换，之后新的似然函数会变成原始的似然减去新的目标，再加上一个常数c。就能近似写成某个形式。最后等价于一个加权最小二乘的表达式。极大化似然估计，就等价于如何对公式做最小二次近似。</p>
+<p>这是一个标准的思路：<strong>统计理论，实现，组合成可应用形式。</strong></p>
+<p>spark上能不能做到逻辑回归，是否有你的方法好，是否贡献了全新的接口，是否解决了问题（推荐航班（此处指那时候刚结束的air-delay数据清洗工作），不延误，省钱）。</p>
+<p>还有很多工作待发掘，未来可期。</p>
+<p>还发现一个repo，没来的及看：<a href="https://github.com/feng-li/darima" target="_blank" rel="noopener">分布式上的时间序列数据darima</a></p>
+<p>（完）</p>
 
             </br>
             <p>本文链接：
@@ -411,8 +473,8 @@
 <nav id="article-nav">
   
   
-    <a href="/2020/11/26/201126hadoop/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">分布式1126-Spark文本分析</div>
+    <a href="/2020/12/10/201210hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式1210-Spark与Scala</div>
       <strong class="article-nav-caption">></strong>
     </a>
   

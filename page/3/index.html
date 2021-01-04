@@ -331,6 +331,112 @@
 
 
   
+    <article id="post-190508数据挖掘某不科学的笔记总结（持续更新）" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2019/05/17/190508数据挖掘某不科学的笔记总结（持续更新）/" class="article-date">
+  	<time datetime="2019-05-16T16:00:00.000Z" itemprop="datePublished">2019-05-17</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/17/190508数据挖掘某不科学的笔记总结（持续更新）/">数据挖掘|某不科学的笔记总结（持续更新）</a>
+    </h1>
+  
+
+
+        </header>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            
+
+            
+            <h1 id="数据挖掘-某不科学的笔记总结（持续更新）"><a href="#数据挖掘-某不科学的笔记总结（持续更新）" class="headerlink" title="数据挖掘|某不科学的笔记总结（持续更新）"></a>数据挖掘|某不科学的笔记总结（持续更新）</h1><p><strong>记录：氦核   最后编辑时间：20190514</strong></p>
+<p>文章主要参考马景义老师的<a href="https://github.com/CUFESAM/Algorithm/blob/master/steplm.ipynb" target="_blank" rel="noopener">数据挖掘教学</a>，与刘苗老师相应课件。笔记中间夹杂很多个人思考与经验，如有错误，请在下方评论区指出，欢迎讨论。</p>
+            
+        </div>
+
+        
+        <div class="article-info article-info-index">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
+	</div>
+
+
+            
+
+            
+            <p class="article-more-link">
+                <a  href="
+                    /2019/05/17/190508数据挖掘某不科学的笔记总结（持续更新）/#more">
+                    More >></a>
+            </p>
+            
+            <div class="clearfix"></div>
+        </div>
+        
+    </div>
+    
+    
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+  
     <article id="post-190514adaboost" class="article article-type-post" itemscope itemprop="blogPost">
     <script>
         $("html").niceScroll({
@@ -1287,117 +1393,9 @@
     }
 </script>
   
-    <article id="post-190201ts" class="article article-type-post" itemscope itemprop="blogPost">
-    <script>
-        $("html").niceScroll({
-            cursorcolor: "#2a2929",
-            cursoropacitymax: 1,
-            touchbehavior: false,
-            cursorwidth: "6px",
-            cursorborder: "5",
-            cursorborderradius: "0px",
-            autohidemode: true
-        });
-    </script>
-    
-    <div class="article-meta">
-        <a href="/2019/02/01/190201ts/" class="article-date">
-  	<time datetime="2019-01-31T16:00:00.000Z" itemprop="datePublished">2019-02-01</time>
-</a>
-
-    </div>
-    
-    <div class="article-inner">
-        
-        <input type="hidden" class="isFancy" />
-        
-        
-        <header class="article-header">
-            
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/01/190201ts/">数据分析报告|Valve-Steam“买断制”游戏平均价格时间序列模型</a>
-    </h1>
-  
-
-
-        </header>
-        
-        
-
-        <div class="article-entry" itemprop="articleBody">
-
-            
-            
-
-            
-            <p>最后编辑于：2020.01.02 14:18</p>
-<h2 id="Valve-Steam“买断制”游戏平均价格时间序列模型"><a href="#Valve-Steam“买断制”游戏平均价格时间序列模型" class="headerlink" title="Valve-Steam“买断制”游戏平均价格时间序列模型"></a>Valve-Steam“买断制”游戏平均价格时间序列模型</h2><h3 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h3><p>作为精神文明消费品，游戏已成为每一个人或多或少都会接触的事物。游戏消费已经成为当代大学生重要的开支，而valve-steam游戏软件消费平台作为近乎垄断的最大的pc（个人电脑）游戏中介平台，已成为大多数电脑游戏玩家不可或缺的电脑软件。</p>
-<p>很多游戏也有“年货”之称，而很多游戏的发布时机和销售价格都有一定的变化规律。本研究将基于steamspy中的steam游戏消费数据，希望探索对游戏的月平均价格的变化趋势。</p>
-<p>（数据来源于<a href="http://steamspy.com/year/" target="_blank" rel="noopener">steamspy</a>）</p>
-            
-        </div>
-
-        
-        <div class="article-info article-info-index">
-            
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据分析/">数据分析</a></li></ul>
-	</div>
-
-
-            
-
-            
-            <p class="article-more-link">
-                <a  href="
-                    /2019/02/01/190201ts/#more">
-                    More >></a>
-            </p>
-            
-            <div class="clearfix"></div>
-        </div>
-        
-    </div>
-    
-    
-    
-
-</article>
-
-
-<script>
-    var isMobile = {
-        Android: function () {
-            return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function () {
-            return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function () {
-            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function () {
-            return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function () {
-            return navigator.userAgent.match(/IEMobile/i);
-        },
-        any: function () {
-            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
-                isMobile.Windows());
-        }
-    };
-    if (isMobile.any()) {
-        //移动端不显示目录和评论
-        $("#toc-button").css("display", "none");
-        $("#commentDiv").css("display", "none");
-    }
-</script>
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
