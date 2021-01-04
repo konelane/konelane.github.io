@@ -15,10 +15,16 @@
 <meta property="og:site_name" content="KOneLane">
 <meta property="og:description" content="交叉验证相关理论介绍2020.10.13 1.1 场景构建源禾同学和正阳同学在某次考试都考了100分，正阳同学实力强劲，学习踏实，掌握核心科技，考了100是实力的体现，因为卷子上只有100分。而源禾同学考100分，因为源禾使用了败者食尘，他课下做了这张卷子的所有题，背了题，考了100分是因为记性好。 谁才是老师喜爱的同学呢？">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/201010CV/图1.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/201010CV/图2.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/201010CV/图3.jpg">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/201010CV/图4.png">
+<meta property="og:image" content="https://konelane.github.io/2020/10/13/201010CV/图5.png">
 <meta property="og:updated_time" content="2020-10-16T01:53:21.547Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据之学|交叉验证相关理论介绍">
 <meta name="twitter:description" content="交叉验证相关理论介绍2020.10.13 1.1 场景构建源禾同学和正阳同学在某次考试都考了100分，正阳同学实力强劲，学习踏实，掌握核心科技，考了100是实力的体现，因为卷子上只有100分。而源禾同学考100分，因为源禾使用了败者食尘，他课下做了这张卷子的所有题，背了题，考了100分是因为记性好。 谁才是老师喜爱的同学呢？">
+<meta name="twitter:image" content="https://konelane.github.io/2020/10/13/201010CV/图1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -348,19 +354,19 @@
 <h3 id="1-2-模型-算法的选择"><a href="#1-2-模型-算法的选择" class="headerlink" title="1.2 模型/算法的选择"></a>1.2 模型/算法的选择</h3><p>在建模时，可选用的模型很多，我们想选用何种模型，此时就需要对模型的<strong>“泛化误差”</strong>（generalization-error，指在独立测试样本上的期望预测误差，也称测试误差test-error或预测误差prediction-error）进行评估。</p>
 <p>在实际建模中，很少能得到样本的精确分布，也无法直接计算泛化误差。基于训练样本得到的样本上平均损失的训练误差是它的一个直接估计，可训练误差会随着模型复杂度（光滑度，自由度）的增加而减小，直至减小到0。（训练均方误差 vs 测试均方误差）</p>
 <p>如果训练均方误差很小但测试均方误差较大时，我们称该数据被过拟合。（模型开始背题了）</p>
-
+<img src="/2020/10/13/201010CV/图1.png" title="图1">
 <blockquote>
 <p>源禾：任何难处都可以靠增加数据量来解决。<br>（当然解决不了的除外）</p>
 </blockquote>
 <p>事实上，这里涉及到偏差方差权衡（bias-variance trade-off）的问题，如果一个统计模型被称为测试性能好，那么要去该模型具有较小的方差和较小的偏差。直觉上我们会选择有极小偏差可是有很大方差的方法（如画一条通过所有观测的曲线，下图的绿线）</p>
-
+<img src="/2020/10/13/201010CV/图2.png" title="图2">
 <blockquote>
 <p>源禾：虽然没有完美的模型，但是有完美模型的传说。</p>
 </blockquote>
 <p>为一个模型来选择何适的光滑度的过程即<strong>模型选择</strong>。这个问题在训练集较小时，被产生的过拟合现象加大了难度。</p>
 <h3 id="1-3-出路-重抽样（resampling）"><a href="#1-3-出路-重抽样（resampling）" class="headerlink" title="1.3 出路 - 重抽样（resampling）"></a>1.3 出路 - 重抽样（resampling）</h3><p>应当找到一个方法解决过拟合，而唯一的限制是，没那么多数据。</p>
 <p>于是人们想了个办法：让这个测试集来源于训练集。我反复从训练集中抽取样本，对每一个样本重新拟合一个模型，来获取关于拟合模型的附加信息。这就是<strong>重抽样</strong>方法。在拟合过程中，保留（holding out）训练观测的一个子集，然后对保留的观测运用统计学习方法，从而来估计其<strong>测试错误率</strong>（test error rate）。</p>
-
+<img src="/2020/10/13/201010CV/图3.jpg" title="图3">
 <blockquote>
 <p>源禾：预测集神圣不可侵犯。</p>
 </blockquote>
@@ -376,7 +382,7 @@
 <p>重复上面计算$MSE_1$的步骤，计算出全部的$MSE_1, MSE_2, …, MSE_n$，对测试均方误差的LOOCV估计是这n个测试误差估计的均值：</p>
 <script type="math/tex; mode=display">CV_{(n)} = \frac{1}{n} \sum^{n}_{i=1}MSE_i</script><p>相对于验证集方法，LOOCV方法更不容易高估测试错误率，也能彻底解决训练集和验证集分割时随机性导致的结果不同问题。</p>
 <h3 id="2-3-K折交叉验证（K-fold-CV）"><a href="#2-3-K折交叉验证（K-fold-CV）" class="headerlink" title="2.3 K折交叉验证（K-fold CV）"></a>2.3 K折交叉验证（K-fold CV）</h3><p>k折交叉验证法是LOOCV的一个替代，这种方法将观测集随机地分成K个大小基本一致的组，或者说<strong>折（fold）</strong>。第一折作为验证集，然后在剩下的k-1折上拟合模型。均方误差$MSE_1$由保留的观测计算得出。</p>
-
+<img src="/2020/10/13/201010CV/图4.png" title="图4">
 <p>重复这个步骤k次（注意一般k大于2），每一次把不同的观测组作为验证集（分组只是第一次分）。整个过程会得到k个测试误差的估计，$MSE_1, MSE_2, …, MSE_k$。k折CV估计由这些值求平均计算得到：</p>
 <script type="math/tex; mode=display">CV_{(k)} = \frac{1}{k} \sum^{k}_{i=1}MSE_i</script><p>不难发现，<strong>k等于n时，LOOCV方法是k折交叉验证的一个特例</strong>。</p>
 <p>k一般取5或10。不取n的原因果然还是因为<strong>好算啊</strong>。几乎对于任一种统计学习方法适用，都有更好的可行性。</p>
@@ -384,7 +390,7 @@
 <p>源禾：在计算简便和尽可能减少估计的波动面前，一个能“我全都要”的方法谁不喜欢呢？</p>
 </blockquote>
 <p>k折交叉验证的结果也会因观测分折的随机性产生一定波动。同时对$Err$估计时也会因训练集样本容量大小产生一定的高估。</p>
-
+<img src="/2020/10/13/201010CV/图5.png" title="图5">
 <p>由上图可知，训练集在150+时，训练效果已经不再随着训练集样本量增加而增加。但训练集样本容量在0至50时，会明显低估$1-Err$。</p>
 <h3 id="2-4-总结"><a href="#2-4-总结" class="headerlink" title="2.4 总结"></a>2.4 总结</h3><p>先画一张表在这：</p>
 <div class="table-container">
