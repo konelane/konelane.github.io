@@ -5,20 +5,20 @@
   <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
 <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
   
-  <title>分布式0917-遍历检索的多进程初试水 | KOneLane</title>
+  <title>大数据|分布式计算课程笔记（持续更新） | KOneLane</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="大数据分布式计算 0917本次课程内容讲述的几个注意的有意思的东西： 分布式是什么“数据向代码跑” / “代码向数据跑” 原本的流程：数据 -&amp;gt; cpu(code) -&amp;gt; answer 新流程：cpu -&amp;gt; 数据">
+  <meta name="description" content="还是熟悉的feng.li老师，还是熟悉的瓜皮禾禾，哈哈哈哈。 没想到研究生依然能听李丰老师的课。欢迎参观李丰老师主页，课程主页 李丰老师合著的参考书依然在编">
 <meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分布式0917-遍历检索的多进程初试水">
-<meta property="og:url" content="https://konelane.github.io/2020/09/24/200917hadoop/index.html">
+<meta property="og:title" content="大数据|分布式计算课程笔记（持续更新）">
+<meta property="og:url" content="https://konelane.github.io/2021/01/04/20-21分布式计算汇总文件/index.html">
 <meta property="og:site_name" content="KOneLane">
-<meta property="og:description" content="大数据分布式计算 0917本次课程内容讲述的几个注意的有意思的东西： 分布式是什么“数据向代码跑” / “代码向数据跑” 原本的流程：数据 -&amp;gt; cpu(code) -&amp;gt; answer 新流程：cpu -&amp;gt; 数据">
+<meta property="og:description" content="还是熟悉的feng.li老师，还是熟悉的瓜皮禾禾，哈哈哈哈。 没想到研究生依然能听李丰老师的课。欢迎参观李丰老师主页，课程主页 李丰老师合著的参考书依然在编">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-24T03:04:11.439Z">
+<meta property="og:updated_time" content="2021-01-04T07:08:12.812Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式0917-遍历检索的多进程初试水">
-<meta name="twitter:description" content="大数据分布式计算 0917本次课程内容讲述的几个注意的有意思的东西： 分布式是什么“数据向代码跑” / “代码向数据跑” 原本的流程：数据 -&amp;gt; cpu(code) -&amp;gt; answer 新流程：cpu -&amp;gt; 数据">
+<meta name="twitter:title" content="大数据|分布式计算课程笔记（持续更新）">
+<meta name="twitter:description" content="还是熟悉的feng.li老师，还是熟悉的瓜皮禾禾，哈哈哈哈。 没想到研究生依然能听李丰老师的课。欢迎参观李丰老师主页，课程主页 李丰老师合著的参考书依然在编">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -253,7 +253,7 @@
 
 	
 </div>
-      <div class="body-wrap"><article id="post-200917hadoop" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-20-21分布式计算汇总文件" class="article article-type-post" itemscope itemprop="blogPost">
     <script>
         $("html").niceScroll({
             cursorcolor: "#2a2929",
@@ -267,8 +267,8 @@
     </script>
     
     <div class="article-meta">
-        <a href="/2020/09/24/200917hadoop/" class="article-date">
-  	<time datetime="2020-09-23T16:00:00.000Z" itemprop="datePublished">2020-09-24</time>
+        <a href="/2021/01/04/20-21分布式计算汇总文件/" class="article-date">
+  	<time datetime="2021-01-03T16:00:00.000Z" itemprop="datePublished">2021-01-04</time>
 </a>
 
     </div>
@@ -282,7 +282,7 @@
             
   
     <h1 class="article-title" itemprop="name">
-      分布式0917-遍历检索的多进程初试水
+      大数据|分布式计算课程笔记（持续更新）
     </h1>
   
 
@@ -308,7 +308,7 @@
             
             <p class="toc-button">目录</p>
 <div id="toc" class="toc-article" style="display:none;">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#大数据分布式计算-0917"><span class="toc-number">1.</span> <span class="toc-text">大数据分布式计算 0917</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式是什么"><span class="toc-number">1.1.</span> <span class="toc-text">分布式是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多进程-并非-多线程"><span class="toc-number">1.2.</span> <span class="toc-text">多进程 并非 多线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map-reduce原理"><span class="toc-number">1.3.</span> <span class="toc-text">map-reduce原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作业"><span class="toc-number">1.4.</span> <span class="toc-text">作业</span></a></li></ol></li></ol>
+    
 </div>
 <script>
     $(function(){
@@ -339,29 +339,28 @@
             
 
             
-            <h2 id="大数据分布式计算-0917"><a href="#大数据分布式计算-0917" class="headerlink" title="大数据分布式计算 0917"></a>大数据分布式计算 0917</h2><p>本次课程内容讲述的几个注意的有意思的东西：</p>
-<h3 id="分布式是什么"><a href="#分布式是什么" class="headerlink" title="分布式是什么"></a>分布式是什么</h3><p>“数据向代码跑” / “代码向数据跑”</p>
-<p>原本的流程：<script type="math/tex">数据 -> cpu(code) -> answer</script></p>
-<p>新流程：<script type="math/tex">cpu -> 数据 <- cpu</script></p>
-<p>俗话说：双拳难敌四手嘛。</p>
+            <p>还是熟悉的feng.li老师，还是熟悉的瓜皮禾禾，哈哈哈哈。</p>
+<p>没想到研究生依然能听李丰老师的课。欢迎参观李丰老师<a href="https://feng.li/" target="_blank" rel="noopener">主页</a>，<a href="https://feng.li/teaching/distcomp/" target="_blank" rel="noopener">课程主页</a></p>
+<p>李丰老师合著的<a href="https://feng.li/files/distcompbook/index.html" target="_blank" rel="noopener">参考书</a>依然在编</p>
 <a id="more"></a>
-<h3 id="多进程-并非-多线程"><a href="#多进程-并非-多线程" class="headerlink" title="多进程 并非 多线程"></a>多进程 并非 多线程</h3><p>多进程即开很多程序，多线程是多路并行。</p>
-<h3 id="map-reduce原理"><a href="#map-reduce原理" class="headerlink" title="map-reduce原理"></a>map-reduce原理</h3><blockquote>
-<p>1+3+5+7+9+11+13+15+17<br>map<br>(1+3+5) + (7+9+11) + (13+15+17)<br>reduce<br>9 + 27+ 45<br>answer</p>
+<p>10.07记：被李丰老师表扬了！！甚至还被打赏了（笑</p>
+<p>继续努力啊小禾禾</p>
+<p><a href="https://konelane.github.io/2020/09/17/200917hadoop">分布式0917-遍历检索的多进程初试水</a></p>
+<p><a href="https://konelane.github.io/2020/09/24/200924hadoop">分布式0924-分布式服务器基础Linux中主机的远程交互(ssh)</a></p>
+<p><a href="https://konelane.github.io/2020/10/07/201007hadoop">分布式1007-Map-Reduce的文字流</a></p>
+<p><a href="https://konelane.github.io/2020/10/21/201015hadoop">分布式1015-1021-分布式回归分析</a></p>
+<p><a href="https://konelane.github.io/2020/11/02/201102hadoop">分布式1102-Hi,Hive!Hi,Spark!</a></p>
+<p><a href="https://konelane.github.io/2020/11/12/201112hadoop">分布式1112-Spark简单功能补充介绍</a></p>
+<p><a href="https://konelane.github.io/2020/11/19/201119hadoop">分布式1119-Spark做些实战-以及为之后的实战铺路</a></p>
+<p><a href="https://konelane.github.io/2020/11/26/201126hadoop">分布式1126-Spark文本分析</a></p>
+<blockquote>
+<p>Hadoop不是编程语言，是分布式计算架构。<br>——李丰老师</p>
 </blockquote>
-<p>常用的框架已经封装了分布式运算的计算法，用户只写需求的逻辑，由此产生了MapReduce的框架和Yarn，并不做运算。</p>
-<p>因为专门的“计算引擎”（基于计算系统）Hadoop，HDFS储存，spark（生于伯克利，号称分布式平台中流砥柱）</p>
-<p>学习目标：非常熟悉，能够把自己写的东西放上去，不写，要会用。</p>
-<h3 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h3><p>请用R或者Python自带的并行计算模块实现一个简单的单机文件查找代码，并与串行代码在效率上做比较。思考分布式与并行计算的区别。</p>
-<p>我的答案，由于特殊需求无意义地加长了很多。同时就当初学python的任务驱动练习了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># coding:utf-8</span><br><span class="line"># 分布式计算1-多进程对比检索代码</span><br><span class="line">import os</span><br><span class="line">import time</span><br><span class="line">import multiprocessing as mp</span><br><span class="line">from time import sleep</span><br><span class="line"></span><br><span class="line">def get_all_file(path):</span><br><span class="line">    res = []</span><br><span class="line">    for root, dirs, files in os.walk(path):</span><br><span class="line">        for file in files:</span><br><span class="line">            res.append(os.path.join(root, file))</span><br><span class="line">    return (res)</span><br><span class="line"></span><br><span class="line">def checkdir(dir):</span><br><span class="line">    file = dir.split(&apos;\\&apos;)[-1]</span><br><span class="line">    (filename, extension) = os.path.splitext(file)</span><br><span class="line">    if (extension == &apos;.txt&apos;) and (&apos;win&apos; in filename):  # 检验文件后缀与事先设置的关键字</span><br><span class="line">        sleep(1)</span><br><span class="line">        return (dir)</span><br><span class="line"># 上一版作业是猜测，不过本次提交版本根据一段未写在作业中的代码可以得知，要把循环从函数剔除，非遍历的部分才能使用迭代加速</span><br><span class="line"># 同时为了实现更直观的对比，而不是对简单函数进行多进程（有时甚至会起反效果），加入了sleep函数</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    # 设定参数</span><br><span class="line">    path0 = &quot;D:\\&quot;   # 设置一个路径，目标是这个路径下全部带有关键字‘win’的文本文档</span><br><span class="line"></span><br><span class="line">    # 顺序执行部分</span><br><span class="line">    print(&apos;顺序执行：&apos;)</span><br><span class="line">    start1 = time.time()</span><br><span class="line">    pathall2 = get_all_file(path0)</span><br><span class="line">    result = []</span><br><span class="line">    for path in pathall2:</span><br><span class="line">        result.append(checkdir(path))</span><br><span class="line">    for res2 in result:</span><br><span class="line">        if res2 != None:  # 为了对比效果，特意使用了和多进程代码相同的函数，徒增复杂度</span><br><span class="line">            print(res2)</span><br><span class="line">    end1 = time.time()</span><br><span class="line">    yongshi1 = end1 - start1</span><br><span class="line">    print(&quot;顺序耗时：%s&quot; % yongshi1)</span><br><span class="line">    print(&apos;==&apos;*20)</span><br><span class="line">    # 多进程执行部分</span><br><span class="line">    print(&quot;多进程执行:&quot;)</span><br><span class="line">    start2 = time.time()</span><br><span class="line">    pool = mp.Pool(4) # 设置4个进程同时运行，不过感觉没有必要，空缺时会根据系统设置最佳参数</span><br><span class="line">    pathall1 = pool.apply_async(get_all_file,args=(path0,)).get()</span><br><span class="line">    # 上一行根据结果来看，没有起作用，即for循环不能被多进程加速，必须按部就班</span><br><span class="line">    results1 = pool.map(checkdir, pathall1) # 此处pathall一定是一个可迭代变量(iter)</span><br><span class="line">    pool.close() #关闭池子，不能再加入进程</span><br><span class="line">    pool.join() # 等待进程结束</span><br><span class="line">    for res1 in results1:</span><br><span class="line">        if res1 != None:</span><br><span class="line">            print(res1)</span><br><span class="line">    end2 = time.time()</span><br><span class="line">    yongshi2 = end2 - start2</span><br><span class="line">    print(&quot;多进程耗时：%s&quot; % yongshi2)</span><br><span class="line"></span><br><span class="line"># 总结：其实本程序慢在os.walk()遍历文件，对后续&lt;比对筛选打印&gt;函数调用多进程反而可能降速</span><br><span class="line"># 核心函数只有pool四行，以及调用os.walk函数</span><br></pre></td></tr></table></figure>
-<p>多进程也不见得很好用嘛，甚至不经过特意等待，比顺序运行还慢，哈哈。</p>
-<p>（请多指教，完）</p>
 
             </br>
             <p>本文链接：
-                <a href="https://konelane.github.io/2020/09/24/200917hadoop/">
-                    https://konelane.github.io/2020/09/24/200917hadoop/
+                <a href="https://konelane.github.io/2021/01/04/20-21分布式计算汇总文件/">
+                    https://konelane.github.io/2021/01/04/20-21分布式计算汇总文件/
                 </a>
             </p>
             <p>-- <acronym title="End of File">EOF</acronym> --</p>
@@ -411,18 +410,9 @@
         
 <nav id="article-nav">
   
-    <a href="/2020/10/07/201007hadoop/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          分布式1007-Map-Reduce的文字流
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/09/24/200924hadoop/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">分布式0924-分布式服务器基础Linux中主机的远程交互(ssh)</div>
+    <a href="/2020/11/26/201126hadoop/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分布式1126-Spark文本分析</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
