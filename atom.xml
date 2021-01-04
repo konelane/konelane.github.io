@@ -197,6 +197,30 @@
   </entry>
   
   <entry>
+    <title>分布式0924-分布式服务器基础Linux中主机的远程交互(ssh)</title>
+    <link href="https://konelane.github.io/2020/09/24/200924hadoop/"/>
+    <id>https://konelane.github.io/2020/09/24/200924hadoop/</id>
+    <published>2020-09-23T16:00:00.000Z</published>
+    <updated>2020-09-25T08:57:43.824Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="大数据分布式计算-0924"><a href="#大数据分布式计算-0924" class="headerlink" title="大数据分布式计算 0924"></a>大数据分布式计算 0924</h2><p>本次课程以上次思考题入手：</p><blockquote><p>并行计算与分布式计算的区别？</p></blockquote><a id="more"></a><p>并行计算是一台计算机使用自身共享的内存和算力，用CPU的多核特点进行并行处理。</p><p>分布式计算是利用服务器的高算力，从远程交互终端中向服务器部署代码进行计算。</p><p>我的理解还是太片面，下面看看李丰老师的想法：</p><p>并行计算（parallel computing）是一个通常用于高性能计算（HPC）领域的术语。它具体指的是使用 多个处理器执行计算或模拟。超级计算机是为执行并行计算而设计的。这些系统不一定有共享内存。并 行系统使用MPI这样的工具将在超级计算机或者集群机器上的计算资源调度并实现多任务的同步计算。 并行计算在许多计算软件中都集成了一些基本的实现途径。比如R中的自带parallel包，Python标准 库中的multiprocessing是一个用与 threading 模块相似API的支持产生进程的包。这些程序模块允 许程序员充分利用机器上的多个核心。Unix 和 Windows 上都可以运行。结合OpenMP（Open Multi-Processing）等支持跨平台共享内存方式的多线程并发的编程API，使用现有编程语言可以在大 多数的处理器体系和操作系统中运行并行计算任务。具有并行计算能力的高性能计算平台往往被应用在 很多特定的科学领域，如超级计算机，密码破译，生物医学。</p><p>分布式计算（distributed computing）实际上是一个比并行计算更笼统的术语。人们可以将分布式计 算与并行计算的意义等同于并行计算，分布式特指的是将计算分布在许多不同的计算机之间。然而，分 布式计算处理的是并发性以外的其他方面。分布式计算具有并行计算所不具有的一些特性，包括计算一 致性、计算高可用性和高容错性能等。此外现在分布式计算平台的计算成本更低。像本书涉及到的 Hadoop或Spark这样的系统都是分布式计算系统，它们都有处理节点和网络故障的能力。不过，这两种 系统也都是为了执行并行计算而设计的。与MPI等HPC系统不同，这类新型系统即使其中一个计算节点出 现故障，也能继续进行海量计算。分布式计算主要应用在数据科学领域，如互联网、物联网、车联网、 数字金融。</p><p>在现代数据科学浪潮的冲击下，利用低成本硬件实现大规模分布式计算成为大数据应用的主流方向。世 界上各大数据科学公司都把分布式计算作为数据科学的核心技术与产品。最为大家熟知的有如亚马逊、 阿里巴巴各大云平台。在数据科学的应用中催生了大量分布式计算的优秀工具，如Hadoop, HDFS, Hive, Spark, Storm。</p><h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><p>分布式中，有不同的框架：</p><p>资源调度器（分布式文件系统HDFS） + 资源管理器（管理计算机资源哪一部分做什么，YARN） + 管理框架（zookeeper &amp; AMBARI）</p><p>不同的领域侧重的框架也不同。</p><blockquote><p>电商 - spark（计算）<br>图片处理 - Hadoop<br>存储数据财富 - hive<br>……</p></blockquote><h2 id="大数据分布式的特性"><a href="#大数据分布式的特性" class="headerlink" title="大数据分布式的特性"></a>大数据分布式的特性</h2><p>分布式服务器一般由很多同质的软件和硬件构成。</p><p>服务器为<strong>“刀片式服务器”</strong>（不同于塔式服务器），每一个计算节点都是一个刀片，通过网络连接，非核心的节点损坏不影响整体。可以在计算资源空闲时慢慢修复。</p><p>masternode<br>|——- workernode1…<br>|——- workernode2…<br>|——- workernode3…  </p><p>HDFS以来的两种逻辑组件，一个是起索引作用的namenode，一个是起存储作用的DataNode。二者数量和位置取决于worker节点的数量：worker很多时，要单独做成服务器，因为他们对算力要求很高；很少时可以置于masternode中。</p><p>优点：用廉价的硬件达到较高的存储性能。</p><p>缺点：随机存储，故不擅于做随机文件的搜索（会消耗大量算力查找索引），大文件被分成小份，存在不同的datanode中。</p><blockquote><p>根据文件大小切割为相似大小的block：<br>$/tmp/test.txt $<br>|——- blocka<br>|——- blockb</p></blockquote><p>&gt;<br>blocka<br>|——- datanode2<br>|——- datanode1<br>blockb<br>|——- datanode1<br>|——- datanode3  </p><p>注意到，DataNode1被复制了两份，这在分布式服务器中是很常见的。DataNode之间会根据是否空闲以及是否存储了相关数据而进行并行处理。只要namenode在，哪怕一块硬盘坏了，也能恢复。</p><h2 id="MapReduce组件"><a href="#MapReduce组件" class="headerlink" title="MapReduce组件"></a>MapReduce组件</h2><p>位置：Hadoop中</p><p>作用：处理大量数据，能用forloop处理的，可以通过分布式发给程序，代码对象应当各自独立。</p><p>对服务器？的I-O性能要求较高（input-output）</p><p>老师提示：分布式程序中应有容错空间（未领会，无经历）</p><p>分布式的MapReduce如下：</p><blockquote><p>JobTracker<br>|——- tasktracker1<br>|——- tasktracker2  （注意，ttk1和ttk2之间也互相连通）<br>ttk中容纳的是M-R两步的多个子程序  </p><p>activeJobs(位置JobTracker)：<br>joba<br>|——- map task1<br>|——- map task2<br>jobb<br>|——- reduce task1<br>|——- reduce task2  </p></blockquote><h2 id="服务器讲解"><a href="#服务器讲解" class="headerlink" title="服务器讲解"></a>服务器讲解</h2><p>远程操作终端：putty</p><p>账号密码和ip就略了（逃</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mkdir</span><br><span class="line">cd</span><br><span class="line">ls</span><br><span class="line">rm -rf /user/students</span><br><span class="line">touch lifeng.txt</span><br><span class="line">vim lifeng.txt</span><br><span class="line">emacs lifeng.txt</span><br><span class="line">cat lifeng.txt</span><br><span class="line"></span><br><span class="line">hadoop fs -ls /</span><br><span class="line">hadoop fs -put lifeng.txt /user/test </span><br><span class="line">hadoop fs -cat /user/test/lifeng.txt</span><br><span class="line">hadoop fs -get /user/test/lifeng.txt lifeng2.txt</span><br><span class="line">hadoop fs -ls /test &gt; hadoop-ls-return.txt</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;大数据分布式计算-0924&quot;&gt;&lt;a href=&quot;#大数据分布式计算-0924&quot; class=&quot;headerlink&quot; title=&quot;大数据分布式计算 0924&quot;&gt;&lt;/a&gt;大数据分布式计算 0924&lt;/h2&gt;&lt;p&gt;本次课程以上次思考题入手：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;并行计算与分布式计算的区别？&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+    
+      <category term="大数据" scheme="https://konelane.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>分布式0917-遍历检索的多进程初试水</title>
     <link href="https://konelane.github.io/2020/09/24/200917hadoop/"/>
     <id>https://konelane.github.io/2020/09/24/200917hadoop/</id>
@@ -212,30 +236,6 @@
 &lt;p&gt;原本的流程：&lt;script type=&quot;math/tex&quot;&gt;数据 -&gt; cpu(code) -&gt; answer&lt;/script&gt;&lt;/p&gt;
 &lt;p&gt;新流程：&lt;script type=&quot;math/tex&quot;&gt;cpu -&gt; 数据 &lt;- cpu&lt;/script&gt;&lt;/p&gt;
 &lt;p&gt;俗话说：双拳难敌四手嘛。&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="大数据" scheme="https://konelane.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分布式0924-分布式服务器基础Linux中主机的远程交互(ssh)</title>
-    <link href="https://konelane.github.io/2020/09/24/200924hadoop/"/>
-    <id>https://konelane.github.io/2020/09/24/200924hadoop/</id>
-    <published>2020-09-23T16:00:00.000Z</published>
-    <updated>2020-09-25T08:57:43.824Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="大数据分布式计算-0924"><a href="#大数据分布式计算-0924" class="headerlink" title="大数据分布式计算 0924"></a>大数据分布式计算 0924</h2><p>本次课程以上次思考题入手：</p><blockquote><p>并行计算与分布式计算的区别？</p></blockquote><a id="more"></a><p>并行计算是一台计算机使用自身共享的内存和算力，用CPU的多核特点进行并行处理。</p><p>分布式计算是利用服务器的高算力，从远程交互终端中向服务器部署代码进行计算。</p><p>我的理解还是太片面，下面看看李丰老师的想法：</p><p>并行计算（parallel computing）是一个通常用于高性能计算（HPC）领域的术语。它具体指的是使用 多个处理器执行计算或模拟。超级计算机是为执行并行计算而设计的。这些系统不一定有共享内存。并 行系统使用MPI这样的工具将在超级计算机或者集群机器上的计算资源调度并实现多任务的同步计算。 并行计算在许多计算软件中都集成了一些基本的实现途径。比如R中的自带parallel包，Python标准 库中的multiprocessing是一个用与 threading 模块相似API的支持产生进程的包。这些程序模块允 许程序员充分利用机器上的多个核心。Unix 和 Windows 上都可以运行。结合OpenMP（Open Multi-Processing）等支持跨平台共享内存方式的多线程并发的编程API，使用现有编程语言可以在大 多数的处理器体系和操作系统中运行并行计算任务。具有并行计算能力的高性能计算平台往往被应用在 很多特定的科学领域，如超级计算机，密码破译，生物医学。</p><p>分布式计算（distributed computing）实际上是一个比并行计算更笼统的术语。人们可以将分布式计 算与并行计算的意义等同于并行计算，分布式特指的是将计算分布在许多不同的计算机之间。然而，分 布式计算处理的是并发性以外的其他方面。分布式计算具有并行计算所不具有的一些特性，包括计算一 致性、计算高可用性和高容错性能等。此外现在分布式计算平台的计算成本更低。像本书涉及到的 Hadoop或Spark这样的系统都是分布式计算系统，它们都有处理节点和网络故障的能力。不过，这两种 系统也都是为了执行并行计算而设计的。与MPI等HPC系统不同，这类新型系统即使其中一个计算节点出 现故障，也能继续进行海量计算。分布式计算主要应用在数据科学领域，如互联网、物联网、车联网、 数字金融。</p><p>在现代数据科学浪潮的冲击下，利用低成本硬件实现大规模分布式计算成为大数据应用的主流方向。世 界上各大数据科学公司都把分布式计算作为数据科学的核心技术与产品。最为大家熟知的有如亚马逊、 阿里巴巴各大云平台。在数据科学的应用中催生了大量分布式计算的优秀工具，如Hadoop, HDFS, Hive, Spark, Storm。</p><h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><p>分布式中，有不同的框架：</p><p>资源调度器（分布式文件系统HDFS） + 资源管理器（管理计算机资源哪一部分做什么，YARN） + 管理框架（zookeeper &amp; AMBARI）</p><p>不同的领域侧重的框架也不同。</p><blockquote><p>电商 - spark（计算）<br>图片处理 - Hadoop<br>存储数据财富 - hive<br>……</p></blockquote><h2 id="大数据分布式的特性"><a href="#大数据分布式的特性" class="headerlink" title="大数据分布式的特性"></a>大数据分布式的特性</h2><p>分布式服务器一般由很多同质的软件和硬件构成。</p><p>服务器为<strong>“刀片式服务器”</strong>（不同于塔式服务器），每一个计算节点都是一个刀片，通过网络连接，非核心的节点损坏不影响整体。可以在计算资源空闲时慢慢修复。</p><p>masternode<br>|——- workernode1…<br>|——- workernode2…<br>|——- workernode3…  </p><p>HDFS以来的两种逻辑组件，一个是起索引作用的namenode，一个是起存储作用的DataNode。二者数量和位置取决于worker节点的数量：worker很多时，要单独做成服务器，因为他们对算力要求很高；很少时可以置于masternode中。</p><p>优点：用廉价的硬件达到较高的存储性能。</p><p>缺点：随机存储，故不擅于做随机文件的搜索（会消耗大量算力查找索引），大文件被分成小份，存在不同的datanode中。</p><blockquote><p>根据文件大小切割为相似大小的block：<br>$/tmp/test.txt $<br>|——- blocka<br>|——- blockb</p></blockquote><p>&gt;<br>blocka<br>|——- datanode2<br>|——- datanode1<br>blockb<br>|——- datanode1<br>|——- datanode3  </p><p>注意到，DataNode1被复制了两份，这在分布式服务器中是很常见的。DataNode之间会根据是否空闲以及是否存储了相关数据而进行并行处理。只要namenode在，哪怕一块硬盘坏了，也能恢复。</p><h2 id="MapReduce组件"><a href="#MapReduce组件" class="headerlink" title="MapReduce组件"></a>MapReduce组件</h2><p>位置：Hadoop中</p><p>作用：处理大量数据，能用forloop处理的，可以通过分布式发给程序，代码对象应当各自独立。</p><p>对服务器？的I-O性能要求较高（input-output）</p><p>老师提示：分布式程序中应有容错空间（未领会，无经历）</p><p>分布式的MapReduce如下：</p><blockquote><p>JobTracker<br>|——- tasktracker1<br>|——- tasktracker2  （注意，ttk1和ttk2之间也互相连通）<br>ttk中容纳的是M-R两步的多个子程序  </p><p>activeJobs(位置JobTracker)：<br>joba<br>|——- map task1<br>|——- map task2<br>jobb<br>|——- reduce task1<br>|——- reduce task2  </p></blockquote><h2 id="服务器讲解"><a href="#服务器讲解" class="headerlink" title="服务器讲解"></a>服务器讲解</h2><p>远程操作终端：putty</p><p>账号密码和ip就略了（逃</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mkdir</span><br><span class="line">cd</span><br><span class="line">ls</span><br><span class="line">rm -rf /user/students</span><br><span class="line">touch lifeng.txt</span><br><span class="line">vim lifeng.txt</span><br><span class="line">emacs lifeng.txt</span><br><span class="line">cat lifeng.txt</span><br><span class="line"></span><br><span class="line">hadoop fs -ls /</span><br><span class="line">hadoop fs -put lifeng.txt /user/test </span><br><span class="line">hadoop fs -cat /user/test/lifeng.txt</span><br><span class="line">hadoop fs -get /user/test/lifeng.txt lifeng2.txt</span><br><span class="line">hadoop fs -ls /test &gt; hadoop-ls-return.txt</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;大数据分布式计算-0924&quot;&gt;&lt;a href=&quot;#大数据分布式计算-0924&quot; class=&quot;headerlink&quot; title=&quot;大数据分布式计算 0924&quot;&gt;&lt;/a&gt;大数据分布式计算 0924&lt;/h2&gt;&lt;p&gt;本次课程以上次思考题入手：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;并行计算与分布式计算的区别？&lt;/p&gt;
-&lt;/blockquote&gt;
     
     </summary>
     
