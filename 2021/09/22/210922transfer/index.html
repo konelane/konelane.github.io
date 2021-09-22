@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="6fea7fc7276fc383ec5b2080c662f076"/>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  
+  <title>深度学习|站在巨人的肩膀上——迁移学习 | KOneLane</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="又是一学期过去了，博客也许久未更新，生活在鸡零狗碎中仓皇逃窜，留下一地的残篇断页，无人捡拾。而我，总算是鼓起勇气，拿起笔开始写一些总结了。 本文介绍的是深度学习中迁移学习的入门级知识。项目是迪士尼公主图像识别。 苦了我了！">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习|站在巨人的肩膀上——迁移学习">
+<meta property="og:url" content="https://konelane.github.io/2021/09/22/210922transfer/index.html">
+<meta property="og:site_name" content="KOneLane">
+<meta property="og:description" content="又是一学期过去了，博客也许久未更新，生活在鸡零狗碎中仓皇逃窜，留下一地的残篇断页，无人捡拾。而我，总算是鼓起勇气，拿起笔开始写一些总结了。 本文介绍的是深度学习中迁移学习的入门级知识。项目是迪士尼公主图像识别。 苦了我了！">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://konelane.github.io/2021/09/22/210922transfer/princess.png">
+<meta property="og:image" content="https://konelane.github.io/2021/09/22/210922transfer/res.png">
+<meta property="og:image" content="https://konelane.github.io/2021/09/22/210922transfer/res2.jpg">
+<meta property="og:image" content="https://konelane.github.io/2021/09/22/210922transfer/confusion.png">
+<meta property="og:image" content="https://konelane.github.io/2021/09/22/210922transfer/wrongpics.png">
+<meta property="og:updated_time" content="2021-09-22T15:28:44.028Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习|站在巨人的肩膀上——迁移学习">
+<meta name="twitter:description" content="又是一学期过去了，博客也许久未更新，生活在鸡零狗碎中仓皇逃窜，留下一地的残篇断页，无人捡拾。而我，总算是鼓起勇气，拿起笔开始写一些总结了。 本文介绍的是深度学习中迁移学习的入门级知识。项目是迪士尼公主图像识别。 苦了我了！">
+<meta name="twitter:image" content="https://konelane.github.io/2021/09/22/210922transfer/princess.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="https://konelane.github.io/js/jquery1.8.2.min.js"></script>
+  <script src="/js/search.js"></script>
+  <script src="/js/ug-theme-default.js"></script>
+  <script src="/js/unitegallery.js"></script>
+  <script src="/js/av.min.js"></script>
+  <script src="/js/valine.min.js"></script>
+<link rel="alternate" href="/atom.xml" title="KOneLane" type="application/atom+xml">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/" class="alluraregular">Little Hehe</a></h1>
+		</hgroup>
+        <!--
+		
+		<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+		
+        -->
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+					</div>
+
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情♂链接</li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/archives">归档</a></li>
+				        
+							<li><a href="/tags/大数据">大数据</a></li>
+				        
+							<li><a href="/tags/数据分析">数据之学</a></li>
+				        
+							<li><a href="/tags/R">R语言探索</a></li>
+				        
+							<li><a href="/tags/文章">低吟浅谈</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+					        
+								<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+					        
+								<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+					        
+						</div>
+					</nav>
+				</section>
+
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/R/" style="font-size: 15px;">R</a> <a href="/tags/填词/" style="font-size: 13.33px;">填词</a> <a href="/tags/大数据/" style="font-size: 16.67px;">大数据</a> <a href="/tags/娱乐time/" style="font-size: 11.67px;">娱乐time</a> <a href="/tags/学习生活/" style="font-size: 10px;">学习生活</a> <a href="/tags/实践/" style="font-size: 13.33px;">实践</a> <a href="/tags/彩虹六号/" style="font-size: 10px;">彩虹六号</a> <a href="/tags/数据分析/" style="font-size: 18.33px;">数据分析</a> <a href="/tags/文章/" style="font-size: 20px;">文章</a> <a href="/tags/歌词/" style="font-size: 10px;">歌词</a>
+					</div>
+				</section>
+				
+
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://divinerhjf.github.io/">正义的处女座友人Diviner</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://feng.li/">可爱的统计计算（sc）丰丰老师</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+			</div>
+		</div>
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Little Hehe</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+				<hgroup>
+				  <h1 class="header-author">Little Hehe</h1>
+				</hgroup>
+			</div>
+			
+			<p class="header-subtitle">一团代码，两行歌词，三篇文章</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/archives">归档</a></li>
+		        
+					<li><a href="/tags/大数据">大数据</a></li>
+		        
+					<li><a href="/tags/数据分析">数据之学</a></li>
+		        
+					<li><a href="/tags/R">R语言探索</a></li>
+		        
+					<li><a href="/tags/文章">低吟浅谈</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/konelane/littlehehe.github.io" title="github">github</a>
+			        
+						<a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+			        
+						<a class="mail" target="_blank" href="mailto:w.yuanhe@qq.com" title="mail">mail</a>
+			        
+				</div>
+			</nav>
+		</header>
+	</div>
+</nav>
+
+	  <div class="page-header" style="">
+	<!--是否开启站内搜索-->
+	
+	<span class="local-search local-search-google local-search-plugin" style="float:right;">
+    <input type="search" placeholder="Search..." id="local-search-input" class="local-search-input-cls" style="">
+    <!--<i class="icon" aria-hidden="true" title="Search"></i>-->
+    <div id="local-search-result" class="local-search-result-cls"></div>
+  </span>
+  
+  <script>
+      var isMobile = {
+          Android: function() {
+              return navigator.userAgent.match(/Android/i);
+          },
+          BlackBerry: function() {
+              return navigator.userAgent.match(/BlackBerry/i);
+          },
+          iOS: function() {
+              return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+          },
+          Opera: function() {
+              return navigator.userAgent.match(/Opera Mini/i);
+          },
+          Windows: function() {
+              return navigator.userAgent.match(/IEMobile/i);
+          },
+          any: function() {
+              return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+          }
+      };
+      
+      
+      if(isMobile.any()){
+          //手机端取消搜索功能
+          $('.local-search').css("display","none");
+      }
+      
+      $(".local-search").on('input porpertychange',function(){
+          
+          //searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+          
+      });
+      
+      if ($('.local-search').size() && !isMobile.any()) {
+          searchFunc("/search.xml", 'local-search-input', 'local-search-result');
+      }
+      
+  </script>
+	
+	<!--是否开启最近通知-->
+	
+	一笑出门去，千里落花风
+
+
+	
+</div>
+      <div class="body-wrap"><article id="post-210922transfer" class="article article-type-post" itemscope itemprop="blogPost">
+    <script>
+        $("html").niceScroll({
+            cursorcolor: "#2a2929",
+            cursoropacitymax: 1,
+            touchbehavior: false,
+            cursorwidth: "6px",
+            cursorborder: "5",
+            cursorborderradius: "0px",
+            autohidemode: true
+        });
+    </script>
+    
+    <div class="article-meta">
+        <a href="/2021/09/22/210922transfer/" class="article-date">
+  	<time datetime="2021-09-21T16:00:00.000Z" itemprop="datePublished">2021-09-22</time>
+</a>
+
+    </div>
+    
+    <div class="article-inner">
+        
+        <input type="hidden" class="isFancy" />
+        
+        
+        <header class="article-header">
+            
+  
+    <h1 class="article-title" itemprop="name">
+      深度学习|站在巨人的肩膀上——迁移学习
+    </h1>
+  
+
+
+        </header>
+        
+        <div class="article-info article-info-post">
+            
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+	</div>
+
+
+            
+
+            <div class="clearfix"></div>
+        </div>
+        
+        
+
+        <div class="article-entry" itemprop="articleBody">
+
+            
+            <p class="toc-button">目录</p>
+<div id="toc" class="toc-article" style="display:none;">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据预处理"><span class="toc-number">1.</span> <span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型应用"><span class="toc-number">2.</span> <span class="toc-text">模型应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VGG16"><span class="toc-number">2.1.</span> <span class="toc-text">VGG16</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ResNet"><span class="toc-number">2.2.</span> <span class="toc-text">ResNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他模型（InceptionV3）"><span class="toc-number">2.3.</span> <span class="toc-text">其他模型（InceptionV3）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模型结果评价"><span class="toc-number">3.</span> <span class="toc-text">模型结果评价</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模型学习曲线"><span class="toc-number">3.1.</span> <span class="toc-text">模型学习曲线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模型准确率"><span class="toc-number">3.2.</span> <span class="toc-text">模型准确率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fine-Tune"><span class="toc-number">4.</span> <span class="toc-text">Fine-Tune</span></a></li></ol>
+</div>
+<script>
+    $(function(){
+
+        var width = document.body.scrollWidth;
+        if (width <=550) {
+             $(".toc-button").css("display","none");
+        }
+        $(".toc-button").hover(function(){
+            var top = $(this).get(0).offsetTop-$(".toc-article").height()/2;
+            $(".toc-article").css({
+                top:top +"px"
+            });
+            $("#toc").show(1000,function(){});
+           // $("#toc").animate({width:500;},3000);
+        },function(){
+
+        });
+        $(".toc-article").hover(function(){
+
+        },function(){
+            $("#toc").hide(1000,function(){});
+        });
+    })
+</script>
+
+            
+            
+
+            
+            <link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>又是一学期过去了，博客也许久未更新，生活在鸡零狗碎中仓皇逃窜，留下一地的残篇断页，无人捡拾。而我，总算是鼓起勇气，拿起笔开始写一些总结了。</p>
+<p>本文介绍的是深度学习中<strong>迁移学习</strong>的入门级知识。项目是<strong>迪士尼公主</strong>图像识别。</p>
+<p>苦了我了！</p>
+<a id="more"></a>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><p>说起来，我作为一个大老爷们，从来没有注意过迪士尼公主的事，直到有一天，在这门名叫“大数据统计建模与深度学习”的课上，我与四位女同学组队，找感兴趣的话题时，才第一次知道迪士尼有这么多公主（我本身的推荐是识别军用船和民用船，被直接pass=.=），而队友们跃跃欲试，我大呼上当快跑，可为时已晚。</p>
+<p>本文用到的数据，竟然是我们几个现场爬下来的（因此，预期也不是很高），百度、bilibili的视频截图，一共十四类，2333张。</p>
+<blockquote>
+<p>公主们的名字：<br>乐佩  宝嘉康蒂    灰姑娘  爱洛公主    艾莎    茉莉公主  蒂安娜公主<br>安娜  梅丽达公主  爱丽儿  白雪公主    花木兰    莫安娜      贝儿公主  </p>
+</blockquote>
+<p>这里随口一提，tf2.0与keras组合绝对是萌新的不二之选。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Activation, Conv2D, BatchNormalization, Dense, add <span class="comment"># 实现相加的模块</span></span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dropout, Flatten, Input, MaxPooling2D, ZeroPadding2D, AveragePooling2D,GlobalAveragePooling2D</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">from</span> keras.preprocessing.image <span class="keyword">import</span> ImageDataGenerator</span><br><span class="line"><span class="keyword">from</span> keras.optimizers <span class="keyword">import</span> Adam</span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> backend <span class="keyword">as</span> K</span><br><span class="line"></span><br><span class="line"><span class="comment"># 基础</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画图</span></span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'SimHei'</span>]  <span class="comment"># 用来正常显示中文标签</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将中文转成拼音</span></span><br><span class="line"><span class="keyword">import</span> pinyin.cedict</span><br><span class="line"></span><br><span class="line"><span class="comment">#### -------- TF-GPU --------</span></span><br><span class="line">gpus = tf.config.experimental.list_physical_devices(<span class="string">'GPU'</span>)</span><br><span class="line"><span class="keyword">if</span> gpus:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># Currently, memory growth needs to be the same across GPUs</span></span><br><span class="line">        <span class="keyword">for</span> gpu <span class="keyword">in</span> gpus:</span><br><span class="line">            tf.config.experimental.set_memory_growth(gpu, <span class="keyword">True</span>)</span><br><span class="line">            logical_gpus = tf.config.experimental.list_logical_devices(<span class="string">'GPU'</span>)</span><br><span class="line">            print(len(gpus), <span class="string">"Physical GPUs,"</span>, len(logical_gpus), <span class="string">"Logical GPUs"</span>)</span><br><span class="line">    <span class="keyword">except</span> RuntimeError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="comment"># Memory growth must be set before GPUs have been initialized</span></span><br><span class="line">        print(e)</span><br></pre></td></tr></table></figure>
+<p>调包的过程其实可以一段一段来，我们进行了整理。如果需要使用GPU，可以用这段代码查看是否有可用的GPU。（当然，需要TensorFlow-gpu版本。）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定公主列表</span></span><br><span class="line">princess_list = [<span class="string">'艾莎'</span>,<span class="string">'爱丽儿'</span>,<span class="string">'爱洛'</span>,<span class="string">'安娜'</span>,<span class="string">'白雪'</span>,<span class="string">'宝嘉康蒂'</span>,<span class="string">'贝儿'</span>,<span class="string">'蒂安娜'</span>,</span><br><span class="line">              <span class="string">'花木兰'</span>,<span class="string">'灰姑娘'</span>,<span class="string">'乐佩'</span>,<span class="string">'梅丽达公主'</span>,<span class="string">'茉莉公主'</span>,<span class="string">'莫安娜'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定数据文件夹和保存output文件夹</span></span><br><span class="line"><span class="comment"># data_dir = "/mnt/princess/data"</span></span><br><span class="line">data_dir = <span class="string">'./data'</span> <span class="comment"># yuanhe</span></span><br><span class="line"><span class="comment"># output_path = "/mnt/princess/output"</span></span><br><span class="line">output_path = <span class="string">'./output'</span> <span class="comment"># yuanhe</span></span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path) == <span class="keyword">False</span> : os.mkdir(output_path)</span><br></pre></td></tr></table></figure>
+<p>上面的代码是对图片数据的位置进行了整理。都是准备工作。下面正片就要开始了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据集拆分函数(由于每个网络的输入size不同,需要指定target_size)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span><span class="params">(im_size, batch_size=<span class="number">64</span>)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 数据增强</span></span><br><span class="line">    datagen = ImageDataGenerator(   </span><br><span class="line"></span><br><span class="line">        rescale=<span class="number">1.</span>/<span class="number">255</span>,           </span><br><span class="line">        shear_range=<span class="number">0.5</span>,                        <span class="comment"># 拉伸变换</span></span><br><span class="line">        rotation_range=<span class="number">30</span>,                      <span class="comment"># 左右旋转角度</span></span><br><span class="line">        zoom_range=<span class="number">0.2</span>,                         <span class="comment"># 放大和缩小的比例不超过1.2</span></span><br><span class="line">        width_shift_range=<span class="number">0.2</span>,                  <span class="comment"># 水平方向上平移的尺度</span></span><br><span class="line">        height_shift_range=<span class="number">0.2</span>,                 <span class="comment"># 垂直方向</span></span><br><span class="line">        horizontal_flip=<span class="keyword">True</span>,</span><br><span class="line">        validation_split = <span class="number">0.2</span>                  <span class="comment"># 训练集和验证集拆分比例</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 训练集数据</span></span><br><span class="line">    train_generator = datagen.flow_from_directory(</span><br><span class="line">        data_dir,</span><br><span class="line">        target_size=(im_size, im_size),</span><br><span class="line">        batch_size=batch_size,</span><br><span class="line">        classes=princess_list,</span><br><span class="line">        class_mode=<span class="string">'categorical'</span>,</span><br><span class="line">        seed=<span class="number">1024</span>,</span><br><span class="line">        subset=<span class="string">'training'</span>) <span class="comment"># set as training data</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 验证集数据</span></span><br><span class="line">    validation_generator = datagen.flow_from_directory(</span><br><span class="line">        data_dir, </span><br><span class="line">        target_size=(im_size, im_size),</span><br><span class="line">        batch_size=batch_size,</span><br><span class="line">        classes=princess_list,</span><br><span class="line">        class_mode=<span class="string">'categorical'</span>,</span><br><span class="line">        shuffle=<span class="keyword">False</span>,</span><br><span class="line">        seed=<span class="number">1024</span>,</span><br><span class="line">        subset=<span class="string">'validation'</span>) <span class="comment"># set as validation data</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (train_generator,validation_generator)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># 拆分训练集</span></span><br><span class="line">(train_generator,validation_generator) = load_data(im_size=<span class="number">224</span>, batch_size=<span class="number">64</span>)</span><br><span class="line">X_train,y_train = next(train_generator)</span><br><span class="line">X_test ,y_test  = next(validation_generator)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一个batch的数据集数量</span></span><br><span class="line">print(X_train.shape)</span><br><span class="line">print(y_train.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示标签对应字典</span></span><br><span class="line">train_generator.class_indices</span><br></pre></td></tr></table></figure>
+<p>数据增强是一种常见的扩大训练集的方式，通过旋转、镜像、变化、裁切等方式进行数据扩充。</p>
+<p>最终输出如下：</p>
+<blockquote>
+<p>Found 1873 images belonging to 14 classes.<br>Found 460 images belonging to 14 classes.<br>(64, 224, 224, 3)<br>(64, 14)<br>{‘艾莎’: 0,<br>‘爱丽儿’: 1,<br>‘爱洛’: 2,<br>‘安娜’: 3,<br>‘白雪’: 4,<br>‘宝嘉康蒂’: 5,<br>‘贝儿’: 6,<br>‘蒂安娜’: 7,<br>‘花木兰’: 8,<br>‘灰姑娘’: 9,<br>‘乐佩’: 10,<br>‘梅丽达公主’: 11,<br>‘茉莉公主’: 12,<br>‘莫安娜’: 13}  </p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 预览图片</span></span><br><span class="line">plt.figure()</span><br><span class="line">fig,ax = plt.subplots(<span class="number">2</span>,<span class="number">7</span>)</span><br><span class="line">fig.set_figheight(<span class="number">5</span>)</span><br><span class="line">fig.set_figwidth(<span class="number">15</span>)</span><br><span class="line">ax = ax.flatten()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">14</span>):</span><br><span class="line">    ax[i].imshow(X_train[i,:,:,:])</span><br><span class="line">    <span class="comment"># 标题显示公主名字</span></span><br><span class="line">    prin_name = princess_list[np.where(y_train[i]==<span class="number">1</span>)[<span class="number">0</span>][<span class="number">0</span>]]</span><br><span class="line">    <span class="comment"># ax[i].set_title(prin_name)</span></span><br><span class="line">    <span class="comment"># 用拼音显示</span></span><br><span class="line">    ax[i].set_title(pinyin.get(prin_name, format=<span class="string">"strip"</span>, delimiter=<span class="string">" "</span>))</span><br></pre></td></tr></table></figure>
+<p>公主们的样貌也展示如下。</p>
+<img src="/2021/09/22/210922transfer/princess.png" title="princess">
+<h2 id="模型应用"><a href="#模型应用" class="headerlink" title="模型应用"></a>模型应用</h2><p>本节均使用通过<code>imagenet</code>预训练好的<code>VGG16</code>、<code>ResNet</code>、<code>InceptionV3</code>、<code>MobileNet</code>卷积层参数，并在此基础上训练14分类的全连接层。</p>
+<h3 id="VGG16"><a href="#VGG16" class="headerlink" title="VGG16"></a>VGG16</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重新启动keras内存</span></span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> backend <span class="keyword">as</span> K</span><br><span class="line">K.clear_session()</span><br><span class="line"><span class="keyword">from</span> keras.applications.vgg16 <span class="keyword">import</span> VGG16</span><br><span class="line"></span><br><span class="line"><span class="comment"># vgg16默认输入尺寸是 224x224，指定im_size为224</span></span><br><span class="line">(train_vgg16,validation_vgg16) = load_data(im_size = <span class="number">224</span>, batch_size = <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建模型</span></span><br><span class="line"><span class="comment"># 导入已训练参数</span></span><br><span class="line">vgg_base = VGG16(weights=<span class="string">'imagenet'</span>, include_top=<span class="keyword">False</span>)</span><br><span class="line">vgg_x = vgg_base.output</span><br><span class="line">vgg_x = GlobalAveragePooling2D()(vgg_x)</span><br><span class="line"></span><br><span class="line">vgg_x = Dense(<span class="number">128</span>,activation=<span class="string">'relu'</span>)(vgg_x)</span><br><span class="line">vgg_pred = Dense(<span class="number">14</span>,activation=<span class="string">'softmax'</span>)(vgg_x)</span><br><span class="line">vgg_model = Model(inputs=vgg_base.input,</span><br><span class="line">                  outputs=vgg_pred)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不再训练前面层</span></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> vgg_base.layers:</span><br><span class="line">    layer.trainable = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">vgg_model.summary()</span><br></pre></td></tr></table></figure>
+<p>输出如下（即VGG16网络的结构）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">Model: &quot;model_1&quot;</span><br><span class="line">_________________________________________________________________</span><br><span class="line">Layer (type)                 Output Shape              Param #   </span><br><span class="line">=================================================================</span><br><span class="line">input_1 (InputLayer)         (None, None, None, 3)     0         </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block1_conv1 (Conv2D)        (None, None, None, 64)    1792      </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block1_conv2 (Conv2D)        (None, None, None, 64)    36928     </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block1_pool (MaxPooling2D)   (None, None, None, 64)    0         </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block2_conv1 (Conv2D)        (None, None, None, 128)   73856     </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block2_conv2 (Conv2D)        (None, None, None, 128)   147584    </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block2_pool (MaxPooling2D)   (None, None, None, 128)   0         </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block3_conv1 (Conv2D)        (None, None, None, 256)   295168    </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block3_conv2 (Conv2D)        (None, None, None, 256)   590080    </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block3_conv3 (Conv2D)        (None, None, None, 256)   590080    </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block3_pool (MaxPooling2D)   (None, None, None, 256)   0         </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block4_conv1 (Conv2D)        (None, None, None, 512)   1180160   </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block4_conv2 (Conv2D)        (None, None, None, 512)   2359808   </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block4_conv3 (Conv2D)        (None, None, None, 512)   2359808   </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block4_pool (MaxPooling2D)   (None, None, None, 512)   0         </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block5_conv1 (Conv2D)        (None, None, None, 512)   2359808   </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block5_conv2 (Conv2D)        (None, None, None, 512)   2359808   </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block5_conv3 (Conv2D)        (None, None, None, 512)   2359808   </span><br><span class="line">_________________________________________________________________</span><br><span class="line">block5_pool (MaxPooling2D)   (None, None, None, 512)   0         </span><br><span class="line">_________________________________________________________________</span><br><span class="line">global_average_pooling2d_1 ( (None, 512)               0         </span><br><span class="line">_________________________________________________________________</span><br><span class="line">dense_1 (Dense)              (None, 128)               65664     </span><br><span class="line">_________________________________________________________________</span><br><span class="line">dense_2 (Dense)              (None, 14)                1806      </span><br><span class="line">=================================================================</span><br><span class="line">Total params: 14,782,158</span><br><span class="line">Trainable params: 67,470</span><br><span class="line">Non-trainable params: 14,714,688</span><br><span class="line">_________________________________________________________________</span><br></pre></td></tr></table></figure>
+<p>训练的过程就是让原有的权重对现有数据进行过拟合的过程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 训练</span></span><br><span class="line">vgg_model.compile(loss=<span class="string">'categorical_crossentropy'</span>, </span><br><span class="line">                  optimizer=Adam(lr=<span class="number">0.001</span>), </span><br><span class="line">                  metrics=[<span class="string">'accuracy'</span>]</span><br><span class="line">                 )</span><br><span class="line">vgg_history = vgg_model.fit_generator(train_vgg16</span><br><span class="line">                                      ,validation_data=validation_vgg16</span><br><span class="line"><span class="comment">#                                       ,epochs=100</span></span><br><span class="line">                                      ,epochs=<span class="number">1</span></span><br><span class="line">                                     ) </span><br><span class="line">                                     </span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line"><span class="comment"># 创建结果保存文件夹</span></span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/model'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/model'</span>)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/acc'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/acc'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存正确率结果</span></span><br><span class="line"><span class="keyword">with</span> open(output_path + <span class="string">'/acc/vgg16_history.txt'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    pickle.dump(vgg_history.history, f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存模型结果</span></span><br><span class="line">vgg_model.save(output_path + <span class="string">"/model/vgg16.h5"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重新启动keras内存</span></span><br><span class="line">K.clear_session()</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> keras.applications.resnet <span class="keyword">import</span> ResNet50</span><br><span class="line"></span><br><span class="line"><span class="comment"># resnet50默认输入尺寸是 224x224</span></span><br><span class="line">(train_resnet50,validation_resnet50) = load_data(im_size=<span class="number">224</span>, batch_size = <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建模型</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入已训练参数</span></span><br><span class="line">resnet_base = ResNet50(weights=<span class="string">'imagenet'</span>,include_top=<span class="keyword">False</span>)</span><br><span class="line">resnet_x = resnet_base.output</span><br><span class="line">resnet_x = GlobalAveragePooling2D()(resnet_x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在最后加入14分类的全连接层</span></span><br><span class="line">resnet_x = Dense(<span class="number">128</span>,activation=<span class="string">'relu'</span>)(resnet_x)</span><br><span class="line">resnet_pred = Dense(<span class="number">14</span>,activation=<span class="string">'softmax'</span>)(resnet_x)</span><br><span class="line">resnet_model = Model(inputs = resnet_base.input</span><br><span class="line">                  ,outputs = resnet_pred)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只训练最后一层</span></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> resnet_base.layers:</span><br><span class="line">    layer.trainable = <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">resnet_model.summary()</span><br></pre></td></tr></table></figure>
+<p>我本来想对模型进行最完整的展示，但其实适合放一张图上来。中间的网络细节就不展示了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Model: &quot;model_1&quot;</span><br><span class="line">                </span><br><span class="line">==================================================================================================</span><br><span class="line">Total params: 23,851,790</span><br><span class="line">Trainable params: 264,078</span><br><span class="line">Non-trainable params: 23,587,712</span><br><span class="line">__________________________________________________________________________________________________</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 训练</span></span><br><span class="line">resnet_model.compile(loss=<span class="string">'categorical_crossentropy'</span>, </span><br><span class="line">              optimizer=Adam(lr=<span class="number">0.001</span>), </span><br><span class="line">              metrics=[<span class="string">'accuracy'</span>]</span><br><span class="line">             )</span><br><span class="line">resnet_history = resnet_model.fit_generator(train_resnet50</span><br><span class="line">                                      ,validation_data=validation_resnet50</span><br><span class="line"><span class="comment">#                                       ,epochs=100</span></span><br><span class="line">                                      ,epochs=<span class="number">1</span></span><br><span class="line">                                     ) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line"><span class="comment"># 创建结果保存文件夹</span></span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/model'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/model'</span>)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/acc'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/acc'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存正确率结果</span></span><br><span class="line"><span class="keyword">with</span> open(output_path + <span class="string">'/acc/resnet_history.txt'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    pickle.dump(vgg_history.history, f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存模型结果</span></span><br><span class="line">resnet_model.save(output_path + <span class="string">"/model/resnet.h5"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="其他模型（InceptionV3）"><a href="#其他模型（InceptionV3）" class="headerlink" title="其他模型（InceptionV3）"></a>其他模型（InceptionV3）</h3><p>甚至，后面的代码我想一并贴出来。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重新启动keras内存</span></span><br><span class="line">K.clear_session()</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> keras.applications.inception_v3 <span class="keyword">import</span> InceptionV3</span><br><span class="line"></span><br><span class="line">(train_InceptionV3, validation_InceptionV3) = load_data(im_size=<span class="number">224</span>, batch_size= <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建模型</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入已训练参数</span></span><br><span class="line">inceV3_base = InceptionV3(weights=<span class="string">'imagenet'</span>,include_top=<span class="keyword">False</span>)</span><br><span class="line">inceV3_x = inceV3_base.output</span><br><span class="line">inceV3_x = GlobalAveragePooling2D()(inceV3_x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在最后加入14分类的全连接层</span></span><br><span class="line">inceV3_x = Dense(<span class="number">128</span>,activation=<span class="string">'relu'</span>)(inceV3_x)</span><br><span class="line">inceV3_pred = Dense(<span class="number">14</span>,activation=<span class="string">'softmax'</span>)(inceV3_x)</span><br><span class="line">InceptionV3_model = Model(inputs = inceV3_base.input</span><br><span class="line">                    ,outputs = inceV3_pred)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只训练最后一层</span></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> inceV3_base.layers:</span><br><span class="line">    layer.trainable = <span class="keyword">False</span></span><br><span class="line">    </span><br><span class="line">InceptionV3_model.summary()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">InceptionV3_model.compile(loss=<span class="string">'categorical_crossentropy'</span>, </span><br><span class="line">                          optimizer=Adam(lr=<span class="number">0.001</span>), </span><br><span class="line">                          metrics=[<span class="string">'accuracy'</span>]</span><br><span class="line">                         )</span><br><span class="line">InceptionV3_history = InceptionV3_model.fit_generator(train_InceptionV3</span><br><span class="line">                                                      ,validation_data=validation_InceptionV3</span><br><span class="line">                                                      ,epochs=<span class="number">100</span></span><br><span class="line"><span class="comment">#                                                       ,epochs=1</span></span><br><span class="line">                                                     ) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line"><span class="comment"># 创建结果保存文件夹</span></span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/model'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/model'</span>)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/acc'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/acc'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存正确率结果</span></span><br><span class="line"><span class="keyword">with</span> open(output_path + <span class="string">'/acc/InceptionV3_history.txt'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    pickle.dump(InceptionV3_history.history, f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存模型结果</span></span><br><span class="line">InceptionV3_model.save(output_path + <span class="string">"/model/InceptionV3.h5"</span>)</span><br></pre></td></tr></table></figure>
+<p>MobileNet</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重新启动keras内存</span></span><br><span class="line">K.clear_session()</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> keras.applications <span class="keyword">import</span> MobileNet</span><br><span class="line"></span><br><span class="line">(train_MobileNet, validation_MobileNet) = load_data(im_size=<span class="number">224</span>, batch_size=<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建模型</span></span><br><span class="line"><span class="comment"># 导入已训练参数</span></span><br><span class="line">mobile_base = MobileNet(weights=<span class="string">'imagenet'</span>,include_top=<span class="keyword">False</span>)</span><br><span class="line">mobile_x = mobile_base.output</span><br><span class="line">mobile_x = GlobalAveragePooling2D()(mobile_x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在最后加入激活函数和14分类的全连接层</span></span><br><span class="line">mobile_x = Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>)(mobile_x)</span><br><span class="line">MobileNet_pred = Dense(<span class="number">14</span>, activation=<span class="string">'softmax'</span>)(mobile_x)</span><br><span class="line">MobileNet_model = Model(inputs = mobile_base.input</span><br><span class="line">                    ,outputs = MobileNet_pred)</span><br><span class="line"><span class="comment"># 只训练最后一层</span></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> mobile_base.layers:</span><br><span class="line">    layer.trainable = <span class="keyword">False</span></span><br><span class="line">    </span><br><span class="line">MobileNet_model.summary()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">MobileNet_model.compile(loss=<span class="string">'categorical_crossentropy'</span>,</span><br><span class="line">                        optimizer=Adam(lr=<span class="number">0.001</span>),</span><br><span class="line">                        metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line">MobileNet_history = MobileNet_model.fit_generator(train_MobileNet</span><br><span class="line">                                                  ,validation_data=validation_MobileNet</span><br><span class="line">                                                  ,epochs=<span class="number">100</span></span><br><span class="line"><span class="comment">#                                                   ,epochs=2</span></span><br><span class="line">                              )</span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line"><span class="comment"># 创建结果保存文件夹</span></span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/model'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/model'</span>)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/acc'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/acc'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存正确率结果</span></span><br><span class="line"><span class="keyword">with</span> open(output_path + <span class="string">'/acc/MobileNet_history.txt'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    pickle.dump(MobileNet_history.history, f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存模型结果</span></span><br><span class="line">MobileNet_model.save(output_path + <span class="string">"/model/MobileNet.h5"</span>)</span><br></pre></td></tr></table></figure>
+<p>训练的过程千篇一律，因为我们站在巨人的肩膀上，相当于只是对最后一层全连接进行了一定程度的“过拟合”。</p>
+<p>而出乎所有人预料的是，效果竟然还可以。</p>
+<h2 id="模型结果评价"><a href="#模型结果评价" class="headerlink" title="模型结果评价"></a>模型结果评价</h2><h3 id="模型学习曲线"><a href="#模型学习曲线" class="headerlink" title="模型学习曲线"></a>模型学习曲线</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出指定模型的学习曲线</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_learning_curves</span><span class="params">(history)</span>:</span></span><br><span class="line">    pd.DataFrame(history.history).plot(figsize = (<span class="number">8</span>,<span class="number">5</span>))</span><br><span class="line">    plt.grid(<span class="keyword">True</span>)</span><br><span class="line">    plt.gca().set_ylim(<span class="number">0.2</span>,<span class="number">1.2</span>)</span><br><span class="line"><span class="comment">#     plt.gca().set_xlim(0,100)</span></span><br><span class="line">    plt.show()</span><br><span class="line">    </span><br><span class="line">plot_learning_curves(vgg_history)</span><br><span class="line">plot_learning_curves(resnet_history)</span><br><span class="line">plot_learning_curves(InceptionV3_history)</span><br><span class="line">plot_learning_curves(MobileNet_history)</span><br></pre></td></tr></table></figure>
+<img src="/2021/09/22/210922transfer/res.png" title="res">
+<h3 id="模型准确率"><a href="#模型准确率" class="headerlink" title="模型准确率"></a>模型准确率</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从保存的结果导入每个模型的正确率</span></span><br><span class="line">model_name = []</span><br><span class="line">train_acc = []</span><br><span class="line">val_acc = []</span><br><span class="line"></span><br><span class="line">path_model_result = output_path + <span class="string">"/acc"</span>              <span class="comment"># 模型结果存储路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历取文件</span></span><br><span class="line"><span class="keyword">for</span> file_name <span class="keyword">in</span> os.listdir(path_model_result):</span><br><span class="line">    model_name.append(file_name.split(<span class="string">'_'</span>)[<span class="number">0</span>])              <span class="comment">#文件名都以_分隔，并且第一个元素都是模型名称</span></span><br><span class="line">    <span class="keyword">with</span> open(os.path.join(path_model_result, file_name), <span class="string">'rb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        model_history = pickle.load(f)</span><br><span class="line">        train_acc.append(model_history[<span class="string">"accuracy"</span>])</span><br><span class="line">        val_acc.append(model_history[<span class="string">"val_accuracy"</span>])</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 测试集和验证集的正确率对比</span></span><br><span class="line">plt.figure(dpi=<span class="number">100</span>)</span><br><span class="line">epoch_list = range(<span class="number">1</span>, <span class="number">101</span>)</span><br><span class="line">color_set=[<span class="string">'red'</span>,<span class="string">'blue'</span>,<span class="string">'green'</span>,<span class="string">'yellow'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> model_loc <span class="keyword">in</span> range(len(model_name)):</span><br><span class="line">    plt.plot(epoch_list, </span><br><span class="line">             train_acc[model_loc], </span><br><span class="line">             marker=<span class="string">'o'</span>, </span><br><span class="line"><span class="comment">#              color=color_set[model_loc], </span></span><br><span class="line">             label=model_name[model_loc]+<span class="string">'Train'</span>)    <span class="comment"># 训练集正确率</span></span><br><span class="line">    plt.plot(epoch_list, </span><br><span class="line">             val_acc[model_loc],</span><br><span class="line">             marker=<span class="string">'*'</span>, </span><br><span class="line"><span class="comment">#              color=color_set[model_loc],</span></span><br><span class="line">             label=model_name[model_loc]+<span class="string">'Validation'</span>) <span class="comment"># 验证集正确率</span></span><br><span class="line">plt.ylim(<span class="number">0.2</span>, <span class="number">1.0</span>)</span><br><span class="line">plt.legend()                                                                                 <span class="comment"># 让图例生效</span></span><br><span class="line">plt.xticks(epoch_list)                                                                       <span class="comment"># 横坐标显示为整数</span></span><br><span class="line">plt.xlabel(<span class="string">u"epoch"</span>)                                                                         <span class="comment"># X轴标签</span></span><br><span class="line">plt.ylabel(<span class="string">"Accuracy"</span>)                                                                       <span class="comment"># Y轴标签</span></span><br><span class="line">plt.title(<span class="string">"Comparison of Accuracy"</span>)                                                          <span class="comment"># 标题</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p>什么，我的代码这里竟然出现了些问题，存档时候丢了什么，没能跑出来qwq。请读者自行脑补（bushi</p>
+<p>不放图的理由增加了，拒绝所有“云丹师”。</p>
+<p>开个玩笑，只是有点糊了……没找到更好的图。</p>
+<img src="/2021/09/22/210922transfer/res2.jpg" title="res2">
+<p>总的来说，还是mobilenet最好，既满足了轻量化需求，又显示了超高的准确率。</p>
+<p>比较有学习意义的是下面这个，名叫“错分分析”的部分。目的是看一看这些模型的混淆矩阵。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_confusion_matrix</span><span class="params">(cm,</span></span></span><br><span class="line"><span class="function"><span class="params">                          target_names,</span></span></span><br><span class="line"><span class="function"><span class="params">                          title=<span class="string">'Confusion matrix'</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                          cmap=plt.cm.Greens,#这个地方设置混淆矩阵的颜色主题</span></span></span><br><span class="line"><span class="function"><span class="params">                          normalize=True)</span>:</span></span><br><span class="line">    <span class="keyword">from</span> itertools <span class="keyword">import</span> product</span><br><span class="line">    </span><br><span class="line">    plt.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'SimHei'</span>]  <span class="comment"># 用来正常显示中文标签</span></span><br><span class="line">    accuracy = np.trace(cm) / float(np.sum(cm))</span><br><span class="line">    misclass = <span class="number">1</span> - accuracy</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> cmap <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        cmap = plt.get_cmap(<span class="string">'Blues'</span>)</span><br><span class="line"></span><br><span class="line">    plt.figure(figsize=(<span class="number">15</span>, <span class="number">12</span>))</span><br><span class="line">    plt.imshow(cm, interpolation=<span class="string">'nearest'</span>, cmap=cmap)</span><br><span class="line">    plt.title(title)</span><br><span class="line">    plt.colorbar()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> target_names <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">        tick_marks = np.arange(len(target_names))</span><br><span class="line">        plt.xticks(tick_marks, target_names, rotation=<span class="number">45</span>)</span><br><span class="line">        plt.yticks(tick_marks, target_names)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> normalize:</span><br><span class="line">        cm = cm.astype(<span class="string">'float'</span>) / cm.sum(axis=<span class="number">1</span>)[:, np.newaxis]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    thresh = cm.max() / <span class="number">1.5</span> <span class="keyword">if</span> normalize <span class="keyword">else</span> cm.max() / <span class="number">2</span></span><br><span class="line">    <span class="keyword">for</span> i, j <span class="keyword">in</span> product(range(cm.shape[<span class="number">0</span>]), range(cm.shape[<span class="number">1</span>])):</span><br><span class="line">        <span class="keyword">if</span> normalize:</span><br><span class="line">            plt.text(j, i, <span class="string">"&#123;:0.4f&#125;"</span>.format(cm[i, j]),</span><br><span class="line">                     horizontalalignment=<span class="string">"center"</span>,</span><br><span class="line">                     color=<span class="string">"white"</span> <span class="keyword">if</span> cm[i, j] &gt; thresh <span class="keyword">else</span> <span class="string">"black"</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            plt.text(j, i, <span class="string">"&#123;:,&#125;"</span>.format(cm[i, j]),</span><br><span class="line">                     horizontalalignment=<span class="string">"center"</span>,</span><br><span class="line">                     color=<span class="string">"white"</span> <span class="keyword">if</span> cm[i, j] &gt; thresh <span class="keyword">else</span> <span class="string">"black"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.ylabel(<span class="string">'True label'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'Predicted label\naccuracy=&#123;:0.4f&#125;; misclass=&#123;:0.4f&#125;'</span>.format(accuracy, misclass))</span><br><span class="line">    <span class="comment">#这里这个savefig是保存图片，如果想把图存在什么地方就改一下下面的路径，然后dpi设一下分辨率即可。</span></span><br><span class="line">    plt.savefig(<span class="string">'./confusionmatrix_14.png'</span>,dpi=<span class="number">1000</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_confuse</span><span class="params">(predictions,true_label,target_names)</span>:</span></span><br><span class="line">    <span class="comment"># predictions = model.predict(x_val).argmax(axis=-1) </span></span><br><span class="line">    truelabel = true_label</span><br><span class="line">    conf_mat = confusion_matrix(y_true=truelabel, y_pred=predictions)</span><br><span class="line">    plt.figure()</span><br><span class="line">    plot_confusion_matrix(conf_mat, normalize=<span class="keyword">False</span>,target_names = target_names,title=<span class="string">'Confusion Matrix'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 读取模型</span></span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> load_model</span><br><span class="line">model_path = output_path + <span class="string">"/model"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 选择一个最好的模型</span></span><br><span class="line">vgg_model = load_model(model_path + <span class="string">"/vgg16.h5"</span>)</span><br><span class="line"><span class="comment"># resnet_model = load_model(model_path + "/resnet.h5")</span></span><br><span class="line"><span class="comment"># InceptionV3_model = load_model(model_path + "/InceptionV3.h5")</span></span><br><span class="line"><span class="comment"># MobileNet_model = load_model(model_path + "/MobileNet.h5")</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 并读取对应的数据集(不用的模型im_size不同而已)</span></span><br><span class="line">model = vgg_model</span><br><span class="line">(train_generator,validation_generator) = load_data(im_size=<span class="number">224</span>, batch_size=<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出每个图像的预测类别</span></span><br><span class="line">pred = model.predict_generator(validation_generator, verbose=<span class="number">1</span>)</span><br><span class="line">predicted_class_indices = np.argmax(pred, axis=<span class="number">1</span>) <span class="comment"># 画图也要用到</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试集的真实类别</span></span><br><span class="line">true_label= validation_generator.classes</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用pd.crosstab来简单画出混淆矩阵</span></span><br><span class="line">table=pd.crosstab(true_label</span><br><span class="line">                  ,predicted_class_indices</span><br><span class="line">                  ,colnames=[<span class="string">'Predict label'</span>]</span><br><span class="line">                  ,rownames=[<span class="string">'True label'</span>],)</span><br><span class="line">print(table)</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 输出每个图像的预测类别</span><br><span class="line">pred = model.predict_generator(validation_generator, verbose=1)</span><br><span class="line">predicted_class_indices = np.argmax(pred, axis=1) # 画图也要用到</span><br><span class="line"></span><br><span class="line"># 测试集的真实类别</span><br><span class="line">true_label= validation_generator.classes</span><br><span class="line"></span><br><span class="line">#使用pd.crosstab来简单画出混淆矩阵</span><br><span class="line">table=pd.crosstab(true_label</span><br><span class="line">                  ,predicted_class_indices</span><br><span class="line">                  ,colnames=[&apos;Predict label&apos;]</span><br><span class="line">                  ,rownames=[&apos;True label&apos;],)</span><br><span class="line">print(table)</span><br></pre></td></tr></table></figure>
+<p>课程作业的收尾自然是画一张有趣的图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">princess_list = list(validation_generator.class_indices.keys())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用之前写的函数画混淆矩阵</span></span><br><span class="line">plot_confuse(predicted_class_indices</span><br><span class="line">             ,validation_generator.classes</span><br><span class="line">             ,princess_list)</span><br></pre></td></tr></table></figure>
+<img src="/2021/09/22/210922transfer/confusion.png" title="confusion">
+<p>以及最后再补几句像模像样的分析。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型最爱的公主</span></span><br><span class="line"></span><br><span class="line">print(<span class="string">'公主的数量:\n'</span>,table.sum(axis=<span class="number">1</span>),<span class="string">'\n\n'</span>)</span><br><span class="line">print(<span class="string">'预测的公主数量:\n'</span>,table.sum(axis=<span class="number">0</span>),<span class="string">'\n\n'</span>)</span><br><span class="line"></span><br><span class="line">pred_true_ratio = table.sum(axis=<span class="number">0</span>) / table.sum(axis=<span class="number">1</span>) <span class="comment"># 按行加是正确的数量</span></span><br><span class="line">names = list(validation_generator.class_indices.keys())</span><br><span class="line">print(<span class="string">'各类的预测数量/真实数量的比例:\n'</span>, pred_true_ratio,<span class="string">'\n\n'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'公主名称:\n'</span>,pd.Series(names),<span class="string">'\n\n'</span>)</span><br><span class="line">print(<span class="string">'比例最低的“小冷清”：'</span>,list(validation_generator.class_indices.keys())[np.argmin(pred_true_ratio)])</span><br><span class="line">print(<span class="string">'比例最高的“大众脸”：'</span>,list(validation_generator.class_indices.keys())[np.argmax(pred_true_ratio)])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">公主的数量:</span><br><span class="line"> True label</span><br><span class="line">0     31</span><br><span class="line">1     56</span><br><span class="line">2     20</span><br><span class="line">3     22</span><br><span class="line">4     30</span><br><span class="line">5     44</span><br><span class="line">6     52</span><br><span class="line">7     20</span><br><span class="line">8     33</span><br><span class="line">9     24</span><br><span class="line">10    33</span><br><span class="line">11    36</span><br><span class="line">12    36</span><br><span class="line">13    23</span><br><span class="line">dtype: int64 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">预测的公主数量:</span><br><span class="line"> Predict label</span><br><span class="line">0      11</span><br><span class="line">1     155</span><br><span class="line">3       3</span><br><span class="line">4       5</span><br><span class="line">5      96</span><br><span class="line">6      95</span><br><span class="line">8       5</span><br><span class="line">10     33</span><br><span class="line">11     50</span><br><span class="line">13      7</span><br><span class="line">dtype: int64 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">各类的预测数量/真实数量的比例:</span><br><span class="line"> 0     0.354839</span><br><span class="line">1     2.767857</span><br><span class="line">2          NaN</span><br><span class="line">3     0.136364</span><br><span class="line">4     0.166667</span><br><span class="line">5     2.181818</span><br><span class="line">6     1.826923</span><br><span class="line">7          NaN</span><br><span class="line">8     0.151515</span><br><span class="line">9          NaN</span><br><span class="line">10    1.000000</span><br><span class="line">11    1.388889</span><br><span class="line">12         NaN</span><br><span class="line">13    0.304348</span><br><span class="line">dtype: float64 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">公主名称:</span><br><span class="line"> 0        艾莎</span><br><span class="line">1       爱丽儿</span><br><span class="line">2      爱洛公主</span><br><span class="line">3        安娜</span><br><span class="line">4      白雪公主</span><br><span class="line">5      宝嘉康蒂</span><br><span class="line">6      贝儿公主</span><br><span class="line">7     蒂安娜公主</span><br><span class="line">8       花木兰</span><br><span class="line">9       灰姑娘</span><br><span class="line">10       乐佩</span><br><span class="line">11    梅丽达公主</span><br><span class="line">12     茉莉公主</span><br><span class="line">13      莫安娜</span><br><span class="line">dtype: object </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">比例最低的“小冷清”： 安娜</span><br><span class="line">比例最高的“大众脸”： 爱丽儿</span><br></pre></td></tr></table></figure>
+<p>看一看错分样本，尝试找到错分的原因。主要还是训练集风格不统一，有2D有3D，有官方作品有同人作品，有漫画作品有电影作品……</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 展示错判的图（错分样本）</span></span><br><span class="line">datapred = predicted_class_indices.tolist()</span><br><span class="line">datatrue = validation_generator.classes.tolist()</span><br><span class="line"></span><br><span class="line">wrong_len = validation_generator.n - list(map(<span class="keyword">lambda</span> x: x[<span class="number">0</span>]-x[<span class="number">1</span>], zip(datapred, datatrue))).count(<span class="number">0</span>)</span><br><span class="line">print(<span class="string">'一共错误预判了 %d 张图片'</span> % wrong_len) <span class="comment">## 一共错误预判了 45 张图片</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重置数据集</span></span><br><span class="line">validation_generator.reset()</span><br><span class="line">X,Y = next(validation_generator)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置画布</span></span><br><span class="line">plt.figure()</span><br><span class="line">fig,ax = plt.subplots(wrong_len//<span class="number">5</span>+<span class="number">1</span>,<span class="number">5</span>)</span><br><span class="line">fig.set_figheight(wrong_len)</span><br><span class="line">fig.set_figwidth(<span class="number">15</span>)</span><br><span class="line">ax = ax.flatten()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历输出每一张错判的图</span></span><br><span class="line">wrong_list = []</span><br><span class="line">k = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(validation_generator.n):</span><br><span class="line">    <span class="comment"># 每一个X里只有64张图片 如果想打100以外的index 得再next一下</span></span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">64</span> == <span class="number">0</span> <span class="keyword">and</span> i != <span class="number">0</span>:</span><br><span class="line">        X,Y = next(validation_generator)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> list(map(<span class="keyword">lambda</span> x: x[<span class="number">0</span>]-x[<span class="number">1</span>], zip(datapred, datatrue)))[i] != <span class="number">0</span>:</span><br><span class="line">        wrong_list.append(i)</span><br><span class="line">        ax[k].imshow(X[i%<span class="number">64</span>,:,:,:])</span><br><span class="line">        ax[k].set_title(<span class="string">'pred:'</span>+ str(princelist[datapred[i]]) + <span class="string">'true:'</span> + str(princelist[datatrue[i]]))</span><br><span class="line">        k += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<img src="/2021/09/22/210922transfer/wrongpics.png" title="wrongpics">
+<p>分类正确率最高的为灰姑娘(100%:12/12)，最低的为爱洛(40%:4/10)；最容易被错认的公主为莫安娜(8次)，最不容易被错认的公主为茉莉公主(1次)。</p>
+<p>其中，白雪公主有4个样本被错判成莫安娜，错分次数最高，而白雪公主的7个错判样本中，有6个都为黑发黑人公主，白雪公主为黑发白人公主，因此可以看出，发色是分类学习的重要特征之一。</p>
+<p>双向被错判的公主为，乐佩和爱洛、宝嘉康蒂和爱丽儿、艾莎和爱丽儿、白雪公主和茉莉公主、花木兰和蒂安娜。其中，乐佩和爱洛同为白人金色长发公主，花木兰和蒂安娜同为深肤色黑色长发公主，具有较大相似性，白雪公主和茉莉公主同为黑发，艾莎和爱丽儿同为白人公主，也具有相似性。宝嘉康蒂和爱丽儿，为什么会被认错QAQ？</p>
+<p>除了同肤色同发色的公主外，可以看到背景也是分类学习的重要特征，比如莫安娜的训练集图片背景都为海边，被错判的图片背景为白色，因此被错误分类为宝嘉康蒂。</p>
+<h2 id="Fine-Tune"><a href="#Fine-Tune" class="headerlink" title="Fine-Tune"></a>Fine-Tune</h2><p>解放固有，来点属于自己的东西</p>
+<p>既然是站在巨人的肩膀上，那索性做一些大胆的尝试。比如解放最后的卷积层，让模型重新训练一次，看看能不能有更好的效果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 选择之前效果最好的模型</span></span><br><span class="line"><span class="keyword">from</span> keras.applications.inception_v3 <span class="keyword">import</span> InceptionV3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入数据</span></span><br><span class="line">(train_finetune, validation_finetune) = load_data(im_size=<span class="number">224</span>, batch_size = <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建模型</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入已训练参数</span></span><br><span class="line">base_model = InceptionV3(weights=<span class="string">'imagenet'</span>,include_top=<span class="keyword">False</span>)</span><br><span class="line">x = base_model.output</span><br><span class="line">x = GlobalAveragePooling2D()(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在最后加入14分类的全连接层</span></span><br><span class="line">x = Dense(<span class="number">128</span>,activation=<span class="string">'relu'</span>)(x)</span><br><span class="line">predictions = Dense(<span class="number">14</span>,activation=<span class="string">'softmax'</span>)(x)</span><br><span class="line">finetune_model = Model(inputs=base_model.input, outputs=predictions)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解冻最后三层</span></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> base_model.layers[:len(base_model.layers)<span class="number">-3</span>]:</span><br><span class="line">    layer.trainable = <span class="keyword">False</span></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> base_model.layers[len(base_model.layers)<span class="number">-3</span>:]:</span><br><span class="line">    layer.trainable = <span class="keyword">True</span></span><br><span class="line">    </span><br><span class="line">finetune_model.summary()</span><br><span class="line"></span><br><span class="line"><span class="comment">## 这里输出依然略过</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">finetune_model.compile(loss=<span class="string">'categorical_crossentropy'</span>, </span><br><span class="line">                          optimizer=Adam(lr=<span class="number">0.001</span>), </span><br><span class="line">                          metrics=[<span class="string">'accuracy'</span>]</span><br><span class="line">                         )</span><br><span class="line">finetune_history = finetune_model.fit_generator(train_finetune</span><br><span class="line">                                                      ,validation_data=validation_finetune</span><br><span class="line">                                                      ,epochs=<span class="number">1</span></span><br><span class="line"><span class="comment">#                                                       ,epochs=100</span></span><br><span class="line">                                                     ) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存结果</span></span><br><span class="line"><span class="comment"># 创建结果保存文件夹</span></span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/model'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/model'</span>)</span><br><span class="line"><span class="keyword">if</span> os.path.exists(output_path + <span class="string">'/acc'</span>) == <span class="keyword">False</span> : os.mkdir(output_path + <span class="string">'/acc'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存正确率结果</span></span><br><span class="line"><span class="keyword">with</span> open(output_path + <span class="string">'/acc/finetune_history.txt'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    pickle.dump(finetune_history.history, f)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存模型结果</span></span><br><span class="line">finetune_model.save(output_path + <span class="string">"/model/finetune.h5"</span>)</span><br></pre></td></tr></table></figure>
+<p>对比的结果不重要（其实也是找不到了）。但迁移学习给了我们很多的可能性，比如利用更好的资源做训练，而把训练好的模型参数放入轻量化的应用中。</p>
+<p>最终验证集的正确率有60%+，着实出人意料。这或许就是神经网络的有趣之处。</p>
+<p>记得老师的总结：“这组同学先用图片训练了一下组里唯一的男生，我估计这位男同学以后去迪士尼玩能当导游。”可惜我过了一个暑假就几乎全忘了呢，而迁移学习竟然能够一直保留（听君一席话，如听一席话）！</p>
+<p>（完，享受深度学习之旅）</p>
+
+            </br>
+            <p>本文链接：
+                <a href="https://konelane.github.io/2021/09/22/210922transfer/">
+                    https://konelane.github.io/2021/09/22/210922transfer/
+                </a>
+            </p>
+            <p>-- <acronym title="End of File">EOF</acronym> --</p>
+            <div class="post-info">
+                <p>转载请注明出处 署名-非商业性使用-禁止演绎 3.0 国际（CC BY-NC-ND 3.0）</p>
+            </div>
+            
+        </div>
+
+        
+    </div>
+    
+    
+        
+            <div class="donateContainer">
+    <div>￥^￥请氦核一盒维他豆奶（喜欢巧克力味）</div>
+    <span id="donate" class="donate" onclick="donate()">打赏</span>
+    <div id="QR" style="display: none;">
+
+        <div id="alipay" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/weixin.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="alipay_qr" src="https://konelane.github.io/img/weixinpay.jpg">
+            </a>
+
+        </div>
+        <div id="wechat" style="display: inline-block">
+            <a href="http://kiritor.github.io/img/zhifubao.jpg" class="fancybox fancybox.image" rel="group">
+                <img id="wechat_qr" src="https://konelane.github.io/img/zhifubaopay.jpg">
+            </a>
+
+        </div>
+    </div>
+    <script>
+        function donate() {
+            var qr = document.getElementById('QR');
+            if (qr.style.display === 'none') {
+                qr.style.display = 'block';
+            } else {
+                qr.style.display = 'none'
+            }
+        };
+    </script>
+</div>
+        
+    
+    
+        
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/04/20-21分布式计算汇总文件/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">大数据|分布式计算课程笔记（持续更新）</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+        
+            
+                <div id="vcomment" class="comment"></div>
+<script src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min.js"></script>
+<script src='//cdn.jsdelivr.net/npm/valine/dist/Valine.min.js'></script>
+<script>
+   var notify = 'true' == true ? true : false;
+   var verify = 'true' == true ? true : false;
+   new Valine({
+            av: AV,
+            el: '#vcomment',
+            notify: notify,
+            verify: verify,
+            app_id: "foDHB9WkGuM2XlXOdLDAf3Rg-gzGzoHsz",
+            app_key: "oDUE1uuhC0Yv6Rp9SuCKjxKk",
+            placeholder: "“回音难寻-评论时输入邮箱能够毁灭打击氦核核心区”",
+            avatar: "",
+            avatar_cdn: "http://api.btstu.cn/sjtx/api.php?lx=c1&amp;format=images",
+            pageSize: 15
+    });
+    if(window.location.hash){
+        var checkExist = setInterval(function() {
+           if ($(window.location.hash).length) {
+              $('html, body').animate({scrollTop: $(window.location.hash).offset().top-90}, 1000);
+              clearInterval(checkExist);
+           }
+        }, 100);
+    }
+</script>
+
+            
+        
+    
+
+</article>
+
+
+<script>
+    var isMobile = {
+        Android: function () {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function () {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function () {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function () {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function () {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function () {
+            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() ||
+                isMobile.Windows());
+        }
+    };
+    if (isMobile.any()) {
+        //移动端不显示目录和评论
+        $("#toc-button").css("display", "none");
+        $("#commentDiv").css("display", "none");
+    }
+</script>
+
+</div>
+      <!--
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2021 Little Hehe
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','m5RW4BUQrJ_r-CYKAksH','2.0.0');
+</script>
+  </div>
+</footer>
+-->
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/mobile.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/prefixfree.js"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div id="totop" style="position:fixed;bottom:200px;right:50px;cursor: pointer;z-index:9999;opacity: 100%;">
+    <a title="返回顶部" style="opacity: 100%;">
+        <img src="/img/scrollup.png" />
+    </a>
+</div>
+
+<script src="/js/totop.js"></script>
+<script src="/js/share.js"></script>
+
+  </div>
+</body>
+</html>
