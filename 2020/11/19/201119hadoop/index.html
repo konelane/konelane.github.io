@@ -136,8 +136,6 @@
 			        
 			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
 			        
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
-			        
 			        </div>
 				</section>
 				
@@ -348,7 +346,7 @@
 <p>累计求和百分比，计算占比较大的类，作为重要的变量<br>结合sql语句<br>spark命令结合sql</p>
 <h4 id="2-哑变量处理"><a href="#2-哑变量处理" class="headerlink" title="2.哑变量处理"></a>2.哑变量处理</h4><p>陈曦同学：对老师的代码的理解：<br>students/2020211004chenxi/1112work</p>
 <h4 id="3-引入sql"><a href="#3-引入sql" class="headerlink" title="3.引入sql"></a>3.引入sql</h4><p>周童给出了引入sql的写法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql_accumulated = f&quot;&quot;&quot;&#123;参数&#125;</span><br><span class="line">	select *</span><br><span class="line">		from ( select &#123;col_name&#125;</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql_accumulated = f&quot;&quot;&quot;&#123;参数&#125;</span><br><span class="line">trueselect *</span><br><span class="line">truetruefrom ( select &#123;col_name&#125;</span><br><span class="line">&quot;&quot;&quot;</span><br></pre></td></tr></table></figure>
 <h4 id="4-分类变量的问题"><a href="#4-分类变量的问题" class="headerlink" title="4.分类变量的问题"></a>4.分类变量的问题</h4><p>注意，3分类只要两个变量，否则有共线性。有k个变量都有可能哑变量，总体应该drop掉2的k次方-k个。全都是0-1的话，就如此。计算机里叫onehot，统计就叫哑变量。</p>
 <p>特别地，onehot存储的形式就会改变：[40,38]一共40个数，第38个位为1</p>
 <h4 id="5-小心使用toPandas"><a href="#5-小心使用toPandas" class="headerlink" title="5.小心使用toPandas"></a>5.小心使用toPandas</h4><p>有一种储存方式是选择将sdf转化成pandas，toPandas对于count都是单机的操作。如果数据量不大，可以这样，因为这样会把数据存上master。</p>

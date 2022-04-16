@@ -143,8 +143,6 @@
 			        
 			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://kiritor.github.io/">博客构建与主题参考</a>
 			        
-			          <a target="_blank" class="main-nav-link switch-friends-link" href="https://xsong.ltd/zh/">一个左手Python右手R的数据分析者-宋骁</a>
-			        
 			        </div>
 				</section>
 				
@@ -394,7 +392,7 @@
 <p>完全没问题！</p>
 <p>很简单，首先要保证每个存储数据的节点上（worker节点）必须有函数cat、wc，我们自己写一个wchehe.py，然后放上服务器去就好啦。</p>
 <p>如下，就是一个简单的读取行数的py程序，第一行一定要注明函数应该怎么找到运行的地方：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env python3</span><br><span class="line">import sys</span><br><span class="line">linecount=0</span><br><span class="line">data = []</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">	linecount += 1</span><br><span class="line">	data.append(line)</span><br><span class="line">Print(linecount)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#! /usr/bin/env python3</span><br><span class="line">import sys</span><br><span class="line">linecount=0</span><br><span class="line">data = []</span><br><span class="line">for line in sys.stdin:</span><br><span class="line">truelinecount += 1</span><br><span class="line">truedata.append(line)</span><br><span class="line">Print(linecount)</span><br></pre></td></tr></table></figure>
 <p>可以用chmod +x wchehe.py 改一下运行权限。</p>
 <p>下来，为了规范代码格式，我们用一个shell批处理文件作为我们的程序入口，也方便调整参数。</p>
 <p>开头别忘了告诉sh函数这是个批处理。<em>看到这篇文章的同学不要用原代码直接跑啊（</em></p>
